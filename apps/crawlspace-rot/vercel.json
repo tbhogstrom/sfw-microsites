@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd ../.. && pnpm turbo build --filter=crawlspace-rot",
-  "installCommand": "cd ../.. && pnpm install",
+  "buildCommand": "cd ../.. && npx turbo build --filter=crawlspace-rot",
+  "installCommand": "cd ../.. && npm install",
   "framework": "astro",
   "outputDirectory": "dist"
 }

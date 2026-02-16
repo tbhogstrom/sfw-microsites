@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd ../.. && pnpm turbo build --filter=beam-repair",
-  "installCommand": "cd ../.. && pnpm install",
+  "buildCommand": "cd ../.. && npx turbo build --filter=beam-repair",
+  "installCommand": "cd ../.. && npm install",
   "framework": "astro",
   "outputDirectory": "dist"
 }
