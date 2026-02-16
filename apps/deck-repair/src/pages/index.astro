@@ -1,0 +1,31 @@
+---
+import { serviceConfigs } from '@sfw/content';
+
+const config = serviceConfigs['deck-repair'];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{config.title}</title>
+    <meta name="description" content={config.description} />
+  </head>
+  <body class="bg-gray-light">
+    <main class="container mx-auto px-4 py-16">
+      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
+        {config.name}
+      </h1>
+      <p class="text-lg text-gray-600 mb-8">
+        {config.description}
+      </p>
+      <a
+        href="tel:5038850236"
+        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
+      >
+        Call {config.phone}
+      </a>
+    </main>
+  </body>
+</html>

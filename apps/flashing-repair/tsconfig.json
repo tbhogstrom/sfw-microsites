@@ -1,0 +1,11 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@sfw/ui/*": ["../../packages/ui/src/*"],
+      "@sfw/content": ["../../packages/content/src/index.ts"],
+      "@sfw/utils": ["../../packages/utils/src/index.ts"]
+    }
+  }
+}

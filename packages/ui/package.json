@@ -1,0 +1,12 @@
+{
+  "name": "@sfw/ui",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "dependencies": {
+    "@sfw/config": "workspace:*",
+    "@sfw/content": "workspace:*",
+    "astro": "^5.1.3",
+    "typescript": "^5.7.2"
+  }
+}
