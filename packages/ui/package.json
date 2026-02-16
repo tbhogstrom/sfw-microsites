@@ -4,8 +4,8 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "dependencies": {
-    "@sfw/config": "workspace:*",
-    "@sfw/content": "workspace:*",
+    "@sfw/config": "*",
+    "@sfw/content": "*",
     "astro": "^5.1.3",
     "typescript": "^5.7.2"
   }

@@ -10,10 +10,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@sfw/ui": "workspace:*",
-    "@sfw/config": "workspace:*",
-    "@sfw/content": "workspace:*",
-    "@sfw/utils": "workspace:*",
+    "@sfw/ui": "*",
+    "@sfw/config": "*",
+    "@sfw/content": "*",
+    "@sfw/utils": "*",
     "astro": "^5.1.3"
   },
   "devDependencies": {
