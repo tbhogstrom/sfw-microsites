@@ -76,7 +76,6 @@ const testimonial = {
 const blogPost = {
   title: '5 Deck Design Trends for 2026',
   excerpt: 'Discover the latest trends in deck design that will elevate your outdoor living space.',
-  image: '/images/blog/deck-trends.jpg',
   slug: 'deck-design-trends-2026',
   publishDate: '2026-01-15',
   author: 'Mike Johnson',
@@ -97,13 +96,14 @@ const blogPost = {
 >
   <div class="space-y-16 pb-16">
     <!-- Hero Section Test -->
-    <HeroSection
-      headline="Beautiful Custom Decks Built to Last"
-      subheadline="Transform your backyard with our expert deck building services"
-      backgroundImage="/images/hero-deck.jpg"
-      primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
-      secondaryCTA={{ text: 'View Gallery', href: '/gallery' }}
-    />
+    <div class="bg-gray-light">
+      <HeroSection
+        headline="Beautiful Custom Decks Built to Last"
+        subheadline="Transform your backyard with our expert deck building services"
+        primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
+        secondaryCTA={{ text: 'View Gallery', href: '/gallery' }}
+      />
+    </div>
 
     <!-- Breadcrumbs Test -->
     <div class="container mx-auto px-4">
@@ -154,25 +154,23 @@ const blogPost = {
     <!-- Service Cards Test -->
     <section class="container mx-auto px-4">
       <h2 class="text-3xl font-heading font-bold mb-6 text-center">Our Services</h2>
+      <p class="text-center text-gray-600 mb-8">Service cards work best with background images (removed for test page)</p>
       <div class="grid md:grid-cols-3 gap-6">
-        <ServiceCard
-          title="Deck Building"
-          description="Custom deck design and construction using premium materials."
-          image="/images/service-build.jpg"
-          href="/services/deck-building"
-        />
-        <ServiceCard
-          title="Deck Repair"
-          description="Expert repairs to restore your deck's beauty and safety."
-          image="/images/service-repair.jpg"
-          href="/services/deck-repair"
-        />
-        <ServiceCard
-          title="Deck Staining"
-          description="Professional staining and sealing to protect your investment."
-          image="/images/service-staining.jpg"
-          href="/services/deck-staining"
-        />
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-3">Deck Building</h3>
+          <p class="mb-4">Custom deck design and construction using premium materials.</p>
+          <Button href="/services/deck-building" variant="primary">Learn More</Button>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-3">Deck Repair</h3>
+          <p class="mb-4">Expert repairs to restore your deck's beauty and safety.</p>
+          <Button href="/services/deck-repair" variant="primary">Learn More</Button>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-3">Deck Staining</h3>
+          <p class="mb-4">Professional staining and sealing to protect your investment.</p>
+          <Button href="/services/deck-staining" variant="primary">Learn More</Button>
+        </div>
       </div>
     </section>
 
