@@ -1,0 +1,55 @@
+---
+/**
+ * BlogGrid.astro - Responsive grid of blog cards
+ * Displays blog posts in a responsive grid layout
+ */
+import type { BaseProps, BlogPost } from '@sfw/ui/types';
+import BlogCard from './BlogCard.astro';
+
+export interface Props extends BaseProps {
+  posts: BlogPost[];
+  columns?: 2 | 3;
+  title?: string;
+  showExcerpt?: boolean;
+}
+
+const {
+  posts,
+  columns = 3,
+  title,
+  showExcerpt = true,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const columnClasses = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-2 lg:grid-cols-3',
+};
+
+const classes = ['py-12', className].filter(Boolean).join(' ');
+const gridClasses = ['grid grid-cols-1 gap-8', columnClasses[columns]].join(' ');
+---
+
+<section class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    {title && (
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
+        {title}
+      </h2>
+    )}
+
+    {posts.length > 0 ? (
+      <div class={gridClasses}>
+        {posts.map((post) => (
+          <BlogCard post={post} showExcerpt={showExcerpt} />
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-gray-500">No blog posts found.</p>
+    )}
+
+    <!-- Optional slot for pagination or load more -->
+    <slot />
+  </div>
+</section>

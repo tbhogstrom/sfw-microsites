@@ -1,0 +1,103 @@
+---
+/**
+ * MobileNav.astro - Mobile navigation overlay
+ * Hamburger menu with full-screen overlay for mobile devices
+ */
+import type { BaseProps, NavigationItem, SiteConfig } from '@sfw/ui/types';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+export interface Props extends BaseProps {
+  config: SiteConfig;
+  navigation: NavigationItem[];
+}
+
+const {
+  config,
+  navigation,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'fixed inset-0 z-40 bg-white hidden',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<div id="mobile-nav" class={classes} {...rest}>
+  <div class="flex flex-col h-full">
+    <!-- Mobile Nav Header -->
+    <div class="flex items-center justify-between p-4 border-b border-gray-200">
+      <span class="text-xl font-heading font-bold text-dark">{config.name}</span>
+      <button
+        id="mobile-menu-close"
+        class="p-2 text-dark hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
+        aria-label="Close mobile menu"
+      >
+        <Icon name="close" size={28} />
+      </button>
+    </div>
+
+    <!-- Mobile Nav Links -->
+    <nav class="flex-1 overflow-y-auto p-4" aria-label="Mobile navigation">
+      <ul class="space-y-4">
+        {navigation.map((item) => (
+          <li>
+            <a
+              href={item.url}
+              class="block py-3 text-lg font-medium text-dark hover:text-primary transition-colors border-b border-gray-100"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Mobile Nav CTA -->
+    <div class="p-4 border-t border-gray-200 space-y-3">
+      <Button
+        href={`tel:${config.phone}`}
+        variant="primary"
+        icon="phone"
+        fullWidth
+      >
+        {config.phone}
+      </Button>
+      <Button
+        href={`mailto:${config.email}`}
+        variant="outline"
+        icon="email"
+        fullWidth
+      >
+        Email Us
+      </Button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile menu close
+  const closeButton = document.getElementById('mobile-menu-close');
+  const mobileNav = document.getElementById('mobile-nav');
+  const menuButton = document.getElementById('mobile-menu-button');
+
+  if (closeButton && mobileNav && menuButton) {
+    closeButton.addEventListener('click', () => {
+      mobileNav.classList.add('hidden');
+      menuButton.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    });
+
+    // Close on link click
+    const navLinks = mobileNav.querySelectorAll('a');
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.add('hidden');
+        menuButton.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('overflow-hidden');
+      });
+    });
+  }
+</script>

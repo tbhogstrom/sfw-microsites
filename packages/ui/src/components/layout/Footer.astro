@@ -1,0 +1,124 @@
+---
+/**
+ * Footer.astro - Site footer
+ * Includes company info, links, service areas, and contact details
+ */
+import type { BaseProps, SiteConfig, NavigationItem } from '@sfw/ui/types';
+import Icon from '../ui/Icon.astro';
+
+export interface Props extends BaseProps {
+  config: SiteConfig;
+  navigation?: NavigationItem[];
+  showServiceAreas?: boolean;
+}
+
+const {
+  config,
+  navigation = [],
+  showServiceAreas = true,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+const classes = ['bg-dark text-white', className].filter(Boolean).join(' ');
+---
+
+<footer class={classes} {...rest}>
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Company Info -->
+      <div>
+        <h3 class="text-xl font-heading font-bold mb-4">{config.name}</h3>
+        <p class="text-gray-300 mb-4">{config.description}</p>
+        <div class="space-y-2">
+          <a
+            href={`tel:${config.phone}`}
+            class="flex items-center text-gray-300 hover:text-primary transition-colors"
+          >
+            <Icon name="phone" size={20} class="mr-2" />
+            {config.phone}
+          </a>
+          <a
+            href={`mailto:${config.email}`}
+            class="flex items-center text-gray-300 hover:text-primary transition-colors"
+          >
+            <Icon name="email" size={20} class="mr-2" />
+            {config.email}
+          </a>
+          <div class="flex items-start text-gray-300">
+            <Icon name="location" size={20} class="mr-2 mt-1 flex-shrink-0" />
+            <span>
+              {config.address}<br />
+              {config.city}, {config.state} {config.zip}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      {navigation.length > 0 && (
+        <div>
+          <h3 class="text-lg font-heading font-bold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            {navigation.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="text-gray-300 hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <!-- Service Areas -->
+      {showServiceAreas && config.serviceAreas && (
+        <div>
+          <h3 class="text-lg font-heading font-bold mb-4">Service Areas</h3>
+          <ul class="space-y-2">
+            {config.serviceAreas.slice(0, 8).map((area) => (
+              <li>
+                <a
+                  href={area.slug ? `/service-areas/${area.slug}` : '#'}
+                  class="text-gray-300 hover:text-primary transition-colors"
+                >
+                  {area.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <!-- Business Hours -->
+      <div>
+        <h3 class="text-lg font-heading font-bold mb-4">Business Hours</h3>
+        <div class="space-y-2 text-gray-300">
+          <div>
+            <div class="font-semibold">Monday - Friday</div>
+            <div>8:00 AM - 6:00 PM</div>
+          </div>
+          <div>
+            <div class="font-semibold">Saturday</div>
+            <div>9:00 AM - 4:00 PM</div>
+          </div>
+          <div>
+            <div class="font-semibold">Sunday</div>
+            <div>Closed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+      <p class="text-gray-400 text-sm">
+        &copy; {currentYear} {config.name}. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,39 @@
+---
+/**
+ * Image.astro - Optimized image component
+ * Wrapper around Astro's Image component with sensible defaults
+ */
+import { Image as AstroImage } from 'astro:assets';
+import type { ImageProps } from '@sfw/ui/types';
+
+export interface Props extends ImageProps {
+  quality?: number;
+  format?: 'avif' | 'webp' | 'jpeg' | 'png';
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  loading = 'lazy',
+  quality = 80,
+  format,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = ['w-full h-auto', className].filter(Boolean).join(' ');
+---
+
+<AstroImage
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={loading}
+  quality={quality}
+  format={format}
+  class={classes}
+  {...rest}
+/>

@@ -1,0 +1,105 @@
+---
+/**
+ * HeroSection.astro - Hero section with background image
+ * Full-width hero with headline, subheadline, and CTA buttons
+ */
+import type { BaseProps } from '@sfw/ui/types';
+import Button from '../ui/Button.astro';
+import Image from '../ui/Image.astro';
+
+export interface Props extends BaseProps {
+  headline: string;
+  subheadline?: string;
+  backgroundImage?: string;
+  primaryCTA?: { text: string; href: string };
+  secondaryCTA?: { text: string; href: string };
+  overlay?: boolean;
+  height?: 'sm' | 'md' | 'lg' | 'full';
+  textAlign?: 'left' | 'center' | 'right';
+}
+
+const {
+  headline,
+  subheadline,
+  backgroundImage,
+  primaryCTA,
+  secondaryCTA,
+  overlay = true,
+  height = 'lg',
+  textAlign = 'center',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const heightClasses = {
+  sm: 'min-h-[400px]',
+  md: 'min-h-[500px]',
+  lg: 'min-h-[600px]',
+  full: 'min-h-screen',
+};
+
+const textAlignClasses = {
+  left: 'text-left items-start',
+  center: 'text-center items-center',
+  right: 'text-right items-end',
+};
+
+const classes = [
+  'relative flex items-center justify-center',
+  heightClasses[height],
+  className,
+].filter(Boolean).join(' ');
+
+const contentClasses = [
+  'relative z-10 container mx-auto px-4 flex flex-col',
+  textAlignClasses[textAlign],
+].filter(Boolean).join(' ');
+---
+
+<section class={classes} {...rest}>
+  <!-- Background Image -->
+  {backgroundImage && (
+    <div class="absolute inset-0 z-0">
+      <Image
+        src={backgroundImage}
+        alt=""
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+      {overlay && (
+        <div class="absolute inset-0 bg-dark/60"></div>
+      )}
+    </div>
+  )}
+
+  <!-- Content -->
+  <div class={contentClasses}>
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 max-w-4xl">
+      {headline}
+    </h1>
+
+    {subheadline && (
+      <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
+        {subheadline}
+      </p>
+    )}
+
+    {(primaryCTA || secondaryCTA) && (
+      <div class="flex flex-col sm:flex-row gap-4">
+        {primaryCTA && (
+          <Button href={primaryCTA.href} variant="primary" size="lg">
+            {primaryCTA.text}
+          </Button>
+        )}
+        {secondaryCTA && (
+          <Button href={secondaryCTA.href} variant="outline" size="lg">
+            {secondaryCTA.text}
+          </Button>
+        )}
+      </div>
+    )}
+
+    <!-- Optional slot for additional content -->
+    <slot />
+  </div>
+</section>

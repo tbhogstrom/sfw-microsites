@@ -1,0 +1,68 @@
+---
+/**
+ * Button.astro - Versatile button component
+ * Supports multiple variants, sizes, and states
+ */
+import type { BaseProps } from '@sfw/ui/types';
+import Icon from './Icon.astro';
+
+export interface Props extends BaseProps {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  icon?: 'phone' | 'email' | 'arrow-right';
+  iconPosition?: 'left' | 'right';
+  fullWidth?: boolean;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  icon,
+  iconPosition = 'right',
+  fullWidth = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+
+const variantClasses = {
+  primary: 'bg-primary text-white hover:bg-primary/90',
+  secondary: 'bg-secondary text-white hover:bg-secondary/90',
+  outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-white',
+  ghost: 'text-primary hover:bg-primary/10',
+};
+
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm rounded',
+  md: 'px-6 py-3 text-base rounded-lg',
+  lg: 'px-8 py-4 text-lg rounded-lg',
+};
+
+const classes = [
+  baseClasses,
+  variantClasses[variant],
+  sizeClasses[size],
+  fullWidth && 'w-full',
+  className,
+].filter(Boolean).join(' ');
+
+const Tag = href ? 'a' : 'button';
+const tagProps = href ? { href } : { type, disabled };
+---
+
+<Tag class={classes} {...tagProps} {...rest}>
+  {icon && iconPosition === 'left' && (
+    <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} class="mr-2" />
+  )}
+  <slot />
+  {icon && iconPosition === 'right' && (
+    <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} class="ml-2" />
+  )}
+</Tag>

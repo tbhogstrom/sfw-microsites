@@ -1,0 +1,68 @@
+---
+/**
+ * Breadcrumbs.astro - Navigation breadcrumbs
+ * Provides hierarchical page navigation with structured data
+ */
+import type { BaseProps } from '@sfw/ui/types';
+import Icon from './Icon.astro';
+
+export interface BreadcrumbItem {
+  label: string;
+  url?: string;
+}
+
+export interface Props extends BaseProps {
+  items: BreadcrumbItem[];
+  showHome?: boolean;
+}
+
+const {
+  items,
+  showHome = true,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const allItems = showHome
+  ? [{ label: 'Home', url: '/' }, ...items]
+  : items;
+
+// BreadcrumbList JSON-LD Schema
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: allItems.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    item: item.url ? `${Astro.site}${item.url}` : undefined,
+  })),
+};
+
+const classes = ['flex items-center space-x-2 text-sm', className].filter(Boolean).join(' ');
+---
+
+<nav aria-label="Breadcrumb" class={classes} {...rest}>
+  <ol class="flex items-center space-x-2">
+    {allItems.map((item, index) => (
+      <li class="flex items-center">
+        {index > 0 && (
+          <Icon name="chevron-right" size={16} class="mx-2 text-gray-400" ariaLabel="separator" />
+        )}
+        {item.url ? (
+          <a
+            href={item.url}
+            class="text-gray-600 hover:text-primary transition-colors"
+          >
+            {item.label}
+          </a>
+        ) : (
+          <span class="text-gray-900 font-medium">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

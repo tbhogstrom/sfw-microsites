@@ -1,0 +1,68 @@
+---
+/**
+ * ProcessSteps.astro - Numbered step-by-step process display
+ * Shows a sequential process with numbered steps
+ */
+import type { BaseProps } from '@sfw/ui/types';
+import Icon from '../ui/Icon.astro';
+
+export interface Step {
+  title: string;
+  description: string;
+  icon?: 'phone' | 'email' | 'check' | 'arrow-right';
+}
+
+export interface Props extends BaseProps {
+  steps: Step[];
+  title?: string;
+  variant?: 'vertical' | 'horizontal';
+}
+
+const {
+  steps,
+  title,
+  variant = 'vertical',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = ['py-12', className].filter(Boolean).join(' ');
+---
+
+<section class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    {title && (
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
+        {title}
+      </h2>
+    )}
+
+    <div class={`grid gap-8 ${variant === 'horizontal' ? 'md:grid-cols-3' : 'grid-cols-1 max-w-3xl mx-auto'}`}>
+      {steps.map((step, index) => (
+        <div class="flex gap-6">
+          {/* Step Number */}
+          <div class="flex-shrink-0">
+            <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold">
+              {index + 1}
+            </div>
+          </div>
+
+          {/* Step Content */}
+          <div class="flex-1">
+            <div class="flex items-start gap-2 mb-2">
+              <h3 class="text-xl font-heading font-bold text-dark">
+                {step.title}
+              </h3>
+              {step.icon && (
+                <Icon name={step.icon} size={24} class="text-primary flex-shrink-0" />
+              )}
+            </div>
+            <p class="text-gray-600">
+              {step.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

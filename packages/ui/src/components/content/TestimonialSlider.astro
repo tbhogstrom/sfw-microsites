@@ -1,0 +1,122 @@
+---
+/**
+ * TestimonialSlider.astro - Swiper.js carousel for testimonials
+ * Responsive slider with navigation and pagination
+ */
+import type { BaseProps, Testimonial } from '@sfw/ui/types';
+import TestimonialCard from './TestimonialCard.astro';
+
+export interface Props extends BaseProps {
+  testimonials: Testimonial[];
+  title?: string;
+  autoplay?: boolean;
+  autoplayDelay?: number;
+}
+
+const {
+  testimonials,
+  title,
+  autoplay = true,
+  autoplayDelay = 5000,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = ['py-12', className].filter(Boolean).join(' ');
+const sliderId = `testimonial-slider-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    {title && (
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
+        {title}
+      </h2>
+    )}
+
+    <!-- Swiper Container -->
+    <div class="relative">
+      <div class={`swiper ${sliderId}`}>
+        <div class="swiper-wrapper">
+          {testimonials.map((testimonial) => (
+            <div class="swiper-slide">
+              <TestimonialCard testimonial={testimonial} />
+            </div>
+          ))}
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class={`swiper-button-prev swiper-button-prev-${sliderId}`}></div>
+        <div class={`swiper-button-next swiper-button-next-${sliderId}`}></div>
+
+        <!-- Pagination -->
+        <div class={`swiper-pagination swiper-pagination-${sliderId} mt-8`}></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ sliderId, autoplay, autoplayDelay }}>
+  // Dynamically import Swiper to avoid SSR issues
+  import('swiper/css').then(() => {
+    import('swiper/css/navigation').then(() => {
+      import('swiper/css/pagination').then(() => {
+        import('swiper').then(({ default: Swiper, Navigation, Pagination, Autoplay }) => {
+          new Swiper(`.${sliderId}`, {
+            modules: [Navigation, Pagination, Autoplay],
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: autoplay ? {
+              delay: autoplayDelay,
+              disableOnInteraction: false,
+            } : false,
+            navigation: {
+              nextEl: `.swiper-button-next-${sliderId}`,
+              prevEl: `.swiper-button-prev-${sliderId}`,
+            },
+            pagination: {
+              el: `.swiper-pagination-${sliderId}`,
+              clickable: true,
+            },
+            breakpoints: {
+              640: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
+            },
+          });
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Custom Swiper Styles */
+  :global(.swiper-button-prev),
+  :global(.swiper-button-next) {
+    color: var(--primary-color, #a1b770);
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    background-color: var(--primary-color, #a1b770);
+  }
+
+  :global(.swiper-button-prev:after),
+  :global(.swiper-button-next:after) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 768px) {
+    :global(.swiper-button-prev),
+    :global(.swiper-button-next) {
+      display: none;
+    }
+  }
+</style>

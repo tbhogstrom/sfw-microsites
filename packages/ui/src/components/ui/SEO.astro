@@ -1,0 +1,83 @@
+---
+/**
+ * SEO.astro - SEO meta tags and structured data
+ * Includes Open Graph, Twitter Cards, and LocalBusiness JSON-LD
+ */
+import type { SiteConfig } from '@sfw/ui/types';
+
+export interface Props {
+  title: string;
+  description: string;
+  config: SiteConfig;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  config,
+  canonical,
+  ogImage = '/og-image.jpg',
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === config.name ? title : `${title} | ${config.name}`;
+const canonicalUrl = canonical || Astro.url.href;
+
+// LocalBusiness JSON-LD Schema
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: config.name,
+  description: config.description,
+  url: config.url,
+  telephone: config.phone,
+  email: config.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: config.city,
+    addressRegion: config.state,
+    postalCode: config.zip,
+    streetAddress: config.address,
+  },
+  geo: config.geo ? {
+    '@type': 'GeoCoordinates',
+    latitude: config.geo.lat,
+    longitude: config.geo.lng,
+  } : undefined,
+  areaServed: config.serviceAreas?.map(area => ({
+    '@type': 'City',
+    name: area.name,
+  })),
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

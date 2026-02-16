@@ -1,0 +1,54 @@
+---
+/**
+ * StatsBar.astro - Statistics display bar
+ * Horizontal bar showing key business statistics
+ */
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface Stat {
+  value: string;
+  label: string;
+  suffix?: string;
+}
+
+export interface Props extends BaseProps {
+  stats: Stat[];
+  variant?: 'light' | 'dark' | 'primary';
+}
+
+const {
+  stats,
+  variant = 'primary',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const variantClasses = {
+  light: 'bg-gray-light text-dark',
+  dark: 'bg-dark text-white',
+  primary: 'bg-primary text-white',
+};
+
+const classes = [
+  'py-12',
+  variantClasses[variant],
+  className,
+].filter(Boolean).join(' ');
+---
+
+<section class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <div class="text-4xl md:text-5xl font-heading font-bold mb-2">
+            {stat.value}{stat.suffix || ''}
+          </div>
+          <div class={`text-base md:text-lg ${variant === 'light' ? 'text-gray-600' : 'text-white/90'}`}>
+            {stat.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

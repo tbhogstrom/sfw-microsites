@@ -1,0 +1,90 @@
+---
+/**
+ * Header.astro - Site header with navigation
+ * Includes logo, navigation menu, and phone CTA
+ */
+import type { BaseProps, NavigationItem, SiteConfig } from '@sfw/ui/types';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+export interface Props extends BaseProps {
+  config: SiteConfig;
+  navigation: NavigationItem[];
+  logo?: string;
+  transparent?: boolean;
+}
+
+const {
+  config,
+  navigation,
+  logo,
+  transparent = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'sticky top-0 z-50 transition-all duration-300',
+  transparent ? 'bg-transparent' : 'bg-white shadow-md',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<header class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center space-x-2">
+        {logo ? (
+          <img src={logo} alt={config.name} class="h-12 w-auto" />
+        ) : (
+          <span class="text-2xl font-heading font-bold text-dark">{config.name}</span>
+        )}
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center space-x-8" aria-label="Main navigation">
+        {navigation.map((item) => (
+          <a
+            href={item.url}
+            class="text-base font-medium text-dark hover:text-primary transition-colors"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA Buttons -->
+      <div class="hidden lg:flex items-center space-x-4">
+        <Button href={`tel:${config.phone}`} variant="primary" icon="phone">
+          {config.phone}
+        </Button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        class="lg:hidden p-2 text-dark hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
+      >
+        <Icon name="menu" size={28} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  if (menuButton && mobileNav) {
+    menuButton.addEventListener('click', () => {
+      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+      mobileNav.classList.toggle('hidden');
+      document.body.classList.toggle('overflow-hidden');
+    });
+  }
+</script>

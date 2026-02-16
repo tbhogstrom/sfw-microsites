@@ -1,0 +1,79 @@
+---
+/**
+ * HeroWithForm.astro - Hero section with embedded contact form
+ * Side-by-side layout with hero content and form (will reference ContactForm after Phase 4)
+ */
+import type { BaseProps, SiteConfig } from '@sfw/ui/types';
+import Image from '../ui/Image.astro';
+
+export interface Props extends BaseProps {
+  headline: string;
+  subheadline?: string;
+  backgroundImage?: string;
+  config: SiteConfig;
+  overlay?: boolean;
+}
+
+const {
+  headline,
+  subheadline,
+  backgroundImage,
+  config,
+  overlay = true,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'relative min-h-[700px] flex items-center',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<section class={classes} {...rest}>
+  <!-- Background Image -->
+  {backgroundImage && (
+    <div class="absolute inset-0 z-0">
+      <Image
+        src={backgroundImage}
+        alt=""
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+      {overlay && (
+        <div class="absolute inset-0 bg-dark/70"></div>
+      )}
+    </div>
+  )}
+
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <!-- Hero Content -->
+      <div class="text-white">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">
+          {headline}
+        </h1>
+
+        {subheadline && (
+          <p class="text-xl md:text-2xl text-white/90 mb-6">
+            {subheadline}
+          </p>
+        )}
+
+        <!-- Optional slot for additional content -->
+        <slot name="content" />
+      </div>
+
+      <!-- Form Slot -->
+      <div class="bg-white rounded-lg shadow-2xl p-6 md:p-8">
+        <slot name="form">
+          <!-- ContactForm will be inserted here after Phase 4 -->
+          <div class="text-center text-gray-500">
+            Form component will be added in Phase 4
+          </div>
+        </slot>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,181 @@
+---
+/**
+ * BlogPost.astro - Full blog post layout
+ * Article layout with header, content, and metadata
+ */
+import type { BaseProps, BlogPost as BlogPostType } from '@sfw/ui/types';
+import Image from '../ui/Image.astro';
+import Breadcrumbs from '../ui/Breadcrumbs.astro';
+
+export interface Props extends BaseProps {
+  post: BlogPostType;
+  showBreadcrumbs?: boolean;
+}
+
+const {
+  post,
+  showBreadcrumbs = true,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const { title, excerpt, image, publishDate, author, category, content } = post;
+
+// Format date
+const formattedDate = publishDate ? new Date(publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}) : '';
+
+const classes = ['py-12', className].filter(Boolean).join(' ');
+
+// Article schema
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: excerpt,
+  image: image,
+  datePublished: publishDate,
+  author: {
+    '@type': 'Person',
+    name: author || 'Staff Writer',
+  },
+};
+---
+
+<article class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    <!-- Breadcrumbs -->
+    {showBreadcrumbs && (
+      <div class="mb-8">
+        <Breadcrumbs
+          items={[
+            { label: 'Blog', url: '/blog' },
+            { label: title },
+          ]}
+        />
+      </div>
+    )}
+
+    <!-- Article Header -->
+    <header class="max-w-4xl mx-auto mb-8">
+      {/* Category & Date */}
+      <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+        {category && (
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+            {category}
+          </span>
+        )}
+        {formattedDate && (
+          <time datetime={publishDate}>{formattedDate}</time>
+        )}
+      </div>
+
+      {/* Title */}
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-dark mb-4">
+        {title}
+      </h1>
+
+      {/* Excerpt */}
+      {excerpt && (
+        <p class="text-xl text-gray-600 mb-4">
+          {excerpt}
+        </p>
+      )}
+
+      {/* Author */}
+      {author && (
+        <div class="text-gray-500">
+          By <span class="font-semibold text-dark">{author}</span>
+        </div>
+      )}
+    </header>
+
+    <!-- Featured Image -->
+    {image && (
+      <div class="max-w-4xl mx-auto mb-8">
+        <Image
+          src={image}
+          alt={title}
+          class="w-full h-auto rounded-lg shadow-lg"
+          loading="eager"
+        />
+      </div>
+    )}
+
+    <!-- Article Content -->
+    <div class="max-w-3xl mx-auto">
+      <div class="prose prose-lg prose-gray max-w-none">
+        <slot>
+          {/* If content is provided as a prop */}
+          {content && <Fragment set:html={content} />}
+        </slot>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<style>
+  /* Prose styles for blog content */
+  :global(.prose) {
+    color: #333;
+    line-height: 1.75;
+  }
+
+  :global(.prose h2) {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+  }
+
+  :global(.prose h3) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
+  }
+
+  :global(.prose p) {
+    margin-bottom: 1.25rem;
+  }
+
+  :global(.prose a) {
+    color: #a1b770;
+    text-decoration: underline;
+  }
+
+  :global(.prose a:hover) {
+    color: #8fa060;
+  }
+
+  :global(.prose ul),
+  :global(.prose ol) {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  :global(.prose li) {
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.prose img) {
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+  }
+
+  :global(.prose blockquote) {
+    border-left: 4px solid #a1b770;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #666;
+    margin: 1.5rem 0;
+  }
+</style>

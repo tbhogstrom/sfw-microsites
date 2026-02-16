@@ -1,0 +1,147 @@
+---
+/**
+ * ContactForm.astro - HubSpot form integration
+ * Embeds HubSpot forms with fallback HTML form
+ */
+import type { BaseProps, SiteConfig } from '@sfw/ui/types';
+import FormInput from './FormInput.astro';
+import FormTextarea from './FormTextarea.astro';
+import FormButton from './FormButton.astro';
+
+export interface Props extends BaseProps {
+  config: SiteConfig;
+  title?: string;
+  description?: string;
+  hubspotPortalId?: string;
+  hubspotFormId?: string;
+  submitText?: string;
+}
+
+const {
+  config,
+  title = 'Get a Free Quote',
+  description = 'Fill out the form below and we\'ll get back to you shortly.',
+  hubspotPortalId,
+  hubspotFormId,
+  submitText = 'Submit',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = ['w-full', className].filter(Boolean).join(' ');
+const useHubSpot = hubspotPortalId && hubspotFormId;
+---
+
+<div class={classes} {...rest}>
+  {title && (
+    <h3 class="text-2xl font-heading font-bold text-dark mb-2">{title}</h3>
+  )}
+
+  {description && (
+    <p class="text-gray-600 mb-6">{description}</p>
+  )}
+
+  {useHubSpot ? (
+    <!-- HubSpot Form Container -->
+    <div id="hubspot-form" class="hubspot-form"></div>
+
+    <script define:vars={{ portalId: hubspotPortalId, formId: hubspotFormId }}>
+      // Load HubSpot Forms Script
+      const script = document.createElement('script');
+      script.src = '//js.hsforms.net/forms/embed/v2.js';
+      script.charset = 'utf-8';
+      script.type = 'text/javascript';
+
+      script.onload = () => {
+        if (window.hbspt) {
+          window.hbspt.forms.create({
+            region: 'na1',
+            portalId: portalId,
+            formId: formId,
+            target: '#hubspot-form',
+            onFormReady: function($form) {
+              // Apply Tailwind classes to HubSpot form elements
+              const inputs = $form.find('input[type="text"], input[type="email"], input[type="tel"], textarea');
+              inputs.addClass('w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent');
+
+              const labels = $form.find('label');
+              labels.addClass('block text-sm font-medium text-gray-700 mb-2');
+
+              const submitBtn = $form.find('input[type="submit"]');
+              submitBtn.addClass('w-full px-8 py-4 text-lg font-semibold bg-primary text-white rounded-lg hover:bg-primary/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2');
+            },
+          });
+        }
+      };
+
+      document.head.appendChild(script);
+    </script>
+  ) : (
+    <!-- Fallback HTML Form -->
+    <form method="POST" action="/api/contact" class="space-y-4">
+      <FormInput
+        type="text"
+        name="name"
+        label="Full Name"
+        placeholder="John Doe"
+        required
+      />
+
+      <FormInput
+        type="email"
+        name="email"
+        label="Email Address"
+        placeholder="john@example.com"
+        required
+      />
+
+      <FormInput
+        type="tel"
+        name="phone"
+        label="Phone Number"
+        placeholder="(555) 123-4567"
+        required
+      />
+
+      <FormInput
+        type="text"
+        name="address"
+        label="Service Address"
+        placeholder="123 Main St, City, State"
+      />
+
+      <FormTextarea
+        name="message"
+        label="Message"
+        placeholder="Tell us about your project..."
+        rows={5}
+      />
+
+      <FormButton type="submit">
+        {submitText}
+      </FormButton>
+    </form>
+  )}
+</div>
+
+<style>
+  /* Override HubSpot default styles */
+  :global(.hubspot-form .hs-form-field) {
+    margin-bottom: 1rem;
+  }
+
+  :global(.hubspot-form .hs-error-msgs) {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.25rem;
+  }
+
+  :global(.hubspot-form .hs-error-msg) {
+    color: #dc2626;
+    font-size: 0.875rem;
+  }
+
+  :global(.hubspot-form .hs-form-required) {
+    color: #dc2626;
+  }
+</style>

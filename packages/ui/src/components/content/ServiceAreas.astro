@@ -1,0 +1,66 @@
+---
+/**
+ * ServiceAreas.astro - Grid of service area links
+ * Displays cities/regions served with links to location pages
+ */
+import type { BaseProps, ServiceArea } from '@sfw/ui/types';
+import Icon from '../ui/Icon.astro';
+
+export interface Props extends BaseProps {
+  serviceAreas: ServiceArea[];
+  title?: string;
+  columns?: 2 | 3 | 4;
+}
+
+const {
+  serviceAreas,
+  title = 'Areas We Serve',
+  columns = 3,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const columnClasses = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+  4: 'md:grid-cols-2 lg:grid-cols-4',
+};
+
+const classes = ['py-12', className].filter(Boolean).join(' ');
+const gridClasses = ['grid grid-cols-1 gap-4', columnClasses[columns]].join(' ');
+---
+
+<section class={classes} {...rest}>
+  <div class="container mx-auto px-4">
+    {title && (
+      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
+        {title}
+      </h2>
+    )}
+
+    <div class={gridClasses}>
+      {serviceAreas.map((area) => (
+        <a
+          href={area.slug ? `/service-areas/${area.slug}` : '#'}
+          class="flex items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transition-all duration-200 group"
+        >
+          <Icon
+            name="location"
+            size={24}
+            class="text-primary mr-3 flex-shrink-0 group-hover:scale-110 transition-transform"
+          />
+          <div>
+            <div class="font-semibold text-dark group-hover:text-primary transition-colors">
+              {area.name}
+            </div>
+            {area.state && (
+              <div class="text-sm text-gray-500">
+                {area.state}
+              </div>
+            )}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,90 @@
+---
+/**
+ * BlogCard.astro - Blog post preview card
+ * Displays blog post with image, title, excerpt, and metadata
+ */
+import type { BaseProps, BlogPost } from '@sfw/ui/types';
+import Image from '../ui/Image.astro';
+import Button from '../ui/Button.astro';
+
+export interface Props extends BaseProps {
+  post: BlogPost;
+  showExcerpt?: boolean;
+}
+
+const {
+  post,
+  showExcerpt = true,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const { title, excerpt, image, slug, publishDate, author, category } = post;
+const postUrl = `/blog/${slug}`;
+
+const classes = [
+  'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 h-full flex flex-col',
+  className,
+].filter(Boolean).join(' ');
+
+// Format date
+const formattedDate = publishDate ? new Date(publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}) : '';
+---
+
+<article class={classes} {...rest}>
+  <!-- Featured Image -->
+  {image && (
+    <a href={postUrl} class="block overflow-hidden">
+      <Image
+        src={image}
+        alt={title}
+        class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+      />
+    </a>
+  )}
+
+  <!-- Content -->
+  <div class="p-6 flex-1 flex flex-col">
+    <!-- Category & Date -->
+    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+      {category && (
+        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+          {category}
+        </span>
+      )}
+      {formattedDate && (
+        <time datetime={publishDate}>{formattedDate}</time>
+      )}
+    </div>
+
+    <!-- Title -->
+    <h3 class="text-xl font-heading font-bold text-dark mb-3 hover:text-primary transition-colors">
+      <a href={postUrl}>{title}</a>
+    </h3>
+
+    <!-- Excerpt -->
+    {showExcerpt && excerpt && (
+      <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
+        {excerpt}
+      </p>
+    )}
+
+    <!-- Author -->
+    {author && (
+      <div class="text-sm text-gray-500 mb-4">
+        By {author}
+      </div>
+    )}
+
+    <!-- Read More -->
+    <div>
+      <Button href={postUrl} variant="outline" size="sm">
+        Read More
+      </Button>
+    </div>
+  </div>
+</article>
