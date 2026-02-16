@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=restoration",
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "astro",
+  "outputDirectory": "dist"
+}

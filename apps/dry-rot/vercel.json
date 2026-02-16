@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=dry-rot",
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "astro",
+  "outputDirectory": "dist"
+}
