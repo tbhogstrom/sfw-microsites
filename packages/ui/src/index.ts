@@ -14,6 +14,7 @@ export * from './components/blog';
 // Export types
 export * from './types';
 
-// Export layouts
+// Export layouts (default export for convenience)
+export { default } from './layouts/BaseLayout.astro';
 export { default as BaseLayout } from './layouts/BaseLayout.astro';
 export type { Props as BaseLayoutProps } from './layouts/BaseLayout.astro';
