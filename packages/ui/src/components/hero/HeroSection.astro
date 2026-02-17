@@ -87,15 +87,8 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
     {hubspotForm ? (
       <!-- Layout with HubSpot Form -->
       <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch">
-        <!-- HubSpot Form - Left Third -->
-        <div class="w-full lg:w-1/3">
-          <div class="bg-white rounded-lg shadow-xl p-6 lg:p-8">
-            <div id={formId}></div>
-          </div>
-        </div>
-
-        <!-- Content - Right Two Thirds -->
-        <div class="w-full lg:w-2/3 flex flex-col justify-center text-left">
+        <!-- Content - Left Two Thirds -->
+        <div class="w-full lg:w-2/3 flex flex-col justify-center text-left order-2 lg:order-1">
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6">
             {headline}
           </h1>
@@ -122,6 +115,16 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
           )}
 
           <slot />
+        </div>
+
+        <!-- HubSpot Form - Right Third -->
+        <div class="w-full lg:w-1/3 order-1 lg:order-2">
+          <div class="bg-white rounded-lg shadow-xl p-6 lg:p-8">
+            <!-- Business Hours Message -->
+            <div id="business-hours-message" class="text-center mb-4 font-semibold text-lg"></div>
+
+            <div id={formId} class="hubspot-form-container"></div>
+          </div>
         </div>
       </div>
     ) : (
@@ -163,6 +166,35 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
     <!-- HubSpot Form Script -->
     <script is:inline src="//js.hsforms.net/forms/embed/v2.js" charset="utf-8"></script>
     <script is:inline define:vars={{ formId, hubspotForm }}>
+      // Business hours checker
+      const updateBusinessHoursMessage = () => {
+        const messageEl = document.getElementById('business-hours-message');
+        if (!messageEl) return;
+
+        const now = new Date();
+        const pstTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+        const currentHour = pstTime.getHours();
+
+        // Business hours: 7am-4pm PST
+        if (currentHour >= 7 && currentHour < 16) {
+          messageEl.textContent = '💬 We can chat now!';
+          messageEl.className = 'text-center mb-4 font-semibold text-lg text-green-600';
+        } else {
+          // Calculate hours until open
+          let hoursUntilOpen;
+          if (currentHour >= 16) {
+            // After 4pm, open tomorrow at 7am
+            hoursUntilOpen = (24 - currentHour) + 7;
+          } else {
+            // Before 7am, open today at 7am
+            hoursUntilOpen = 7 - currentHour;
+          }
+
+          messageEl.textContent = `⏰ Our office opens in ${hoursUntilOpen} hours`;
+          messageEl.className = 'text-center mb-4 font-semibold text-lg text-gray-600';
+        }
+      };
+
       // Wait for HubSpot script to load
       const loadHubSpotForm = () => {
         if (window.hbspt) {
@@ -172,6 +204,9 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
             region: hubspotForm.region || 'na1',
             target: `#${formId}`,
           });
+          updateBusinessHoursMessage();
+          // Update every minute
+          setInterval(updateBusinessHoursMessage, 60000);
         } else {
           setTimeout(loadHubSpotForm, 100);
         }
@@ -183,5 +218,42 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
         loadHubSpotForm();
       }
     </script>
+
+    <!-- Custom HubSpot Form Styling -->
+    <style is:global>
+      /* Make all form inputs full width and stack vertically */
+      .hubspot-form-container .hs-form-field {
+        width: 100% !important;
+        margin-bottom: 1rem !important;
+      }
+
+      .hubspot-form-container .hs-input {
+        width: 100% !important;
+        display: block !important;
+      }
+
+      .hubspot-form-container .hs-form-field > label {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      .hubspot-form-container .input {
+        width: 100% !important;
+      }
+
+      .hubspot-form-container .hs-submit {
+        width: 100% !important;
+      }
+
+      .hubspot-form-container .hs-button {
+        width: 100% !important;
+      }
+
+      /* Remove inline styles that might conflict */
+      .hubspot-form-container fieldset {
+        max-width: 100% !important;
+      }
+    </style>
   </>
 )}
