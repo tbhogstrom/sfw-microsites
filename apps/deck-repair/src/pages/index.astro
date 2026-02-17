@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['deck-repair'];
 
@@ -57,6 +58,7 @@ const faqs: FAQ[] = [
   navigation={[
     { label: 'Home', url: '/' },
     { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
     { label: 'Locations', url: '/locations' },
   ]}
 >
@@ -72,6 +74,13 @@ const faqs: FAQ[] = [
   <FAQAccordion
     faqs={faqs}
     title="Deck Repair and Structural Dry Rot FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts}
+    title="Latest Deck Repair Tips & Guides"
+    class="bg-gray-light"
   />
 
   <!-- CTA Section -->
