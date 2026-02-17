@@ -29,11 +29,15 @@ export interface CompanyInfo {
 }
 
 export interface Testimonial {
-  quote: string;
-  author: string;
+  quote?: string; // For backward compatibility
+  text?: string; // Alternative to quote
+  name?: string; // Alternative to author
+  author?: string;
   location: string;
   service?: string;
   date?: string;
+  rating?: number;
+  image?: string;
 }
 
 export interface FAQ {
