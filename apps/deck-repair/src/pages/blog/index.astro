@@ -34,14 +34,7 @@ const config = serviceConfigs['deck-repair'];
     <div class="container mx-auto px-4">
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {blogPosts.map((post) => (
-          <BlogCard
-            title={post.title}
-            excerpt={post.excerpt}
-            image={post.image}
-            date={post.publishDate}
-            category={post.category}
-            url={`/blog/${post.slug}`}
-          />
+          <BlogCard post={post} />
         ))}
       </div>
 

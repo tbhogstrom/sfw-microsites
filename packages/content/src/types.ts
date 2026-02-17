@@ -56,9 +56,10 @@ export interface BlogPost {
   slug: string;
   excerpt: string;
   content: string;
-  date: string;
+  publishDate: string;
   image?: string;
   author?: string;
+  category?: string;
 }
 
 export interface CTAButton {
