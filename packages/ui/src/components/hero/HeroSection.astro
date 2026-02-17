@@ -5,7 +5,6 @@
  */
 import type { BaseProps } from '@sfw/ui/types';
 import Button from '../ui/Button.astro';
-import Image from '../ui/Image.astro';
 
 export interface Props extends BaseProps {
   headline: string;
@@ -60,7 +59,7 @@ const contentClasses = [
   <!-- Background Image -->
   {backgroundImage && (
     <div class="absolute inset-0 z-0">
-      <Image
+      <img
         src={backgroundImage}
         alt=""
         class="w-full h-full object-cover"

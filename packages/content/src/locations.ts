@@ -74,7 +74,7 @@ export const deckRepairLocations: Record<string, Location> = {
 
     heroHeadline: 'Seattle\'s Trusted Deck Repair Experts',
     heroSubheadline: 'Serving the Greater Seattle Area with Premium Deck Services Since 1999',
-    heroImage: '/images/locations/seattle-deck-hero.jpg',
+    heroImage: 'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
 
     services: [
       {
@@ -160,7 +160,7 @@ export const deckRepairLocations: Record<string, Location> = {
 
     heroHeadline: 'Portland\'s Premier Deck Builders',
     heroSubheadline: 'Crafting Beautiful Outdoor Spaces Across the Portland Metro Area',
-    heroImage: '/images/locations/portland-deck-hero.jpg',
+    heroImage: 'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
 
     services: [
       {
