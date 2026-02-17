@@ -1,31 +1,85 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
 
 const config = serviceConfigs['deck-repair'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What are the signs of structural dry rot on my deck?',
+    answer: 'Signs of structural dry rot include visible decay in wood surfaces, a musty odor, soft or spongy wood, and cracks or splits in the decking. If you notice any of these signs, especially around the edges or where wood meets moisture, it\'s crucial to inspect further. In Portland, the wet climate can exacerbate these issues, so regular inspections during and after the rainy season are advisable.',
+  },
+  {
+    question: 'How much does it typically cost to repair a deck with dry rot?',
+    answer: 'The cost of repairing a deck with dry rot can vary significantly depending on the extent of the damage. For minor repairs, such as replacing small sections or patching, you might spend around $100 to $300. However, for more extensive damage where large sections need replacing, costs can escalate to $1,000 or more. Additionally, labor costs in Portland can average between $50 and $75 per hour for skilled tradespeople.',
+  },
+  {
+    question: 'Can I repair dry rot myself, or should I hire a professional?',
+    answer: 'Small repairs can often be tackled by a competent DIYer, especially with guidance from available resources. However, significant rot or structural concerns typically warrant hiring a professional. In Portland, professionals can ensure that repairs meet local building codes and effectively address the underlying moisture issues that caused the rot in the first place. If you\'re inexperienced, it\'s best to consult a pro to avoid further complications.',
+  },
+  {
+    question: 'What materials are best for deck repairs in a wet climate like Portland?',
+    answer: 'When repairing a deck in Portland, it\'s advisable to use pressure-treated lumber or naturally rot-resistant woods such as cedar or redwood. For patching, high-strength epoxies and wood hardeners are recommended, as they can provide lasting repairs when properly applied. Make sure to choose materials that have a moisture content appropriate for outdoor use, ideally under 19%, as highlighted in various construction handbooks.',
+  },
+  {
+    question: 'What techniques should I employ when repairing dry rot?',
+    answer: 'Begin by assessing the extent of the rot. If the damage is localized, you can cut out the affected sections, ensuring you reach solid wood. Use a chisel to remove any loose material, and consider applying wood hardener to stabilize the surrounding area. For patching, utilize a two-part filler like Bondo® to create a solid, lasting repair. In Portland, it\'s crucial to ensure your repairs are protected from moisture to prevent future issues.',
+  },
+  {
+    question: 'How long should I expect deck repairs to last?',
+    answer: 'With proper materials and techniques, repaired sections of a deck can last many years, potentially matching the lifespan of the original wood if moisture is adequately managed. In Portland\'s climate, regular maintenance, including sealing and staining, can further prolong the life of the repairs. Regular inspections every couple of years can help catch any emerging issues early.',
+  },
+  {
+    question: 'What are the best maintenance practices to prevent dry rot on my deck?',
+    answer: 'To prevent dry rot, regularly clean your deck to remove debris that can trap moisture. Apply a waterproof sealant or stain every few years to protect the wood. Ensure that gutters and downspouts are functioning properly to redirect water away from the deck. In Portland, where rain can be frequent, it\'s essential to maintain good drainage and ventilation under the deck to minimize moisture accumulation.',
+  },
+  {
+    question: 'When should I consider replacing my entire deck instead of repairing it?',
+    answer: 'If more than 25% of your deck is compromised by dry rot, or if the structural integrity is significantly affected, replacing the entire deck may be more cost-effective. Additionally, if your deck is over 20 years old and showing signs of extensive wear, it might be time for a full replacement. Consulting a professional can provide a clearer assessment of whether repair or replacement is the best route, especially in Portland\'s unique climate.',
+  },
+  {
+    question: 'How can I identify if my deck\'s structural supports are compromised?',
+    answer: 'Look for sagging or uneven surfaces, gaps between boards, or soft spots when walking on the deck. Inspect areas where wood meets soil or concrete for signs of moisture retention. If you suspect structural issues, it\'s crucial to consult a professional who can evaluate the joists and beams. The construction handbooks emphasize addressing moisture problems to prevent further deterioration.',
+  },
+  {
+    question: 'What should I do if I find mold or fungus growth on my deck?',
+    answer: 'If you find mold or fungus, it\'s essential to address it promptly to prevent further wood damage. Begin by cleaning the affected area with a mixture of water and bleach or a commercial mold remover. After cleaning, allow the wood to dry thoroughly before applying a wood hardener or sealant. Regular maintenance and moisture management are key to preventing recurrence, especially in Portland\'s damp environment. If the mold persists, consult a professional for a more thorough assessment and treatment plan.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
+    height="md"
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Deck Repair and Structural Dry Rot FAQ"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Deck Repair Today"
+    description="Don't let dry rot compromise your deck's safety. Contact us for a free inspection and quote."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>
