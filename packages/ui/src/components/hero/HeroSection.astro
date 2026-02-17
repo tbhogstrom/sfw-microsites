@@ -254,11 +254,17 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
       }
 
       /* Style submit button to match primary CTA */
-      .hubspot-form-container .hs-button {
+      .hubspot-form-container .hs-button,
+      .hubspot-form-container input[type="submit"],
+      .hubspot-form-container .hs-submit input,
+      .hubspot-form-container .hs-submit .hs-button,
+      .hs-button.primary.large {
         width: 100% !important;
         background-color: #a1b770 !important;
+        background: #a1b770 !important;
         color: white !important;
         border: none !important;
+        border-color: #a1b770 !important;
         padding: 1rem 2rem !important;
         font-size: 1.125rem !important;
         font-weight: 600 !important;
@@ -267,8 +273,12 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
         transition: opacity 0.2s !important;
       }
 
-      .hubspot-form-container .hs-button:hover {
+      .hubspot-form-container .hs-button:hover,
+      .hubspot-form-container input[type="submit"]:hover,
+      .hubspot-form-container .hs-submit input:hover {
         opacity: 0.9 !important;
+        background-color: #a1b770 !important;
+        background: #a1b770 !important;
       }
 
       /* Remove inline styles that might conflict */
