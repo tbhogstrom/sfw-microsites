@@ -16,7 +16,7 @@ export interface Props extends BaseProps {
 const {
   posts,
   title,
-  autoplay = true,
+  autoplay = false,
   autoplayDelay = 5000,
   class: className = '',
   ...rest
@@ -35,11 +35,11 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
     )}
 
     <!-- Swiper Container -->
-    <div class="relative">
+    <div class="relative max-w-6xl mx-auto">
       <div class={`swiper ${sliderId}`}>
         <div class="swiper-wrapper">
           {posts.map((post) => (
-            <div class="swiper-slide h-auto">
+            <div class="swiper-slide">
               <BlogCard post={post} />
             </div>
           ))}
@@ -48,9 +48,6 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
         <!-- Navigation Buttons -->
         <div class={`swiper-button-prev swiper-button-prev-${sliderId}`}></div>
         <div class={`swiper-button-next swiper-button-next-${sliderId}`}></div>
-
-        <!-- Pagination -->
-        <div class={`swiper-pagination swiper-pagination-${sliderId} mt-8`}></div>
       </div>
     </div>
   </div>
@@ -60,41 +57,29 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
   // Dynamically import Swiper to avoid SSR issues
   import('swiper/css').then(() => {
     import('swiper/css/navigation').then(() => {
-      import('swiper/css/pagination').then(() => {
-        import('swiper').then(({ default: Swiper, Navigation, Pagination, Autoplay }) => {
-          new Swiper(`.${sliderId}`, {
-            modules: [Navigation, Pagination, Autoplay],
-            slidesPerView: 3,
-            spaceBetween: 20,
-            loop: false,
-            direction: 'horizontal',
-            autoplay: autoplay ? {
-              delay: autoplayDelay,
-              disableOnInteraction: false,
-            } : false,
-            navigation: {
-              nextEl: `.swiper-button-next-${sliderId}`,
-              prevEl: `.swiper-button-prev-${sliderId}`,
+      import('swiper').then(({ default: Swiper, Navigation, Autoplay }) => {
+        new Swiper(`.${sliderId}`, {
+          modules: [Navigation, Autoplay],
+          slidesPerView: 1,
+          spaceBetween: 20,
+          autoplay: autoplay ? {
+            delay: autoplayDelay,
+            disableOnInteraction: false,
+          } : false,
+          navigation: {
+            nextEl: `.swiper-button-next-${sliderId}`,
+            prevEl: `.swiper-button-prev-${sliderId}`,
+          },
+          breakpoints: {
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
             },
-            pagination: {
-              el: `.swiper-pagination-${sliderId}`,
-              clickable: true,
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 30,
             },
-            breakpoints: {
-              320: {
-                slidesPerView: 1.2,
-                spaceBetween: 15,
-              },
-              640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-            },
-          });
+          },
         });
       });
     });
@@ -108,19 +93,21 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
     color: var(--primary-color, #a1b770);
   }
 
-  :global(.swiper-pagination-bullet-active) {
-    background-color: var(--primary-color, #a1b770);
-  }
-
   :global(.swiper-button-prev:after),
   :global(.swiper-button-next:after) {
     font-size: 24px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1023px) {
     :global(.swiper-button-prev),
     :global(.swiper-button-next) {
       display: none;
     }
+  }
+
+  /* Ensure swiper slides display horizontally */
+  :global(.swiper-wrapper) {
+    display: flex;
+    flex-direction: row;
   }
 </style>
