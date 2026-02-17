@@ -1,7 +1,7 @@
 ---
 /**
- * BlogCarousel.astro - Swiper.js carousel for blog posts
- * Responsive slider with navigation and pagination
+ * BlogCarousel.astro - Grid display for latest blog posts
+ * Simple responsive grid layout
  */
 import type { BaseProps, BlogPost } from '@sfw/ui/types';
 import BlogCard from './BlogCard.astro';
@@ -9,21 +9,16 @@ import BlogCard from './BlogCard.astro';
 export interface Props extends BaseProps {
   posts: BlogPost[];
   title?: string;
-  autoplay?: boolean;
-  autoplayDelay?: number;
 }
 
 const {
   posts,
   title,
-  autoplay = false,
-  autoplayDelay = 5000,
   class: className = '',
   ...rest
 } = Astro.props;
 
-const classes = ['py-12', className].filter(Boolean).join(' ');
-const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
+const classes = ['py-16', className].filter(Boolean).join(' ');
 ---
 
 <section class={classes} {...rest}>
@@ -34,93 +29,11 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
       </h2>
     )}
 
-    <!-- Swiper Container -->
-    <div class="relative max-w-6xl mx-auto">
-      <div class={`swiper ${sliderId}`}>
-        <div class="swiper-wrapper">
-          {posts.map((post) => (
-            <div class="swiper-slide">
-              <BlogCard post={post} />
-            </div>
-          ))}
-        </div>
-
-        <!-- Navigation Buttons -->
-        <div class={`swiper-button-prev swiper-button-prev-${sliderId}`}></div>
-        <div class={`swiper-button-next swiper-button-next-${sliderId}`}></div>
-      </div>
+    <!-- Blog Posts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {posts.map((post) => (
+        <BlogCard post={post} />
+      ))}
     </div>
   </div>
 </section>
-
-<script define:vars={{ sliderId, autoplay, autoplayDelay }}>
-  // Dynamically import Swiper to avoid SSR issues
-  import('swiper/css').then(() => {
-    import('swiper/css/navigation').then(() => {
-      import('swiper').then(({ default: Swiper, Navigation, Autoplay }) => {
-        new Swiper(`.${sliderId}`, {
-          modules: [Navigation, Autoplay],
-          slidesPerView: 1,
-          spaceBetween: 20,
-          autoplay: autoplay ? {
-            delay: autoplayDelay,
-            disableOnInteraction: false,
-          } : false,
-          navigation: {
-            nextEl: `.swiper-button-next-${sliderId}`,
-            prevEl: `.swiper-button-prev-${sliderId}`,
-          },
-          breakpoints: {
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
-          },
-        });
-      });
-    });
-  });
-</script>
-
-<style>
-  /* Custom Swiper Styles */
-  :global(.swiper-button-prev),
-  :global(.swiper-button-next) {
-    color: var(--primary-color, #a1b770);
-  }
-
-  :global(.swiper-button-prev:after),
-  :global(.swiper-button-next:after) {
-    font-size: 24px;
-  }
-
-  @media (max-width: 1023px) {
-    :global(.swiper-button-prev),
-    :global(.swiper-button-next) {
-      display: none;
-    }
-  }
-
-  /* Ensure swiper slides display horizontally with consistent sizing */
-  :global(.swiper-wrapper) {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  /* Consistent card widths and heights */
-  :global(.swiper-slide) {
-    height: auto;
-    display: flex;
-    flex-shrink: 0;
-  }
-
-  :global(.swiper-slide > article) {
-    width: 100%;
-    height: 100%;
-  }
-</style>
