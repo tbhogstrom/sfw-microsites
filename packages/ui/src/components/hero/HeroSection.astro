@@ -203,6 +203,13 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
             formId: hubspotForm.formId,
             region: hubspotForm.region || 'na1',
             target: `#${formId}`,
+            submitButtonClass: 'hs-button primary large',
+            cssClass: 'hs-custom-form',
+            translations: {
+              en: {
+                submitText: 'Contact me ASAP'
+              }
+            }
           });
           updateBusinessHoursMessage();
           // Update every minute
@@ -246,8 +253,22 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
         width: 100% !important;
       }
 
+      /* Style submit button to match primary CTA */
       .hubspot-form-container .hs-button {
         width: 100% !important;
+        background-color: #a1b770 !important;
+        color: white !important;
+        border: none !important;
+        padding: 1rem 2rem !important;
+        font-size: 1.125rem !important;
+        font-weight: 600 !important;
+        border-radius: 0.5rem !important;
+        cursor: pointer !important;
+        transition: opacity 0.2s !important;
+      }
+
+      .hubspot-form-container .hs-button:hover {
+        opacity: 0.9 !important;
       }
 
       /* Remove inline styles that might conflict */
