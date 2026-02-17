@@ -64,8 +64,8 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
         import('swiper').then(({ default: Swiper, Navigation, Pagination, Autoplay }) => {
           new Swiper(`.${sliderId}`, {
             modules: [Navigation, Pagination, Autoplay],
-            slidesPerView: 1,
-            spaceBetween: 30,
+            slidesPerView: 3,
+            spaceBetween: 20,
             loop: true,
             autoplay: autoplay ? {
               delay: autoplayDelay,
@@ -80,14 +80,17 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
               clickable: true,
             },
             breakpoints: {
-              640: {
-                slidesPerView: 1,
+              320: {
+                slidesPerView: 1.2,
+                spaceBetween: 15,
               },
-              768: {
+              640: {
                 slidesPerView: 2,
+                spaceBetween: 20,
               },
               1024: {
                 slidesPerView: 3,
+                spaceBetween: 30,
               },
             },
           });
