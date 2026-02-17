@@ -105,9 +105,22 @@ const sliderId = `blog-slider-${Math.random().toString(36).substr(2, 9)}`;
     }
   }
 
-  /* Ensure swiper slides display horizontally */
+  /* Ensure swiper slides display horizontally with consistent sizing */
   :global(.swiper-wrapper) {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
+  }
+
+  /* Consistent card widths and heights */
+  :global(.swiper-slide) {
+    height: auto;
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  :global(.swiper-slide > article) {
+    width: 100%;
+    height: 100%;
   }
 </style>
