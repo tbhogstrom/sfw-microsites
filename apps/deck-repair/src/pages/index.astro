@@ -67,7 +67,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
-    height="md"
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
   />
 
   <!-- FAQ Section -->
