@@ -1,0 +1,263 @@
+---
+/**
+ * Component Test Page - Tests all @sfw/ui components
+ * This page verifies that components render correctly and imports work
+ */
+import BaseLayout from '@sfw/ui';
+import {
+  Button,
+  Icon,
+  Breadcrumbs,
+  HeroSection,
+  ContactForm,
+  ServiceCard,
+  TestimonialCard,
+  StatsBar,
+  CTASection,
+  ProcessSteps,
+  FAQAccordion,
+  ServiceAreas,
+  BlogCard,
+  BlogGrid,
+  LinkCard,
+} from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+
+const config = serviceConfigs['deck-repair'];
+
+// Sample data
+const stats = [
+  { value: '25', suffix: '+', label: 'Years Experience' },
+  { value: '500', suffix: '+', label: 'Decks Built' },
+  { value: '100', suffix: '%', label: 'Satisfaction Rate' },
+  { value: '24', suffix: '/7', label: 'Emergency Service' },
+];
+
+const steps = [
+  {
+    title: 'Free Consultation',
+    description: 'We discuss your vision and assess your property.',
+    icon: 'phone' as const,
+  },
+  {
+    title: 'Custom Design',
+    description: 'Our experts create a tailored deck plan.',
+    icon: 'check' as const,
+  },
+  {
+    title: 'Professional Installation',
+    description: 'Skilled craftsmen bring your deck to life.',
+    icon: 'check' as const,
+  },
+];
+
+const faqs = [
+  {
+    question: 'How long does deck installation take?',
+    answer: 'Most deck installations take 1-2 weeks depending on size and complexity.',
+  },
+  {
+    question: 'Do you offer warranties?',
+    answer: 'Yes, we offer a 5-year warranty on all workmanship.',
+  },
+  {
+    question: 'What materials do you use?',
+    answer: 'We work with composite, pressure-treated wood, cedar, and exotic hardwoods.',
+  },
+];
+
+const testimonial = {
+  name: 'John Smith',
+  location: 'Seattle, WA',
+  text: 'Outstanding work! Our new deck completely transformed our backyard. The team was professional, punctual, and delivered exactly what they promised.',
+  rating: 5,
+};
+
+const blogPost = {
+  title: '5 Deck Design Trends for 2026',
+  excerpt: 'Discover the latest trends in deck design that will elevate your outdoor living space.',
+  slug: 'deck-design-trends-2026',
+  publishDate: '2026-01-15',
+  author: 'Mike Johnson',
+  category: 'Design',
+};
+---
+
+<BaseLayout
+  title="Component Test"
+  description="Testing all UI components"
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'About', url: '/about' },
+    { label: 'Contact', url: '/contact' },
+  ]}
+>
+  <div class="space-y-16 pb-16">
+    <!-- Hero Section Test -->
+    <div class="bg-gray-light">
+      <HeroSection
+        headline="Beautiful Custom Decks Built to Last"
+        subheadline="Transform your backyard with our expert deck building services"
+        primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
+        secondaryCTA={{ text: 'View Gallery', href: '/gallery' }}
+      />
+    </div>
+
+    <!-- Breadcrumbs Test -->
+    <div class="container mx-auto px-4">
+      <Breadcrumbs
+        items={[
+          { label: 'Services', url: '/services' },
+          { label: 'Deck Repair', url: '/services/deck-repair' },
+          { label: 'Component Test' },
+        ]}
+      />
+    </div>
+
+    <!-- Button Tests -->
+    <section class="container mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold mb-6">Button Variants</h2>
+      <div class="flex flex-wrap gap-4">
+        <Button variant="primary">Primary Button</Button>
+        <Button variant="secondary">Secondary Button</Button>
+        <Button variant="outline">Outline Button</Button>
+        <Button variant="ghost">Ghost Button</Button>
+        <Button variant="primary" icon="phone">Call Now</Button>
+        <Button variant="primary" icon="arrow-right" iconPosition="right">Learn More</Button>
+        <Button variant="primary" size="sm">Small</Button>
+        <Button variant="primary" size="lg">Large</Button>
+      </div>
+    </section>
+
+    <!-- Icon Tests -->
+    <section class="container mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold mb-6">Icons</h2>
+      <div class="flex flex-wrap gap-4 items-center">
+        <Icon name="phone" size={32} />
+        <Icon name="email" size={32} />
+        <Icon name="menu" size={32} />
+        <Icon name="close" size={32} />
+        <Icon name="chevron-down" size={32} />
+        <Icon name="chevron-right" size={32} />
+        <Icon name="check" size={32} />
+        <Icon name="star" size={32} class="text-yellow-400" />
+        <Icon name="location" size={32} class="text-primary" />
+        <Icon name="arrow-right" size={32} />
+      </div>
+    </section>
+
+    <!-- Stats Bar Test -->
+    <StatsBar stats={stats} variant="primary" />
+
+    <!-- Service Cards Test -->
+    <section class="container mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold mb-6 text-center">Our Services</h2>
+      <p class="text-center text-gray-600 mb-8">Service cards work best with background images (removed for test page)</p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-3">Deck Building</h3>
+          <p class="mb-4">Custom deck design and construction using premium materials.</p>
+          <Button href="/services/deck-building" variant="primary">Learn More</Button>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-3">Deck Repair</h3>
+          <p class="mb-4">Expert repairs to restore your deck's beauty and safety.</p>
+          <Button href="/services/deck-repair" variant="primary">Learn More</Button>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg">
+          <h3 class="text-xl font-bold mb-3">Deck Staining</h3>
+          <p class="mb-4">Professional staining and sealing to protect your investment.</p>
+          <Button href="/services/deck-staining" variant="primary">Learn More</Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Steps Test -->
+    <ProcessSteps
+      title="Our Process"
+      steps={steps}
+      variant="vertical"
+    />
+
+    <!-- Link Cards Test -->
+    <section class="container mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold mb-6">Link Cards</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <LinkCard
+          href="/services"
+          title="View Services"
+          description="Explore our full range of deck services"
+          icon="arrow-right"
+          variant="bordered"
+        />
+        <LinkCard
+          href="/contact"
+          title="Contact Us"
+          description="Get in touch for a free consultation"
+          icon="phone"
+          variant="elevated"
+        />
+        <LinkCard
+          href="/gallery"
+          title="View Gallery"
+          description="See our completed projects"
+          icon="arrow-right"
+          variant="default"
+        />
+      </div>
+    </section>
+
+    <!-- Testimonial Card Test -->
+    <section class="container mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold mb-6 text-center">What Our Customers Say</h2>
+      <div class="max-w-md mx-auto">
+        <TestimonialCard testimonial={testimonial} />
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Test -->
+    <FAQAccordion
+      title="Frequently Asked Questions"
+      faqs={faqs}
+    />
+
+    <!-- Service Areas Test -->
+    {config.serviceAreas && (
+      <ServiceAreas
+        serviceAreas={config.serviceAreas}
+        title="Areas We Serve"
+        columns={4}
+      />
+    )}
+
+    <!-- Contact Form Test -->
+    <section class="container mx-auto px-4">
+      <div class="max-w-2xl mx-auto">
+        <ContactForm
+          config={config}
+          title="Get Your Free Quote"
+          description="Fill out the form and we'll get back to you within 24 hours."
+        />
+      </div>
+    </section>
+
+    <!-- Blog Card Test -->
+    <section class="container mx-auto px-4">
+      <h2 class="text-3xl font-heading font-bold mb-6 text-center">Latest from Our Blog</h2>
+      <div class="max-w-md mx-auto">
+        <BlogCard post={blogPost} />
+      </div>
+    </section>
+
+    <!-- CTA Section Test -->
+    <CTASection
+      headline="Ready to Build Your Dream Deck?"
+      description="Get a free consultation and quote today. We're here to help!"
+      primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
+      secondaryCTA={{ text: 'Call Now', href: `tel:${config.phone}` }}
+      variant="dark"
+    />
+  </div>
+</BaseLayout>
