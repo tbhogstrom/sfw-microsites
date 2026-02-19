@@ -1,6 +1,6 @@
 {
   "buildCommand": "cd ../.. && npx turbo build --filter=chimney-repair",
-  "installCommand": "cd ../.. && npm install --force",
+  "installCommand": "cd ../.. && npm ci",
   "framework": "astro",
   "outputDirectory": "dist"
 }
