@@ -1,6 +1,6 @@
 {
   "buildCommand": "cd ../.. && npx turbo build --filter=chimney-repair",
-  "installCommand": "cd ../.. && npm install",
+  "installCommand": "cd ../.. && npm ci --legacy-peer-deps || npm install --legacy-peer-deps",
   "framework": "astro",
   "outputDirectory": "dist"
 }
