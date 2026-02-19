@@ -1,5 +1,5 @@
 /**
- * Blog posts data for chimney-repair site
+ * Blog posts data
  */
 
 export interface BlogPostData {
