@@ -16,7 +16,7 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const config = serviceConfigs['chimney-repair'];
+const config = serviceConfigs['siding-repair'];
 ---
 
 <BaseLayout
@@ -35,8 +35,8 @@ const config = serviceConfigs['chimney-repair'];
 
   <!-- CTA Section -->
   <CTASection
-    headline="Need Expert Chimney Repair?"
-    description="Contact us today for professional chimney repair services in Portland."
+    headline="Need Expert Siding Repair?"
+    description="Contact us today for professional Siding Repair services in Portland."
     primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
     secondaryCTA={{ text: 'Read More Articles', href: '/blog' }}
     variant="primary"
