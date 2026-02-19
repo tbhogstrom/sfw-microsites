@@ -1,5 +1,5 @@
 {
-  "installCommand": "cd ../.. && npm ci",
-  "buildCommand": "cd ../.. && npx turbo run build --filter=chimney-repair",
+  "installCommand": "npm ci",
+  "buildCommand": "npx turbo run build --filter=chimney-repair",
   "outputDirectory": "dist"
 }
