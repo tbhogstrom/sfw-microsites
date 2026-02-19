@@ -1,6 +1,6 @@
 {
   "framework": null,
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
+  "buildCommand": "cd ../.. && npm install && cd apps/chimney-repair && npm run build",
+  "installCommand": "cd ../.. && npm install",
   "outputDirectory": "dist"
 }
