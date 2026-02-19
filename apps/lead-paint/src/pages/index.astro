@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['lead-paint'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'How do I know if my home has lead paint?',
+    answer: 'Homes built before 1978 are likely to contain lead paint, as it was banned for residential use that year. Signs include paint that chips, cracks, or peels easily, chalky residue on surfaces, and deteriorating painted surfaces. However, lead paint cannot be identified visually alone. Professional testing using XRF analyzers or lab analysis of paint samples provides definitive results. In Portland, many older homes contain lead paint, making testing crucial before renovation or if you have young children.',
+  },
+  {
+    question: 'How much does lead paint removal cost in Portland?',
+    answer: 'Lead paint removal costs vary significantly based on the extent and location of lead paint. Testing typically costs $300 to $700. Small abatement projects might cost $2,000 to $5,000, while whole-home abatement can range from $10,000 to $30,000+. Encapsulation is often less expensive at $4 to $7 per square foot. Portland requires certified professionals for abatement, which ensures safe, compliant work but affects pricing. The investment protects your family\'s health and home value.',
+  },
+  {
+    question: 'Can I remove lead paint myself?',
+    answer: 'No. Lead paint removal requires EPA and Oregon-certified professionals due to serious health risks. DIY removal creates dangerous lead dust that spreads throughout the home and yard, causing lead poisoning. Even sanding or scraping creates hazardous conditions. In Portland, regulations require certified lead abatement contractors who use proper containment, HEPA filtration, and disposal methods. Attempting DIY removal risks your health, your family\'s health, creates liability, and may violate state and federal regulations.',
+  },
+  {
+    question: 'What are the health risks of lead paint exposure?',
+    answer: 'Lead exposure causes serious health problems, especially in children under 6 and pregnant women. Effects include developmental delays, learning difficulties, lower IQ, behavioral problems, nervous system damage, kidney damage, hearing loss, and slowed growth. In adults, lead causes reproductive issues, high blood pressure, joint pain, and cognitive problems. Even low-level exposure is harmful. Portland has strong lead safety regulations because lead poisoning is preventable through proper abatement and safe work practices.',
+  },
+  {
+    question: 'What\'s the difference between lead paint removal, encapsulation, and enclosure?',
+    answer: 'Removal completely eliminates lead paint but is the most expensive and disruptive option. Encapsulation covers lead paint with special sealants, creating a protective barrier; it\'s less expensive but requires monitoring and reapplication. Enclosure installs new materials like drywall over lead-painted surfaces. In Portland, certified professionals assess which method suits your situation based on paint condition, location, budget, and intended use. All methods must meet EPA and Oregon requirements.',
+  },
+  {
+    question: 'Do I need lead paint testing before renovation?',
+    answer: 'Yes. Federal EPA RRP (Renovation, Repair, and Painting) Rule and Oregon regulations require testing before disturbing painted surfaces in pre-1978 homes. This includes window replacement, siding removal, demolition, or any work that disturbs paint. Portland contractors must be EPA and Oregon Lead-Based Paint certified. Testing identifies lead hazards, allowing proper protective measures. Skipping testing risks health hazards, regulatory violations, fines up to $37,500 per violation, and potential lawsuits.',
+  },
+  {
+    question: 'How long does lead paint abatement take?',
+    answer: 'Timeline depends on project scope. Testing takes a few days for results. Small projects like single-room abatement might take 2-5 days, whole-home abatement 1-3 weeks, and large or complex projects longer. Work includes setup, containment, removal or encapsulation, cleanup, clearance testing, and final inspection. In Portland, certified professionals ensure thorough work meeting all regulations. Rushing compromises safety. Proper abatement protects your family for decades, making the time investment worthwhile.',
+  },
+  {
+    question: 'What happens during professional lead paint abatement?',
+    answer: 'Professional abatement includes comprehensive testing, developing an abatement plan, containing work areas with plastic sheeting, using HEPA filtration and ventilation, wearing protective equipment, carefully removing or encapsulating lead paint using approved methods, cleaning with HEPA vacuums and wet methods, disposing of waste at approved facilities, conducting clearance testing to verify safety, and providing documentation. Portland certified contractors follow EPA and Oregon requirements, ensuring your home is safe for occupancy.',
+  },
+  {
+    question: 'What should I do if I think my child was exposed to lead paint?',
+    answer: 'Contact your pediatrician immediately to arrange blood lead level testing. Remove children from the contaminated area. Don\'t disturb the lead source further. Hire a certified lead inspector to assess your home. Clean surfaces with damp cloths (dry sweeping spreads lead dust). Have professional abatement performed. In Portland, Multnomah County Health Department offers resources and testing. Early intervention is crucial as lead poisoning treatment is most effective when caught early.',
+  },
+  {
+    question: 'Are there regulations about lead paint disclosure when selling a home?',
+    answer: 'Yes. Federal law requires sellers and landlords of pre-1978 homes to disclose known lead paint hazards, provide EPA\'s lead hazard information pamphlet, and allow buyers a 10-day testing period. Oregon has additional requirements. Non-disclosure risks lawsuits, fines, and transaction cancellation. In Portland, proactive testing and abatement before listing can be a selling point, demonstrating the home is safe and potentially increasing value. Proper documentation protects all parties.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Lead Paint Testing and Removal FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Lead Paint Safety Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Lead Paint Removal Today"
+    description="Protect your family's health with certified lead paint testing and abatement. Contact us for a free consultation."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

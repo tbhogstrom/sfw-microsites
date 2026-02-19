@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['dry-rot'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What is dry rot and how does it differ from wet rot?',
+    answer: 'Dry rot is a fungal decay caused by Serpula lacrymans that breaks down wood cellulose, making it brittle and crumbly. Despite its name, it requires moisture to start (20-30% wood moisture content). Wet rot requires higher moisture levels (50%+) and is less aggressive. Dry rot is more serious because it spreads through masonry, can travel far from moisture sources, and causes more extensive structural damage. In Portland, both types occur, but dry rot is particularly destructive due to its spreading capability.',
+  },
+  {
+    question: 'What are the signs of dry rot in my home?',
+    answer: 'Signs include wood that crumbles when pressed, distinctive musty mushroom odor, cracking in cube-shaped patterns, darkening or discoloration of wood, cotton-wool-like fungal growth (mycelium), rust-colored spore dust, warped or distorted wood members, and brittle, dry-feeling affected wood. Advanced cases show visible fruiting bodies (mushroom-like structures). In Portland, check areas with moisture issues: window frames, door frames, under sinks, basements, crawlspaces, and areas with roof leaks or plumbing issues.',
+  },
+  {
+    question: 'How much does dry rot repair cost in Portland?',
+    answer: 'Dry rot repair costs vary widely based on extent and location. Minor repairs might cost $500 to $2,000, moderate repairs involving framing or structural members $2,000 to $8,000, and extensive repairs affecting multiple areas or major structural components $10,000 to $30,000+. Costs include fungal treatment, removing affected wood, replacing structural members, addressing moisture sources, and preventive treatments. Portland labor rates run $75 to $125 per hour. Early intervention significantly reduces costs.',
+  },
+  {
+    question: 'Can I repair dry rot myself or should I hire a professional?',
+    answer: 'Small, non-structural dry rot can be tackled by skilled DIYers, but most dry rot requires professional attention. Professionals properly assess extent (often hidden), identify all affected areas, address underlying moisture problems, perform structural repairs meeting building codes, apply proper fungicidal treatments, and prevent recurrence. In Portland, professionals understand local moisture conditions and effective prevention strategies. Improper DIY repairs often miss hidden damage, leading to recurring problems and potentially unsafe structural conditions.',
+  },
+  {
+    question: 'What causes dry rot in Portland homes?',
+    answer: 'Dry rot requires four conditions: moisture (20-30% wood moisture), oxygen, suitable temperature (50-90°F), and wood as food. In Portland, causes include roof leaks, failed flashing, plumbing leaks, poor ventilation in crawlspaces and attics, condensation problems, clogged gutters, inadequate drainage, wood-to-soil contact, and moisture intrusion through foundations or siding. Portland\'s wet climate creates ideal conditions. Addressing moisture sources is essential for prevention and preventing recurrence after repairs.',
+  },
+  {
+    question: 'How long does dry rot repair take?',
+    answer: 'Timeline depends on extent. Small repairs might take 1-3 days, moderate repairs involving structural work 1-2 weeks, and extensive repairs requiring significant structural replacement several weeks to months. Process includes assessment, removing damaged material, treating affected areas, addressing moisture sources, replacing structural members, and finishing work. In Portland, weather can affect outdoor work schedules. Proper repairs can\'t be rushed; thorough treatment ensures the problem doesn\'t recur.',
+  },
+  {
+    question: 'How can I prevent dry rot in my home?',
+    answer: 'Prevent dry rot by controlling moisture: maintain gutters and downspouts, repair leaks promptly, ensure proper ventilation in crawlspaces and attics, fix plumbing leaks immediately, maintain proper grading away from foundations, use vapor barriers in crawlspaces, ensure adequate clearance between soil and wood, paint and seal exterior wood, inspect regularly for early signs, and address condensation issues. In Portland, pre-winter inspections are crucial. Keeping wood dry is the most effective prevention.',
+  },
+  {
+    question: 'Is dry rot dangerous to my health?',
+    answer: 'Dry rot fungus itself isn\'t typically toxic to humans, but it indicates serious moisture problems that promote mold growth, which can cause respiratory issues, allergies, and other health problems. The primary danger is structural: compromised beams, joists, and framing create collapse risks and safety hazards. Airborne spores can aggravate respiratory conditions. In Portland, the moisture conditions supporting dry rot often harbor other harmful mold species. Addressing dry rot protects both structural integrity and health.',
+  },
+  {
+    question: 'Can dry rot spread to other areas of my home?',
+    answer: 'Yes. Unlike wet rot, dry rot fungus (Serpula lacrymans) can spread through walls, under floors, and even through masonry searching for wood. It transports its own moisture, allowing spread to initially dry areas. Mycelial strands can travel several feet from the moisture source. This makes dry rot particularly destructive and why professional treatment of all affected areas, not just visible damage, is essential. In Portland homes, untreated dry rot can spread from one area to affect the entire structure.',
+  },
+  {
+    question: 'What treatments are used for dry rot?',
+    answer: 'Effective dry rot treatment involves removing all affected wood (cutting back to sound wood with margin of safety), treating surrounding areas with fungicidal solutions (borate-based treatments are common), addressing moisture sources, ensuring proper ventilation and drainage, replacing removed wood with treated or naturally rot-resistant lumber, and applying protective coatings. In Portland, professionals often recommend additional moisture management solutions like improved drainage or ventilation. Simply treating visible rot without addressing moisture and hidden damage ensures recurrence.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Dry Rot Identification and Repair FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Dry Rot Repair Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Dry Rot Repair Today"
+    description="Don't let fungal decay compromise your home's structure. Contact us for a free inspection and quote."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

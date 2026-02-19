@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['restoration'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What makes historic home restoration different from regular remodeling?',
+    answer: 'Historic restoration preserves original materials, architectural details, and historical integrity while updating functionality and addressing deterioration. It requires specialized knowledge of period-appropriate materials and techniques, understanding of historic construction methods, and often compliance with historic preservation standards. In Portland, many homes are in historic districts with specific requirements. Restoration focuses on repair rather than replacement, matching original craftsmanship, and using compatible materials that respect the home\'s character and historical significance.',
+  },
+  {
+    question: 'How much does historic home restoration cost in Portland?',
+    answer: 'Historic restoration costs vary widely based on project scope, home condition, and preservation standards. Minor projects like window restoration might cost $3,000 to $10,000, exterior restoration $15,000 to $50,000+, and whole-home restoration $100,000 to $500,000+. Portland has many Craftsman, Victorian, and early 20th-century homes requiring specialized attention. Costs are typically higher than standard remodeling due to specialized labor, custom materials, and preservation requirements. However, restoration protects your investment and preserves irreplaceable historical character.',
+  },
+  {
+    question: 'Do I need special permits for historic home restoration in Portland?',
+    answer: 'Yes, if your home is in a historic district or designated as a historic landmark. Portland has several historic conservation districts requiring design review approval before exterior work. Even non-designated historic homes need standard building permits. Historic review ensures work maintains the home\'s character and district integrity. Professional restoration contractors experienced with Portland\'s historic preservation guidelines can navigate the permitting process. Some restoration projects may qualify for tax credits or grants, offsetting costs.',
+  },
+  {
+    question: 'Should I repair or replace historic windows?',
+    answer: 'Repair is usually preferable for historic windows. Original windows are often higher quality than modern replacements, can be restored to function well, maintain historical authenticity, and are required in many historic districts. Properly restored and weatherized historic windows perform surprisingly well. However, severely damaged or deteriorated windows might require replication or, if allowed, sensitive replacement. In Portland, specialists can restore original windows, install interior storm windows for efficiency, and replicate missing historic elements, preserving character while improving performance.',
+  },
+  {
+    question: 'What are the most common issues in Portland\'s historic homes?',
+    answer: 'Common issues include foundation settling or deterioration, rot in siding, trim, and structural members from moisture, failing or absent moisture barriers (modern building science), outdated or unsafe electrical and plumbing systems, inadequate insulation, deteriorating original windows, roof leaks and flashing failures, failing original paint containing lead, seismic concerns (unreinforced masonry, inadequate foundation connections), and deferred maintenance accumulation. Portland\'s wet climate exacerbates moisture-related problems. Professional assessment identifies issues requiring immediate attention versus long-term planning.',
+  },
+  {
+    question: 'How can I maintain my historic home\'s value and character?',
+    answer: 'Maintain value by preserving original features (trim, moldings, hardware, built-ins), using appropriate repair rather than replacement, following Secretary of Interior Standards for preservation, keeping detailed documentation of work, using period-appropriate materials and colors, addressing maintenance needs promptly, working with preservation specialists for major projects, and ensuring updates are reversible when possible. In Portland, well-preserved historic homes command premium prices. Inappropriate alterations can significantly decrease value and desirability.',
+  },
+  {
+    question: 'Can I modernize a historic home while preserving its character?',
+    answer: 'Yes. Successful approaches include updating systems (electrical, plumbing, HVAC) within walls and attics invisibly, adding insulation without altering exterior appearance, installing efficient windows behind preserved historic sashes, modernizing kitchens and baths while preserving trim and architectural details, and ensuring additions respect original architecture. In Portland, specialists balance preservation with modern comfort, safety, and efficiency. The goal is reversibility and compatibility, allowing contemporary living while respecting historical significance.',
+  },
+  {
+    question: 'What restoration projects provide the best return on investment?',
+    answer: 'High-ROI restoration projects include exterior work (painting, siding repair, trim restoration) that enhances curb appeal, foundation and structural repairs preventing further damage, original window restoration (buyers value authenticity), historically appropriate additions increasing space, updated systems (electrical, plumbing) ensuring safety and functionality, and addressing moisture and rot issues preventing deterioration. In Portland\'s competitive historic home market, quality restoration preserving character while ensuring modern function attracts buyers willing to pay premium prices.',
+  },
+  {
+    question: 'How do I find quality historic restoration contractors in Portland?',
+    answer: 'Look for contractors with historic restoration experience, references from similar projects, knowledge of local preservation standards, membership in restoration organizations, understanding of traditional materials and techniques, and appropriate licensing and insurance. Check references thoroughly, review previous work, verify familiarity with Portland historic districts and requirements, and ensure they use preservation-appropriate methods rather than modern shortcuts. The Restore Oregon and Portland Historic Landmarks Commission can provide resources and may recommend qualified professionals.',
+  },
+  {
+    question: 'Are there financial incentives for historic home restoration in Portland?',
+    answer: 'Yes. Options include Federal Historic Preservation Tax Credits (20% for income-producing properties), Oregon Special Assessment for Historic Properties (reducing property taxes), Energy Trust of Oregon incentives (some applicable to historic homes), potential local improvement district financing, and occasionally city or county grants for specific neighborhoods. Property tax benefits can be significant for qualifying homes. Portland also has programs supporting sustainable and seismic improvements. Consult with preservation specialists and the State Historic Preservation Office about available incentives.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Historic Home Restoration FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Historic Restoration Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Historic Restoration Today"
+    description="Preserve your historic home's character while ensuring modern comfort and safety. Contact us for a free consultation."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

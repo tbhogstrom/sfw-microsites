@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['leak-repair'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What are the common signs of window leaks?',
+    answer: 'Common signs include water stains on walls or windowsills, peeling paint or wallpaper near windows, visible moisture or condensation between window panes, musty odors, mold or mildew growth around window frames, warped or rotting wood trim, drafts or cold spots near windows, and increased energy bills. In Portland\'s rainy climate, these issues often result from failed seals, damaged flashing, or improper installation. Early detection prevents costly structural damage.',
+  },
+  {
+    question: 'How much does window leak repair cost in Portland?',
+    answer: 'Window leak repair costs vary based on the source and extent of damage. Simple caulking and sealing repairs might cost $200 to $500, while flashing replacement can range from $500 to $1,500 per window. Repairs involving rot damage to framing or sills can cost $1,000 to $3,000+ per window. Complete window replacement due to severe damage runs $500 to $1,500 per window. Portland professionals typically charge $75 to $100 per hour for leak diagnosis and repair.',
+  },
+  {
+    question: 'Can I fix window leaks myself or should I hire a professional?',
+    answer: 'Minor exterior caulking and weatherstripping can be DIY projects for handy homeowners. However, leaks involving flashing repairs, structural wood damage, between-pane moisture, or difficult-to-locate sources should be handled by professionals. In Portland, professionals understand proper flashing installation, moisture barrier systems, and building envelope principles essential for preventing recurring leaks in our wet climate. Improper repairs often mask problems temporarily, leading to extensive hidden damage.',
+  },
+  {
+    question: 'What causes windows to leak in Portland homes?',
+    answer: 'Window leaks in Portland are primarily caused by failed caulking and sealants, improperly installed or damaged flashing, deteriorated weatherstripping, cracked or broken window seals, improper window installation, settling or shifting foundations, wood rot around frames, and inadequate drainage. Portland\'s frequent rain and wind-driven moisture overwhelm compromised seals. Age, UV exposure, and temperature fluctuations also break down sealants over time. Proper installation and maintenance are crucial.',
+  },
+  {
+    question: 'How long do window leak repairs last?',
+    answer: 'With quality materials and proper technique, window leak repairs should last 10-20 years. Caulking typically lasts 5-10 years, flashing repairs 15-25 years, and structural repairs 20+ years if moisture sources are eliminated. In Portland, longevity depends on regular maintenance, including annual caulking inspections and prompt repairs. Using high-quality exterior-grade materials appropriate for Portland\'s climate significantly extends repair lifespan. Proper drainage and overhang protection also help.',
+  },
+  {
+    question: 'How can I prevent window leaks?',
+    answer: 'Prevent window leaks by inspecting and replacing deteriorated caulking annually, ensuring proper flashing installation and maintenance, cleaning weep holes to allow drainage, maintaining gutters and downspouts, trimming vegetation away from windows, checking and replacing weatherstripping, addressing any visible damage promptly, and ensuring proper drainage slopes away from the foundation. In Portland, pre-winter inspections are especially important. Proper installation of new windows with adequate flashing is essential.',
+  },
+  {
+    question: 'What\'s the difference between condensation and window leaks?',
+    answer: 'Condensation forms on interior window surfaces due to humidity differences and typically appears uniformly, wiping off easily without damage. Window leaks show water infiltrating from outside, often appearing at specific points, accompanied by water damage, staining, and rot. Condensation between double-pane windows indicates failed seals but isn\'t necessarily a leak. In Portland, both issues are common. Professionals can diagnose the source and recommend appropriate solutions, whether improved ventilation, dehumidification, or leak repairs.',
+  },
+  {
+    question: 'Should I repair or replace leaking windows?',
+    answer: 'Repair if leaks are caused by failed caulking, damaged flashing, or minor wood rot with otherwise functioning windows. Replace if windows have failed seals causing between-pane condensation, extensive frame rot, single-pane inefficiency, recurring leak problems despite repairs, or windows over 20 years old with multiple issues. In Portland, energy-efficient replacement windows often provide long-term value through energy savings and eliminated maintenance. A professional assessment determines the most cost-effective approach.',
+  },
+  {
+    question: 'How do I find the source of a window leak?',
+    answer: 'Locate window leak sources by inspecting during rainfall, looking for active water entry points, checking caulking for gaps or cracks, examining flashing condition, looking for water stains indicating leak paths, testing with a hose spray (working from bottom up), and using moisture meters to detect hidden dampness. In Portland, professionals often use thermal imaging cameras to identify moisture intrusion and air leaks. Proper diagnosis is crucial since water often travels from the entry point before becoming visible.',
+  },
+  {
+    question: 'What are the long-term consequences of ignoring window leaks?',
+    answer: 'Ignoring window leaks leads to extensive wood rot in framing and structural members, mold growth causing health issues and costly remediation, damage to interior finishes and furnishings, compromised insulation and increased energy costs, structural instability requiring major repairs, decreased property value, and potential pest infestations in damaged wood. In Portland\'s wet climate, small leaks quickly escalate to major problems. Early intervention saves thousands in repair costs and protects your home\'s structural integrity and value.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Window Leak Diagnosis and Repair FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Window Leak Repair Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Window Leak Repair Today"
+    description="Don't let water damage compromise your home. Contact us for a free leak inspection and quote."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

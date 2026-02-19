@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['trim-repair'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What are the common signs that exterior trim needs repair?',
+    answer: 'Signs include cracking, splitting, or warping of trim boards, peeling or bubbling paint, soft or spongy wood when pressed, visible rot or decay, gaps between trim and siding or walls, water stains or discoloration, insect damage or holes, pulling away from the structure, and mold or mildew growth. In Portland\'s wet climate, moisture damage is the leading cause of trim deterioration. Regular inspections, especially after winter, help catch problems early before they become extensive and expensive.',
+  },
+  {
+    question: 'How much does exterior trim repair cost in Portland?',
+    answer: 'Exterior trim repair costs vary by extent and location. Minor repairs like filling small cracks might cost $200 to $500, while replacing trim boards runs $500 to $2,000 depending on length and complexity. Extensive repairs involving multiple areas, structural damage, or hard-to-access locations can cost $3,000 to $8,000+. Window and door trim replacement typically costs $300 to $800 per unit. Portland labor rates average $70 to $110 per hour. Quality repairs protect your home and enhance curb appeal.',
+  },
+  {
+    question: 'Can I repair exterior trim myself or should I hire a professional?',
+    answer: 'Simple repairs like caulking, filling small cracks, or repainting can be DIY projects for handy homeowners. However, replacing trim boards, addressing rot damage, working at heights, ensuring proper flashing and moisture barriers, or making structural repairs should be handled by professionals. In Portland, professionals understand moisture management techniques essential for lasting repairs in our wet climate. Proper installation prevents recurring problems and maintains your home\'s weather protection and appearance.',
+  },
+  {
+    question: 'What materials are best for exterior trim in Portland?',
+    answer: 'For Portland\'s wet climate, consider these materials: PVC/cellular PVC (excellent moisture resistance, no rot, low maintenance), fiber cement (durable, rot-resistant, paintable), primed pine or cedar (traditional, requires maintenance but economical), composite materials (moisture-resistant, stable), and aluminum-wrapped wood (protected wood core with low-maintenance exterior). Each has advantages in cost, appearance, and longevity. Professionals can recommend the best material for your specific application, architectural style, and budget.',
+  },
+  {
+    question: 'How long does exterior trim last?',
+    answer: 'Trim longevity varies by material and maintenance. PVC trim lasts 30-50+ years, fiber cement 30-50 years, properly maintained painted wood 20-30 years, cedar 15-25 years, and composite materials 25-40 years. In Portland, regular maintenance significantly extends lifespan: keeping trim painted, caulked, and protected from prolonged moisture contact is essential. Quality installation with proper flashing and drainage also affects longevity. Investing in durable materials and professional installation provides decades of protection.',
+  },
+  {
+    question: 'What causes exterior trim to rot or fail?',
+    answer: 'Trim failure in Portland primarily results from moisture exposure: failed caulking allowing water infiltration, improper or missing flashing, clogged gutters causing overflow, ground contact or soil splash, inadequate paint protection, poor drainage, trapped moisture behind trim, wood-to-concrete contact, and vegetation growing against trim. Portland\'s frequent rain accelerates deterioration. Proper installation with moisture barriers, adequate drainage, and regular maintenance prevents most trim problems. Addressing the moisture source is crucial when repairing damaged trim.',
+  },
+  {
+    question: 'Should I repair or replace damaged trim?',
+    answer: 'Repair if damage is superficial (surface cracks, minor paint issues), localized to small areas, and the underlying wood is sound. Replace if wood is soft or rotted, damage is extensive, trim is pulling away from structure, there are recurring problems despite repairs, or trim is severely warped or split. In Portland, moisture-damaged trim often has hidden deterioration. Professionals use moisture meters and probing to assess true extent. Sometimes full replacement costs only moderately more than extensive repairs while providing better long-term value.',
+  },
+  {
+    question: 'How do I maintain exterior trim to prevent damage?',
+    answer: 'Maintain trim by inspecting annually (especially pre-winter in Portland), keeping trim painted with quality exterior paint, checking and renewing caulking every 2-3 years, cleaning gutters regularly to prevent overflow, ensuring proper drainage away from foundations, trimming vegetation away from trim, removing debris from joints and corners, addressing any damage promptly before it spreads, and ensuring adequate clearance from soil and mulch. Regular maintenance is far less expensive than major repairs or replacement.',
+  },
+  {
+    question: 'What\'s involved in professional exterior trim repair?',
+    answer: 'Professional trim repair includes thorough inspection to identify all damaged areas and underlying causes, removing damaged trim sections, addressing any rot in underlying sheathing or framing, ensuring proper flashing and moisture barriers, installing new trim with appropriate fastening and expansion gaps, caulking and sealing all joints, priming and painting or finishing as needed, and implementing preventive measures. In Portland, professionals ensure repairs shed water properly and meet building codes. Quality work comes with warranties protecting your investment.',
+  },
+  {
+    question: 'Can damaged trim affect my home\'s energy efficiency?',
+    answer: 'Yes. Damaged, warped, or improperly installed trim creates gaps allowing air infiltration, increasing heating and cooling costs. Gaps also allow moisture intrusion, potentially damaging insulation and reducing its effectiveness. In Portland, proper trim installation and maintenance is part of the building envelope that protects your home from weather. Addressing trim damage often reveals and allows correction of insulation deficiencies or air leaks, improving comfort and reducing energy bills while protecting your home\'s structure.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Exterior Trim Repair and Replacement FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Exterior Trim Repair Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Exterior Trim Repair Today"
+    description="Don't let damaged trim compromise your home's protection and curb appeal. Contact us for a free inspection and quote."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

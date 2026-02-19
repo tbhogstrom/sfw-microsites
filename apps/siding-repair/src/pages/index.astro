@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['siding-repair'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What are the common signs that my siding needs repair?',
+    answer: 'Common signs include visible cracks, warping, or buckling in siding panels, gaps between panels, water stains or moisture behind siding, faded or peeling paint, mold or mildew growth, increased energy bills due to poor insulation, and soft or rotting wood beneath the siding. In Portland\'s wet climate, these issues often result from moisture infiltration and should be addressed promptly to prevent structural damage.',
+  },
+  {
+    question: 'How much does siding repair cost in Portland?',
+    answer: 'Siding repair costs vary based on damage extent and material type. Minor repairs like replacing a few panels might cost $300 to $800, while more extensive repairs involving moisture damage and sheathing replacement can range from $1,500 to $5,000. Complete siding replacement can cost $8,000 to $20,000+ depending on home size and materials. Portland labor rates typically run $60 to $100 per hour. A professional inspection can provide an accurate estimate.',
+  },
+  {
+    question: 'Can I repair siding damage myself or should I hire a professional?',
+    answer: 'Small cosmetic repairs like caulking gaps or replacing individual vinyl panels can be DIY projects for handy homeowners. However, repairs involving moisture damage, structural issues, or extensive panel replacement should be handled by professionals. In Portland, professionals understand proper moisture barriers, flashing installation, and building code requirements essential for preventing water infiltration in our wet climate. Improper repairs can lead to costly hidden damage.',
+  },
+  {
+    question: 'What siding materials work best in Portland\'s climate?',
+    answer: 'For Portland\'s wet climate, fiber cement siding (like James Hardie) is excellent due to its moisture resistance and durability. Vinyl siding is also popular and cost-effective, though it can expand and contract with temperature changes. Cedar siding offers natural beauty but requires regular maintenance. Engineered wood products provide good moisture resistance. Regardless of material, proper installation with moisture barriers, flashing, and adequate ventilation is crucial for longevity in Portland.',
+  },
+  {
+    question: 'How long do siding repairs typically last?',
+    answer: 'With quality materials and proper installation, siding repairs should last 15-30 years depending on the material. Fiber cement repairs can last 30-50 years, vinyl 20-30 years, and wood 15-25 years with proper maintenance. In Portland, longevity depends heavily on moisture management and regular maintenance. Annual inspections, prompt caulking repairs, and addressing drainage issues can significantly extend repair lifespan.',
+  },
+  {
+    question: 'What maintenance prevents siding damage?',
+    answer: 'Prevent siding damage by cleaning it annually to remove mildew and debris, inspecting caulking and sealing gaps promptly, ensuring gutters and downspouts direct water away from siding, trimming vegetation to allow airflow and prevent moisture retention, checking for and repairing damaged panels immediately, and repainting or resealing as recommended for your siding type. In Portland, post-winter inspections are especially important to catch moisture-related issues early.',
+  },
+  {
+    question: 'Should I repair or replace my siding?',
+    answer: 'Consider full replacement if more than 30% of siding is damaged, if there\'s extensive moisture damage to sheathing or framing, if your siding is over 30 years old with multiple issues, or if you\'re experiencing recurring problems despite repairs. Factor in energy efficiency improvements and aesthetic updates. In many cases, strategic repairs can extend siding life for years, making replacement unnecessary. A professional assessment can help determine the most cost-effective approach.',
+  },
+  {
+    question: 'What causes siding to rot or deteriorate in Portland?',
+    answer: 'Siding deterioration in Portland is primarily caused by moisture infiltration from frequent rain. Contributing factors include failed caulking and sealants, improper or damaged flashing, clogged gutters causing overflow, lack of proper drainage, vegetation growing too close and trapping moisture, poor ventilation behind siding, and ground contact with wood siding. Addressing these moisture sources during repairs is essential for preventing recurring damage.',
+  },
+  {
+    question: 'How do I know if there\'s damage behind my siding?',
+    answer: 'Signs of hidden damage include soft or spongy spots when pressing on siding, visible water stains on interior walls, musty odors inside the home, increased pest activity, sagging or bulging siding panels, and unexplained increases in heating or cooling costs. If you suspect hidden damage, a professional inspection with moisture meters and thermal imaging can reveal problems before they become severe. Early detection saves significant repair costs.',
+  },
+  {
+    question: 'Does siding repair require permits in Portland?',
+    answer: 'In Portland, minor siding repairs typically don\'t require permits, but extensive repairs or replacement involving structural work, sheathing replacement, or more than one exterior wall may require permits. Requirements vary by project scope and whether historic district regulations apply. Professional contractors familiar with Portland building codes can advise on permit requirements and handle the permitting process. Proper permitting ensures work meets safety standards and protects your property value.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Siding Repair and Moisture Damage FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Siding Repair Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Siding Repair Today"
+    description="Don't let moisture damage compromise your home's protection. Contact us for a free inspection and quote."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

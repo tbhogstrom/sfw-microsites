@@ -1,31 +1,99 @@
 ---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['crawlspace-rot'];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What are the signs of crawlspace rot and moisture damage?',
+    answer: 'Common signs include musty odors in the home, sagging or soft floors, visible mold or mildew in the crawlspace, standing water or excessive moisture, damaged or rotting floor joists and beams, crumbling support posts, increased pest activity, and high indoor humidity levels. In Portland, crawlspace issues are particularly common due to high rainfall and poor drainage. If you notice any of these signs, a professional inspection is recommended.',
+  },
+  {
+    question: 'How much does crawlspace repair cost in Portland?',
+    answer: 'Crawlspace repair costs vary widely based on the extent of damage and work required. Minor joist repairs might cost $1,000 to $3,000, while extensive structural repairs can range from $5,000 to $15,000 or more. Full crawlspace encapsulation typically costs $5,000 to $15,000. Support beam replacement, foundation work, or drainage system installation add to costs. Portland professionals typically charge $75 to $125 per hour. A thorough inspection provides accurate estimates.',
+  },
+  {
+    question: 'Should I attempt crawlspace repairs myself?',
+    answer: 'Crawlspace repairs should generally be handled by professionals due to structural complexity, safety concerns, and building code requirements. Working in confined spaces with potential mold exposure, handling structural repairs, and ensuring proper moisture barriers require specialized knowledge and equipment. In Portland, professionals understand local soil conditions, drainage requirements, and moisture management techniques essential for lasting repairs. DIY approaches often miss underlying issues, leading to recurring problems.',
+  },
+  {
+    question: 'What causes crawlspace rot in Portland homes?',
+    answer: 'Crawlspace rot in Portland is primarily caused by excessive moisture from high rainfall, poor drainage, groundwater infiltration, plumbing leaks, inadequate ventilation, missing or damaged vapor barriers, and improper grading directing water toward foundations. Portland\'s clay-heavy soils can retain moisture, exacerbating problems. Downspouts emptying near foundations and clogged gutters also contribute. Addressing moisture sources is essential for preventing and repairing rot damage.',
+  },
+  {
+    question: 'How long do crawlspace repairs last?',
+    answer: 'With proper moisture management and quality materials, crawlspace repairs can last 20-50 years or more. Structural repairs using pressure-treated or rot-resistant materials properly installed should match the home\'s remaining lifespan. Vapor barriers last 20-25 years, while encapsulation systems can last 20-30 years. In Portland, longevity depends on maintaining drainage systems, keeping gutters clear, and monitoring moisture levels. Annual inspections help catch issues early.',
+  },
+  {
+    question: 'What is crawlspace encapsulation and do I need it?',
+    answer: 'Crawlspace encapsulation involves sealing the space with heavy-duty vapor barriers on floors and walls, sealing vents, and often adding dehumidifiers. It creates a controlled environment preventing moisture intrusion. In Portland, encapsulation is highly beneficial for homes with recurring moisture problems, musty odors, high energy bills, or structural damage history. It prevents rot, improves indoor air quality, reduces energy costs, and protects structural integrity. Most Portland homes benefit from this investment.',
+  },
+  {
+    question: 'How can I prevent crawlspace moisture problems?',
+    answer: 'Prevent crawlspace moisture by ensuring gutters and downspouts direct water at least 6 feet from foundations, grading soil away from the house, installing and maintaining vapor barriers, ensuring proper ventilation or encapsulation, fixing plumbing leaks promptly, monitoring humidity levels, removing debris and vegetation near foundations, and conducting annual inspections. In Portland, installing drainage systems like French drains may be necessary due to heavy rainfall.',
+  },
+  {
+    question: 'What are the health risks of crawlspace mold and rot?',
+    answer: 'Crawlspace mold and rot can significantly impact indoor air quality, as up to 50% of home air originates from the crawlspace. Health risks include respiratory problems, allergies, asthma exacerbation, headaches, fatigue, and aggravated immune system conditions. Mold spores circulate through the home, affecting all occupants, particularly children and those with sensitivities. Structural rot also creates safety hazards. Addressing crawlspace issues improves both health and home safety.',
+  },
+  {
+    question: 'How do I know if my crawlspace has structural damage?',
+    answer: 'Signs of structural damage include sagging, bouncy, or sloping floors, cracks in walls or ceilings, doors and windows that stick or won\'t close properly, visible deterioration of joists or beams in the crawlspace, crumbling or damaged support posts, and separation between walls and floors. If you notice these signs, have a professional structural inspection immediately. In Portland, moisture-related structural damage is common and should be addressed promptly to prevent worsening.',
+  },
+  {
+    question: 'Do I need permits for crawlspace repair in Portland?',
+    answer: 'In Portland, most crawlspace structural repairs require building permits, especially those involving floor joists, beams, foundation work, or support posts. Simple vapor barrier installation typically doesn\'t require permits, but encapsulation projects often do. Permit requirements ensure work meets safety standards and building codes. Professional contractors experienced with Portland regulations can navigate the permitting process and ensure all work is properly documented and inspected.',
+  },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{config.title}</title>
-    <meta name="description" content={config.description} />
-  </head>
-  <body class="bg-gray-light">
-    <main class="container mx-auto px-4 py-16">
-      <h1 class="text-4xl font-heading font-bold text-dark mb-4">
-        {config.name}
-      </h1>
-      <p class="text-lg text-gray-600 mb-8">
-        {config.description}
-      </p>
-      <a
-        href="tel:5038850236"
-        class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition"
-      >
-        Call {config.phone}
-      </a>
-    </main>
-  </body>
-</html>
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Crawlspace Rot and Moisture Damage FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Crawlspace Repair Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Crawlspace Repair Today"
+    description="Don't let moisture damage compromise your home's foundation. Contact us for a free inspection and quote."
+    primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>
