@@ -7,24 +7,25 @@ import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs, getAllLocations } from '@sfw/content';
 
-const config = serviceConfigs['chimney-repair'];
+const config = serviceConfigs['siding-repair'];
 const locations = getAllLocations();
 ---
 
 <BaseLayout
-  title="Service Locations | Chimney Repair Services"
-  description="Professional wood chimney repair and structural restoration services across the Pacific Northwest. Serving Seattle, Portland, and surrounding areas."
+  title="Service Locations | Siding Repair Services"
+  description="Professional siding repair and installation services across the Pacific Northwest. Serving Seattle, Portland, and surrounding areas."
   config={config}
   navigation={[
     { label: 'Home', url: '/' },
     { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
     { label: 'Locations', url: '/locations' },
   ]}
 >
   <!-- Hero Section -->
   <HeroSection
-    headline="Professional Chimney Services Across the Pacific Northwest"
-    subheadline="Expert wood chimney repair, framing, and waterproofing in your area"
+    headline="Professional Siding Services Across the Pacific Northwest"
+    subheadline="Expert siding repair, installation, and maintenance in your area"
     primaryCTA={{ text: 'View Locations', href: '#locations' }}
     height="md"
   />
@@ -143,8 +144,8 @@ const locations = getAllLocations();
 
   <!-- CTA Section -->
   <CTASection
-    headline="Find Chimney Repair Experts in Your Area"
-    description="Select your location to see our services, get a free quote, and connect with local chimney professionals."
+    headline="Find Siding Experts in Your Area"
+    description="Select your location to see our services, get a free quote, and connect with local siding professionals."
     primaryCTA={{ text: 'View Locations', href: '#locations' }}
     secondaryCTA={{ text: 'Call Now', href: `tel:${config.phone}` }}
     variant="dark"
