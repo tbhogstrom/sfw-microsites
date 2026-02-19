@@ -1,0 +1,7 @@
+# Robots.txt for beamrepairexpert.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://beamrepairexpert.com/sitemap-index.xml

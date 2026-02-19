@@ -1,0 +1,7 @@
+# Robots.txt for woodchimneyrepair.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://woodchimneyrepair.com/sitemap-index.xml

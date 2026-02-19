@@ -1,0 +1,7 @@
+# Robots.txt for flashingrepairs.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://flashingrepairs.com/sitemap-index.xml

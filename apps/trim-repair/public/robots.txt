@@ -1,0 +1,7 @@
+# Robots.txt for exteriortrimrepairs.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://exteriortrimrepairs.com/sitemap-index.xml

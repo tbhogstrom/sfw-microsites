@@ -1,0 +1,7 @@
+# Robots.txt for leakingwindow.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://leakingwindow.com/sitemap-index.xml

@@ -1,0 +1,7 @@
+# Robots.txt for deckrepairexpert.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://deckrepairexpert.com/sitemap-index.xml

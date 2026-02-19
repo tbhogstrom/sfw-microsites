@@ -1,0 +1,7 @@
+# Robots.txt for crawlspacerot.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+Sitemap: https://crawlspacerot.com/sitemap-index.xml
