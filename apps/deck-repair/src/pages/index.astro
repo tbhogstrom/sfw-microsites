@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ } from '@sfw/ui/types';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['deck-repair'];
+const stats = [  { value: '20', suffix: '+', label: 'Years Experience' },  { value: '1000', suffix: '+', label: 'Projects Completed' },  { value: '99', suffix: '%', label: 'Customer Satisfaction' },  { value: '24', suffix: '/7', label: 'Available' },];
 
 const faqs: FAQ[] = [
   {
@@ -74,6 +75,10 @@ const faqs: FAQ[] = [
       region: "na1"
     }}
   />
+
+  <!-- Stats Bar -->
+  <StatsBar stats={stats} variant="primary" />
+
 
   <!-- FAQ Section -->
   <FAQAccordion
