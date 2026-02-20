@@ -1,7 +1,7 @@
 ---
 /**
  * Dynamic Service Page Route
- * URL: /services/portland/deck-repair-services, /services/seattle/deck-joist-repair-replacement, etc.
+ * URL: /services/portland/leak-repair-services, /services/seattle/leak-detection, etc.
  */
 import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
@@ -21,7 +21,7 @@ if (!serviceData) {
   return Astro.redirect('/404');
 }
 
-const config = serviceConfigs['chimney-repair'];
+const config = serviceConfigs['leak-repair'];
 
 // Get location-specific phone number
 const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
@@ -91,7 +91,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
   <!-- CTA Section -->
   <CTASection
     headline={`Ready for Professional ${serviceData.name}?`}
-    description={`Get a free consultation and quote today. We're here to help with all your chimney repair needs in ${serviceData.locationFull}.`}
+    description={`Get a free consultation and quote today. We're here to help with all your leak repair needs in ${serviceData.locationFull}.`}
     primaryCTA={{ text: 'Get Free Quote', href: `tel:${locationPhone}` }}
     secondaryCTA={{ text: 'View All Services', href: '/services' }}
     variant="dark"
