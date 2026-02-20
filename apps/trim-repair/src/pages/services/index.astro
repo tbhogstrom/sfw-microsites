@@ -81,8 +81,58 @@ const config = serviceConfigs['trim-repair'];
     </div>
   </section>
 
-  <!-- Why Choose Us Section -->
+  <!-- Seattle Services -->
   <section class="py-16 bg-gray-light">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-heading font-bold mb-4">
+            Seattle, Washington Services
+          </h2>
+          <p class="text-xl text-gray-600">
+            Comprehensive trim repair services for homeowners in the Seattle metro area
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {servicesByLocation.seattle.map((service) => (
+            <a
+              href={`/services/${service.location}/${service.slug}`}
+              class="group bg-white p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+            >
+              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                {service.name}
+              </h3>
+              <p class="text-gray-600 mb-4 line-clamp-3">
+                {service.heroSubheadline}
+              </p>
+              <div class="flex items-center text-primary font-semibold">
+                Learn More
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="/locations/seattle"
+            class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            View Seattle Location
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-4xl font-heading font-bold mb-8">
