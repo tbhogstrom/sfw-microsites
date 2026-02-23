@@ -1,31 +1,104 @@
 ---
 /**
- * CCBBanner.astro - Contractor license information banner
- * Displays CCB license numbers and company affiliation
+ * CCBBanner.astro - Comprehensive footer banner
+ * Displays office locations, DBA links, navigation, and license info
  */
-import type { BaseProps } from '@sfw/ui/types';
+import type { BaseProps, NavigationItem } from '@sfw/ui/types';
+import { serviceConfigs } from '@sfw/content';
 
 export interface Props extends BaseProps {
   dbaName: string;
+  navigation?: NavigationItem[];
 }
 
 const {
   dbaName,
+  navigation = [],
   class: className = '',
   ...rest
 } = Astro.props;
+
+// Get all DBAs from service configs
+const allDBAs = Object.entries(serviceConfigs).map(([slug, config]) => ({
+  name: config.name,
+  slug: slug,
+  // Use domain if available, otherwise use relative path
+  url: config.domain || `/${slug}`,
+}));
 ---
 
-<div class={`bg-gray-100 border-t border-gray-200 py-6 ${className}`} {...rest}>
+<div class={`bg-gray-100 border-t border-gray-200 py-8 ${className}`} {...rest}>
   <div class="container mx-auto px-4">
-    <p class="text-center text-sm md:text-base text-gray-700">
-      <strong>{dbaName}</strong> is a <a
-        href="https://sfwconstruction.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-primary hover:text-primary-dark underline font-semibold transition-colors"
-      >SFW Construction</a> Company - <span class="font-medium whitespace-nowrap">OR CCB# 259926</span> | <span class="font-medium whitespace-nowrap">WA LIC# SFWCOC*745BH</span>
-    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+
+      <!-- Office Locations -->
+      <div>
+        <h3 class="font-bold text-dark mb-3 text-sm uppercase tracking-wide">Office Locations</h3>
+        <ul class="space-y-2 text-sm text-gray-700">
+          <li>
+            <strong>Portland, Oregon</strong>
+          </li>
+          <li>
+            <strong>Seattle, Washington</strong>
+          </li>
+        </ul>
+      </div>
+
+      <!-- All DBAs -->
+      <div>
+        <h3 class="font-bold text-dark mb-3 text-sm uppercase tracking-wide">Our Companies</h3>
+        <ul class="space-y-1 text-sm">
+          {allDBAs.map((dba) => (
+            <li>
+              <a
+                href={dba.url}
+                class="text-gray-700 hover:text-primary transition-colors"
+              >
+                {dba.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Microsite Navigation -->
+      {navigation.length > 0 && (
+        <div>
+          <h3 class="font-bold text-dark mb-3 text-sm uppercase tracking-wide">Quick Links</h3>
+          <ul class="space-y-1 text-sm">
+            {navigation.map((item) => (
+              <li>
+                <a
+                  href={item.url}
+                  class="text-gray-700 hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+
+    <!-- License Information -->
+    <div class="border-t border-gray-300 pt-4">
+      <p class="text-center text-sm text-gray-700">
+        <strong>{dbaName}</strong> is a{' '}
+        <a
+          href="https://sfwconstruction.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary hover:text-primary-dark underline font-semibold transition-colors"
+        >SFW Construction</a>{' '}
+        Company
+      </p>
+      <p class="text-center text-xs text-gray-600 mt-2">
+        <span class="font-medium whitespace-nowrap">OR CCB# 259926</span>
+        {' '}<span class="text-gray-400">|</span>{' '}
+        <span class="font-medium whitespace-nowrap">WA LIC# SFWCOC*745BH</span>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -34,6 +107,10 @@ const {
   a {
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
   }
 
   a:focus {
