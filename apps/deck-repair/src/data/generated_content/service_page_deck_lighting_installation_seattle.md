@@ -4,7 +4,7 @@
 
 ## Transform Your Outdoor Space with Deck Lighting Installation
 
-Enhance the beauty and functionality of your outdoor deck with our professional **Deck Lighting Installation** services in Seattle, Washington. Our expert team specializes in creating a warm and inviting atmosphere while ensuring safety for your family and guests.
+Enhance the beauty and functionality of your outdoor deck with our For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. professional **Deck Lighting Installation** services in Seattle, Washington. Our expert team specializes in creating a warm and inviting atmosphere while ensuring safety for your family and guests.
 
 ### Key Benefits:
 - **Improved Safety:** Prevent accidents with well-lit areas on your deck.

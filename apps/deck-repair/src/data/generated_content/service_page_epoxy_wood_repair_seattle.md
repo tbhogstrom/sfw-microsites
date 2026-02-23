@@ -4,7 +4,7 @@
 
 ## Hero Section
 ### Restore Your Home’s Integrity with Expert Epoxy Wood Repair in Seattle, Washington
-Are you dealing with rotting wood in your home? Our Epoxy Wood Repair service offers a durable, long-lasting solution to restore the beauty and strength of your wood components. 
+Are you dealing with rotting wood in your home?Our Epoxy Wood Repair service offers a durable, long-lasting solution to restore For comprehensive solutions, [exterior services in Renton](https://sfwconstruction.com/locations/renton/) can help. the beauty and strength of your wood components. 
 
 **Key Benefits:**
 - **Durability**: High-strength epoxy creates a bond that lasts as long as the wood itself, preventing future decay.

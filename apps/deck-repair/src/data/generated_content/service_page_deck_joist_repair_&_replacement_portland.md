@@ -20,7 +20,7 @@ When your deck needs attention, don’t compromise on safety and aesthetics. Our
 
 ### What is Deck Joist Repair & Replacement?
 
-Deck joist repair and replacement involves assessing, fixing, or replacing the joists that support your deck. Joists are critical structural components that bear the weight of the deck and its occupants. Over time, exposure to moisture and other environmental factors can lead to damage, including rot, warping, or insect infestation.
+Deck joist repair and replacement involves assessing, fixing, or For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. replacing the joists that support your deck. Joists are critical structural components that bear the weight of the deck and its occupants. Over time, exposure to moisture and other environmental factors can lead to damage, including rot, warping, or insect infestation.
 
 ### Why It's Important for Homeowners in Portland, Oregon
 

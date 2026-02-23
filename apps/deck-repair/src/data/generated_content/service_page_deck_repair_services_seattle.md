@@ -66,7 +66,7 @@ We offer free estimates to provide you with a clear understanding of potential c
 ## FAQ Section
 ### Common Questions About Deck Repair Services
 
-1. **What is structural dry rot, and how can it be repaired?**
+1.**What is structural dry rot, and For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. how can it be repaired?**
    Structural dry rot is a fungal decay that affects wood, often caused by prolonged moisture exposure. Repairs typically involve removing affected areas and using high-strength epoxy to reinforce the structure [Source: Christina Glennon, Siding, Roofing, and Trim, Page 196].
 
 2. **How long does the deck repair process take?**

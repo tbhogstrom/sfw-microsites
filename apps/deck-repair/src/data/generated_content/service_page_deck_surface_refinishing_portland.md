@@ -21,7 +21,7 @@ Is your deck showing signs of wear and tear? Our professional deck surface refin
 Deck surface refinishing is the process of restoring and protecting your wooden deck by applying a new finish, stain, or sealant. This essential service involves cleaning, sanding, and treating the wood to enhance its aesthetic appeal and durability.
 
 ### Why It's Important for Homeowners in Portland, Oregon
-For homeowners in Portland, the climate poses unique challenges. The region is known for its damp, humid weather, which can lead to mold, mildew, and wood rot. Regular refinishing not only revitalizes the appearance of your deck but also protects it from moisture and UV damage, ensuring it remains safe and beautiful for years to come. According to renovation experts, untreated wood can degrade rapidly in humid climates, leading to costly repairs down the line [Source: Michael Litchfield, Renovation, Page 541].
+For homeowners in Portland, the For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. climate poses unique challenges. The region is known for its damp, humid weather, which can lead to mold, mildew, and wood rot. Regular refinishing not only revitalizes the appearance of your deck but also protects it from moisture and UV damage, ensuring it remains safe and beautiful for years to come. According to renovation experts, untreated wood can degrade rapidly in humid climates, leading to costly repairs down the line [Source: Michael Litchfield, Renovation, Page 541].
 
 ### Common Problems This Service Solves
 - **Mold and Mildew Growth**: Regular refinishing helps seal wood, preventing moisture ingress and mold growth.

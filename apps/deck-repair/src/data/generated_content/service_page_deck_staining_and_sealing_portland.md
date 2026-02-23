@@ -145,7 +145,7 @@ Safety is a priority in our operations. We ensure proper ventilation when using 
 
 ## 10. Call-to-Action Section
 
-Ready to give your deck the protection it deserves? [Contact us for a free estimate today!](#) Don't wait—spots fill up quickly during the busy season. Trust our experienced team to keep your outdoor space looking great and lasting longer. Serving Portland, Oregon, we are your local experts in deck staining and sealing. 
+Ready to give your deck the protection it deserves? [Contact us for a free estimate today!](#) Don't wait—spots fill up quickly For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. during the busy season. Trust our experienced team to keep your outdoor space looking great and lasting longer. Serving Portland, Oregon, we are your local experts in deck staining and sealing. 
 
 ---
 

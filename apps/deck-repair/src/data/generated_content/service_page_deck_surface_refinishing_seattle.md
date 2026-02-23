@@ -66,7 +66,7 @@ We proudly serve various neighborhoods in Seattle, including Capitol Hill, Balla
 ---
 
 ## 6. Pricing & Estimates
-Deck refinishing costs in Seattle typically range from **$2 to $5 per square foot**, depending on the size of your deck and the extent of repairs needed. Factors influencing cost include the type of wood, the condition of the existing finish, and any necessary repairs. We offer **free estimates** to provide you with transparent pricing without hidden fees.
+Deck refinishing costs in Seattle typically range from **$2 to $5 per square foot**, depending on For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. the size of your deck and the extent of repairs needed. Factors influencing cost include the type of wood, the condition of the existing finish, and any necessary repairs. We offer **free estimates** to provide you with transparent pricing without hidden fees.
 
 ---
 

@@ -5,7 +5,7 @@
 ## 1. Hero Section
 ### Reliable Post Replacement and Repair in Portland, Oregon
 
-Ensure the safety and longevity of your deck with our expert post replacement and repair services in Portland, Oregon. Our skilled team specializes in restoring structural support by addressing rotting or damaged deck posts, ensuring your outdoor space remains safe and functional.
+Ensure the safety and longevity of your deck with our expert For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. post replacement and repair services in Portland, Oregon. Our skilled team specializes in restoring structural support by addressing rotting or damaged deck posts, ensuring your outdoor space remains safe and functional.
 
 - **Enhanced Safety**: Protect your family and guests from potential hazards.
 - **Long-lasting Solutions**: We use high-quality materials to ensure durability and stability.

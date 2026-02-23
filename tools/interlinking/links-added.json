@@ -1,0 +1,208 @@
+{
+  "links": [
+    {
+      "file": "test-content.txt",
+      "url": "https://sfwconstruction.com/repair-services/portland-deck-repair/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/portland-deck-repair/",
+      "anchorText": "restore your deck",
+      "timestamp": "2026-02-23T17:51:22.472Z"
+    },
+    {
+      "file": "../../apps/deck-repair/src/data/generated_content/preventing_dry_rot_essential_tips_for_deck_maintenance.md",
+      "url": "https://sfwconstruction.com/repair-services/dry-rot-repair/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/dry-rot-repair/",
+      "anchorText": "repair wood rot damage",
+      "timestamp": "2026-02-23T17:54:13.137Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\what_every_homeowner_should_know_about_structural_dry_rot.md",
+      "url": "https://sfwconstruction.com/repair-services/window-installation-portland/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/window-installation-portland/",
+      "anchorText": "upgrade your home's windows",
+      "timestamp": "2026-02-23T18:03:15.574Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\the_ultimate_guide_to_deck_repair_tips_for_homeowners.md",
+      "url": "https://sfwconstruction.com/siding-calculator/",
+      "urlDestination": "https://sfwconstruction.com/siding-calculator/",
+      "anchorText": "estimate your siding project cost",
+      "timestamp": "2026-02-23T18:03:15.579Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_rotten_trim_repair_seattle.md",
+      "url": "https://sfwconstruction.com/siding-repair/",
+      "urlDestination": "https://sfwconstruction.com/siding-repair/",
+      "anchorText": "fix damaged siding",
+      "timestamp": "2026-02-23T18:03:15.583Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_rotten_trim_repair_portland.md",
+      "url": "https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/",
+      "urlDestination": "https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/",
+      "anchorText": "how much window repair costs",
+      "timestamp": "2026-02-23T18:03:15.587Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_pressure-treated_wood_installation_seattle.md",
+      "url": "https://sfwconstruction.com/locations/seattle/",
+      "urlDestination": "https://sfwconstruction.com/locations/seattle/",
+      "anchorText": "our Seattle service area",
+      "timestamp": "2026-02-23T18:03:15.590Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_pressure-treated_wood_installation_portland.md",
+      "url": "https://sfwconstruction.com/locations/portland/",
+      "urlDestination": "https://sfwconstruction.com/locations/portland/",
+      "anchorText": "our Portland service area",
+      "timestamp": "2026-02-23T18:03:15.593Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_post_replacement_and_repair_seattle.md",
+      "url": "https://sfwconstruction.com/repair-services/crawl-space-repair-portland/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/crawl-space-repair-portland/",
+      "anchorText": "fix moisture issues in your crawl space",
+      "timestamp": "2026-02-23T18:03:15.596Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_post_replacement_and_repair_portland.md",
+      "url": "https://sfwconstruction.com/repair-services/construction-defect-repair-portland/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/construction-defect-repair-portland/",
+      "anchorText": "repair construction defects",
+      "timestamp": "2026-02-23T18:03:15.599Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_epoxy_wood_repair_seattle.md",
+      "url": "https://sfwconstruction.com/locations/renton/",
+      "urlDestination": "https://sfwconstruction.com/locations/renton/",
+      "anchorText": "exterior services in Renton",
+      "timestamp": "2026-02-23T18:03:15.603Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_epoxy_wood_repair_portland.md",
+      "url": "https://sfwconstruction.com/siding-calculator/",
+      "urlDestination": "https://sfwconstruction.com/siding-calculator/",
+      "anchorText": "estimate your siding project cost",
+      "timestamp": "2026-02-23T18:03:15.606Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_surface_refinishing_seattle.md",
+      "url": "https://sfwconstruction.com/repair-services/dry-rot-repair/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/dry-rot-repair/",
+      "anchorText": "repair wood rot damage",
+      "timestamp": "2026-02-23T18:03:15.610Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_surface_refinishing_portland.md",
+      "url": "https://sfwconstruction.com/repair-services/portland-deck-repair/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/portland-deck-repair/",
+      "anchorText": "restore your deck",
+      "timestamp": "2026-02-23T18:03:15.613Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_staining_and_sealing_seattle.md",
+      "url": "https://sfwconstruction.com/locations/seattle/",
+      "urlDestination": "https://sfwconstruction.com/locations/seattle/",
+      "anchorText": "our Seattle service area",
+      "timestamp": "2026-02-23T18:03:15.617Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_staining_and_sealing_portland.md",
+      "url": "https://sfwconstruction.com/locations/portland/",
+      "urlDestination": "https://sfwconstruction.com/locations/portland/",
+      "anchorText": "our Portland service area",
+      "timestamp": "2026-02-23T18:03:15.620Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_repair_services_seattle.md",
+      "url": "https://sfwconstruction.com/siding-repair/",
+      "urlDestination": "https://sfwconstruction.com/siding-repair/",
+      "anchorText": "fix damaged siding",
+      "timestamp": "2026-02-23T18:03:15.624Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_repair_services_portland.md",
+      "url": "https://sfwconstruction.com/locations/tualatin-siding-contractor/",
+      "urlDestination": "https://sfwconstruction.com/locations/tualatin-siding-contractor/",
+      "anchorText": "siding services in Tualatin",
+      "timestamp": "2026-02-23T18:03:15.627Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_lighting_installation_seattle.md",
+      "url": "https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/",
+      "urlDestination": "https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/",
+      "anchorText": "how much window repair costs",
+      "timestamp": "2026-02-23T18:03:15.630Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_lighting_installation_portland.md",
+      "url": "https://sfwconstruction.com/repair-services/crawl-space-repair-portland/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/crawl-space-repair-portland/",
+      "anchorText": "fix moisture issues in your crawl space",
+      "timestamp": "2026-02-23T18:03:15.634Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_joist_repair_&_replacement_seattle.md",
+      "url": "https://sfwconstruction.com/locations/renton/",
+      "urlDestination": "https://sfwconstruction.com/locations/renton/",
+      "anchorText": "exterior services in Renton",
+      "timestamp": "2026-02-23T18:03:15.637Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_joist_repair_&_replacement_portland.md",
+      "url": "https://sfwconstruction.com/siding-calculator/",
+      "urlDestination": "https://sfwconstruction.com/siding-calculator/",
+      "anchorText": "estimate your siding project cost",
+      "timestamp": "2026-02-23T18:03:15.641Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_drainage_solutions_seattle.md",
+      "url": "https://sfwconstruction.com/repair-services/portland-deck-repair/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/portland-deck-repair/",
+      "anchorText": "restore your deck",
+      "timestamp": "2026-02-23T18:03:15.645Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_drainage_solutions_portland.md",
+      "url": "https://sfwconstruction.com/repair-services/dry-rot-repair/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/dry-rot-repair/",
+      "anchorText": "repair wood rot damage",
+      "timestamp": "2026-02-23T18:03:15.648Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_board_replacement_seattle.md",
+      "url": "https://sfwconstruction.com/siding-repair/",
+      "urlDestination": "https://sfwconstruction.com/siding-repair/",
+      "anchorText": "fix damaged siding",
+      "timestamp": "2026-02-23T18:03:15.652Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\service_page_deck_board_replacement_portland.md",
+      "url": "https://sfwconstruction.com/repair-services/window-installation-portland/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/window-installation-portland/",
+      "anchorText": "upgrade your home's windows",
+      "timestamp": "2026-02-23T18:03:15.656Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\repair_or_replace_a_decision_guide_for_your_deck.md",
+      "url": "https://sfwconstruction.com/repair-services/construction-defect-repair-portland/",
+      "urlDestination": "https://sfwconstruction.com/repair-services/construction-defect-repair-portland/",
+      "anchorText": "repair construction defects",
+      "timestamp": "2026-02-23T18:03:15.659Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\preventing_dry_rot_essential_tips_for_deck_maintenance.md",
+      "url": "https://sfwconstruction.com/locations/tualatin-siding-contractor/",
+      "urlDestination": "https://sfwconstruction.com/locations/tualatin-siding-contractor/",
+      "anchorText": "siding services in Tualatin",
+      "timestamp": "2026-02-23T18:03:15.662Z"
+    },
+    {
+      "file": "..\\..\\apps\\deck-repair\\src\\data\\generated_content\\how_to_choose_the_best_deck_repair_contractor_in_portland.md",
+      "url": "https://sfwconstruction.com/locations/portland/",
+      "urlDestination": "https://sfwconstruction.com/locations/portland/",
+      "anchorText": "our Portland service area",
+      "timestamp": "2026-02-23T18:03:15.665Z"
+    }
+  ],
+  "totalLinks": 29
+}

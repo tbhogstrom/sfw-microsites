@@ -130,7 +130,7 @@ Typically, homeowners in Portland can expect to invest between **$1,500 and $5,0
 
 ## Local Considerations for Portland, Oregon
 
-Portland's climate is characterized by wet winters and dry summers, making effective drainage solutions vital for preserving outdoor structures. Local building codes emphasize the importance of managing water runoff, particularly around decks and patios. Common issues in the area include soil erosion and moisture buildup, which can lead to costly repairs if not addressed promptly. Seasonal considerations, such as heavy rainfall during winter months, necessitate proactive drainage measures to protect your investment.
+Portland's climate is characterized by wet winters and dry summers, making For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. effective drainage solutions vital for preserving outdoor structures. Local building codes emphasize the importance of managing water runoff, particularly around decks and patios. Common issues in the area include soil erosion and moisture buildup, which can lead to costly repairs if not addressed promptly. Seasonal considerations, such as heavy rainfall during winter months, necessitate proactive drainage measures to protect your investment.
 
 ---
 
