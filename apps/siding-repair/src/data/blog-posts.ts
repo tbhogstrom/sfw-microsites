@@ -15,9 +15,9 @@ export interface BlogPostData {
 
 export const blogPosts: BlogPostData[] = [
   {
-    title: 'When to Repair vs Replace Your Home\',
+    title: 'When to Repair vs Replace Your Home\'s Siding',
     slug: 'when-to-repair-vs-replace-your-homes-siding',
-    excerpt: 'Your home\',
+    excerpt: 'Your home\'s siding is one of its most important protective barriers. Learn when to repair and when to replace for optimal protection.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
