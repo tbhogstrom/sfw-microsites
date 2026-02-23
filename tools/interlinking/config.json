@@ -1,0 +1,33 @@
+{
+  "linksPerPage": {
+    "min": 1,
+    "max": 2
+  },
+  "linkTypes": {
+    "sfw": 1,
+    "microsite": 1
+  },
+  "placement": {
+    "preferredSections": [
+      "Related Services",
+      "Next Steps",
+      "Prevention",
+      "Maintenance",
+      "FAQ",
+      "Process"
+    ],
+    "avoidSections": [
+      "Title",
+      "Introduction"
+    ]
+  },
+  "anchorTextVariation": true,
+  "excludeTerms": [
+    "click here",
+    "read more",
+    "this link",
+    "here"
+  ],
+  "reportOutput": "./reports",
+  "verbose": true
+}

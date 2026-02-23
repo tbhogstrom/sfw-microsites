@@ -1,0 +1,347 @@
+{
+  "deck-repair": {
+    "name": "Deck Repair Experts",
+    "domain": "https://deckrepairexpert.com",
+    "relatedServices": [
+      {
+        "slug": "dry-rot",
+        "reason": "deck-rot-connection",
+        "anchorOptions": [
+          "address dry rot damage",
+          "repair wood rot",
+          "fix dry rot in structural members"
+        ]
+      },
+      {
+        "slug": "crawlspace-rot",
+        "reason": "structural-moisture",
+        "anchorOptions": [
+          "check your crawlspace for moisture",
+          "inspect foundation framing",
+          "address crawlspace issues"
+        ]
+      },
+      {
+        "slug": "beam-repair",
+        "reason": "structural-support",
+        "anchorOptions": [
+          "repair load-bearing beams",
+          "fix structural support members",
+          "restore beam integrity"
+        ]
+      }
+    ]
+  },
+  "chimney-repair": {
+    "name": "Chimney Repair Experts",
+    "domain": "https://woodchimneyrepair.com",
+    "relatedServices": [
+      {
+        "slug": "flashing-repair",
+        "reason": "waterproofing",
+        "anchorOptions": [
+          "repair chimney flashing",
+          "fix flashing leaks",
+          "proper flashing installation"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "chase-siding",
+        "anchorOptions": [
+          "replace chimney chase siding",
+          "repair exterior chimney covering",
+          "fix siding around your chimney"
+        ]
+      }
+    ]
+  },
+  "siding-repair": {
+    "name": "Siding Repair Experts",
+    "domain": "https://sidingrepairexperts.com",
+    "relatedServices": [
+      {
+        "slug": "trim-repair",
+        "reason": "exterior-trim",
+        "anchorOptions": [
+          "repair exterior trim",
+          "fix fascia and soffit",
+          "restore trim boards"
+        ]
+      },
+      {
+        "slug": "flashing-repair",
+        "reason": "weatherproofing",
+        "anchorOptions": [
+          "ensure proper flashing",
+          "fix flashing issues",
+          "install weatherproof flashing"
+        ]
+      },
+      {
+        "slug": "leak-repair",
+        "reason": "water-intrusion",
+        "anchorOptions": [
+          "stop water leaks",
+          "fix moisture intrusion",
+          "address leak sources"
+        ]
+      }
+    ]
+  },
+  "crawlspace-rot": {
+    "name": "Crawlspace Repair Experts",
+    "domain": "https://crawlspacerot.com",
+    "relatedServices": [
+      {
+        "slug": "dry-rot",
+        "reason": "rot-remediation",
+        "anchorOptions": [
+          "treat dry rot",
+          "address wood rot",
+          "repair rotted framing"
+        ]
+      },
+      {
+        "slug": "beam-repair",
+        "reason": "structural-framing",
+        "anchorOptions": [
+          "replace compromised beams",
+          "repair floor joists",
+          "fix structural members"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "exterior-moisture",
+        "anchorOptions": [
+          "repair exterior damage",
+          "fix siding problems",
+          "address exterior moisture sources"
+        ]
+      }
+    ]
+  },
+  "leak-repair": {
+    "name": "Window Leak Experts",
+    "domain": "https://leakingwindow.com",
+    "relatedServices": [
+      {
+        "slug": "flashing-repair",
+        "reason": "leak-prevention",
+        "anchorOptions": [
+          "install proper flashing",
+          "repair window flashing",
+          "fix flashing leaks"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "exterior-sealing",
+        "anchorOptions": [
+          "repair siding around windows",
+          "fix exterior penetrations",
+          "seal exterior openings"
+        ]
+      },
+      {
+        "slug": "trim-repair",
+        "reason": "window-trim",
+        "anchorOptions": [
+          "replace window trim",
+          "repair exterior trim",
+          "fix trim around openings"
+        ]
+      }
+    ]
+  },
+  "lead-paint": {
+    "name": "Lead Paint Removal Experts",
+    "domain": "https://leadpaintprofessionals.com",
+    "relatedServices": [
+      {
+        "slug": "restoration",
+        "reason": "historic-homes",
+        "anchorOptions": [
+          "restore historic features",
+          "preserve historic details",
+          "properly renovate historic homes"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "exterior-renovation",
+        "anchorOptions": [
+          "safely replace siding",
+          "remove lead-painted siding",
+          "install new siding"
+        ]
+      },
+      {
+        "slug": "trim-repair",
+        "reason": "trim-renovation",
+        "anchorOptions": [
+          "replace painted trim",
+          "renovate exterior trim",
+          "restore trim safely"
+        ]
+      }
+    ]
+  },
+  "flashing-repair": {
+    "name": "Flashing Repair Experts",
+    "domain": "https://flashingrepairs.com",
+    "relatedServices": [
+      {
+        "slug": "chimney-repair",
+        "reason": "chimney-flashing",
+        "anchorOptions": [
+          "repair chimney structures",
+          "fix chimney leaks",
+          "address chimney issues"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "exterior-protection",
+        "anchorOptions": [
+          "repair siding damage",
+          "fix water-damaged siding",
+          "replace affected siding"
+        ]
+      },
+      {
+        "slug": "leak-repair",
+        "reason": "leak-source",
+        "anchorOptions": [
+          "fix window leaks",
+          "stop water intrusion",
+          "repair leak sources"
+        ]
+      }
+    ]
+  },
+  "trim-repair": {
+    "name": "Exterior Trim Repair Experts",
+    "domain": "https://exteriortrimrepairs.com",
+    "relatedServices": [
+      {
+        "slug": "siding-repair",
+        "reason": "exterior-envelope",
+        "anchorOptions": [
+          "repair adjacent siding",
+          "fix siding issues",
+          "replace damaged siding"
+        ]
+      },
+      {
+        "slug": "leak-repair",
+        "reason": "trim-leaks",
+        "anchorOptions": [
+          "stop trim leaks",
+          "fix moisture problems",
+          "address leak sources"
+        ]
+      }
+    ]
+  },
+  "beam-repair": {
+    "name": "Beam Repair Experts",
+    "domain": "https://beamrepairexpert.com",
+    "relatedServices": [
+      {
+        "slug": "crawlspace-rot",
+        "reason": "foundation-structure",
+        "anchorOptions": [
+          "address crawlspace moisture",
+          "fix foundation issues",
+          "repair subfloor damage"
+        ]
+      },
+      {
+        "slug": "dry-rot",
+        "reason": "rot-damage",
+        "anchorOptions": [
+          "treat structural rot",
+          "address wood decay",
+          "repair rotted members"
+        ]
+      },
+      {
+        "slug": "deck-repair",
+        "reason": "structural-framing",
+        "anchorOptions": [
+          "repair deck framing",
+          "fix deck structure",
+          "restore deck support"
+        ]
+      }
+    ]
+  },
+  "dry-rot": {
+    "name": "Dry Rot Repair Experts",
+    "domain": "",
+    "relatedServices": [
+      {
+        "slug": "crawlspace-rot",
+        "reason": "moisture-issues",
+        "anchorOptions": [
+          "address crawlspace moisture",
+          "fix foundation dampness",
+          "repair crawlspace damage"
+        ]
+      },
+      {
+        "slug": "deck-repair",
+        "reason": "deck-rot",
+        "anchorOptions": [
+          "repair deck rot",
+          "fix rotted deck boards",
+          "replace damaged decking"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "exterior-rot",
+        "anchorOptions": [
+          "fix rotted siding",
+          "replace damaged exterior",
+          "repair rot damage"
+        ]
+      }
+    ]
+  },
+  "restoration": {
+    "name": "Historic Home Restoration Experts",
+    "domain": "https://historicrenovationsnw.com",
+    "relatedServices": [
+      {
+        "slug": "lead-paint",
+        "reason": "historic-safety",
+        "anchorOptions": [
+          "safely remove lead paint",
+          "handle lead paint properly",
+          "certified lead paint services"
+        ]
+      },
+      {
+        "slug": "trim-repair",
+        "reason": "historic-details",
+        "anchorOptions": [
+          "restore original trim",
+          "repair historic woodwork",
+          "preserve trim details"
+        ]
+      },
+      {
+        "slug": "siding-repair",
+        "reason": "historic-exterior",
+        "anchorOptions": [
+          "restore historic siding",
+          "repair period exteriors",
+          "maintain historic character"
+        ]
+      }
+    ]
+  }
+}
