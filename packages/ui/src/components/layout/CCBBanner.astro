@@ -1,0 +1,44 @@
+---
+/**
+ * CCBBanner.astro - Contractor license information banner
+ * Displays CCB license numbers and company affiliation
+ */
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface Props extends BaseProps {
+  dbaName: string;
+}
+
+const {
+  dbaName,
+  class: className = '',
+  ...rest
+} = Astro.props;
+---
+
+<div class={`bg-gray-100 border-t border-gray-200 py-6 ${className}`} {...rest}>
+  <div class="container mx-auto px-4">
+    <p class="text-center text-sm md:text-base text-gray-700">
+      <strong>{dbaName}</strong> is a <a
+        href="https://sfwconstruction.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-primary hover:text-primary-dark underline font-semibold transition-colors"
+      >SFW Construction</a> Company - <span class="font-medium whitespace-nowrap">OR CCB# 259926</span> | <span class="font-medium whitespace-nowrap">WA LIC# SFWCOC*745BH</span>
+    </p>
+  </div>
+</div>
+
+<style>
+  /* Ensure links are visible and accessible */
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  a:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>
