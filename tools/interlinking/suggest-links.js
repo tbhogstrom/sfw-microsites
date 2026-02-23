@@ -125,7 +125,7 @@ function getMicrositeSuggestions(micrositeSlug, keywords) {
 /**
  * Analyze content and generate suggestions
  */
-function analyzContent(content, micrositeSlug) {
+function analyzeContent(content, micrositeSlug) {
   const keywords = extractKeywords(content);
 
   // Get SFW link suggestions
