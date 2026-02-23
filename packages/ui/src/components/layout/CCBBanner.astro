@@ -1,103 +1,42 @@
 ---
 /**
- * CCBBanner.astro - Comprehensive footer banner
- * Displays DBA links, navigation, headline, and license info
+ * CCBBanner.astro - CCB License banner above footer
+ * Displays license information and SFW Construction affiliation
  */
-import type { BaseProps, NavigationItem } from '@sfw/ui/types';
-import { dbasWithDomains } from '@sfw/content';
+import type { BaseProps } from '@sfw/ui/types';
 
 export interface Props extends BaseProps {
   dbaName: string;
-  navigation?: NavigationItem[];
 }
 
 const {
   dbaName,
-  navigation = [],
   class: className = '',
   ...rest
 } = Astro.props;
-
-// Get all DBAs with domains (sorted alphabetically)
-const allDBAs = [...dbasWithDomains].sort((a, b) => a.name.localeCompare(b.name));
 ---
 
-<footer class={`bg-dark text-white py-10 ${className}`} {...rest}>
+<div class={`bg-gray-100 border-t border-gray-200 py-4 ${className}`} {...rest}>
   <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-8">
-
-      <!-- Our Companies - Two Column Layout -->
-      <div class="lg:col-span-1">
-        <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Our Companies</h3>
-        <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-          {allDBAs.map((dba) => (
-            <li>
-              <a
-                href={dba.domain}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-gray-300 hover:text-primary transition-colors"
-              >
-                {dba.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Quick Links Navigation -->
-      {navigation.length > 0 && (
-        <div class="lg:col-span-1">
-          <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
-          <ul class="space-y-2 text-sm">
-            {navigation.map((item) => (
-              <li>
-                <a
-                  href={item.url}
-                  class="text-gray-300 hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <!-- DBA Headline & Office Locations -->
-      <div class="lg:col-span-1">
-        <h1 class="text-2xl md:text-3xl font-heading font-bold text-white mb-3">
-          {dbaName}
-        </h1>
-        <p class="text-gray-300 text-sm mb-6">
-          We have offices in Portland, Oregon and Seattle, Washington to serve you.
-        </p>
-      </div>
-    </div>
-
-    <!-- License Information -->
-    <div class="border-t border-gray-700 pt-6">
-      <p class="text-center text-sm text-gray-300">
-        <strong>{dbaName}</strong> is a{' '}
-        <a
-          href="https://sfwconstruction.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-primary hover:text-primary-light underline font-semibold transition-colors"
-        >SFW Construction</a>{' '}
-        Company
-      </p>
-      <p class="text-center text-xs text-gray-400 mt-2">
-        <span class="font-medium whitespace-nowrap">OR CCB# 259926</span>
-        {' '}<span class="text-gray-600">|</span>{' '}
-        <span class="font-medium whitespace-nowrap">WA LIC# SFWCOC*745BH</span>
-      </p>
-    </div>
+    <p class="text-center text-sm text-gray-700">
+      <strong>{dbaName}</strong> is a{' '}
+      <a
+        href="https://sfwconstruction.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-primary hover:text-primary-dark underline font-semibold transition-colors"
+      >SFW Construction</a>{' '}
+      Company
+    </p>
+    <p class="text-center text-xs text-gray-600 mt-2">
+      <span class="font-medium whitespace-nowrap">OR CCB# 259926</span>
+      {' '}<span class="text-gray-400">|</span>{' '}
+      <span class="font-medium whitespace-nowrap">WA LIC# SFWCOC*745BH</span>
+    </p>
   </div>
-</footer>
+</div>
 
 <style>
-  /* Ensure links are visible and accessible */
   a {
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;

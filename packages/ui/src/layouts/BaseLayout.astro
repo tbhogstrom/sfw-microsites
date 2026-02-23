@@ -72,7 +72,10 @@ const {
     </main>
 
     {showFooter && (
-      <CCBBanner dbaName={config.name} navigation={navigation} />
+      <>
+        <CCBBanner dbaName={config.name} />
+        <Footer config={config} navigation={navigation} />
+      </>
     )}
   </body>
 </html>
