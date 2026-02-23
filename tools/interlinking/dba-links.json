@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Chimney Repair Experts",
+    "url": "https://woodchimneyrepair.com",
+    "slug": "chimney-repair",
+    "naturalOption1": "professional chimney repair services",
+    "naturalOption2": "expert chimney chase solutions",
+    "topics": ["chimney", "chase", "flue", "fireplace", "chimney-repair"]
+  },
+  {
+    "name": "Siding Repair Experts",
+    "url": "https://sidingrepairexperts.com",
+    "slug": "siding-repair",
+    "naturalOption1": "professional siding repair",
+    "naturalOption2": "expert siding solutions",
+    "topics": ["siding", "hardie", "vinyl", "fiber-cement", "exterior", "cladding"]
+  },
+  {
+    "name": "Crawlspace Repair Experts",
+    "url": "https://crawlspacerot.com",
+    "slug": "crawlspace-rot",
+    "naturalOption1": "crawl space repair services",
+    "naturalOption2": "crawlspace moisture solutions",
+    "topics": ["crawlspace", "crawl-space", "foundation", "moisture", "ventilation"]
+  },
+  {
+    "name": "Window Leak Experts",
+    "url": "https://leakingwindow.com",
+    "slug": "leak-repair",
+    "naturalOption1": "window leak repair services",
+    "naturalOption2": "leaking window solutions",
+    "topics": ["window", "leak", "leaking", "water-damage", "moisture"]
+  },
+  {
+    "name": "Lead Paint Removal Experts",
+    "url": "https://leadpaintprofessionals.com",
+    "slug": "lead-paint",
+    "naturalOption1": "lead paint removal services",
+    "naturalOption2": "lead-safe renovation",
+    "topics": ["lead-paint", "lead", "paint-removal", "historic", "abatement"]
+  },
+  {
+    "name": "Flashing Repair Experts",
+    "url": "https://flashingrepairs.com",
+    "slug": "flashing-repair",
+    "naturalOption1": "flashing repair services",
+    "naturalOption2": "professional flashing solutions",
+    "topics": ["flashing", "waterproof", "roof", "penetration", "weatherproof"]
+  },
+  {
+    "name": "Exterior Trim Repair Experts",
+    "url": "https://exteriortrimrepairs.com",
+    "slug": "trim-repair",
+    "naturalOption1": "trim repair services",
+    "naturalOption2": "fascia and soffit repair",
+    "topics": ["trim", "fascia", "soffit", "frieze", "molding", "exterior-trim"]
+  },
+  {
+    "name": "Historic Home Restoration Experts",
+    "url": "https://historicrenovationsnw.com",
+    "slug": "restoration",
+    "naturalOption1": "historic home restoration",
+    "naturalOption2": "professional renovation services",
+    "topics": ["restoration", "renovation", "historic", "remodel", "upgrade"]
+  },
+  {
+    "name": "Beam Repair Experts",
+    "url": "https://beamrepairexpert.com",
+    "slug": "beam-repair",
+    "naturalOption1": "beam repair services",
+    "naturalOption2": "structural beam solutions",
+    "topics": ["beam", "joist", "structural", "framing", "support"]
+  },
+  {
+    "name": "Deck Repair Experts",
+    "url": "https://deckrepairexpert.com",
+    "slug": "deck-repair",
+    "naturalOption1": "deck repair services",
+    "naturalOption2": "professional deck restoration",
+    "topics": ["deck", "decking", "railing", "outdoor", "deck-repair"]
+  }
+]
