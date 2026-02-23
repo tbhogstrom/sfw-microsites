@@ -332,6 +332,76 @@ async function processSingleFile(filePath) {
 }
 
 /**
+ * Find all content files for a microsite
+ */
+function findContentFiles(micrositeSlug) {
+  const glob = require('glob');
+  const basePath = path.join(__dirname, '../../apps', micrositeSlug);
+
+  // Find blog posts
+  const blogPosts = glob.sync(`${basePath}/src/data/generated_content/*.md`);
+
+  // Find service pages (markdown files in service directories)
+  const servicePages = glob.sync(`${basePath}/src/pages/**/*.md`);
+
+  return [...blogPosts, ...servicePages];
+}
+
+/**
+ * Process single file in batch mode (no confirmation)
+ */
+async function processBatchFile(filePath, micrositeSlug) {
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const trackingData = loadLinkTracking();
+    const keywords = extractKeywords(content);
+
+    const scoredLinks = scoreSFWLinks(keywords, trackingData);
+
+    if (scoredLinks.length === 0) {
+      return {
+        success: false,
+        reason: 'No suitable links (all overused)',
+        file: path.basename(filePath)
+      };
+    }
+
+    const topLink = scoredLinks[0];
+    const anchorText = topLink.link.naturalOption1;
+    const paragraph = findInsertionPoint(content, keywords);
+
+    if (!paragraph) {
+      return {
+        success: false,
+        reason: 'No suitable insertion point',
+        file: path.basename(filePath)
+      };
+    }
+
+    // Automatically add the link
+    const updatedContent = insertLink(content, paragraph, anchorText, topLink.link.url);
+    fs.writeFileSync(filePath, updatedContent, 'utf-8');
+
+    recordLink(filePath, topLink.link.url, anchorText, trackingData);
+
+    return {
+      success: true,
+      file: path.basename(filePath),
+      url: topLink.link.url,
+      anchor: anchorText,
+      score: topLink.score
+    };
+
+  } catch (error) {
+    return {
+      success: false,
+      reason: error.message,
+      file: path.basename(filePath)
+    };
+  }
+}
+
+/**
  * Process multiple files in batch mode
  */
 async function processBatchFiles(micrositeSlug) {
@@ -340,8 +410,86 @@ async function processBatchFiles(micrositeSlug) {
     { padding: 1, margin: 1, borderStyle: 'double', borderColor: 'cyan' }
   ));
 
-  // TODO: Implement batch processing
-  console.log(chalk.yellow('Batch processing coming soon!'));
+  const spinner = ora('Finding content files...').start();
+
+  const files = findContentFiles(micrositeSlug);
+
+  if (files.length === 0) {
+    spinner.fail(chalk.red('No content files found'));
+    return;
+  }
+
+  spinner.succeed(chalk.green(`Found ${files.length} files to process`));
+
+  const results = {
+    successful: [],
+    failed: []
+  };
+
+  // Process each file
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const fileName = path.basename(file);
+
+    const processSpinner = ora(`[${i + 1}/${files.length}] ${fileName}`).start();
+
+    const result = await processBatchFile(file, micrositeSlug);
+
+    if (result.success) {
+      processSpinner.succeed(chalk.green(`✓ ${fileName}`));
+      results.successful.push(result);
+    } else {
+      processSpinner.warn(chalk.yellow(`⊘ ${fileName} - ${result.reason}`));
+      results.failed.push(result);
+    }
+  }
+
+  // Display summary
+  console.log('\n' + boxen(
+    chalk.bold.green('📊 Batch Processing Complete'),
+    { padding: 1, margin: 1, borderStyle: 'round', borderColor: 'green' }
+  ));
+
+  const table = new Table({
+    head: [
+      chalk.cyan('Status'),
+      chalk.cyan('Count')
+    ]
+  });
+
+  table.push(
+    [chalk.green('✓ Successful'), chalk.bold(results.successful.length)],
+    [chalk.yellow('⊘ Skipped'), chalk.bold(results.failed.length)],
+    [chalk.blue('Total Files'), chalk.bold(files.length)]
+  );
+
+  console.log(table.toString());
+
+  if (results.successful.length > 0) {
+    console.log('\n' + chalk.bold('Recent Links Added:'));
+
+    const linksTable = new Table({
+      head: [
+        chalk.cyan('File'),
+        chalk.cyan('Anchor Text'),
+        chalk.cyan('Score')
+      ],
+      colWidths: [40, 35, 10]
+    });
+
+    results.successful.slice(-10).forEach(result => {
+      linksTable.push([
+        result.file,
+        chalk.yellow(result.anchor),
+        chalk.gray(`${result.score}/10`)
+      ]);
+    });
+
+    console.log(linksTable.toString());
+  }
+
+  const trackingData = loadLinkTracking();
+  console.log(chalk.gray(`\nTotal links in database: ${trackingData.totalLinks}`));
 }
 
 /**
@@ -362,9 +510,12 @@ async function main() {
   } else if (argv.microsite && argv.batch) {
     await processBatchFiles(argv.microsite);
   } else {
-    console.log(chalk.yellow('Usage:'));
-    console.log('  Single file:  ' + chalk.cyan('node suggest-links.js --file path/to/file.md'));
-    console.log('  Batch mode:   ' + chalk.cyan('node suggest-links.js --microsite deck-repair --batch'));
+    console.log(chalk.yellow('\nUsage:'));
+    console.log('  ' + chalk.bold('Single file (interactive):'));
+    console.log('    ' + chalk.cyan('node suggest-links.js --file path/to/file.md'));
+    console.log('\n  ' + chalk.bold('Batch mode (automatic):'));
+    console.log('    ' + chalk.cyan('node suggest-links.js --microsite deck-repair --batch'));
+    console.log('\n  ' + chalk.gray('Example microsites: deck-repair, chimney-repair, siding-repair, etc.'));
   }
 }
 
