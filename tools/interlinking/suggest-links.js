@@ -1,56 +1,81 @@
 #!/usr/bin/env node
 
 /**
- * Interlinking Suggestion Tool
- * Analyzes content and suggests contextual internal links
+ * Interactive Interlinking Tool
+ * Analyzes content, suggests links, and instruments them with user confirmation
  */
 
 const fs = require('fs');
 const path = require('path');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+const ora = require('ora');
+const boxen = require('boxen');
+const Table = require('cli-table3');
 
 // Load data files
 const sfwLinks = require('./sfw-links.json');
 const micrositeRelationships = require('./microsite-relationships.json');
 const config = require('./config.json');
 
+// Links tracking file
+const LINKS_TRACKING_FILE = path.join(__dirname, 'links-added.json');
+
 // Parse command line arguments
 const argv = yargs(hideBin(process.argv))
-  .option('microsite', {
-    alias: 'm',
-    type: 'string',
-    description: 'Microsite slug (e.g., deck-repair)',
-  })
   .option('file', {
     alias: 'f',
     type: 'string',
     description: 'Path to specific content file',
   })
-  .option('all', {
-    alias: 'a',
-    type: 'boolean',
-    description: 'Analyze all microsites',
-  })
-  .option('output', {
-    alias: 'o',
+  .option('microsite', {
+    alias: 'm',
     type: 'string',
-    description: 'Output file for suggestions',
-    default: 'link-suggestions.json',
+    description: 'Microsite slug for batch processing',
+  })
+  .option('batch', {
+    alias: 'b',
+    type: 'boolean',
+    description: 'Process multiple files automatically',
   })
   .help()
   .argv;
+
+/**
+ * Load or initialize link tracking data
+ */
+function loadLinkTracking() {
+  if (fs.existsSync(LINKS_TRACKING_FILE)) {
+    return JSON.parse(fs.readFileSync(LINKS_TRACKING_FILE, 'utf-8'));
+  }
+  return { links: [], totalLinks: 0 };
+}
+
+/**
+ * Save link tracking data
+ */
+function saveLinkTracking(data) {
+  fs.writeFileSync(LINKS_TRACKING_FILE, JSON.stringify(data, null, 2));
+}
+
+/**
+ * Calculate link usage percentage
+ */
+function getLinkUsagePercentage(url, trackingData) {
+  if (trackingData.totalLinks === 0) return 0;
+  const usageCount = trackingData.links.filter(link => link.url === url).length;
+  return (usageCount / trackingData.totalLinks) * 100;
+}
 
 /**
  * Extract keywords from content
  */
 function extractKeywords(content) {
   const keywords = new Set();
-
-  // Convert to lowercase for matching
   const lowerContent = content.toLowerCase();
 
-  // Extract common topic keywords
   const topicPatterns = [
     /\b(deck|decking|decks)\b/g,
     /\b(siding|hardie|vinyl|fiber cement)\b/g,
@@ -78,13 +103,11 @@ function extractKeywords(content) {
 }
 
 /**
- * Score SFW links based on content relevance
+ * Score and filter SFW links based on usage
  */
-function scoreSFWLinks(keywords) {
+function scoreSFWLinks(keywords, trackingData) {
   return sfwLinks.map(link => {
     let score = 0;
-
-    // Check how many keywords match this link's topics
     keywords.forEach(keyword => {
       if (link.topics.some(topic =>
         keyword.includes(topic) || topic.includes(keyword)
@@ -93,109 +116,264 @@ function scoreSFWLinks(keywords) {
       }
     });
 
-    return { link, score };
+    const usagePercentage = getLinkUsagePercentage(link.url, trackingData);
+
+    return { link, score, usagePercentage };
   })
-  .filter(item => item.score > 0)
-  .sort((a, b) => b.score - a.score);
+  .filter(item => item.score > 0 && item.usagePercentage < 10) // Filter overused links
+  .sort((a, b) => {
+    // Sort by score first, then by usage (prefer less used)
+    if (b.score !== a.score) return b.score - a.score;
+    return a.usagePercentage - b.usagePercentage;
+  });
 }
 
 /**
- * Get related microsite suggestions
+ * Find best location to insert link
  */
-function getMicrositeSuggestions(micrositeSlug, keywords) {
-  const microsite = micrositeRelationships[micrositeSlug];
-  if (!microsite || !microsite.relatedServices) return [];
+function findInsertionPoint(content, keywords) {
+  const lines = content.split('\n');
 
-  return microsite.relatedServices.map(related => {
-    let score = 0;
+  // Look for paragraphs that contain relevant keywords
+  const scoredParagraphs = [];
+  let currentParagraph = '';
+  let lineIndex = 0;
 
-    // Score based on keyword relevance
-    keywords.forEach(keyword => {
-      if (related.reason.includes(keyword) || keyword.includes(related.reason)) {
-        score++;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (line === '') {
+      if (currentParagraph) {
+        const score = keywords.filter(kw =>
+          currentParagraph.toLowerCase().includes(kw.replace(/-/g, ' '))
+        ).length;
+
+        if (score > 0 && currentParagraph.length > 100) {
+          scoredParagraphs.push({
+            text: currentParagraph,
+            lineIndex,
+            score
+          });
+        }
+        currentParagraph = '';
       }
-    });
+    } else if (!line.startsWith('#') && !line.startsWith('-') && !line.startsWith('*')) {
+      if (!currentParagraph) lineIndex = i;
+      currentParagraph += (currentParagraph ? ' ' : '') + line;
+    }
+  }
 
-    return { ...related, score };
-  })
-  .filter(item => item.score > 0 || micrositeRelationships[micrositeSlug].relatedServices.length <= 3)
-  .sort((a, b) => b.score - a.score);
+  if (scoredParagraphs.length === 0) return null;
+
+  // Return paragraph with highest keyword score
+  scoredParagraphs.sort((a, b) => b.score - a.score);
+  return scoredParagraphs[0];
 }
 
 /**
- * Analyze content and generate suggestions
+ * Insert link into content
  */
-function analyzeContent(content, micrositeSlug) {
-  const keywords = extractKeywords(content);
+function insertLink(content, paragraph, anchorText, url) {
+  // Find a good sentence in the paragraph to add the link
+  const sentences = paragraph.text.split(/[.!?]+/);
+  const relevantSentence = sentences.find(s => s.length > 50 && s.length < 200) || sentences[0];
 
-  // Get SFW link suggestions
-  const sfwSuggestions = scoreSFWLinks(keywords)
-    .slice(0, config.linkTypes.sfw);
+  // Create the markdown link
+  const linkMarkdown = `[${anchorText}](${url})`;
 
-  // Get microsite cross-link suggestions
-  const micrositeSuggestions = getMicrositeSuggestions(micrositeSlug, keywords)
-    .slice(0, config.linkTypes.microsite);
+  // Find where to insert in the sentence (try to insert naturally)
+  const words = relevantSentence.trim().split(' ');
+  const insertPosition = Math.min(Math.floor(words.length * 0.6), words.length - 3);
 
-  return {
-    keywords,
-    sfwLinks: sfwSuggestions.map(item => ({
-      url: item.link.url,
-      anchorOptions: [
-        item.link.naturalOption1,
-        item.link.naturalOption2,
-        item.link.currentAnchor,
-      ],
-      relevanceScore: item.score,
-      topics: item.link.topics,
-    })),
-    micrositeLinks: micrositeSuggestions.map(item => {
-      const relatedMicrosite = micrositeRelationships[item.slug];
-      return {
-        name: relatedMicrosite?.name || item.slug,
-        domain: relatedMicrosite?.domain || `https://${item.slug}.com`,
-        anchorOptions: item.anchorOptions,
-        reason: item.reason,
-        relevanceScore: item.score,
-      };
-    }),
-  };
+  // Create new sentence with link
+  const linkedSentence = [
+    ...words.slice(0, insertPosition),
+    'For comprehensive solutions,',
+    linkMarkdown,
+    'can help.',
+    ...words.slice(insertPosition)
+  ].join(' ');
+
+  // Replace in content
+  return content.replace(relevantSentence, linkedSentence);
+}
+
+/**
+ * Display link suggestion with context
+ */
+function displaySuggestion(paragraph, anchorText, url, linkData) {
+  console.log('\n' + boxen(
+    chalk.bold.cyan('🔗 Link Suggestion'),
+    { padding: 1, margin: 1, borderStyle: 'round', borderColor: 'cyan' }
+  ));
+
+  console.log(chalk.bold('📄 Context:'));
+  console.log(chalk.gray('─'.repeat(80)));
+
+  // Show paragraph with highlighted anchor
+  const highlightedText = paragraph.text.substring(0, 200) + '...';
+  console.log(highlightedText);
+  console.log(chalk.gray('─'.repeat(80)));
+
+  console.log('\n' + chalk.bold('🔗 Proposed Link:'));
+  console.log(chalk.yellow(`   Anchor: ${anchorText}`));
+  console.log(chalk.blue(`   URL: ${url}`));
+  console.log(chalk.gray(`   Relevance Score: ${linkData.score}/10`));
+  console.log(chalk.gray(`   Current Usage: ${linkData.usagePercentage.toFixed(1)}%`));
+}
+
+/**
+ * Record link addition
+ */
+function recordLink(filePath, url, anchorText, trackingData) {
+  trackingData.links.push({
+    file: filePath,
+    url: url,
+    urlDestination: url,
+    anchorText: anchorText,
+    timestamp: new Date().toISOString(),
+  });
+  trackingData.totalLinks++;
+  saveLinkTracking(trackingData);
+}
+
+/**
+ * Display summary table
+ */
+function displaySummary(trackingData) {
+  console.log('\n' + boxen(
+    chalk.bold.green('✅ Link Addition Summary'),
+    { padding: 1, margin: 1, borderStyle: 'round', borderColor: 'green' }
+  ));
+
+  const table = new Table({
+    head: [
+      chalk.cyan('File'),
+      chalk.cyan('Anchor Text'),
+      chalk.cyan('Destination URL')
+    ],
+    colWidths: [30, 30, 50],
+    wordWrap: true
+  });
+
+  trackingData.links.slice(-5).forEach(link => {
+    table.push([
+      path.basename(link.file),
+      chalk.yellow(link.anchorText),
+      chalk.blue(link.url)
+    ]);
+  });
+
+  console.log(table.toString());
+  console.log(chalk.gray(`\nTotal links added: ${trackingData.totalLinks}`));
+}
+
+/**
+ * Process single file interactively
+ */
+async function processSingleFile(filePath) {
+  const spinner = ora('Analyzing content...').start();
+
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const trackingData = loadLinkTracking();
+    const keywords = extractKeywords(content);
+
+    spinner.text = 'Finding relevant links...';
+    const scoredLinks = scoreSFWLinks(keywords, trackingData);
+
+    if (scoredLinks.length === 0) {
+      spinner.fail(chalk.red('No suitable links found (all relevant links are overused)'));
+      return;
+    }
+
+    const topLink = scoredLinks[0];
+    const anchorText = topLink.link.naturalOption1;
+
+    spinner.text = 'Finding best insertion point...';
+    const paragraph = findInsertionPoint(content, keywords);
+
+    if (!paragraph) {
+      spinner.fail(chalk.red('Could not find suitable location for link'));
+      return;
+    }
+
+    spinner.succeed(chalk.green('Analysis complete!'));
+
+    // Display suggestion
+    displaySuggestion(paragraph, anchorText, topLink.link.url, topLink);
+
+    // Ask for confirmation
+    const { shouldAdd } = await inquirer.prompt([{
+      type: 'confirm',
+      name: 'shouldAdd',
+      message: 'Add this link to the file?',
+      default: true,
+    }]);
+
+    if (shouldAdd) {
+      const addSpinner = ora('Adding link to file...').start();
+
+      const updatedContent = insertLink(content, paragraph, anchorText, topLink.link.url);
+      fs.writeFileSync(filePath, updatedContent, 'utf-8');
+
+      recordLink(filePath, topLink.link.url, anchorText, trackingData);
+
+      addSpinner.succeed(chalk.green(`✅ Link added successfully to ${path.basename(filePath)}`));
+
+      displaySummary(trackingData);
+    } else {
+      console.log(chalk.yellow('⏭️  Link skipped'));
+    }
+
+  } catch (error) {
+    spinner.fail(chalk.red(`Error: ${error.message}`));
+  }
+}
+
+/**
+ * Process multiple files in batch mode
+ */
+async function processBatchFiles(micrositeSlug) {
+  console.log(boxen(
+    chalk.bold.cyan(`🔗 Batch Processing: ${micrositeSlug}`),
+    { padding: 1, margin: 1, borderStyle: 'double', borderColor: 'cyan' }
+  ));
+
+  // TODO: Implement batch processing
+  console.log(chalk.yellow('Batch processing coming soon!'));
 }
 
 /**
  * Main execution
  */
-function main() {
-  console.log('🔗 SFW Interlinking Tool\n');
+async function main() {
+  console.log(boxen(
+    chalk.bold.magenta('🔗 SFW Interactive Interlinking Tool'),
+    { padding: 1, margin: 1, borderStyle: 'double', borderColor: 'magenta' }
+  ));
 
   if (argv.file) {
-    // Analyze specific file
-    console.log(`Analyzing file: ${argv.file}`);
-    const content = fs.readFileSync(argv.file, 'utf-8');
-    const micrositeSlug = path.dirname(argv.file).match(/apps\/([^\/]+)/)?.[1] || 'unknown';
-
-    const suggestions = analyzeContent(content, micrositeSlug);
-    console.log('\n📊 Suggestions:\n');
-    console.log(JSON.stringify(suggestions, null, 2));
-
-  } else if (argv.microsite) {
-    // Analyze all content for a microsite
-    console.log(`Analyzing microsite: ${argv.microsite}`);
-    console.log('(Feature coming soon - analyze all blog posts)');
-
-  } else if (argv.all) {
-    // Analyze all microsites
-    console.log('Analyzing all microsites...');
-    console.log('(Feature coming soon - generate full report)');
-
+    if (!fs.existsSync(argv.file)) {
+      console.log(chalk.red(`❌ File not found: ${argv.file}`));
+      process.exit(1);
+    }
+    await processSingleFile(argv.file);
+  } else if (argv.microsite && argv.batch) {
+    await processBatchFiles(argv.microsite);
   } else {
-    console.log('Please specify --file, --microsite, or --all');
-    console.log('Run with --help for usage information');
+    console.log(chalk.yellow('Usage:'));
+    console.log('  Single file:  ' + chalk.cyan('node suggest-links.js --file path/to/file.md'));
+    console.log('  Batch mode:   ' + chalk.cyan('node suggest-links.js --microsite deck-repair --batch'));
   }
 }
 
 // Run the tool
 if (require.main === module) {
-  main();
+  main().catch(error => {
+    console.error(chalk.red('Error:'), error.message);
+    process.exit(1);
+  });
 }
 
-module.exports = { analyzeContent, extractKeywords, scoreSFWLinks };
+module.exports = { extractKeywords, scoreSFWLinks };
