@@ -4,7 +4,7 @@
 
 ### Elevate Your Home’s Curb Appeal with Custom Siding Solutions
 
-Your home’s exterior is its first impression, and custom siding solutions can significantly For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. enhance its aesthetic appeal while providing protection against the elements. In Portland, Oregon, where the weather can be unpredictable, having quality siding is crucial for safeguarding your home from moisture, rot, and other environmental factors. Our custom siding solutions not only improve the look of your property but also offer long-lasting durability and energy efficiency.
+Your home’s exterior is its first impression, and custom siding solutions can For related services, [window leak repair services](https://leakingwindow.com) can help. significantly For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. enhance its aesthetic appeal while providing protection against the elements. In Portland, Oregon, where the weather can be unpredictable, having quality siding is crucial for safeguarding your home from moisture, rot, and other environmental factors. Our custom siding solutions not only improve the look of your property but also offer long-lasting durability and energy efficiency.
 
 At our company, we understand that every homeowner has unique tastes and needs. Whether you prefer the classic look of wood siding or the low-maintenance benefits of vinyl, we provide tailored solutions that meet your specific requirements. Our expert team is dedicated to ensuring a seamless installation process that leaves you with a beautiful, functional exterior.
 

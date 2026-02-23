@@ -26,7 +26,7 @@ Our cleanup protocol follows a detailed plan to contain and remove lead dust saf
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-Portland's older housing stock makes many homes For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. vulnerable to lead dust exposure. The wet climate can contribute to moisture problems that exacerbate the degradation of lead paint, increasing the likelihood of dust and particles becoming airborne [Source: Michael Litchfield, Page 525]. Knowing how to manage these risks is crucial for preserving both health and property value.
+Portland's older housing stock makes many homes For For related services, [flashing repair services](https://flashingrepairs.com) can help. comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. vulnerable to lead dust exposure. The wet climate can contribute to moisture problems that exacerbate the degradation of lead paint, increasing the likelihood of dust and particles becoming airborne [Source: Michael Litchfield, Page 525]. Knowing how to manage these risks is crucial for preserving both health and property value.
 
 ### Common Problems This Service Solves
 - **Lead Contamination**: Lead dust can linger long after renovations if not properly cleaned, posing health risks [Source: Michael Litchfield, Page 525].

@@ -4,7 +4,7 @@
 
 ### Ensure Your Home's Safety with Expert Lead Hazard Control 
 
-Lead hazards in homes, particularly those built before 1978, pose serious For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. health risks, especially to children and pregnant women. Our **Lead Hazard Control Consultation** in Portland, Oregon, focuses on identifying and mitigating these risks through meticulous inspection and professional advice. With many homes in Portland constructed during this period, it is vital to address lead paint and dust issues before they become a health crisis.
+Lead hazards in homes, particularly those built before 1978, pose For related services, [flashing repair services](https://flashingrepairs.com) can help. serious For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. health risks, especially to children and pregnant women. Our **Lead Hazard Control Consultation** in Portland, Oregon, focuses on identifying and mitigating these risks through meticulous inspection and professional advice. With many homes in Portland constructed during this period, it is vital to address lead paint and dust issues before they become a health crisis.
 
 Our certified experts are equipped to provide comprehensive assessments, ensuring your home is safe and compliant with federal regulations. By understanding the potential dangers of lead exposure, you can take proactive measures to protect your family and preserve the integrity of your property.
 

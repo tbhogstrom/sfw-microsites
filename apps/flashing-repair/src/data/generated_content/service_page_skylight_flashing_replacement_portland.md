@@ -138,7 +138,7 @@ Local building codes require adherence to specific standards for skylight instal
 
 ### Seasonal Considerations
 
-The best time for skylight flashing replacement in Portland is typically during the dry summer months, reducing the risk of moisture interference during installation.
+The best time for skylight flashing replacement in Portland is typically during the dry For related services, [window leak repair services](https://leakingwindow.com) can help. summer months, reducing the risk of moisture interference during installation.
 
 ## Ready to Get Started?
 

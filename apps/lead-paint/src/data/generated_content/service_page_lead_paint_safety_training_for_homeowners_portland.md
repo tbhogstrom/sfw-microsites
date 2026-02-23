@@ -123,7 +123,7 @@ The damp climate can accelerate lead paint deterioration, making vigilance even 
 
 ### Climate Factors
 
-Portland's rainy climate can lead to moisture issues that exacerbate lead paint deterioration, making lead safety training particularly important for homeowners.
+Portland's rainy climate can lead to moisture issues that exacerbate lead paint For related services, [trim repair services](https://exteriortrimrepairs.com) can help. deterioration, making lead safety training particularly important for homeowners.
 
 ### Building Codes and Regulations
 

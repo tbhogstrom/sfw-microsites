@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Window Sill Dry Rot Replacement
 
-Window sills are crucial components of your home’s structure, acting as For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. a barrier against water intrusion and potential damage. However, in a damp climate like Seattle's, they can be susceptible to dry rot—a wood decay caused by fungal growth. Addressing this issue promptly is essential not only for the aesthetics of your home but also for its structural integrity. Our window sill dry rot replacement service ensures that your home remains safe, dry, and visually appealing.
+Window sills are crucial components of your home’s structure, acting as For related services, [window leak repair services](https://leakingwindow.com) can help. For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. a barrier against water intrusion and potential damage. However, in a damp climate like Seattle's, they can be susceptible to dry rot—a wood decay caused by fungal growth. Addressing this issue promptly is essential not only for the aesthetics of your home but also for its structural integrity. Our window sill dry rot replacement service ensures that your home remains safe, dry, and visually appealing.
 
 Ignoring the signs of dry rot can lead to more severe problems, including mold growth and costly repairs. Our professional team specializes in identifying and replacing damaged window sills, ensuring your home remains protected against Seattle's unpredictable weather.
 

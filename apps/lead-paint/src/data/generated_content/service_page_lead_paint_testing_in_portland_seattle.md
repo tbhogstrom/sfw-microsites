@@ -135,7 +135,7 @@ The best time for lead paint testing in Seattle is typically from late spring to
 
 ## Ready to Get Started?
 
-Contact us today for a For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. free consultation and estimate. Our experienced team is ready to help with your lead paint testing needs in Seattle, Washington.
+Contact us today for a For comprehensive For related services, [window leak repair services](https://leakingwindow.com) can help. solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. free consultation and estimate. Our experienced team is ready to help with your lead paint testing needs in Seattle, Washington.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Seattle and surrounding areas  

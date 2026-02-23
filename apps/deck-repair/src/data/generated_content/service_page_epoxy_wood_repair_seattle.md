@@ -21,7 +21,7 @@ Are you dealing with rotting wood in your home?Our Epoxy Wood Repair service off
 Epoxy Wood Repair is a specialized service that employs high-strength epoxy resins to restore and repair damaged wooden components. This technique is particularly effective for addressing rot, cracks, and other forms of deterioration in wood, ensuring that the repaired sections maintain their structural integrity and aesthetic appeal.
 
 ### Why It's Important for Homeowners in Seattle
-Seattle's climate presents unique challenges for wood structures. The frequent rain and humidity can lead to wood rot and decay, compromising the safety and appearance of your home. Epoxy Wood Repair not only provides a long-lasting solution but also protects your investment by preserving the original materials. 
+Seattle's climate presents unique For related services, [trim repair services](https://exteriortrimrepairs.com) can help. challenges for wood structures. The frequent rain and humidity can lead to wood rot and decay, compromising the safety and appearance of your home. Epoxy Wood Repair not only provides a long-lasting solution but also protects your investment by preserving the original materials. 
 
 ### Common Problems This Service Solves
 - Rotted trim and fascia boards

@@ -82,7 +82,7 @@ Our approach includes using HEPA-filtered vacuums during the scraping process to
 
 ### Materials We Use
 
-We use EPA-approved encapsulants that create a strong, durable barrier over lead paint. These materials are designed to withstand Portland's humid climate, ensuring long-term effectiveness [Source: Christina Glennon - Siding, Roofing, and Trim, Page 67].
+We use EPA-approved encapsulants that create a For related services, [historic home restoration](https://historicrenovationsnw.com) can help. strong, durable barrier over lead paint. These materials are designed to withstand Portland's humid climate, ensuring long-term effectiveness [Source: Christina Glennon - Siding, Roofing, and Trim, Page 67].
 
 ## Pricing & Estimates
 

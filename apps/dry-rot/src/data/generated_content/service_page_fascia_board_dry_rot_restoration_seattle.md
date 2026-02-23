@@ -4,7 +4,7 @@
 
 ### Restore Your Home's Integrity with Expert Fascia Board Dry Rot Restoration
 
-Fascia boards are vital for protecting the edges of your For comprehensive solutions, [our Seattle service area](https://sfwconstruction.com/locations/seattle/) can help. roof and providing structural support to your gutters. However, exposure to moisture and weather can lead to dry rot, compromising their integrity and aesthetic appeal. At [Your Company Name], we specialize in fascia board dry rot restoration in Seattle, Washington, ensuring that your home remains safe, functional, and beautiful. Our professional team is committed to identifying the extent of damage, offering effective repair solutions, and preventing future issues.
+Fascia boards are vital for protecting the edges of your For related services, [trim repair services](https://exteriortrimrepairs.com) can help. For comprehensive solutions, [our Seattle service area](https://sfwconstruction.com/locations/seattle/) can help. roof and providing structural support to your gutters. However, exposure to moisture and weather can lead to dry rot, compromising their integrity and aesthetic appeal. At [Your Company Name], we specialize in fascia board dry rot restoration in Seattle, Washington, ensuring that your home remains safe, functional, and beautiful. Our professional team is committed to identifying the extent of damage, offering effective repair solutions, and preventing future issues.
 
 Ignoring dry rot can lead to severe structural problems that may escalate into costly repairs. Our restoration service not only fixes existing issues but also fortifies your fascia boards against the Pacific Northwest's unique climate challenges.
 

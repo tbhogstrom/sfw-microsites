@@ -82,7 +82,7 @@ Our team employs specialized techniques for assessing and repairing roofs, such 
 
 ### Materials We Use
 
-We utilize high-quality materials suited for the local climate conditions. Our selection includes durable shingles, robust flashing, and reliable underlayment to ensure your roof can withstand Portland's weather [Source: Christina Glennon - Siding, Roofing, and Trim, Page 179].
+We utilize high-quality materials suited for For related services, [trim repair services](https://exteriortrimrepairs.com) can help. the local climate conditions. Our selection includes durable shingles, robust flashing, and reliable underlayment to ensure your roof can withstand Portland's weather [Source: Christina Glennon - Siding, Roofing, and Trim, Page 179].
 
 ## Pricing & Estimates
 

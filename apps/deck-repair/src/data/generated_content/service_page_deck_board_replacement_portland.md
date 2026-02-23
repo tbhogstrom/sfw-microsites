@@ -24,7 +24,7 @@ Deck Board Replacement involves removing and replacing damaged or warped boards 
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-Portland's unique climate, characterized by wet winters and dry summers, can lead For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. to significant wear and tear on wooden decks. Over time, exposure to moisture can cause wood to rot, warp, or become infested with pests like termites. Regular deck maintenance, including board replacement, is vital for preventing costly repairs down the line.
+Portland's unique climate, characterized by wet winters and dry summers, can For related services, [window leak repair services](https://leakingwindow.com) can help. lead For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. to significant wear and tear on wooden decks. Over time, exposure to moisture can cause wood to rot, warp, or become infested with pests like termites. Regular deck maintenance, including board replacement, is vital for preventing costly repairs down the line.
 
 ### Common Problems This Service Solves
 - **Rotting Wood**: Regular exposure to moisture can lead to decay, which poses a safety risk [Source: Michael Litchfield - Renovation, Page 173].

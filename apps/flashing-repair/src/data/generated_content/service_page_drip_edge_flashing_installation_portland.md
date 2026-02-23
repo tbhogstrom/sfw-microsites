@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Professional Drip Edge Flashing Installation
 
-Drip edge flashing is a critical component of your roofing system that For comprehensive solutions, [siding services in Tualatin](https://sfwconstruction.com/locations/tualatin-siding-contractor/) can help. helps to protect your home from water damage. It directs water away from the roof edges, preventing it from being drawn back under shingles or into your home via capillary action. In Portland, Oregon, where rain is a common occurrence, having a properly installed drip edge is essential to safeguard your property against leaks and moisture-related issues. 
+Drip edge flashing is a critical component of your roofing system For related services, [window leak repair services](https://leakingwindow.com) can help. that For comprehensive solutions, [siding services in Tualatin](https://sfwconstruction.com/locations/tualatin-siding-contractor/) can help. helps to protect your home from water damage. It directs water away from the roof edges, preventing it from being drawn back under shingles or into your home via capillary action. In Portland, Oregon, where rain is a common occurrence, having a properly installed drip edge is essential to safeguard your property against leaks and moisture-related issues. 
 
 Improper installation or lack of drip edge flashing can lead to costly repairs down the line. Our professional installation service ensures that your roof is equipped with the right materials and techniques to keep your home dry and secure. 
 

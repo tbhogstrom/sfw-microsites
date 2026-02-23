@@ -4,7 +4,7 @@
 
 ### Ensure Your Historic Home is Safe and Beautiful
 
-Lead paint removal is an essential service for homeowners in Portland, Oregon, especially those who own properties built before 1978 when the U.S. government banned lead-based paint. This toxic substance poses significant health risks, particularly to children, making its removal not only a home improvement task but a crucial safety measure. Our specialized lead paint removal services ensure that your historic home is not only preserved but also safe for your family and guests.
+Lead paint removal is an essential service for homeowners in Portland, Oregon, especially For related services, [historic home restoration](https://historicrenovationsnw.com) can help. those who own properties built before 1978 when the U.S. government banned lead-based paint. This toxic substance poses significant health risks, particularly to children, making its removal not only a home improvement task but a crucial safety measure. Our specialized lead paint removal services ensure that your historic home is not only preserved but also safe for your family and guests.
 
 If your home has peeling, chipping, or flaking paint, it can release harmful lead dust into the environment. By addressing these issues through our lead paint removal services, you can enhance your home's aesthetics while safeguarding your loved ones. Our team employs certified methods under EPA guidelines to ensure safety and compliance throughout the removal process.
 

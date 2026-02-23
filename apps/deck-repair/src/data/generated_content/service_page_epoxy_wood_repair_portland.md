@@ -4,7 +4,7 @@
 
 ## Hero Section
 ### Restore Your Wood with Expert Epoxy Wood Repair in Portland, Oregon
-Are you dealing with rotted or For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. damaged wood in your home? Our **Epoxy Wood Repair** service offers a permanent solution that restores your wood to its former strength and integrity. Using high-strength epoxy, we ensure a durable fix that withstands Portland’s unique climate conditions.
+Are you dealing with rotted or For comprehensive For related services, [historic home restoration](https://historicrenovationsnw.com) can help. solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. damaged wood in your home? Our **Epoxy Wood Repair** service offers a permanent solution that restores your wood to its former strength and integrity. Using high-strength epoxy, we ensure a durable fix that withstands Portland’s unique climate conditions.
 
 **Key Benefits:**
 - **Long-Lasting Repairs:** High-strength epoxy bonds effectively to wood, ensuring durability and longevity.

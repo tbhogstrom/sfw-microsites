@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Professional Roof Cricket Installation
 
-When it comes to maintaining the integrity of your home, proper roof cricket installation for chimneys is essential. A roof cricket, often referred to as a chimney saddle, is a sloped structure designed to divert water away from your chimney. This simple yet effective addition prevents water pooling and reduces the risk of leaks, mold, and structural damage that can arise from water intrusion. In Portland, where rainfall is abundant, ensuring your chimney is equipped with a properly installed cricket is not just a recommendation; it’s a necessity.
+When it comes to maintaining the integrity of your home, For related services, [professional siding repair](https://sidingrepairexperts.com) can help. proper roof cricket installation for chimneys is essential. A roof cricket, often referred to as a chimney saddle, is a sloped structure designed to divert water away from your chimney. This simple yet effective addition prevents water pooling and reduces the risk of leaks, mold, and structural damage that can arise from water intrusion. In Portland, where rainfall is abundant, ensuring your chimney is equipped with a properly installed cricket is not just a recommendation; it’s a necessity.
 
 Crickets are particularly important for wider chimneys, as they effectively channel water and snow away from the chimney’s base, preventing it from becoming a source of leaks. By installing a cricket, homeowners can extend the lifespan of their roofing system and chimney, saving money on repairs and maintaining the value of their property.
 

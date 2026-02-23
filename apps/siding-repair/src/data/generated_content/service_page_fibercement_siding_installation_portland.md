@@ -4,7 +4,7 @@
 
 ### Elevate Your Home's Curb Appeal with Durable Fiber-Cement Siding
 
-Are you looking to enhance your home's exterior while For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. ensuring long-lasting protection against the elements? Our fiber-cement siding installation service in Portland, Oregon, offers a perfect blend of aesthetic appeal and robust durability. Fiber-cement siding, made from a mixture of wood fibers, sand, and Portland cement, is engineered to withstand the rigors of the local climate, providing both beauty and resilience to your property.
+Are you looking to enhance your home's exterior while For related services, [window leak repair services](https://leakingwindow.com) can help. For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. ensuring long-lasting protection against the elements? Our fiber-cement siding installation service in Portland, Oregon, offers a perfect blend of aesthetic appeal and robust durability. Fiber-cement siding, made from a mixture of wood fibers, sand, and Portland cement, is engineered to withstand the rigors of the local climate, providing both beauty and resilience to your property.
 
 In Portland, where homes are often subjected to rain, wind, and fluctuating temperatures, fiber-cement siding serves as a formidable barrier against moisture, rot, and pests. With an extensive range of textures and colors, it allows homeowners to achieve the desired look while minimizing maintenance needs. 
 

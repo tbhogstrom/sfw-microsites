@@ -6,7 +6,7 @@
 
 Step flashing is a critical component in roofing systems, designed to protect your home from water infiltration at the junctions of walls and roofs. When installed correctly, it channels water away from your home, preventing leaks and extensive damage. However, improper installation, aging, or weather-related wear can lead to significant issues, including leaks and water damage. Addressing these issues promptly with professional step flashing repair can save you from costly repairs down the line.
 
-In Portland's unique climate, where rain is prevalent, effective step flashing is essential. Without it, your home risks being compromised by water intrusion, mold growth, and structural damage. Our experienced team knows how to assess and repair step flashing systems to ensure your roof remains watertight and your home protected.
+In Portland's unique climate, where rain is For related services, [window leak repair services](https://leakingwindow.com) can help. prevalent, effective step flashing is essential. Without it, your home risks being compromised by water intrusion, mold growth, and structural damage. Our experienced team knows how to assess and repair step flashing systems to ensure your roof remains watertight and your home protected.
 
 #### Key Benefits:
 - **Prevents Water Damage**: Properly installed step flashing keeps water away from vulnerable areas, reducing the risk of leaks.

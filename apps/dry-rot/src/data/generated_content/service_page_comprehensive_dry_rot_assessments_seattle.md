@@ -6,7 +6,7 @@
 
 Dry rot can pose a serious threat to the structural integrity of your home, often lurking undetected until it’s too late. Our **Comprehensive Dry Rot Assessments** in Seattle ensure that your property is thoroughly evaluated for any signs of rot and damage. Our team of experts utilizes advanced techniques and local knowledge to identify issues early, providing you with peace of mind and safeguarding your investment.
 
-With the unique climate of Seattle, where moisture levels can lead to rapid wood For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. decay, understanding the extent of potential dry rot is crucial. Not only does our assessment help you avoid costly repairs down the road, but it also ensures the safety and comfort of your living environment.
+With the unique climate of Seattle, where moisture levels can lead to For related services, [professional siding repair](https://sidingrepairexperts.com) can help. rapid wood For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. decay, understanding the extent of potential dry rot is crucial. Not only does our assessment help you avoid costly repairs down the road, but it also ensures the safety and comfort of your living environment.
 
 #### Key Benefits:
 - **Early Detection**: Identify dry rot before it spreads and causes significant damage.

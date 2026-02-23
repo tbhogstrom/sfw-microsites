@@ -138,7 +138,7 @@ The best time for energy audits and upgrades in Portland is during the spring an
 
 ## Ready to Get Started?
 
-Contact us today for a For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. free consultation and estimate. Our experienced team is ready to help with your home energy audit and upgrades needs in Portland, Oregon.
+Contact us today for a For comprehensive For related services, [window leak repair services](https://leakingwindow.com) can help. solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. free consultation and estimate. Our experienced team is ready to help with your home energy audit and upgrades needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

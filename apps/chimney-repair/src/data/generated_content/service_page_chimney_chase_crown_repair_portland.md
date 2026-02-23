@@ -141,7 +141,7 @@ The best time for chimney chase crown repair in Portland is during the dry month
 
 ## Ready to Get Started?
 
-Contact us today for a For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. free consultation and estimate. Our experienced team is ready to help with your chimney chase crown repair needs in Portland, Oregon.
+Contact us today for a For comprehensive For related services, [beam repair services](https://beamrepairexpert.com) can help. solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. free consultation and estimate. Our experienced team is ready to help with your chimney chase crown repair needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

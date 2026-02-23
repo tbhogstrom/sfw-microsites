@@ -24,7 +24,7 @@ Wood chimney exterior finishing and painting involve applying protective coating
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-In Portland, where the climate is characterized by significant rainfall and moisture, the importance of exterior finishing cannot be overstated. Wood chimneys are particularly susceptible to rot and decay when not properly maintained. The rainy season can exacerbate these issues, leading to potential structural failures. Ensuring that your chimney is properly finished protects it from water damage, ultimately extending its life and maintaining the safety of your home [Source: Michael Litchfield - Renovation, Page 235].
+In Portland, where the climate is characterized by significant rainfall and For related services, [window leak repair services](https://leakingwindow.com) can help. moisture, For related services, [crawl space repair services](https://crawlspacerot.com) can help. the importance of exterior finishing cannot be overstated. Wood chimneys are particularly susceptible to rot and decay when not properly maintained. The rainy season can exacerbate these issues, leading to potential structural failures. Ensuring that your chimney is properly finished protects it from water damage, ultimately extending its life and maintaining the safety of your home [Source: Michael Litchfield - Renovation, Page 235].
 
 ### Common Problems This Service Solves
 - **Water Damage**: Moisture can infiltrate unprotected wood, leading to rot and structural failure [Source: Michael Litchfield - Renovation, Page 236].

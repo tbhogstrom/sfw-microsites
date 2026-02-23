@@ -24,7 +24,7 @@ Bay window leak repair involves a comprehensive assessment and repair process to
 
 1. **Inspection**: Identifying the source of the leak, which can arise from faulty installation, damaged flashing, deteriorated seals, or even rotting wood [Source: Michael Litchfield - Renovation, Page 140].
 2. **Repair Techniques**: Utilizing advanced methods such as applying self-adhesive flashing tape, resealing the glass with high-quality glazing compounds, and replacing damaged wood as necessary [Source: Michael Litchfield - Renovation, Page 156].
-3.**Weatherproofing**: Ensuring that your bay windows are properly sealed and insulated to prevent future leaks For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. and air infiltration [Source: Michael Litchfield - Renovation, Page 141].
+3.**Weatherproofing**: Ensuring that your bay windows are properly sealed and insulated to prevent For related services, [beam repair services](https://beamrepairexpert.com) can help. future leaks For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. and air infiltration [Source: Michael Litchfield - Renovation, Page 141].
 
 ### Why It's Important for Homeowners in Portland, Oregon
 

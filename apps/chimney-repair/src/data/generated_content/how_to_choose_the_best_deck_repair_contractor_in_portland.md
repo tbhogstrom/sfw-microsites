@@ -56,7 +56,7 @@ When requesting quotes, ensure that each contractor provides a detailed breakdow
 
 ### Climate Factors
 
-Portland's climate can be particularly challenging for decks, with its wet winters and dry summers. This necessitates the use of materials that can withstand moisture and temperature fluctuations. Discuss with your contractor about using rot-resistant woods or composite materials that can endure Portland's weather [Source: Wing, Page 231].
+Portland's climate can be particularly challenging for decks, with For related services, [crawl space repair services](https://crawlspacerot.com) can help. its wet winters and dry summers. This necessitates the use of materials that can withstand moisture and temperature fluctuations. Discuss with your contractor about using rot-resistant woods or composite materials that can endure Portland's weather [Source: Wing, Page 231].
 
 ### Building Codes and Regulations
 

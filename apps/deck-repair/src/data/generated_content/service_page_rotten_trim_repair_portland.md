@@ -21,7 +21,7 @@ Is your home’s exterior trim showing signs of rot and decay? Our specialized R
 Rotten Trim Repair involves the careful assessment and restoration of exterior trim that has succumbed to rot, typically caused by prolonged exposure to moisture and inadequate maintenance. This critical service not only enhances the appearance of your home but also protects it from further water damage.
 
 ### Why It's Important for Homeowners in Portland, Oregon
-Portland's damp climate can accelerate the For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. deterioration of wood trim. Homeowners often encounter issues such as peeling paint, water stains, and visible rot around windows and doors. Repairing rotten trim promptly helps prevent structural damage and costly repairs down the line.
+Portland's damp climate can accelerate the For comprehensive For related services, [window leak repair services](https://leakingwindow.com) can help. solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. deterioration of wood trim. Homeowners often encounter issues such as peeling paint, water stains, and visible rot around windows and doors. Repairing rotten trim promptly helps prevent structural damage and costly repairs down the line.
 
 ### Common Problems This Service Solves
 - **Water Damage:** Addressing the root cause of rot to prevent future issues.

@@ -26,7 +26,7 @@ Are you concerned about water damage to your deck? Our **Deck Drainage Solutions
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Seattle's unique climate, characterized by frequent rainfall and high For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. humidity, makes effective deck drainage essential. Water accumulation can lead to structural issues, including wood rot, mold growth, and decreased aesthetics. By investing in professional deck drainage solutions, homeowners can prevent costly repairs and maintain their outdoor living spaces.
+Seattle's unique climate, characterized by frequent rainfall and high For related services, [trim repair services](https://exteriortrimrepairs.com) can help. For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. humidity, makes effective deck drainage essential. Water accumulation can lead to structural issues, including wood rot, mold growth, and decreased aesthetics. By investing in professional deck drainage solutions, homeowners can prevent costly repairs and maintain their outdoor living spaces.
 
 ### Common Problems This Service Solves
 

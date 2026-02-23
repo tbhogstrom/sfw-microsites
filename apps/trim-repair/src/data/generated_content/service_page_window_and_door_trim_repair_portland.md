@@ -4,7 +4,7 @@
 
 ### Elevate Your Home's Aesthetics with Expert Trim Repair
 
-Your home's trim is not just a decorative element; it serves a vital For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. purpose in protecting your windows and doors from the elements. Over time, exposure to moisture and weather can lead to deterioration, compromising both the function and appearance of your home. Our window and door trim repair service in Portland, Oregon, ensures that your trim not only looks its best but also performs optimally, safeguarding your home from potential damage.
+Your home's trim is not just a decorative element; it serves a For related services, [window leak repair services](https://leakingwindow.com) can help. vital For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. purpose in protecting your windows and doors from the elements. Over time, exposure to moisture and weather can lead to deterioration, compromising both the function and appearance of your home. Our window and door trim repair service in Portland, Oregon, ensures that your trim not only looks its best but also performs optimally, safeguarding your home from potential damage.
 
 We specialize in repairing, replacing, and enhancing trim around windows and doors, using high-quality materials and proven techniques. Whether you face peeling paint, rot, or mismatched styles, our team is dedicated to restoring your home's trim to its original glory.
 

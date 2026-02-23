@@ -6,7 +6,7 @@ Structural dry rot can be a homeowner's worst nightmare. It's insidious, often h
 
 ### What is Structural Dry Rot?
 
-Structural dry rot refers to the decay of wood caused by fungal growth, For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. specifically the *Serpula lacrymans* fungus, which thrives in moist environments. Unlike other forms of rot, dry rot can spread rapidly and is capable of damaging wood even in relatively dry conditions due to its ability to transport moisture through the air.
+Structural dry rot refers to the decay of wood caused by fungal For related services, [crawl space repair services](https://crawlspacerot.com) can help. growth, For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. specifically the *Serpula lacrymans* fungus, which thrives in moist environments. Unlike other forms of rot, dry rot can spread rapidly and is capable of damaging wood even in relatively dry conditions due to its ability to transport moisture through the air.
 
 ### Signs of Dry Rot
 

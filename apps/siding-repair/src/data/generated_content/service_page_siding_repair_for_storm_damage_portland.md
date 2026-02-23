@@ -131,7 +131,7 @@ Portland’s wet winters and humidity can lead to quicker deterioration of sidin
 
 ### Climate Factors
 
-Portland’s climate features wet winters and mild summers, which can lead to increased moisture exposure for siding. Regular maintenance is crucial to prevent damage from mold or rot.
+Portland’s climate features wet winters and mild summers, which can For related services, [crawl space repair services](https://crawlspacerot.com) can help. lead to increased moisture exposure for siding. Regular maintenance is crucial to prevent damage from mold or rot.
 
 ### Building Codes and Regulations
 

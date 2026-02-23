@@ -29,7 +29,7 @@ Porch column dry rot repair involves the assessment and restoration of wooden co
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Seattle's damp climate can contribute to the rapid development of dry rot in wooden structures, especially in porch columns that are exposed to moisture. With the average annual rainfall exceeding 37 inches, untreated wood is particularly susceptible to rot and decay. Addressing this issue promptly not only maintains your home's aesthetic appeal but also complies with local building codes, ensuring safety and structural integrity.
+Seattle's damp climate can contribute to the rapid development of dry rot in wooden For related services, [trim repair services](https://exteriortrimrepairs.com) can help. structures, especially in porch columns that are exposed to moisture. With the average annual rainfall exceeding 37 inches, untreated wood is particularly susceptible to rot and decay. Addressing this issue promptly not only maintains your home's aesthetic appeal but also complies with local building codes, ensuring safety and structural integrity.
 
 ### Common Problems This Service Solves
 - **Structural Weakness**: Compromised columns can lead to safety hazards if left untreated [Source: Michael Litchfield, Renovation, Page 173].

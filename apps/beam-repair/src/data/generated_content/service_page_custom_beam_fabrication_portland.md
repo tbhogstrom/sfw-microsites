@@ -125,7 +125,7 @@ Yes, Portland's climate can affect wood beams, so we recommend materials that ca
 
 ### Climate Factors
 
-Portland's rainy climate necessitates the use of weather-resistant materials For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. to prevent rot and structural damage. Selecting beams designed for moisture resistance is crucial for long-term durability.
+Portland's rainy climate necessitates the use of weather-resistant materials For related services, [flashing repair services](https://flashingrepairs.com) can help. For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. to prevent rot and structural damage. Selecting beams designed for moisture resistance is crucial for long-term durability.
 
 ### Building Codes and Regulations
 

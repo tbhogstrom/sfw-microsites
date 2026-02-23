@@ -24,7 +24,7 @@ Chimney chase repair and rebuilding involves inspecting, repairing, or completel
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-Portland’s climate, characterized by significant rainfall and moisture, can lead to rapid deterioration of chimney chases. The constant exposure to damp conditions may result in cracking, warping, and other structural issues that compromise the integrity of your chimney system. The local building codes necessitate proper chimney construction and maintenance to ensure safety and efficiency, making timely repairs crucial for any homeowner in the area.
+Portland’s climate, characterized by significant rainfall and moisture, can For related services, [flashing repair services](https://flashingrepairs.com) can help. lead to rapid deterioration of chimney chases. The constant exposure to damp conditions may result in cracking, warping, and other structural issues that compromise the integrity of your chimney system. The local building codes necessitate proper chimney construction and maintenance to ensure safety and efficiency, making timely repairs crucial for any homeowner in the area.
 
 ### Common Problems This Service Solves
 - **Cracked or Missing Flue Tiles**: These allow superheated gases to escape, potentially igniting surrounding materials [Source: Michael Litchfield - Renovation, Page 22].

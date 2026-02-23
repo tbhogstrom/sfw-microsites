@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Step Flashing Installation
 
-Step flashing is a critical component in roofing that ensures your For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. home remains watertight, especially during Seattle's rain-heavy months. Proper installation of step flashing is essential to prevent leaks and water damage, which can lead to costly repairs and a decline in your home's value. If you notice water stains on your ceilings, peeling paint, or musty odors, these may be signs of improper flashing installation.
+Step flashing is a critical component in roofing that ensures For related services, [window leak repair services](https://leakingwindow.com) can help. For related services, [professional chimney repair services](https://woodchimneyrepair.com) can help. your For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. home remains watertight, especially during Seattle's rain-heavy months. Proper installation of step flashing is essential to prevent leaks and water damage, which can lead to costly repairs and a decline in your home's value. If you notice water stains on your ceilings, peeling paint, or musty odors, these may be signs of improper flashing installation.
 
 Our team specializes in step flashing installation and repair, utilizing the best techniques and materials to safeguard your home. We understand the unique challenges posed by Seattle's climate, and we are dedicated to providing solutions that not only meet but exceed local building codes.
 

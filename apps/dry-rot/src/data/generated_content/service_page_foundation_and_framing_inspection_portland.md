@@ -4,7 +4,7 @@
 
 ### Ensure Your Home's Safety and Stability
 
-A comprehensive foundation and framing inspection is crucial for maintaining For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. the long-term stability and safety of your home. In Portland, where seasonal rains and varied soil conditions can impact structural integrity, early detection of potential issues can save homeowners from costly repairs and safety hazards. Our seasoned inspectors assess the foundation and framing elements of your property, identifying problems such as cracks, rot, or structural misalignments that could lead to severe complications down the line.
+A comprehensive foundation and framing inspection is crucial for For related services, [crawl space repair services](https://crawlspacerot.com) can help. maintaining For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. the long-term stability and safety of your home. In Portland, where seasonal rains and varied soil conditions can impact structural integrity, early detection of potential issues can save homeowners from costly repairs and safety hazards. Our seasoned inspectors assess the foundation and framing elements of your property, identifying problems such as cracks, rot, or structural misalignments that could lead to severe complications down the line.
 
 Investing in a foundation and framing inspection not only protects your property value but also enhances peace of mind. With our expert team, you can be confident that your home is built on a solid foundation, both literally and figuratively.
 

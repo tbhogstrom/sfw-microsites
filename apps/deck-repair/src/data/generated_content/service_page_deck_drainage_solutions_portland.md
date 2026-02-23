@@ -19,7 +19,7 @@ Maintaining the integrity of your deck is crucial for its longevity, especially 
 ## Service Overview
 
 ### What are Deck Drainage Solutions?
-Deck Drainage Solutions encompass a range of techniques and systems designed to manage excess water on and around your deck. This service is essential for homeowners in Portland, Oregon, where heavy rains can cause moisture buildup and lead to structural damage.
+Deck Drainage Solutions encompass a range of techniques and systems designed to For related services, [flashing repair services](https://flashingrepairs.com) can help. manage excess water on and around your deck. This service is essential for homeowners in Portland, Oregon, where heavy rains can cause moisture buildup and lead to structural damage.
 
 ### Importance for Homeowners
 In Portland’s wet climate, effective water management is critical. Without proper drainage, water can seep into deck materials, causing rot, mold growth, and even compromising the structural integrity of your home. Our solutions include the installation of drainage systems that direct water away from your deck, ensuring it remains safe, dry, and enjoyable.

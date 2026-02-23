@@ -6,7 +6,7 @@
 
 Seattle is home to a treasure trove of historic properties, each telling a unique story through its architecture and design. Historic home restoration is not merely a service; it's a commitment to preserving the history and charm of these beautiful residences while enhancing their functionality and safety. Whether you own a Victorian, Craftsman, or any other vintage home, our expert restoration services ensure that your property remains a stunning piece of history for generations to come.
 
-With Seattle's diverse climate and rich architectural heritage, maintaining the integrity of historic homes is paramount. Our restoration services address common issues such as weather damage, outdated systems, and structural integrity, allowing you to enjoy your home to its fullest. We focus on using traditional techniques alongside modern materials to create a seamless blend of old and new, ensuring that your home remains both beautiful and functional.
+With Seattle's diverse climate and rich architectural heritage, maintaining For related services, [window leak repair services](https://leakingwindow.com) can help. the integrity of historic homes is paramount. Our restoration services address common issues such as weather damage, outdated systems, and structural integrity, allowing you to enjoy your home to its fullest. We focus on using traditional techniques alongside modern materials to create a seamless blend of old and new, ensuring that your home remains both beautiful and functional.
 
 #### Key Benefits:
 - **Preservation of Character**: Maintain the unique architectural features and historical significance of your home.

@@ -4,7 +4,7 @@
 
 ### Ensure Safety and Compliance with Professional Lead Paint Inspections
 
-Lead paint is a serious health hazard, For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. especially in homes built before 1978. In Portland, Oregon, where many older homes are prevalent, ensuring your property is free from lead-based paint is crucial. Our Lead Paint Inspection Services provide thorough testing and assessment to identify any lead risks in your home. We use state-of-the-art techniques and adhere to the EPA’s Renovation, Repair, and Painting (RRP) regulations to ensure the safety of your family and compliance with local laws.
+Lead paint is a serious health hazard, For comprehensive For related services, [window leak repair services](https://leakingwindow.com) can help. solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. especially in homes built before 1978. In Portland, Oregon, where many older homes are prevalent, ensuring your property is free from lead-based paint is crucial. Our Lead Paint Inspection Services provide thorough testing and assessment to identify any lead risks in your home. We use state-of-the-art techniques and adhere to the EPA’s Renovation, Repair, and Painting (RRP) regulations to ensure the safety of your family and compliance with local laws.
 
 Lead exposure can lead to serious health issues, particularly for children and pregnant women. With our expert inspections, you can take proactive steps to mitigate risks associated with lead paint, ensuring a safe living environment. 
 

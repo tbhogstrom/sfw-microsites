@@ -4,7 +4,7 @@
 
 ### Restore Your Home’s Beauty and Integrity with Professional Wood Siding Repair
 
-Your home’s exterior is its first line of defense against For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. the elements, particularly in Portland’s diverse weather conditions. Wood siding not only enhances the aesthetic appeal of your property but also plays a crucial role in insulation and structural integrity. Over time, exposure to sun, rain, and wind can lead to damage, including cracks, rot, and peeling paint. Our specialized wood siding repair services are designed to address these issues, ensuring your home remains protected while maintaining its charm.
+Your home’s exterior is its first line of defense against For related services, [historic home restoration](https://historicrenovationsnw.com) can help. For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. the elements, particularly in Portland’s diverse weather conditions. Wood siding not only enhances the aesthetic appeal of your property but also plays a crucial role in insulation and structural integrity. Over time, exposure to sun, rain, and wind can lead to damage, including cracks, rot, and peeling paint. Our specialized wood siding repair services are designed to address these issues, ensuring your home remains protected while maintaining its charm.
 
 Whether you’re dealing with minor cosmetic issues or significant structural damage, timely wood siding repair is essential. Our team of experts will assess the condition of your siding and recommend the best course of action, providing solutions that restore both function and appearance.
 

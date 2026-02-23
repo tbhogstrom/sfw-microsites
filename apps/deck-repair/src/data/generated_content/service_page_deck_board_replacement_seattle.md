@@ -30,7 +30,7 @@ For homeowners in Seattle, the unique climate—characterized by frequent rain a
 
 ### Common Problems This Service Solves
 
-1.**Rotting Wood:** Rotted boards can lead to For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. structural weaknesses, posing safety risks.
+1.**Rotting Wood:** Rotted boards can lead to For related services, [professional siding repair](https://sidingrepairexperts.com) can help. For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. structural weaknesses, posing safety risks.
 2. **Warping and Splitting:** Exposure to moisture can cause boards to warp or split, making them dangerous to walk on.
 3. **Insect Infestation:** Damaged wood is more susceptible to pests like termites, which can cause further damage.
 4. **Aesthetic Deterioration:** Faded, splintered, or stained boards detract from the beauty of your outdoor space.

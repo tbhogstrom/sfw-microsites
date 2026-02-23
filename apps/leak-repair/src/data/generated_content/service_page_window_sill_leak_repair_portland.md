@@ -4,7 +4,7 @@
 
 ### Protect Your Home from Water Damage with Expert Window Sill Leak Repair
 
-Water intrusion can lead to severe problems for homeowners, particularly For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. in a rainy climate like Portland, Oregon. A window sill leak may seem minor, but if left unaddressed, it can result in costly damage to your walls, flooring, and even the foundation of your home. Our window sill leak repair service ensures that your windows remain watertight, protecting both your home’s structural integrity and your peace of mind. 
+Water intrusion can lead to severe problems for homeowners, particularly For related services, [flashing repair services](https://flashingrepairs.com) can help. For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. in a rainy climate like Portland, Oregon. A window sill leak may seem minor, but if left unaddressed, it can result in costly damage to your walls, flooring, and even the foundation of your home. Our window sill leak repair service ensures that your windows remain watertight, protecting both your home’s structural integrity and your peace of mind. 
 
 We specialize in identifying the root cause of leaks, repairing any damage, and implementing preventative measures to ensure you remain dry and secure. Don’t let a simple leak turn into a major renovation project—our dedicated team is here to help!
 

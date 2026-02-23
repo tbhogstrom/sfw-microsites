@@ -127,7 +127,7 @@ The moisture in Seattle can lead to mold and rot in lower-quality materials. We 
 
 ### Climate Factors
 
-Seattle's humid climate necessitates the use of materials that can withstand moisture without warping or rotting. Our site-made moldings are crafted from durable materials that are ideal for local conditions.
+Seattle's humid climate necessitates the use of materials that For related services, [window leak repair services](https://leakingwindow.com) can help. can withstand moisture without warping or rotting. Our site-made moldings are crafted from durable materials that are ideal for local conditions.
 
 ### Building Codes and Regulations
 

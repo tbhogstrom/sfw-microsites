@@ -24,7 +24,7 @@ Beam replacement involves the careful removal and installation of structural bea
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-Portland's unique climate, characterized by wet winters, For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. poses specific challenges for homeowners. Prolonged exposure to moisture can lead to rot and structural failure in wooden beams. Additionally, older homes in the area may not meet current building codes, increasing the importance of timely beam replacement to ensure safety and compliance with local regulations.
+Portland's unique climate, characterized by wet winters, For comprehensive For related services, [crawl space repair services](https://crawlspacerot.com) can help. solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. poses specific challenges for homeowners. Prolonged exposure to moisture can lead to rot and structural failure in wooden beams. Additionally, older homes in the area may not meet current building codes, increasing the importance of timely beam replacement to ensure safety and compliance with local regulations.
 
 ### Common Problems This Service Solves
 - **Rot and Decay**: Moisture damage can compromise beams, making replacements necessary for safety [Source: Litchfield, Page 247].

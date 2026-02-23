@@ -18,7 +18,7 @@ Leaking windows can cause significant problems in your home, leading to water da
 
 ### What is Leaking Window Repair and Waterproofing?
 
-Leaking window repair involves identifying the source of leaks and For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. implementing effective solutions to waterproof your windows. This service includes assessing the condition of window frames, applying flashing tape to seal gaps, and ensuring that all components are properly aligned to prevent water intrusion. We employ techniques such as using flexible, self-adhesive flashing tape to create a watertight seal around window frames, which is critical in a climate like Seattle's, where rain is frequent and persistent [Source: Michael Litchfield, Page 140].
+Leaking window repair involves identifying the source of leaks For related services, [flashing repair services](https://flashingrepairs.com) can help. and For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. implementing effective solutions to waterproof your windows. This service includes assessing the condition of window frames, applying flashing tape to seal gaps, and ensuring that all components are properly aligned to prevent water intrusion. We employ techniques such as using flexible, self-adhesive flashing tape to create a watertight seal around window frames, which is critical in a climate like Seattle's, where rain is frequent and persistent [Source: Michael Litchfield, Page 140].
 
 ### Why It's Important for Homeowners in Seattle, Washington
 

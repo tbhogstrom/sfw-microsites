@@ -20,7 +20,7 @@ Whether your home requires minor repairs or extensive renovations, our experienc
 
 ### What is Historic Home Restoration?
 
-Historic home restoration involves carefully repairing, preserving, and enhancing the original features of For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. older homes to restore them to their former glory. This can include everything from repairing intricate woodwork and restoring original windows to updating plumbing and electrical systems while respecting the home’s historical context. According to Litchfield, “Taking care of a home, keeping it healthy, often starts outside where the siding, roofing, and trim are a home’s first line of defense against the sun, wind, and rain” [Source: Renovation, Page 8].
+Historic home restoration involves carefully repairing, preserving, and enhancing the original features For related services, [lead paint removal services](https://leadpaintprofessionals.com) can help. of For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. older homes to restore them to their former glory. This can include everything from repairing intricate woodwork and restoring original windows to updating plumbing and electrical systems while respecting the home’s historical context. According to Litchfield, “Taking care of a home, keeping it healthy, often starts outside where the siding, roofing, and trim are a home’s first line of defense against the sun, wind, and rain” [Source: Renovation, Page 8].
 
 ### Why It's Important for Homeowners in Portland, Oregon
 

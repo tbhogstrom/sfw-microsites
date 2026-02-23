@@ -26,7 +26,7 @@ Proper flashing installation is vital; it must be positioned correctly to divert
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-Portland's climate, characterized by its long rainy seasons, makes effective flashing For comprehensive solutions, [repair chimney siding and framing](https://sfwconstruction.com/chimney-chase-repair/) can help. solutions essential for preventing water-related issues in homes. The risk of leaks from improper flashing can lead to significant damage, including compromised structural integrity and costly repairs. Local building codes necessitate proper flashing installations, making it imperative to work with experienced professionals who understand the specific requirements and challenges of the Portland area.
+Portland's climate, characterized by its long rainy seasons, makes effective flashing For related services, [professional chimney repair services](https://woodchimneyrepair.com) can help. For comprehensive solutions, [repair chimney siding and framing](https://sfwconstruction.com/chimney-chase-repair/) can help. solutions essential for preventing water-related issues in homes. The risk of leaks from improper flashing can lead to significant damage, including compromised structural integrity and costly repairs. Local building codes necessitate proper flashing installations, making it imperative to work with experienced professionals who understand the specific requirements and challenges of the Portland area.
 
 ### Common Problems This Service Solves
 - **Water Leaks**: Improperly installed or old flashing can lead to leaks, especially around chimneys and vents, causing structural damage over time [Source: Glennon, Siding, Roofing, and Trim, Page 180].

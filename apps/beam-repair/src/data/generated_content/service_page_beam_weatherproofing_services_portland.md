@@ -4,7 +4,7 @@
 
 ### Protect Your Home from the Elements with Our Expert Beam Weatherproofing Solutions
 
-Weatherproofing your beams is not just a precaution; it is an essential part For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. of maintaining the integrity and safety of your home. In Portland, Oregon, where the climate can be unpredictable with heavy rains and occasional snow, ensuring your structural beams are protected from moisture and rot is critical. Our Beam Weatherproofing Services help prevent water intrusion, which can lead to significant structural damage and costly repairs down the line.
+Weatherproofing your beams is not just a precaution; it is an For related services, [flashing repair services](https://flashingrepairs.com) can help. essential part For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. of maintaining the integrity and safety of your home. In Portland, Oregon, where the climate can be unpredictable with heavy rains and occasional snow, ensuring your structural beams are protected from moisture and rot is critical. Our Beam Weatherproofing Services help prevent water intrusion, which can lead to significant structural damage and costly repairs down the line.
 
 Our team of professionals utilizes high-quality materials and proven techniques to create a robust weatherproof barrier around your beams. This service not only safeguards your property but also enhances its overall value and longevity.
 

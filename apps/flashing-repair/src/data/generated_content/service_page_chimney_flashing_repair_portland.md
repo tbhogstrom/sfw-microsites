@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Chimney Flashing Repair
 
-A well-functioning chimney is crucial for maintaining For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. your home's integrity and safety. Chimney flashing is the metal barrier that prevents water from seeping into your home where the chimney meets the roof. Over time, weather, age, and improper installation can lead to leaks, rot, and extensive damage to your property. Our chimney flashing repair service in Portland, Oregon, ensures your chimney is adequately sealed, protecting your home from costly water damage and keeping your family safe.
+A well-functioning chimney is crucial for maintaining For related services, [window leak repair services](https://leakingwindow.com) can help. For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. your home's integrity and safety. Chimney flashing is the metal barrier that prevents water from seeping into your home where the chimney meets the roof. Over time, weather, age, and improper installation can lead to leaks, rot, and extensive damage to your property. Our chimney flashing repair service in Portland, Oregon, ensures your chimney is adequately sealed, protecting your home from costly water damage and keeping your family safe.
 
 Our experienced team understands the unique challenges faced by homeowners in Portland, including the city's rainy climate and the potential for rapid deterioration of roof structures. By addressing chimney flashing issues promptly, we help you avoid more significant problems down the line.
 
