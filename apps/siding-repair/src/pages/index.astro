@@ -1,12 +1,44 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ } from '@sfw/ui/types';
+import type { FAQ, Service } from '@sfw/ui/types';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['siding-repair'];
-const stats = [  { value: '20', suffix: '+', label: 'Years Experience' },  { value: '1000', suffix: '+', label: 'Projects Completed' },  { value: '99', suffix: '%', label: 'Customer Satisfaction' },  { value: '24', suffix: '/7', label: 'Available' },];
+const stats = [
+  { value: '20', suffix: '+', label: 'Years Experience' },
+  { value: '1000', suffix: '+', label: 'Projects Completed' },
+  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
+  { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const services: Service[] = [
+  {
+    title: 'Siding Panel Repair and Replacement',
+    description: 'Expert replacement of damaged siding panels with proper moisture barriers and flashing installation.',
+  },
+  {
+    title: 'Hardie Board and Fiber Cement Installation',
+    description: 'Professional installation of durable fiber cement siding designed for Portland\'s wet climate.',
+  },
+  {
+    title: 'Moisture Damage Remediation',
+    description: 'We locate and repair water damage behind siding, including sheathing and framing restoration.',
+  },
+  {
+    title: 'Siding Waterproofing and Sealing',
+    description: 'Comprehensive weatherproofing with proper caulking, flashing, and moisture barriers.',
+  },
+  {
+    title: 'Quality Materials and Craftsmanship',
+    description: 'We use premium siding materials and proven installation techniques for long-lasting protection.',
+  },
+  {
+    title: 'Transparent Estimates and Communication',
+    description: 'Detailed assessments and clear communication throughout the project ensure no surprises—just dependable results.',
+  },
+];
 
 const faqs: FAQ[] = [
   {
@@ -79,6 +111,24 @@ const faqs: FAQ[] = [
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
 
+  <!-- Services Offered Section -->
+  <ServicesOffered
+    mainHeading="Siding Repair and Restoration in Portland — And So Much More"
+    bulletPoints={[
+      'Local specialists',
+      'Clear Pricing',
+      'Fast response',
+      'Repairs built to last',
+    ]}
+    mainDescription="Siding Repair Experts provides comprehensive siding remediation and structural restoration services for Portland-area homes. From identifying hidden moisture damage to replacing panels, sheathing, and moisture barriers, our team restores your home's protection and appearance with lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
+    ctaText="Get Free Pricing"
+    ctaHref="#contact"
+    ctaSubtext="Talk to a local expert"
+    servicesHeading={`What ${config.name} Offers Portland Homeowners`}
+    services={services}
+    servicesDescription="Tired of contractors who patch the surface without addressing the real problem? With Siding Repair Experts, you get a team that finds the cause of damage and fixes it the right way. Our in-house installers and moisture specialists work together to make your home sound, durable, and beautiful again."
+    variant="light"
+  />
 
   <!-- FAQ Section -->
   <FAQAccordion

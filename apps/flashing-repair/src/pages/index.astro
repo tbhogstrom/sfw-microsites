@@ -1,12 +1,45 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ } from '@sfw/ui/types';
+import type { FAQ, Service } from '@sfw/ui/types';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['flashing-repair'];
-const stats = [  { value: '20', suffix: '+', label: 'Years Experience' },  { value: '1000', suffix: '+', label: 'Projects Completed' },  { value: '99', suffix: '%', label: 'Customer Satisfaction' },  { value: '24', suffix: '/7', label: 'Available' },];
+
+const stats = [
+  { value: '20', suffix: '+', label: 'Years Experience' },
+  { value: '1000', suffix: '+', label: 'Projects Completed' },
+  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
+  { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const services: Service[] = [
+  {
+    title: 'Chimney Flashing Installation',
+    description: 'Expert installation of base and counter-flashing systems designed to shed water and prevent chimney leaks.',
+  },
+  {
+    title: 'Valley and Step Flashing',
+    description: 'Professional installation of valley flashing and step flashing where roofs meet walls for complete protection.',
+  },
+  {
+    title: 'Skylight Flashing Repair',
+    description: 'Specialized flashing systems for skylights that integrate seamlessly with your roofing materials.',
+  },
+  {
+    title: 'Premium Material Selection',
+    description: 'Installation of copper, stainless steel, or aluminum flashing chosen for durability in Portland\'s climate.',
+  },
+  {
+    title: 'Leak Detection and Assessment',
+    description: 'Comprehensive evaluation of existing flashing to identify failures and water entry points before damage spreads.',
+  },
+  {
+    title: 'Preventive Maintenance Services',
+    description: 'Regular inspection and maintenance of flashing systems, including sealant renewal and corrosion prevention.',
+  },
+];
 
 const faqs: FAQ[] = [
   {
@@ -79,6 +112,24 @@ const faqs: FAQ[] = [
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
 
+  <!-- Services Offered Section -->
+  <ServicesOffered
+    mainHeading="Flashing Repair and Installation in Portland — And So Much More"
+    bulletPoints={[
+      'Local specialists',
+      'Clear Pricing',
+      'Fast response',
+      'Repairs built to last',
+    ]}
+    mainDescription="Flashing Repair Experts provides comprehensive roof flashing installation and repair services for Portland-area homes. From identifying leak sources to installing premium flashing systems at chimneys, valleys, skylights, and roof edges, our team restores your home's weather protection with lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
+    ctaText="Get Free Pricing"
+    ctaHref="#contact"
+    ctaSubtext="Talk to a local expert"
+    servicesHeading={`What ${config.name} Offers Portland Homeowners`}
+    services={services}
+    servicesDescription="Tired of contractors who patch the surface without addressing the real problem? With Flashing Repair Experts, you get a team that understands water flow dynamics and installs flashing the right way. Our specialists use premium materials and proven techniques to make your roof watertight, durable, and protected for decades."
+    variant="light"
+  />
 
   <!-- FAQ Section -->
   <FAQAccordion

@@ -1,12 +1,45 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ } from '@sfw/ui/types';
+import type { FAQ, Service } from '@sfw/ui/types';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['restoration'];
-const stats = [  { value: '20', suffix: '+', label: 'Years Experience' },  { value: '1000', suffix: '+', label: 'Projects Completed' },  { value: '99', suffix: '%', label: 'Customer Satisfaction' },  { value: '24', suffix: '/7', label: 'Available' },];
+
+const stats = [
+  { value: '20', suffix: '+', label: 'Years Experience' },
+  { value: '1000', suffix: '+', label: 'Projects Completed' },
+  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
+  { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const services: Service[] = [
+  {
+    title: 'Historic Window Restoration',
+    description: 'Expert repair and restoration of original windows, preserving historic glass, frames, and hardware while improving performance.',
+  },
+  {
+    title: 'Period-Appropriate Carpentry',
+    description: 'Skilled replication and repair of historic trim, moldings, and architectural details using traditional techniques.',
+  },
+  {
+    title: 'Structural Stabilization',
+    description: 'Foundation repair, beam replacement, and structural reinforcement while maintaining historic integrity.',
+  },
+  {
+    title: 'Historic District Compliance',
+    description: 'Expert navigation of Portland historic preservation guidelines and design review requirements.',
+  },
+  {
+    title: 'Exterior Restoration Services',
+    description: 'Comprehensive siding, trim, and paint restoration using period-appropriate materials and color consultation.',
+  },
+  {
+    title: 'Moisture and Rot Remediation',
+    description: 'Modern moisture management solutions integrated sensitively with historic building envelopes.',
+  },
+];
 
 const faqs: FAQ[] = [
   {
@@ -79,6 +112,24 @@ const faqs: FAQ[] = [
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
 
+  <!-- Services Offered Section -->
+  <ServicesOffered
+    mainHeading="Historic Home Restoration in Portland — And So Much More"
+    bulletPoints={[
+      'Local specialists',
+      'Clear Pricing',
+      'Fast response',
+      'Repairs built to last',
+    ]}
+    mainDescription="Historic Restoration Experts provides comprehensive historic home restoration and preservation services for Portland-area homes. From window restoration to structural repairs, architectural replication, and historic district compliance, our team preserves your home's character while ensuring modern safety and comfort. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
+    ctaText="Get Free Pricing"
+    ctaHref="#contact"
+    ctaSubtext="Talk to a local expert"
+    servicesHeading={`What ${config.name} Offers Portland Homeowners`}
+    services={services}
+    servicesDescription="Tired of contractors who don't understand historic homes? With Historic Restoration Experts, you get craftspeople who respect your home's heritage and know period-appropriate techniques. Our specialists balance preservation standards with modern performance, ensuring your historic home remains beautiful, functional, and valuable for generations."
+    variant="light"
+  />
 
   <!-- FAQ Section -->
   <FAQAccordion

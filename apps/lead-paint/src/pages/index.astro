@@ -1,12 +1,45 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ } from '@sfw/ui/types';
+import type { FAQ, Service } from '@sfw/ui/types';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['lead-paint'];
-const stats = [  { value: '20', suffix: '+', label: 'Years Experience' },  { value: '1000', suffix: '+', label: 'Projects Completed' },  { value: '99', suffix: '%', label: 'Customer Satisfaction' },  { value: '24', suffix: '/7', label: 'Available' },];
+
+const stats = [
+  { value: '20', suffix: '+', label: 'Years Experience' },
+  { value: '1000', suffix: '+', label: 'Projects Completed' },
+  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
+  { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const services: Service[] = [
+  {
+    title: 'EPA-Certified Lead Testing',
+    description: 'Professional XRF analyzer testing and lab analysis to accurately identify lead paint locations throughout your home.',
+  },
+  {
+    title: 'Certified Lead Paint Removal',
+    description: 'Safe abatement by EPA and Oregon-certified professionals using HEPA filtration and proper containment systems.',
+  },
+  {
+    title: 'Lead Paint Encapsulation',
+    description: 'Cost-effective sealing of lead paint with specialized coatings that create durable protective barriers.',
+  },
+  {
+    title: 'Lead Paint Enclosure Systems',
+    description: 'Installation of new materials over lead-painted surfaces to permanently isolate lead hazards.',
+  },
+  {
+    title: 'Pre-Renovation Testing and Compliance',
+    description: 'EPA RRP-compliant testing and safe work practices for renovation projects in pre-1978 homes.',
+  },
+  {
+    title: 'Clearance Testing and Documentation',
+    description: 'Post-abatement testing to verify safety and comprehensive documentation for compliance and peace of mind.',
+  },
+];
 
 const faqs: FAQ[] = [
   {
@@ -79,6 +112,24 @@ const faqs: FAQ[] = [
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
 
+  <!-- Services Offered Section -->
+  <ServicesOffered
+    mainHeading="Lead Paint Testing and Removal in Portland — And So Much More"
+    bulletPoints={[
+      'Local specialists',
+      'Clear Pricing',
+      'Fast response',
+      'Repairs built to last',
+    ]}
+    mainDescription="Lead Paint Experts provides comprehensive lead paint testing, removal, and abatement services for Portland-area homes. From EPA-certified testing to safe removal, encapsulation, and clearance testing, our certified team protects your family's health with compliant, lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
+    ctaText="Get Free Pricing"
+    ctaHref="#contact"
+    ctaSubtext="Talk to a local expert"
+    servicesHeading={`What ${config.name} Offers Portland Homeowners`}
+    services={services}
+    servicesDescription="Tired of contractors who take shortcuts with lead paint? With Lead Paint Experts, you get EPA and Oregon-certified professionals who follow strict safety protocols. Our specialists use HEPA filtration, proper containment, and approved disposal methods to make your home safe for your family while meeting all regulations."
+    variant="light"
+  />
 
   <!-- FAQ Section -->
   <FAQAccordion
