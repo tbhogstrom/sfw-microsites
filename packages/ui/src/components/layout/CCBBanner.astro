@@ -4,7 +4,7 @@
  * Displays office locations, DBA links, navigation, and license info
  */
 import type { BaseProps, NavigationItem } from '@sfw/ui/types';
-import { serviceConfigs } from '@sfw/content';
+import { dbasWithDomains } from '@sfw/content';
 
 export interface Props extends BaseProps {
   dbaName: string;
@@ -18,13 +18,8 @@ const {
   ...rest
 } = Astro.props;
 
-// Get all DBAs from service configs
-const allDBAs = Object.entries(serviceConfigs).map(([slug, config]) => ({
-  name: config.name,
-  slug: slug,
-  // Use domain if available, otherwise use relative path
-  url: config.domain || `/${slug}`,
-}));
+// Get all DBAs with domains (sorted alphabetically)
+const allDBAs = [...dbasWithDomains].sort((a, b) => a.name.localeCompare(b.name));
 ---
 
 <div class={`bg-gray-100 border-t border-gray-200 py-8 ${className}`} {...rest}>
@@ -51,7 +46,9 @@ const allDBAs = Object.entries(serviceConfigs).map(([slug, config]) => ({
           {allDBAs.map((dba) => (
             <li>
               <a
-                href={dba.url}
+                href={dba.domain}
+                target="_blank"
+                rel="noopener noreferrer"
                 class="text-gray-700 hover:text-primary transition-colors"
               >
                 {dba.name}
