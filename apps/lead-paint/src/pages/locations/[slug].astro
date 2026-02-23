@@ -38,21 +38,21 @@ const stats = [
   { value: '24', suffix: '/7', label: 'Emergency Service' },
 ];
 
-// Process steps for projects
+// Process steps for lead paint projects
 const steps = [
   {
     title: 'Free Consultation',
-    description: `Call us at ${location.phone} or fill out our form for a free, no-obligation consultation.`,
+    description: `Call us at ${location.phone} or fill out our form for a free consultation and lead testing information.`,
     icon: 'phone' as const,
   },
   {
-    title: 'Custom Design',
-    description: `Our ${location.name} team creates a custom deck plan tailored to your home and budget.`,
+    title: 'Lead Testing & Planning',
+    description: `Our ${location.name} certified team tests for lead paint and develops a safe removal or encapsulation plan.`,
     icon: 'check' as const,
   },
   {
-    title: 'Professional Installation',
-    description: 'Licensed and insured craftsmen build your deck to perfection.',
+    title: 'Certified Lead-Safe Work',
+    description: 'EPA-certified specialists use lead-safe practices for removal, renovation, or encapsulation.',
     icon: 'check' as const,
   },
 ];
@@ -64,20 +64,20 @@ const faqs = [
     answer: `Yes! We serve all neighborhoods in ${location.fullName} and surrounding areas. Our service area includes ${location.neighborhoods.slice(0, 5).map(n => n.name).join(', ')}, and more.`,
   },
   {
-    question: 'How long does a project take?',
-    answer: 'Most installations take 1-2 weeks depending on size and complexity. Repairs can often be completed in just a few days.',
+    question: 'How long does lead paint work take?',
+    answer: 'Lead paint projects typically take 2-5 days depending on scope. Testing takes 1-2 days, and removal or encapsulation varies by square footage. We prioritize safety over speed.',
   },
   {
-    question: 'Do you offer warranties?',
-    answer: 'Yes, we offer a 5-year warranty on all workmanship and our materials come with manufacturer warranties.',
+    question: 'Are you EPA certified for lead work?',
+    answer: 'Yes, we are EPA RRP (Renovation, Repair, and Painting) certified and follow all lead-safe work practices required for homes built before 1978.',
   },
   {
-    question: `What service options work best in ${location.name}?`,
-    answer: `In ${location.fullName}, we recommend the best materials for your needs. We'll help you choose the best material for your climate and budget.`,
+    question: `When do I need lead paint services in ${location.name}?`,
+    answer: `In ${location.fullName}, homes built before 1978 likely contain lead paint. You need lead-safe services when renovating, repairing windows/doors, painting, or doing any work that disturbs painted surfaces in older homes.`,
   },
   {
-    question: 'Can you help with permits?',
-    answer: `Absolutely! We handle all permit applications and inspections required in ${location.name}.`,
+    question: 'What is the difference between removal and encapsulation?',
+    answer: `Lead paint removal completely strips the paint (more expensive, sometimes necessary). Encapsulation seals lead paint under special coatings (faster, more affordable, often sufficient for renovations). We recommend the best approach for your situation.`,
   },
 ];
 ---
@@ -276,9 +276,9 @@ const faqs = [
 
   <!-- CTA Section -->
   <CTASection
-    headline={`Ready to Get Started in ${location.name}?`}
-    description="Get a free consultation and quote today. We're here to help bring your outdoor vision to life."
-    primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
+    headline={`Need Lead-Safe Services in ${location.name}?`}
+    description="Get a free consultation and quote today. Our EPA-certified specialists provide safe lead paint removal and renovation services."
+    primaryCTA={{ text: 'Get Free Consultation', href: '#contact' }}
     secondaryCTA={{ text: `Call ${location.phone}`, href: `tel:${location.phone}` }}
     variant="dark"
   />

@@ -38,21 +38,21 @@ const stats = [
   { value: '24', suffix: '/7', label: 'Emergency Service' },
 ];
 
-// Process steps for projects
+// Process steps for chimney repair projects
 const steps = [
   {
-    title: 'Free Consultation',
-    description: `Call us at ${location.phone} or fill out our form for a free, no-obligation consultation.`,
+    title: 'Free Inspection',
+    description: `Call us at ${location.phone} or fill out our form for a free chimney inspection and assessment.`,
     icon: 'phone' as const,
   },
   {
-    title: 'Custom Design',
-    description: `Our ${location.name} team creates a custom deck plan tailored to your home and budget.`,
+    title: 'Damage Assessment',
+    description: `Our ${location.name} team evaluates your chimney's structural condition and creates a custom repair plan.`,
     icon: 'check' as const,
   },
   {
-    title: 'Professional Installation',
-    description: 'Licensed and insured craftsmen build your deck to perfection.',
+    title: 'Expert Repair',
+    description: 'Licensed specialists repair your wood chimney framing, fix rot damage, and restore structural integrity.',
     icon: 'check' as const,
   },
 ];
@@ -64,20 +64,20 @@ const faqs = [
     answer: `Yes! We serve all neighborhoods in ${location.fullName} and surrounding areas. Our service area includes ${location.neighborhoods.slice(0, 5).map(n => n.name).join(', ')}, and more.`,
   },
   {
-    question: 'How long does a project take?',
-    answer: 'Most installations take 1-2 weeks depending on size and complexity. Repairs can often be completed in just a few days.',
+    question: 'How long does a chimney repair project take?',
+    answer: 'Most wood chimney repairs take 2-5 days depending on the extent of rot damage and structural work needed. Emergency repairs can often be started within 24 hours.',
   },
   {
     question: 'Do you offer warranties?',
     answer: 'Yes, we offer a 5-year warranty on all workmanship and our materials come with manufacturer warranties.',
   },
   {
-    question: `What service options work best in ${location.name}?`,
-    answer: `In ${location.fullName}, we recommend the best materials for your needs. We'll help you choose the best material for your climate and budget.`,
+    question: `What types of chimney problems do you fix in ${location.name}?`,
+    answer: `In ${location.fullName}, we specialize in wood chimney framing repair, chimney rot repair, chimney chase repairs, flashing replacement, and structural chimney restoration. We handle both interior and exterior chimney wood framing issues.`,
   },
   {
-    question: 'Can you help with permits?',
-    answer: `Absolutely! We handle all permit applications and inspections required in ${location.name}.`,
+    question: 'Do chimney repairs require permits?',
+    answer: `Yes, structural chimney repairs typically require permits. We handle all permit applications and inspections required in ${location.name}.`,
   },
 ];
 ---
@@ -276,9 +276,9 @@ const faqs = [
 
   <!-- CTA Section -->
   <CTASection
-    headline={`Ready to Get Started in ${location.name}?`}
-    description="Get a free consultation and quote today. We're here to help bring your outdoor vision to life."
-    primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
+    headline={`Need Chimney Repair in ${location.name}?`}
+    description="Get a free chimney inspection and quote today. Our wood chimney specialists will assess the damage and provide expert repair solutions."
+    primaryCTA={{ text: 'Get Free Inspection', href: '#contact' }}
     secondaryCTA={{ text: `Call ${location.phone}`, href: `tel:${location.phone}` }}
     variant="dark"
   />

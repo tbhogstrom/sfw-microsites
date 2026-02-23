@@ -38,21 +38,21 @@ const stats = [
   { value: '24', suffix: '/7', label: 'Emergency Service' },
 ];
 
-// Process steps for projects
+// Process steps for historic restoration projects
 const steps = [
   {
     title: 'Free Consultation',
-    description: `Call us at ${location.phone} or fill out our form for a free, no-obligation consultation.`,
+    description: `Call us at ${location.phone} or fill out our form for a free consultation and historic home assessment.`,
     icon: 'phone' as const,
   },
   {
-    title: 'Custom Design',
-    description: `Our ${location.name} team creates a custom deck plan tailored to your home and budget.`,
+    title: 'Period-Appropriate Planning',
+    description: `Our ${location.name} restoration specialists research your home's era and plan authentic, historically accurate repairs.`,
     icon: 'check' as const,
   },
   {
-    title: 'Professional Installation',
-    description: 'Licensed and insured craftsmen build your deck to perfection.',
+    title: 'Expert Restoration',
+    description: 'Master craftsmen restore your historic home using traditional techniques and period-appropriate materials.',
     icon: 'check' as const,
   },
 ];
@@ -64,20 +64,20 @@ const faqs = [
     answer: `Yes! We serve all neighborhoods in ${location.fullName} and surrounding areas. Our service area includes ${location.neighborhoods.slice(0, 5).map(n => n.name).join(', ')}, and more.`,
   },
   {
-    question: 'How long does a project take?',
-    answer: 'Most installations take 1-2 weeks depending on size and complexity. Repairs can often be completed in just a few days.',
+    question: 'How long does historic restoration take?',
+    answer: 'Historic restoration timelines vary by project. Small repairs may take 1-2 weeks, while comprehensive restorations can take several months. We prioritize historical accuracy over speed.',
   },
   {
     question: 'Do you offer warranties?',
     answer: 'Yes, we offer a 5-year warranty on all workmanship and our materials come with manufacturer warranties.',
   },
   {
-    question: `What service options work best in ${location.name}?`,
-    answer: `In ${location.fullName}, we recommend the best materials for your needs. We'll help you choose the best material for your climate and budget.`,
+    question: `What makes historic restoration different in ${location.name}?`,
+    answer: `In ${location.fullName}, historic restoration requires matching original architectural styles, using period-appropriate materials, and often working with landmark commissions. We preserve your home's character while meeting modern building codes.`,
   },
   {
-    question: 'Can you help with permits?',
-    answer: `Absolutely! We handle all permit applications and inspections required in ${location.name}.`,
+    question: 'Can you match original materials and details?',
+    answer: `Yes! We specialize in replicating original moldings, trim profiles, siding patterns, and architectural details. We use traditional joinery, historic paint colors, and authentic materials whenever possible.`,
   },
 ];
 ---
@@ -276,9 +276,9 @@ const faqs = [
 
   <!-- CTA Section -->
   <CTASection
-    headline={`Ready to Get Started in ${location.name}?`}
-    description="Get a free consultation and quote today. We're here to help bring your outdoor vision to life."
-    primaryCTA={{ text: 'Get Free Quote', href: '#contact' }}
+    headline={`Preserve Your Historic Home in ${location.name}?`}
+    description="Get a free consultation and quote today. Our restoration specialists will help preserve your home's architectural heritage."
+    primaryCTA={{ text: 'Get Free Consultation', href: '#contact' }}
     secondaryCTA={{ text: `Call ${location.phone}`, href: `tel:${location.phone}` }}
     variant="dark"
   />
