@@ -76,23 +76,23 @@ function extractKeywords(content) {
   const lowerContent = content.toLowerCase();
 
   const topicPatterns = [
-    /\b(deck|decking|decks)\\b/g,
-    /\b(siding|hardie|vinyl|fiber cement)\\b/g,
-    /\b(rot|rotted|rotting|decay|fungus)\\b/g,
-    /\b(crawl\\s?space|crawlspace|foundation)\\b/g,
-    /\b(chimney|chase|flue)\\b/g,
-    /\b(window|windows|leak|leaking)\\b/g,
-    /\b(flashing|waterproof|moisture)\\b/g,
-    /\b(trim|fascia|soffit|frieze)\\b/g,
-    /\b(beam|joist|framing|structural)\\b/g,
-    /\b(lead\\s?paint|historic|restoration)\\b/g,
-    /\b(portland|seattle|oregon|washington)\\b/g,
+    /\b(deck|decking|decks)\b/g,
+    /\b(siding|hardie|vinyl|fiber cement)\b/g,
+    /\b(rot|rotted|rotting|decay|fungus)\b/g,
+    /\b(crawl\s?space|crawlspace|foundation)\b/g,
+    /\b(chimney|chase|flue)\b/g,
+    /\b(window|windows|leak|leaking)\b/g,
+    /\b(flashing|waterproof|moisture)\b/g,
+    /\b(trim|fascia|soffit|frieze)\b/g,
+    /\b(beam|joist|framing|structural)\b/g,
+    /\b(lead\s?paint|historic|restoration)\b/g,
+    /\b(portland|seattle|oregon|washington)\b/g,
   ];
 
   topicPatterns.forEach(pattern => {
     const matches = lowerContent.match(pattern);
     if (matches) {
-      matches.forEach(match => keywords.add(match.trim().replace(/\\s+/g, '-')));
+      matches.forEach(match => keywords.add(match.trim().replace(/\s+/g, '-')));
     }
   });
 
@@ -131,7 +131,7 @@ function scoreDBALinks(keywords, currentMicrosite, trackingData) {
  * Find best location to insert link
  */
 function findInsertionPoint(content, keywords) {
-  const lines = content.split('\\n');
+  const lines = content.split('\n');
 
   // Look for paragraphs that contain relevant keywords
   const scoredParagraphs = [];
