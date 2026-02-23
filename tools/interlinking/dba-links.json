@@ -5,7 +5,7 @@
     "slug": "chimney-repair",
     "naturalOption1": "professional chimney repair services",
     "naturalOption2": "expert chimney chase solutions",
-    "topics": ["chimney", "chase", "flue", "fireplace", "chimney-repair"]
+    "topics": ["chimney", "chimneys", "chase", "flue", "fireplace", "penetration", "roof"]
   },
   {
     "name": "Siding Repair Experts",
@@ -13,7 +13,7 @@
     "slug": "siding-repair",
     "naturalOption1": "professional siding repair",
     "naturalOption2": "expert siding solutions",
-    "topics": ["siding", "hardie", "vinyl", "fiber-cement", "exterior", "cladding"]
+    "topics": ["siding", "hardie", "vinyl", "fiber", "cement", "exterior", "cladding", "sheathing"]
   },
   {
     "name": "Crawlspace Repair Experts",
@@ -21,7 +21,7 @@
     "slug": "crawlspace-rot",
     "naturalOption1": "crawl space repair services",
     "naturalOption2": "crawlspace moisture solutions",
-    "topics": ["crawlspace", "crawl-space", "foundation", "moisture", "ventilation"]
+    "topics": ["crawlspace", "crawl", "space", "foundation", "moisture", "ventilation", "rot", "fungus", "mold"]
   },
   {
     "name": "Window Leak Experts",
@@ -29,7 +29,7 @@
     "slug": "leak-repair",
     "naturalOption1": "window leak repair services",
     "naturalOption2": "leaking window solutions",
-    "topics": ["window", "leak", "leaking", "water-damage", "moisture"]
+    "topics": ["window", "windows", "leak", "leaking", "water", "moisture", "seal", "glazing"]
   },
   {
     "name": "Lead Paint Removal Experts",
@@ -37,7 +37,7 @@
     "slug": "lead-paint",
     "naturalOption1": "lead paint removal services",
     "naturalOption2": "lead-safe renovation",
-    "topics": ["lead-paint", "lead", "paint-removal", "historic", "abatement"]
+    "topics": ["lead", "paint", "historic", "abatement", "removal", "old", "vintage"]
   },
   {
     "name": "Flashing Repair Experts",
@@ -45,7 +45,7 @@
     "slug": "flashing-repair",
     "naturalOption1": "flashing repair services",
     "naturalOption2": "professional flashing solutions",
-    "topics": ["flashing", "waterproof", "roof", "penetration", "weatherproof"]
+    "topics": ["flashing", "waterproof", "roof", "penetration", "weatherproof", "leak", "moisture", "metal"]
   },
   {
     "name": "Exterior Trim Repair Experts",
@@ -53,7 +53,7 @@
     "slug": "trim-repair",
     "naturalOption1": "trim repair services",
     "naturalOption2": "fascia and soffit repair",
-    "topics": ["trim", "fascia", "soffit", "frieze", "molding", "exterior-trim"]
+    "topics": ["trim", "fascia", "soffit", "frieze", "molding", "exterior", "board", "eave", "corner"]
   },
   {
     "name": "Historic Home Restoration Experts",
@@ -61,7 +61,7 @@
     "slug": "restoration",
     "naturalOption1": "historic home restoration",
     "naturalOption2": "professional renovation services",
-    "topics": ["restoration", "renovation", "historic", "remodel", "upgrade"]
+    "topics": ["restoration", "renovate", "renovation", "historic", "remodel", "upgrade", "old", "vintage"]
   },
   {
     "name": "Beam Repair Experts",
@@ -69,7 +69,7 @@
     "slug": "beam-repair",
     "naturalOption1": "beam repair services",
     "naturalOption2": "structural beam solutions",
-    "topics": ["beam", "joist", "structural", "framing", "support"]
+    "topics": ["beam", "beams", "joist", "joists", "structural", "framing", "support", "post", "column", "header"]
   },
   {
     "name": "Deck Repair Experts",
@@ -77,6 +77,6 @@
     "slug": "deck-repair",
     "naturalOption1": "deck repair services",
     "naturalOption2": "professional deck restoration",
-    "topics": ["deck", "decking", "railing", "outdoor", "deck-repair"]
+    "topics": ["deck", "decks", "decking", "railing", "outdoor", "patio", "porch", "balcony"]
   }
 ]

@@ -119,7 +119,7 @@ function scoreDBALinks(keywords, currentMicrosite, trackingData) {
 
       return { link, score, usagePercentage };
     })
-    .filter(item => item.score > 0 && item.usagePercentage < 10) // Filter overused links
+    .filter(item => item.score > 0 && item.usagePercentage < 25) // Filter overused links (25% threshold for DBA cross-links)
     .sort((a, b) => {
       // Sort by score first, then by usage (prefer less used)
       if (b.score !== a.score) return b.score - a.score;
