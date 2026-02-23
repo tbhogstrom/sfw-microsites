@@ -111,7 +111,7 @@ export const blogPosts: BlogPostData[] = [
     `,
   },
   {
-    title: 'Preventing Water Damage: A Homeowner\',
+    title: 'Preventing Water Damage: A Homeowner\'s Guide',
     slug: 'preventing-water-damage-a-homeowners-guide',
     excerpt: 'Water damage is a significant concern for homeowners, especially in regions like Portland, Oregon, where rainfall can be abundant.',
     publishDate: '2026-02-23',
