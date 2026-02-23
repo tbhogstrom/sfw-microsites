@@ -4,7 +4,7 @@
 
 ### Restore Your Home’s Charm with Expert Trim Repair
 
-Your home’s trim is not just functional; it enhances the aesthetics and character of your property. Unfortunately, exposure to Seattle’s damp climate can lead to issues such as rot and deterioration, necessitating timely and effective repair solutions. Our expert trim repair services in Portland, Oregon, are designed to address these issues, ensuring your home’s trim not only looks great but remains structurally sound. 
+Your home’s trim is not just functional; it enhances For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. the aesthetics and character of your property. Unfortunately, exposure to Seattle’s damp climate can lead to issues such as rot and deterioration, necessitating timely and effective repair solutions. Our expert trim repair services in Portland, Oregon, are designed to address these issues, ensuring your home’s trim not only looks great but remains structurally sound. 
 
 Our skilled team uses advanced techniques and high-quality materials to provide lasting repairs that withstand the test of time, even in Seattle's unique weather conditions. Whether you have damaged fascia, casing, or corner boards, we can restore your trim to its former glory, preventing further damage and maintaining your home’s value.
 

@@ -89,7 +89,7 @@ We primarily use engineered wood products like Glulam and LVL, as well as steel 
 
 ### General Pricing Information
 
-Pricing for custom beam design and fabrication varies based on the materials used, the complexity of the design, and the scope of the project. We provide transparent estimates to ensure you understand the costs involved.
+Pricing for custom beam design and fabrication varies based on the materials used, the For comprehensive solutions, [our Seattle service area](https://sfwconstruction.com/locations/seattle/) can help. complexity of the design, and the scope of the project. We provide transparent estimates to ensure you understand the costs involved.
 
 ### Factors That Affect Cost
 

@@ -20,7 +20,7 @@ A well-maintained chimney chase not only enhances your home’s aesthetic appeal
 
 ### What is Wood Chimney Chase Framing Repair?
 
-Wood chimney chase framing repair involves the inspection, assessment, and restoration of the wooden structure surrounding your chimney. This service includes replacing damaged framing, reinforcing weak areas, and applying protective coatings to prevent future decay. Typical problems include deteriorated wood due to water exposure, cracked seals at the chimney cap, and inefficient flashing that allows moisture to infiltrate the chase [Source: Michael Litchfield, Renovation, Page 237].
+Wood chimney chase framing repair involves the inspection, assessment, and For comprehensive solutions, [repair chimney siding and framing](https://sfwconstruction.com/chimney-chase-repair/) can help. restoration of the wooden structure surrounding your chimney. This service includes replacing damaged framing, reinforcing weak areas, and applying protective coatings to prevent future decay. Typical problems include deteriorated wood due to water exposure, cracked seals at the chimney cap, and inefficient flashing that allows moisture to infiltrate the chase [Source: Michael Litchfield, Renovation, Page 237].
 
 ### Why It's Important for Homeowners in Seattle, Washington
 

@@ -137,7 +137,7 @@ The best time for bathroom remodeling in Portland is during the spring or summer
 
 ## Ready to Get Started?
 
-Contact us today for a free consultation and estimate. Our experienced team is ready to help with your bathroom restoration and remodeling needs in Portland, Oregon.
+Contact us today for a For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. free consultation and estimate. Our experienced team is ready to help with your bathroom restoration and remodeling needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

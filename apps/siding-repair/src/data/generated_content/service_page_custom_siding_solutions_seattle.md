@@ -6,7 +6,7 @@
 
 Your home’s siding is more than just a protective shell; it reflects your style and safeguards your investment. Custom siding solutions in Seattle provide homeowners the opportunity to enhance curb appeal while addressing critical issues such as insulation, weather resistance, and maintenance. Whether you’re dealing with faded panels, peeling paint, or outdated materials, our expert team can tailor a siding solution that meets both your aesthetic and functional needs.
 
-Siding is often subjected to Seattle's unique climate, which includes heavy rains and occasional storms that can wear down traditional materials over time. Proper installation and maintenance of your siding can prevent costly repairs in the long run. Our custom solutions ensure that your home stays not only beautiful but also structurally sound, making it more energy-efficient and comfortable year-round.
+Siding is often subjected to Seattle's unique climate, which includes heavy rains and For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. occasional storms that can wear down traditional materials over time. Proper installation and maintenance of your siding can prevent costly repairs in the long run. Our custom solutions ensure that your home stays not only beautiful but also structurally sound, making it more energy-efficient and comfortable year-round.
 
 #### Key Benefits:
 - **Enhanced Curb Appeal**: Custom siding can transform the look of your home, increasing its value and attractiveness.

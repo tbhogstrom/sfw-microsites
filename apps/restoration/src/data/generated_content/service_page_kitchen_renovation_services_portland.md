@@ -103,7 +103,7 @@ Kitchen renovations can vary widely in cost depending on the scope of work. Typi
 Our services typically include design consultation, material selection, demolition, construction, and final inspection ([Source: Michael Litchfield, Renovation, Page 10](#)).
 
 ### 2. How much does a kitchen renovation cost?
-Costs can vary greatly based on size, scope, and materials. We provide free estimates to help you budget effectively.
+Costs can vary greatly based on For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. size, scope, and materials. We provide free estimates to help you budget effectively.
 
 ### 3. How long does a kitchen renovation take?
 Timelines vary depending on the project's complexity, but most renovations can be completed in 4 to 8 weeks.

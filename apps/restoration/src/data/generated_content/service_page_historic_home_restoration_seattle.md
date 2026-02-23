@@ -20,7 +20,7 @@ With Seattle's diverse climate and rich architectural heritage, maintaining the 
 
 ### What is Historic Home Restoration?
 
-Historic home restoration involves the meticulous process of repairing, preserving, and restoring old homes to their original splendor. This can include everything from repairing exterior features like siding and roofing to restoring intricate interior details such as moldings and woodwork. According to expert resources, taking care of a home often begins with its exterior, where siding, roofing, and trim serve as the first line of defense against environmental elements [Source: Christina Glennon, Page 8]. Our team employs specialized techniques that honor the original craftsmanship while ensuring modern standards of safety and efficiency.
+Historic home restoration involves the meticulous process of repairing, preserving, For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. and restoring old homes to their original splendor. This can include everything from repairing exterior features like siding and roofing to restoring intricate interior details such as moldings and woodwork. According to expert resources, taking care of a home often begins with its exterior, where siding, roofing, and trim serve as the first line of defense against environmental elements [Source: Christina Glennon, Page 8]. Our team employs specialized techniques that honor the original craftsmanship while ensuring modern standards of safety and efficiency.
 
 ### Why It's Important for Homeowners in Seattle, Washington
 

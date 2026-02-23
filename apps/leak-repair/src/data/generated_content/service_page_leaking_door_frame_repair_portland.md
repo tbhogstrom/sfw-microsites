@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Leaking Door Frame Repairs
 
-Is your door frame letting in drafts or water? A leaking door frame can lead to significant damage to your home, including water stains, mold, and structural issues. Our leaking door frame repair services in Portland, Oregon, are designed to address these problems head-on, ensuring your home remains safe, dry, and energy-efficient. 
+Is your door frame letting in drafts or water?A leaking door frame can lead to significant damage to your For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. home, including water stains, mold, and structural issues. Our leaking door frame repair services in Portland, Oregon, are designed to address these problems head-on, ensuring your home remains safe, dry, and energy-efficient. 
 
 With our skilled technicians, you can count on a thorough assessment and efficient repair process that will restore your door frame and give you peace of mind. Don’t let a small leak turn into a costly problem—get it fixed today!
 

@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Dry Rot Repair
 
-Dry rot can be a significant issue for homeowners in Portland, Oregon, especially due to the region's damp climate. It not only compromises the structural integrity of your home but can also lead to costly repairs if left unchecked. Our Comprehensive Dry Rot Solutions service is designed to identify, repair, and prevent dry rot damage, ensuring your home remains safe, sound, and beautiful. 
+Dry rot can be a significant issue for homeowners in Portland, For comprehensive solutions, [siding services in Tualatin](https://sfwconstruction.com/locations/tualatin-siding-contractor/) can help. Oregon, especially due to the region's damp climate. It not only compromises the structural integrity of your home but can also lead to costly repairs if left unchecked. Our Comprehensive Dry Rot Solutions service is designed to identify, repair, and prevent dry rot damage, ensuring your home remains safe, sound, and beautiful. 
 
 Understanding the importance of addressing dry rot promptly is crucial for maintaining your property’s value and livability. With our expert team, you can secure the longevity of your home while avoiding the stress associated with extensive repairs.
 

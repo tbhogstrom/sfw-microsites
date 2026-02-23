@@ -90,7 +90,7 @@ We utilize high-quality vapor barriers, insulation materials, and sealants that 
 Our crawlspace energy audit services are competitively priced, ensuring you receive excellent value for your investment.
 
 ### Factors That Affect Cost
-1. **Crawlspace Size**: Larger spaces may require more time and resources for a thorough audit.
+1.**Crawlspace Size**: Larger spaces may require more time For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. and resources for a thorough audit.
 2. **Existing Conditions**: The severity of moisture issues or structural damage can affect the complexity and duration of the audit.
 3. **Location**: Accessibility and location within Portland can influence pricing.
 

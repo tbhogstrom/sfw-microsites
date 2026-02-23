@@ -4,7 +4,7 @@
 
 ### Safeguard Your Home with Expert Wood Chimney Chase Framing Repair
 
-A well-constructed chimney chase is essential for protecting your home from the elements while ensuring the safe expulsion of flue gases. Over time, wood framing can become damaged due to water infiltration, pest infestations, or structural weaknesses. Our wood chimney chase framing repair services not only rectify these issues but also enhance the longevity and safety of your chimney system. Proper repair and maintenance can prevent more significant, costlier problems down the line.
+A well-constructed chimney chase is essential for protecting your home from the For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. elements while ensuring the safe expulsion of flue gases. Over time, wood framing can become damaged due to water infiltration, pest infestations, or structural weaknesses. Our wood chimney chase framing repair services not only rectify these issues but also enhance the longevity and safety of your chimney system. Proper repair and maintenance can prevent more significant, costlier problems down the line.
 
 Chimney chases play a critical role in your home’s architecture, providing both aesthetic and functional benefits. If you're experiencing leaks, drafts, or visible damage, it’s crucial to address these concerns promptly. Our team specializes in identifying and repairing wood chimney chase issues, ensuring your home remains safe, dry, and efficient.
 

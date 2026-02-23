@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Quality Fascia Board Replacement
 
-Fascia boards play a crucial role in protecting your home from water damage and enhancing its overall aesthetic appeal. In Portland, Oregon, where the climate can be unpredictable, having a sturdy fascia is essential to maintaining your home's structural integrity. Whether it's shielding your roof from moisture or providing a finished look to your eaves, fascia boards are an integral part of your home's exterior.
+Fascia boards play a crucial role in protecting your home from For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. water damage and enhancing its overall aesthetic appeal. In Portland, Oregon, where the climate can be unpredictable, having a sturdy fascia is essential to maintaining your home's structural integrity. Whether it's shielding your roof from moisture or providing a finished look to your eaves, fascia boards are an integral part of your home's exterior.
 
 Over time, fascia boards may succumb to rot, damage, or wear due to exposure to the elements. Our fascia board replacement service addresses these issues head-on, ensuring that your home remains not only beautiful but also safe and functional.
 

@@ -4,7 +4,7 @@
 
 ### Restore Your Home's Protection with Expert Siding Repair
 
-Storms can wreak havoc on your home, causing significant damage to your siding. Whether it’s high winds that tear at your panels or heavy rain that seeps through cracks, damaged siding can lead to bigger issues like water leaks and mold growth. Our siding repair services in Portland, Oregon, are designed to restore your home’s exterior, ensuring it remains a strong barrier against the elements while enhancing its curb appeal.
+Storms can wreak havoc on your home, For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. causing significant damage to your siding. Whether it’s high winds that tear at your panels or heavy rain that seeps through cracks, damaged siding can lead to bigger issues like water leaks and mold growth. Our siding repair services in Portland, Oregon, are designed to restore your home’s exterior, ensuring it remains a strong barrier against the elements while enhancing its curb appeal.
 
 Keeping your siding in optimal condition not only protects your investment but also maintains the overall integrity and safety of your home. With our professional siding repair services, you can rest assured that your home will be fortified against future storms, and any existing damage will be efficiently addressed.
 

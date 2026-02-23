@@ -22,7 +22,7 @@ Custom moldings not only serve a decorative purpose but also help conceal gaps a
 
 Custom site-made moldings involve the creation of bespoke trim profiles directly on-site, allowing for precise matching to existing architectural elements. This process often utilizes a tablesaw, block plane, and sanding blocks to replicate the required profiles accurately [Source: Christina Glennon, Page 206]. By crafting moldings on-site, we can accommodate unique specifications and eliminate the long lead times associated with ordering custom profiles from a mill.
 
-Our skilled craftsmen measure and create moldings that not only match existing trim but also adhere to high standards of quality and design. This is particularly beneficial for older homes where original moldings may no longer be available in the market. Additionally, site-made moldings can be a practical solution for repairing damaged or rotting trim, ensuring a seamless integration with the existing features of your home [Source: Michael Litchfield, Page 497].
+Our skilled craftsmen measure and create moldings that not only match existing trim For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. but also adhere to high standards of quality and design. This is particularly beneficial for older homes where original moldings may no longer be available in the market. Additionally, site-made moldings can be a practical solution for repairing damaged or rotting trim, ensuring a seamless integration with the existing features of your home [Source: Michael Litchfield, Page 497].
 
 ### Why It's Important for Homeowners in Seattle, Washington
 

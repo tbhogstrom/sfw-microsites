@@ -26,7 +26,7 @@ During the replacement process, we utilize shoring posts to support the structur
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Seattle's unique climate poses specific challenges for homeowners, including moisture accumulation and wood rot. The heavy rains and humid conditions can lead to the deterioration of wooden beams, necessitating timely replacement to prevent more extensive damage. Additionally, local building codes require that all structural repairs meet specific standards to ensure safety and compliance.
+Seattle's unique climate poses specific challenges for homeowners, For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. including moisture accumulation and wood rot. The heavy rains and humid conditions can lead to the deterioration of wooden beams, necessitating timely replacement to prevent more extensive damage. Additionally, local building codes require that all structural repairs meet specific standards to ensure safety and compliance.
 
 ### Common Problems This Service Solves
 - **Sagging Floors**: Often caused by weakened beams, sagging floors can indicate deeper structural issues ([Source: Michael Litchfield, Renovation, Page 221]).

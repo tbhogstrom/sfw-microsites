@@ -4,7 +4,7 @@
 
 ### Keep Your Home Safe and Dry with Expert Flashing Maintenance
 
-Flashing is an essential component of your roofing and siding system, designed to direct water away from critical areas like chimneys, walls, and windows. Properly maintained flashing prevents leaks, water damage, and costly repairs. In Seattle's wet climate, where rainfall can be heavy and persistent, ensuring your flashing is in top condition is not just a recommendation—it's a necessity.
+Flashing is an essential component of your roofing and siding system, designed to direct For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. water away from critical areas like chimneys, walls, and windows. Properly maintained flashing prevents leaks, water damage, and costly repairs. In Seattle's wet climate, where rainfall can be heavy and persistent, ensuring your flashing is in top condition is not just a recommendation—it's a necessity.
 
 At [Your Company Name], we specialize in comprehensive flashing maintenance and inspection services tailored for Seattle homeowners. Our trained professionals thoroughly assess your flashing systems, identify potential issues, and implement effective solutions to keep your home safe from water intrusion.
 

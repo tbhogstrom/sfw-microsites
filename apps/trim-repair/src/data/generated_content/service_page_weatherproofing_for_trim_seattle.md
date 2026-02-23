@@ -22,7 +22,7 @@ By investing in weatherproofing, you not only enhance your home’s curb appeal 
 
 Weatherproofing for trim is a multi-step process designed to protect exterior trim from the harsh climatic conditions often experienced in Seattle. This service typically includes:
 
-1. **Priming**: All sides and edges of the trim are primed to prevent moisture absorption and to ensure paint adheres correctly [Source: Litchfield, Page 169].
+1.**Priming**: All sides and edges of the trim are primed to prevent moisture absorption For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. and to ensure paint adheres correctly [Source: Litchfield, Page 169].
 2. **Sealing Cut Edges**: After trimming, the exposed ends are sealed immediately to prevent moisture infiltration, which can lead to rot [Source: Litchfield, Page 169].
 3. **Painting**: At least two coats of high-quality acrylic latex paint are applied after priming to complete the waterproof barrier [Source: Litchfield, Page 169].
 4. **Installation**: Trim is secured to the framing rather than just sheathing to enhance stability and durability [Source: Litchfield, Page 169].

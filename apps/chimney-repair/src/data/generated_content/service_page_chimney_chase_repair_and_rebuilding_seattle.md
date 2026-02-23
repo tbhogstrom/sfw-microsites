@@ -139,7 +139,7 @@ The best time for chimney chase repairs in Seattle is ideally during the dry sum
 
 ## Ready to Get Started?
 
-Contact us today for a free consultation and estimate. Our experienced team is ready to help with your chimney chase repair and rebuilding needs in Seattle, Washington.
+Contact us today for a For comprehensive solutions, [our Seattle service area](https://sfwconstruction.com/locations/seattle/) can help. free consultation and estimate. Our experienced team is ready to help with your chimney chase repair and rebuilding needs in Seattle, Washington.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Seattle and surrounding areas  

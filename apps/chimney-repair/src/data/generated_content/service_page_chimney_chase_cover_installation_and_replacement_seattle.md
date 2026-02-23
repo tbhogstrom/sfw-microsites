@@ -22,7 +22,7 @@ Chimney chase cover installation involves fitting a protective cover over your c
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Seattle's climate is characterized by significant rainfall, making chimney protection essential. Without a properly installed chase cover, rainwater can seep into the chimney, leading to issues such as mold growth, rust on flue liners, and structural damage. Moreover, local building codes often require proper chimney coverings to ensure safety and compliance [Source: Michael Litchfield - Renovation, Page 21]. By investing in chimney chase cover installation or replacement, homeowners can prevent these costly issues and enhance the lifespan of their chimneys.
+Seattle's climate is characterized by significant For comprehensive solutions, [repair chimney siding and framing](https://sfwconstruction.com/chimney-chase-repair/) can help. rainfall, making chimney protection essential. Without a properly installed chase cover, rainwater can seep into the chimney, leading to issues such as mold growth, rust on flue liners, and structural damage. Moreover, local building codes often require proper chimney coverings to ensure safety and compliance [Source: Michael Litchfield - Renovation, Page 21]. By investing in chimney chase cover installation or replacement, homeowners can prevent these costly issues and enhance the lifespan of their chimneys.
 
 ### Common Problems This Service Solves
 - **Water Damage**: Inadequate protection leads to moisture intrusion, damaging flue liners and surrounding structures [Source: Michael Litchfield - Renovation, Page 236].

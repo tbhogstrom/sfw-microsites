@@ -2,7 +2,7 @@
 
 # Preventing Dry Rot: Essential Tips for Deck Maintenance
 
-Keeping your deck in pristine condition is not just about aesthetics; it's also about preventing costly damages like dry rot. Dry rot can turn your beloved outdoor space into a safety hazard and a financial burden if left unchecked. In Portland, Oregon, with its wet climate, understanding how to protect your deck from decay is crucial. In this article, we will explore practical tips for maintaining your deck, ensuring it remains a safe and enjoyable space for years to come.
+Keeping your deck in pristine condition is not just about aesthetics; it's For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. also about preventing costly damages like dry rot. Dry rot can turn your beloved outdoor space into a safety hazard and a financial burden if left unchecked. In Portland, Oregon, with its wet climate, understanding how to protect your deck from decay is crucial. In this article, we will explore practical tips for maintaining your deck, ensuring it remains a safe and enjoyable space for years to come.
 
 ## Understanding Dry Rot and Its Causes
 

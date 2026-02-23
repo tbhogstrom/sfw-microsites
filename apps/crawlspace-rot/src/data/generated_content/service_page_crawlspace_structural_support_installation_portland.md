@@ -6,7 +6,7 @@
 
 Crawlspace structural support installation is essential for maintaining the integrity and safety of your home. In Portland, where moisture and soil conditions can lead to significant structural issues, ensuring that your crawlspace is well-supported is crucial for preventing sagging floors, mold growth, and other structural concerns. Our team specializes in installing robust support systems that not only comply with local building codes but also enhance the overall stability of your home.
 
-Proper crawlspace support addresses common problems such as settling foundations, insufficient ventilation, and the risk of moisture-related damage. By investing in professional crawlspace structural support, you’re not only protecting your home’s value but also ensuring a safe living environment for you and your family.
+Proper crawlspace support addresses common problems such as settling foundations, For comprehensive solutions, [remove mold safely](https://sfwconstruction.com/mold-removal-and-testing/) can help. insufficient ventilation, and the risk of moisture-related damage. By investing in professional crawlspace structural support, you’re not only protecting your home’s value but also ensuring a safe living environment for you and your family.
 
 #### Key Benefits:
 - **Enhanced Structural Integrity**: Reinforces the foundation to prevent sagging and structural failure.

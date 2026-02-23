@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Siding and Window Integration Repair
 
-Are you experiencing leaks, drafts, or unsightly gaps around your windows? Proper siding and window integration is essential for the structural integrity of your home and the comfort of your living space. In Seattle's rainy climate, failing to address these issues can lead to more significant problems, such as water damage and energy inefficiencies. Our specialized siding and window integration repair service ensures a watertight seal, preventing moisture intrusion and enhancing energy efficiency. 
+Are you experiencing leaks, drafts, or For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. unsightly gaps around your windows? Proper siding and window integration is essential for the structural integrity of your home and the comfort of your living space. In Seattle's rainy climate, failing to address these issues can lead to more significant problems, such as water damage and energy inefficiencies. Our specialized siding and window integration repair service ensures a watertight seal, preventing moisture intrusion and enhancing energy efficiency. 
 
 Investing in professional repairs not only enhances your home’s aesthetic appeal but also protects your investment against the elements. Our experienced team utilizes high-quality materials and proven techniques to ensure that your windows and siding work in harmony, providing a beautiful and functional exterior.
 

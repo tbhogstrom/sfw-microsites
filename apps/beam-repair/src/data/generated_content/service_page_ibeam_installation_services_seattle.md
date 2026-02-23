@@ -92,7 +92,7 @@ While costs can vary based on the specific project, our pricing is competitive a
 
 ### Factors That Affect Cost
 
-1. **Size and Length of I-Beam**: Larger beams or custom sizes will incur higher costs.
+1.**Size and Length of I-Beam**: Larger beams or For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. custom sizes will incur higher costs.
 2. **Complexity of Installation**: Projects requiring extensive shoring or structural modifications may increase labor costs.
 3. **Location and Accessibility**: If your project site poses logistical challenges, this may affect overall pricing.
 

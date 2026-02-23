@@ -4,7 +4,7 @@
 
 ### Protect Your Home from Water Damage with Expert Chimney Leak Repair
 
-Chimney penetration leaks can wreak havoc on your home, leading to costly repairs and potential safety hazards. When water seeps through the chimney, it can undermine the structural integrity of your property, lead to mold growth, and even pose fire hazards due to compromised flue systems. Our chimney penetration leak repair service specializes in identifying and resolving these issues, ensuring your home remains safe and dry.
+Chimney penetration leaks can wreak havoc on your home, leading For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. to costly repairs and potential safety hazards. When water seeps through the chimney, it can undermine the structural integrity of your property, lead to mold growth, and even pose fire hazards due to compromised flue systems. Our chimney penetration leak repair service specializes in identifying and resolving these issues, ensuring your home remains safe and dry.
 
 We understand that Seattle's unique climate can exacerbate chimney issues, making timely repairs essential. Our team is equipped with the knowledge and tools necessary to tackle these challenges head-on, providing you with peace of mind and a secure home. 
 

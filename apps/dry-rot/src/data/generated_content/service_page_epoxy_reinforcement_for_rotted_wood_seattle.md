@@ -4,7 +4,7 @@
 
 ### Restore Your Home’s Integrity and Beauty with Expert Epoxy Reinforcement
 
-Wood rot can be a homeowner's worst nightmare, especially in Seattle's damp climate. Fortunately, our epoxy reinforcement service offers a lasting solution to restore the structural integrity of your wooden elements. By utilizing high-strength epoxy materials, we can effectively repair and reinforce rotted wood, ensuring that your home remains safe and beautiful. 
+Wood rot can be a homeowner's worst For comprehensive solutions, [exterior services in Renton](https://sfwconstruction.com/locations/renton/) can help. nightmare, especially in Seattle's damp climate. Fortunately, our epoxy reinforcement service offers a lasting solution to restore the structural integrity of your wooden elements. By utilizing high-strength epoxy materials, we can effectively repair and reinforce rotted wood, ensuring that your home remains safe and beautiful. 
 
 Epoxy reinforcement not only fills gaps and repairs rotted sections but also protects against future damage. With our expertise, you can avoid the costly and labor-intensive process of replacing entire wooden structures. 
 

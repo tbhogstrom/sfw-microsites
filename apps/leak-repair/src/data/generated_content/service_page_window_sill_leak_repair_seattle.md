@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Window Sill Leak Repair
 
-Is your window sill allowing water to seep into your home? Window sill leaks can lead to extensive damage if left unaddressed. Our Window Sill Leak Repair service in Seattle, Washington, is designed to protect your home from water intrusion, mold growth, and costly repairs. Our experienced team utilizes industry-leading techniques and materials to ensure your windows are watertight, especially crucial in Seattle's rainy climate.
+Is your window sill allowing water For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. to seep into your home? Window sill leaks can lead to extensive damage if left unaddressed. Our Window Sill Leak Repair service in Seattle, Washington, is designed to protect your home from water intrusion, mold growth, and costly repairs. Our experienced team utilizes industry-leading techniques and materials to ensure your windows are watertight, especially crucial in Seattle's rainy climate.
 
 In the Pacific Northwest, where heavy rainfall is common, having a properly sealed window sill is not just a luxury; it's a necessity. A well-maintained window sill can enhance your home’s energy efficiency and prevent structural damage. Don’t wait for leaks to become a bigger issue—get your home inspected and repaired today!
 

@@ -4,7 +4,7 @@
 
 ### Revitalize Your Home's Trim for Lasting Beauty and Functionality
 
-Trim is an essential component of your home’s aesthetic and structural integrity. Over time, exposure to the elements can lead to rot, warping, or damage, detracting from your home’s curb appeal and potentially compromising its value. Our Trim Restoration and Refinishing service in Portland, Oregon, offers a comprehensive solution, ensuring your trim is not only restored to its former glory but also reinforced for long-lasting durability.
+Trim is an essential component of your For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. home’s aesthetic and structural integrity. Over time, exposure to the elements can lead to rot, warping, or damage, detracting from your home’s curb appeal and potentially compromising its value. Our Trim Restoration and Refinishing service in Portland, Oregon, offers a comprehensive solution, ensuring your trim is not only restored to its former glory but also reinforced for long-lasting durability.
 
 By investing in trim restoration, you are addressing potential issues before they escalate, saving you money and hassle in the long run. Our skilled professionals utilize high-quality materials and techniques to provide repairs that stand the test of time, ensuring your home remains beautiful and functional.
 

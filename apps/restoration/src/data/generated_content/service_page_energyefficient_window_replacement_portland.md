@@ -6,7 +6,7 @@
 
 Are you tired of drafty windows that let heat escape in the winter and allow it to seep in during the summer? Energy-efficient window replacement is the solution you need! This service not only enhances the aesthetic appeal of your home but also significantly improves its energy efficiency. With the rising costs of energy, making your home more comfortable while saving on energy bills has never been more crucial.
 
-By investing in energy-efficient windows, you're taking a proactive step toward reducing your carbon footprint and enhancing your home's value. Whether you're looking to replace old, worn-out windows or upgrade to the latest energy-efficient models, our expert team in Portland, Oregon is here to guide you through every step of the process.
+By investing in energy-efficient windows, you're taking a proactive step toward reducing For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. your carbon footprint and enhancing your home's value. Whether you're looking to replace old, worn-out windows or upgrade to the latest energy-efficient models, our expert team in Portland, Oregon is here to guide you through every step of the process.
 
 #### Key Benefits:
 - **Increased Energy Savings**: Modern windows can reduce heating and cooling costs by up to 50% [Source: Litchfield, Page 147].

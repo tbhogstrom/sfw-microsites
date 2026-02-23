@@ -88,7 +88,7 @@ We offer a selection of materials tailored to your needs, including durable PVC 
 Our pricing for Trim Design Consultation varies based on the scope of the project, materials selected, and specific homeowner needs. We provide transparent and competitive pricing.
 
 ### Factors That Affect Cost
-1. **Material Choice**: Different materials come with varying costs, affecting the overall budget.
+1.**Material Choice**: Different materials come with varying For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. costs, affecting the overall budget.
 2. **Project Scope**: The size and complexity of the trim work will impact labor and material costs.
 3. **Existing Conditions**: Any repairs needed for rot or damage will influence the final estimate.
 

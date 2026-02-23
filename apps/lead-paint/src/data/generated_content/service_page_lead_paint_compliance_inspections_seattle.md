@@ -24,7 +24,7 @@ Lead paint compliance inspections involve a comprehensive evaluation of your hom
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Given Seattle's rich architectural history, many homes were built before 1978 when lead paint was banned due to its health risks. The Pacific Northwest's climate, which can lead to moisture and structural issues, may exacerbate the degradation of lead paint, making inspections even more critical. By ensuring compliance through our inspections, you can prevent potential legal issues and protect your home's value.
+Given Seattle's rich architectural history, many homes were built before 1978 when For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. lead paint was banned due to its health risks. The Pacific Northwest's climate, which can lead to moisture and structural issues, may exacerbate the degradation of lead paint, making inspections even more critical. By ensuring compliance through our inspections, you can prevent potential legal issues and protect your home's value.
 
 ### Common Problems This Service Solves
 - **Lead Exposure Risks**: Lead dust and chips can pose serious health risks, particularly to children [Source: Michael Litchfield, Page 525].

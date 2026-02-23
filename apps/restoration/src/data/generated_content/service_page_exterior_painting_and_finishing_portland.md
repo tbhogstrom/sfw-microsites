@@ -18,7 +18,7 @@ When it comes to enhancing your home's exterior, professional painting and finis
 
 ### What is Exterior Painting and Finishing?
 
-Exterior painting and finishing involve a comprehensive process that starts well before the first stroke of paint. It includes thorough preparation, which is crucial for ensuring the longevity of the paint job. This process typically involves cleaning the surfaces, scraping off old paint, repairing any damaged wood, and applying appropriate primers and finishes. High-quality paint is then applied to protect the home from the elements and enhance its appearance [Source: Christina Glennon - Siding, Roofing, and Trim, Page 63].
+Exterior painting and finishing involve a comprehensive process that starts For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. well before the first stroke of paint. It includes thorough preparation, which is crucial for ensuring the longevity of the paint job. This process typically involves cleaning the surfaces, scraping off old paint, repairing any damaged wood, and applying appropriate primers and finishes. High-quality paint is then applied to protect the home from the elements and enhance its appearance [Source: Christina Glennon - Siding, Roofing, and Trim, Page 63].
 
 ### Why It's Important for Homeowners in Portland, Oregon
 

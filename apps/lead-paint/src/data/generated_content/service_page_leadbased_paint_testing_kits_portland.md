@@ -138,7 +138,7 @@ Spring and summer are ideal times for testing, as homeowners often engage in ren
 
 ## Ready to Get Started?
 
-Contact us today for a free consultation and estimate. Our experienced team is ready to help with your lead-based paint testing kits needs in Portland, Oregon.
+Contact us today for a For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. free consultation and estimate. Our experienced team is ready to help with your lead-based paint testing kits needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

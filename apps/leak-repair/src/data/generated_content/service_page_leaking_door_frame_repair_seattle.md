@@ -4,7 +4,7 @@
 
 ### Protect Your Home from Water Damage with Expert Leaking Door Frame Repairs
 
-Is your door frame leaking? This common issue can lead to significant water damage, mold growth, and increased energy costs if not addressed promptly. Our leaking door frame repair service in Seattle, Washington, focuses on identifying and fixing leaks around your door frames to ensure your home remains safe, dry, and comfortable. 
+Is your door frame leaking?This common issue can lead to significant water damage, mold growth, For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. and increased energy costs if not addressed promptly. Our leaking door frame repair service in Seattle, Washington, focuses on identifying and fixing leaks around your door frames to ensure your home remains safe, dry, and comfortable. 
 
 Our skilled technicians assess the root causes of leaks and implement effective repairs that enhance the durability and functionality of your door frames. Whether it’s improper installation, worn-out materials, or the effects of Seattle’s rainy climate, we are here to provide you with a lasting solution.
 

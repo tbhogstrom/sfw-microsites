@@ -26,7 +26,7 @@ The process involves removing the damaged sections, ensuring that the weather-re
 
 ### Why It's Important for Homeowners in Portland, Oregon
 
-Portland’s climate, characterized by wet winters and dry summers, can take a toll on your siding. Homeowners need to be vigilant about siding maintenance to prevent moisture-related issues, such as mold and rot. Additionally, homes built before 1978 may have lead paint, necessitating careful handling during repairs [Source: Christina Glennon - Siding, Roofing, and Trim, Page 44]. Proper siding installation and maintenance not only protect your home but also comply with local building codes and regulations.
+Portland’s climate, characterized by wet winters and dry summers, For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. can take a toll on your siding. Homeowners need to be vigilant about siding maintenance to prevent moisture-related issues, such as mold and rot. Additionally, homes built before 1978 may have lead paint, necessitating careful handling during repairs [Source: Christina Glennon - Siding, Roofing, and Trim, Page 44]. Proper siding installation and maintenance not only protect your home but also comply with local building codes and regulations.
 
 ### Common Problems This Service Solves
 - **Water Damage**: Poorly maintained siding can allow water to seep into your home, leading to mold growth and structural issues [Source: Michael Litchfield - Renovation, Page 23].

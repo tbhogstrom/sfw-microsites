@@ -4,7 +4,7 @@
 
 ### Restore Your Home’s Protection and Curb Appeal
 
-Severe weather can wreak havoc on your home's exterior, especially in Seattle, where storms can bring heavy rains and winds. Our Siding Repair for Storm Damage service is designed to restore your home’s protective barrier against the elements while enhancing its visual appeal. Damage to siding can lead to significant problems, including water infiltration, mold growth, and decreased energy efficiency. Addressing these issues promptly is crucial for maintaining the integrity of your home.
+Severe weather can wreak havoc on your home's exterior, especially in Seattle, For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. where storms can bring heavy rains and winds. Our Siding Repair for Storm Damage service is designed to restore your home’s protective barrier against the elements while enhancing its visual appeal. Damage to siding can lead to significant problems, including water infiltration, mold growth, and decreased energy efficiency. Addressing these issues promptly is crucial for maintaining the integrity of your home.
 
 Our experienced team specializes in assessing and repairing storm-damaged siding, ensuring that your home remains safe, dry, and attractive. Whether it’s replacing broken shingles, fixing gouges, or repairing underlying structures, we have the expertise to handle all types of siding materials.
 

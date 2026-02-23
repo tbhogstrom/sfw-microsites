@@ -4,7 +4,7 @@
 
 ### Protect Your Home from Unseen Damage with Expert Emergency Dry Rot Repair
 
-Dry rot can silently compromise the integrity of your home, leading to costly repairs and safety hazards. Our Emergency Dry Rot Repair service in Portland, Oregon, is designed to quickly assess and remedy any signs of wood decay, ensuring that your property remains safe and sound. Whether it’s a small patch of compromised trim or a more extensive structural issue, our team of experts is equipped to handle it all.
+Dry rot can silently compromise the integrity of your home, For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. leading to costly repairs and safety hazards. Our Emergency Dry Rot Repair service in Portland, Oregon, is designed to quickly assess and remedy any signs of wood decay, ensuring that your property remains safe and sound. Whether it’s a small patch of compromised trim or a more extensive structural issue, our team of experts is equipped to handle it all.
 
 Ignoring dry rot can lead to further damage, increased repair costs, and even potential safety risks for your family. Our prompt and professional service not only restores the aesthetic appeal of your home but also strengthens its structural integrity, ensuring longevity and safety.
 

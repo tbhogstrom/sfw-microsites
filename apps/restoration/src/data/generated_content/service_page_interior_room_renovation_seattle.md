@@ -87,7 +87,7 @@ We select materials that are not only aesthetically pleasing but also environmen
 
 ### General Pricing Information
 
-Pricing for interior room renovation can vary widely based on the scope of work, materials used, and specific homeowner needs. We provide transparent estimates to ensure you understand the costs involved.
+Pricing for interior room renovation can vary widely based on the scope For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. of work, materials used, and specific homeowner needs. We provide transparent estimates to ensure you understand the costs involved.
 
 ### Factors That Affect Cost
 1. **Scope of Renovation**: The extent of the work required will significantly impact costs.

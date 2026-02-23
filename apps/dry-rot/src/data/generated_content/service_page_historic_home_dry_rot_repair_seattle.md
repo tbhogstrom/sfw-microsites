@@ -6,7 +6,7 @@
 
 Dry rot is an insidious issue that can compromise the integrity and beauty of your historic home in Seattle. This condition, caused by wood-decaying fungi, often goes unnoticed until significant damage has occurred. Our expert dry rot repair services are designed to not only address existing rot but also to prevent future occurrences, ensuring that your home remains a cherished part of Seattle's architectural landscape.
 
-Dry rot can lead to structural instability, aesthetic decline, and even increased costs due to extensive repairs. Our team understands the unique requirements of historic homes and employs specialized techniques to restore your property while preserving its character. From identifying the root causes of rot to using high-quality materials, we bring a comprehensive approach to dry rot repair.
+Dry rot can lead to structural instability, aesthetic decline, and For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. even increased costs due to extensive repairs. Our team understands the unique requirements of historic homes and employs specialized techniques to restore your property while preserving its character. From identifying the root causes of rot to using high-quality materials, we bring a comprehensive approach to dry rot repair.
 
 #### Key Benefits:
 - **Prolonged Lifespan**: Our expert repairs can extend the life of your historic trim and structural elements.

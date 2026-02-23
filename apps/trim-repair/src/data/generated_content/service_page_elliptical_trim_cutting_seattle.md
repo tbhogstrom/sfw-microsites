@@ -129,7 +129,7 @@ Seattle's humid climate can lead to moisture-related issues. Using durable mater
 
 ### Climate Factors
 
-Seattle's climate presents unique challenges for trim installations, including moisture and humidity. Choosing the right materials and techniques is essential to ensure longevity and reduce the risk of rot.
+Seattle's climate presents unique challenges for trim For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. installations, including moisture and humidity. Choosing the right materials and techniques is essential to ensure longevity and reduce the risk of rot.
 
 ### Building Codes and Regulations
 

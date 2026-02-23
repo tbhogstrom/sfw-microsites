@@ -4,7 +4,7 @@
 
 ### Enhance Your Home's Charm and Safety with Professional Chimney Finishing
 
-Your wood chimney is not just a functional element of your home; it is a vital part of your home's aesthetics and safety. Our wood chimney exterior finishing and painting service in Portland, Oregon, ensures that your chimney looks great while protecting it from the elements. Regular maintenance and finishing help prevent water damage, rot, and other issues that could lead to costly repairs down the line.
+Your wood chimney is not just a functional element of your home; it For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. is a vital part of your home's aesthetics and safety. Our wood chimney exterior finishing and painting service in Portland, Oregon, ensures that your chimney looks great while protecting it from the elements. Regular maintenance and finishing help prevent water damage, rot, and other issues that could lead to costly repairs down the line.
 
 Proper finishing and painting of your chimney not only improve its appearance but also enhance its durability against Portland's wet climate. With our expert services, you can enjoy peace of mind knowing your chimney is well-protected.
 

@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Expert Window Seal Replacement and Reglazing
 
-As a homeowner in Portland, you understand the importance of maintaining a safe and comfortable environment. Over time, window seals can deteriorate, leading to drafts, moisture intrusion, and reduced energy efficiency. Our window seal replacement and reglazing services are designed to restore your windows to optimal performance, enhancing your home’s comfort while saving you money on energy bills. We address common issues such as foggy glass and air leaks, ensuring that your windows look great and function properly.
+As a homeowner in Portland, you understand the importance For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. of maintaining a safe and comfortable environment. Over time, window seals can deteriorate, leading to drafts, moisture intrusion, and reduced energy efficiency. Our window seal replacement and reglazing services are designed to restore your windows to optimal performance, enhancing your home’s comfort while saving you money on energy bills. We address common issues such as foggy glass and air leaks, ensuring that your windows look great and function properly.
 
 #### Key Benefits:
 - **Improved Energy Efficiency**: Sealing leaks and reglazing windows can significantly reduce energy loss, keeping your home warmer in winter and cooler in summer.

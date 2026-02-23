@@ -4,7 +4,7 @@
 
 ### Revitalize Your Home with Expert Custom Wood Replacement
 
-Are you facing issues with rotting, damaged, or outdated wood in your home? Custom wood replacement is a vital service that ensures your property remains safe, aesthetically pleasing, and structurally sound. At [Your Company Name], we specialize in replacing damaged wood components with high-quality materials that enhance the longevity and beauty of your home. Whether it's a rotting fascia board or distressed trim, our customized solutions are tailored to meet your specific needs.
+Are you facing issues with rotting, damaged, For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. or outdated wood in your home? Custom wood replacement is a vital service that ensures your property remains safe, aesthetically pleasing, and structurally sound. At [Your Company Name], we specialize in replacing damaged wood components with high-quality materials that enhance the longevity and beauty of your home. Whether it's a rotting fascia board or distressed trim, our customized solutions are tailored to meet your specific needs.
 
 Neglecting damaged wood can lead to severe structural issues, increased repair costs, and diminished property value. Our team of experienced professionals provides meticulous assessments and durable replacements, ensuring that your home's exterior remains robust against the elements. With our expertise, you can enjoy peace of mind knowing your home is in capable hands.
 

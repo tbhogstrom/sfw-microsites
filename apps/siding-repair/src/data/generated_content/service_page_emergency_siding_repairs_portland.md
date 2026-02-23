@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Our Expert Emergency Siding Repairs
 
-Siding is the first line of defense for your home against the elements, including rain, wind, and UV radiation. When your siding is damaged, it can lead to significant problems like water infiltration, pest infestations, and energy loss. Our emergency siding repair services in Portland, Oregon, are designed to address these issues swiftly and effectively. Whether you're dealing with storm damage, rot, or a sudden impact, we offer comprehensive solutions to restore the integrity of your home.
+Siding is the first line of defense for your home against For comprehensive solutions, [restore your deck](https://sfwconstruction.com/repair-services/portland-deck-repair/) can help. the elements, including rain, wind, and UV radiation. When your siding is damaged, it can lead to significant problems like water infiltration, pest infestations, and energy loss. Our emergency siding repair services in Portland, Oregon, are designed to address these issues swiftly and effectively. Whether you're dealing with storm damage, rot, or a sudden impact, we offer comprehensive solutions to restore the integrity of your home.
 
 Our experienced team understands that siding issues require immediate attention. By providing prompt and professional repairs, we help protect your home from further damage and costly repairs down the line. With our expertise, you can have peace of mind knowing your property is well-protected.
 

@@ -22,7 +22,7 @@ Investing in professional bay window leak repair is essential for maintaining yo
 
 Bay window leak repair involves identifying and fixing leaks around the bay window structure, which may include the window frame, seals, and surrounding wall. This service typically involves several steps:
 
-1. **Inspection**: Our team conducts a thorough assessment to pinpoint the source of the leak, often looking for compromised seals, damaged flashing, or rotted wood within the frame [Source: Michael Litchfield, Renovation, Page 140].
+For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. 1. **Inspection**: Our team conducts a thorough assessment to pinpoint the source of the leak, often looking for compromised seals, damaged flashing, or rotted wood within the frame [Source: Michael Litchfield, Renovation, Page 140].
 2. **Repair**: This may involve resealing or replacing window seals, applying flashing tape to ensure water does not penetrate [Source: Michael Litchfield, Renovation, Page 152], and addressing any structural rot found in the surrounding materials.
 3. **Re-Glazing**: If the window glass is compromised, we may need to replace the glazing putty and ensure the glass fits snugly within the frame to prevent air and water leaks [Source: Michael Litchfield, Renovation, Page 156].
 

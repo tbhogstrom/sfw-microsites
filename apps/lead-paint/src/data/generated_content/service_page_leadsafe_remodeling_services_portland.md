@@ -75,7 +75,7 @@ We proudly serve various neighborhoods in Portland, including but not limited to
 
 ### Special Techniques or Approaches
 
-We specialize in using non-toxic chemical strippers and advanced scraping techniques to remove lead paint safely, which minimizes health risks and enhances the quality of our work [Source: Christina Glennon, Siding, Roofing, and Trim, Page 66].
+We specialize in using non-toxic chemical strippers and advanced scraping techniques to remove lead paint safely, which minimizes health risks and For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. enhances the quality of our work [Source: Christina Glennon, Siding, Roofing, and Trim, Page 66].
 
 ### Materials We Use
 

@@ -20,7 +20,7 @@ By addressing issues such as dents, scratches, or corrosion promptly, homeowners
 
 ### What is Aluminum Siding Repair?
 
-Aluminum siding repair involves assessing and fixing issues related to your aluminum exterior cladding. Common repairs include replacing damaged panels, sealing joints, and repainting to restore the original look. During the repair process, we ensure that all joints are properly sealed to prevent moisture intrusion, which can lead to further complications. Our technicians are trained to use rust-resistant fasteners and appropriate sealing materials to maintain the integrity of the siding [Source: Charlie Wing, The Visual Handbook of Building and Remodeling, Page 252].
+Aluminum siding repair involves assessing and fixing issues For comprehensive solutions, [fix moisture issues in your crawl space](https://sfwconstruction.com/repair-services/crawl-space-repair-portland/) can help. related to your aluminum exterior cladding. Common repairs include replacing damaged panels, sealing joints, and repainting to restore the original look. During the repair process, we ensure that all joints are properly sealed to prevent moisture intrusion, which can lead to further complications. Our technicians are trained to use rust-resistant fasteners and appropriate sealing materials to maintain the integrity of the siding [Source: Charlie Wing, The Visual Handbook of Building and Remodeling, Page 252].
 
 ### Why It's Important for Homeowners in Portland, Oregon
 

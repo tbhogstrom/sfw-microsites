@@ -26,7 +26,7 @@ Common techniques include using marine epoxy for permanent repairs to rotten sec
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Seattle's unique climate, characterized by frequent rain and moisture, can accelerate the deterioration of wood trim. Homeowners need to maintain exterior trim to prevent rot, mold, and structural damage that can lead to costly repairs [Source: Glennon, Page 196]. Additionally, adhering to local building codes and ensuring that your home’s exterior is appealing can significantly improve property value and curb appeal.
+Seattle's unique climate, characterized by frequent rain and moisture, For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. can accelerate the deterioration of wood trim. Homeowners need to maintain exterior trim to prevent rot, mold, and structural damage that can lead to costly repairs [Source: Glennon, Page 196]. Additionally, adhering to local building codes and ensuring that your home’s exterior is appealing can significantly improve property value and curb appeal.
 
 ### Common Problems This Service Solves
 - **Rotting Trim**: Often seen in older homes, rotting trim can lead to further structural damage if not addressed promptly [Source: Glennon, Page 196].

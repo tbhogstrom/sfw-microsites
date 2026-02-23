@@ -4,7 +4,7 @@
 
 ### Protect Your Home from Water Damage with Expert Window Flashing Services
 
-Window flashing is a critical element in protecting your home from water infiltration. Proper installation and maintenance of window flashing ensure that rainwater is diverted away from your windows and into the drainage system, preventing leaks, mold, and structural damage. In Portland's rainy climate, having reliable window flashing is not just a luxury; it’s a necessity. 
+Window flashing is a critical element in For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. protecting your home from water infiltration. Proper installation and maintenance of window flashing ensure that rainwater is diverted away from your windows and into the drainage system, preventing leaks, mold, and structural damage. In Portland's rainy climate, having reliable window flashing is not just a luxury; it’s a necessity. 
 
 Our window flashing repair and installation services are designed to safeguard your home against the elements. Whether you're dealing with an existing leak or planning a window installation, our professional team will ensure your home remains dry and secure.
 

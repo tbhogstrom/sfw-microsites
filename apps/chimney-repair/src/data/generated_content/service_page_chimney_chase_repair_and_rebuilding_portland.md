@@ -4,7 +4,7 @@
 
 ### Secure Your Home with Professional Chimney Chase Repair
 
-Your chimney chase is a vital component of your home’s heating system, providing safety and efficiency for your fireplace. Over time, exposure to the elements can lead to deterioration, potentially resulting in costly repairs and safety hazards. Our chimney chase repair and rebuilding services in Portland, Oregon, ensure that your chimney functions correctly, preventing leaks and protecting your home from water damage. 
+Your chimney chase is a vital component of your home’s heating For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. system, providing safety and efficiency for your fireplace. Over time, exposure to the elements can lead to deterioration, potentially resulting in costly repairs and safety hazards. Our chimney chase repair and rebuilding services in Portland, Oregon, ensure that your chimney functions correctly, preventing leaks and protecting your home from water damage. 
 
 Whether you're dealing with a cracked crown, missing flue tiles, or inadequate flashing, our professional team is here to help. We address these issues promptly, restoring your chimney chase to its optimal condition and giving you peace of mind.
 

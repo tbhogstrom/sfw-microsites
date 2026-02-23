@@ -4,7 +4,7 @@
 
 ### Protect Your Home with Reliable Chimney Flashing Repair
 
-Chimney flashing is a critical component of your roofing system that prevents water from leaking into your home through the seams where the chimney meets the roof. In Seattle's wet climate, proper chimney flashing is vital for maintaining the integrity of your roofing and preventing costly damage. Over time, flashing can become loose, corroded, or improperly installed, leading to leaks and water damage. Our chimney flashing repair service ensures that your home remains safe, dry, and structurally sound.
+Chimney flashing is a critical component of your roofing system that prevents water from leaking into For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. your home through the seams where the chimney meets the roof. In Seattle's wet climate, proper chimney flashing is vital for maintaining the integrity of your roofing and preventing costly damage. Over time, flashing can become loose, corroded, or improperly installed, leading to leaks and water damage. Our chimney flashing repair service ensures that your home remains safe, dry, and structurally sound.
 
 Neglecting chimney flashing can result in significant issues, including rotting wood, mold growth, and compromised structural integrity. Our team of experienced professionals understands the unique challenges posed by Seattle's climate and is dedicated to providing high-quality repairs that withstand the elements.
 

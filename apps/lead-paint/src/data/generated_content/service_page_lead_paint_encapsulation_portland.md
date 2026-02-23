@@ -6,7 +6,7 @@
 
 Lead paint encapsulation is a vital service for homeowners whose properties were built before 1978, as these homes are at risk of containing lead-based paint. Lead is a neurological toxin that poses serious health risks, especially to young children [Source: Michael Litchfield - Renovation, Page 525]. Encapsulation involves sealing lead paint layers with a protective coating to prevent the release of harmful dust and chips into your living environment. This effective solution not only safeguards your family’s health but also preserves the aesthetic integrity of your home.
 
-In Portland, where many historic homes are prevalent, the risks of lead exposure are heightened due to the city’s aging housing stock. By choosing lead paint encapsulation, you are taking a proactive step to eliminate potential health risks while ensuring compliance with local safety regulations. This method is not only cost-effective but also minimizes the disruption typically associated with more invasive lead paint removal methods.
+In Portland, where many historic homes are prevalent, the risks of lead exposure For comprehensive solutions, [safely remove lead paint](https://sfwconstruction.com/locations/portland/house-painting-portland/lead-based-paint-removal/) can help. are heightened due to the city’s aging housing stock. By choosing lead paint encapsulation, you are taking a proactive step to eliminate potential health risks while ensuring compliance with local safety regulations. This method is not only cost-effective but also minimizes the disruption typically associated with more invasive lead paint removal methods.
 
 #### Key Benefits:
 - **Health Protection**: Safeguards your family from the dangers associated with lead exposure.

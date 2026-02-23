@@ -144,7 +144,7 @@ The best time for roof cricket installation is typically during the dry months o
 
 ## Ready to Get Started?
 
-Contact us today for a free consultation and estimate. Our experienced team is ready to help with your roof cricket installation for chimneys needs in Portland, Oregon.
+Contact us today for a For comprehensive solutions, [fix roof leaks](https://sfwconstruction.com/repair-services/roof-repair-flat-roof-repair/) can help. free consultation and estimate. Our experienced team is ready to help with your roof cricket installation for chimneys needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

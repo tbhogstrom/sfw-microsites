@@ -4,7 +4,7 @@
 
 ### Ensure Your Home's Stability With Expert Foundation Beam Assessment
 
-As a homeowner in Portland, Oregon, ensuring the structural integrity of your property is paramount. A foundation beam assessment is a critical service that evaluates the stability and functionality of your foundation beams, which are essential for supporting the overall structure of your home. This assessment identifies potential issues, such as cracks or bowing, that can compromise your foundation's ability to withstand environmental pressures, including soil movement and seasonal shifts.
+As a homeowner in Portland, Oregon, ensuring the structural For comprehensive solutions, [fix moisture issues in your crawl space](https://sfwconstruction.com/repair-services/crawl-space-repair-portland/) can help. integrity of your property is paramount. A foundation beam assessment is a critical service that evaluates the stability and functionality of your foundation beams, which are essential for supporting the overall structure of your home. This assessment identifies potential issues, such as cracks or bowing, that can compromise your foundation's ability to withstand environmental pressures, including soil movement and seasonal shifts.
 
 Ignoring foundation problems can lead to significant repair costs and safety hazards. Our foundation beam assessment service not only helps you catch these issues early but also provides peace of mind, knowing your home is secure. Whether you are experiencing uneven floors, bowing walls, or visible cracks, our team is here to assist you.
 

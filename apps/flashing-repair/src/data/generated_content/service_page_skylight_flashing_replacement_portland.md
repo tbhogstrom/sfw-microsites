@@ -142,7 +142,7 @@ The best time for skylight flashing replacement in Portland is typically during 
 
 ## Ready to Get Started?
 
-Contact us today for a free consultation and estimate. Our experienced team is ready to help with your skylight flashing replacement needs in Portland, Oregon.
+Contact us today for a For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. free consultation and estimate. Our experienced team is ready to help with your skylight flashing replacement needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

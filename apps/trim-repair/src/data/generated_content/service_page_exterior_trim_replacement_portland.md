@@ -4,7 +4,7 @@
 
 ### Transform Your Home's Exterior with Quality Trim Replacement
 
-Your home’s exterior trim is not just about aesthetics; it plays a critical role in protecting your home from the elements and enhancing its overall value. Exterior trim serves as a beautiful finishing touch that frames your doors and windows, adds character to your home, and keeps moisture at bay. Over time, however, even the best materials can succumb to rot, weather damage, and wear. Our exterior trim replacement service in Portland, Oregon, ensures that your home not only looks stunning but is also safeguarded against structural issues that can arise from neglect.
+Your home’s exterior trim is not just about aesthetics; it plays a critical role in For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. protecting your home from the elements and enhancing its overall value. Exterior trim serves as a beautiful finishing touch that frames your doors and windows, adds character to your home, and keeps moisture at bay. Over time, however, even the best materials can succumb to rot, weather damage, and wear. Our exterior trim replacement service in Portland, Oregon, ensures that your home not only looks stunning but is also safeguarded against structural issues that can arise from neglect.
 
 When you choose us for your exterior trim replacement, you are investing in the longevity of your home. We use high-quality materials and proven techniques to replace damaged trim, ensuring that your home remains as beautiful as it is functional. 
 

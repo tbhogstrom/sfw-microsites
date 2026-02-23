@@ -4,7 +4,7 @@
 
 ### Uncovering the Hidden Threats of Chimney Leaks
 
-Chimney penetration leaks can lead to significant structural damage and health hazards in your home. These leaks often occur where the chimney intersects with the roof, making them notoriously difficult to spot without professional inspection. If left unaddressed, they can cause water damage, mold growth, and even chimney fires due to the buildup of combustible materials. Our chimney penetration leak repair service in Portland, Oregon, aims to identify and rectify these leaks, ensuring the safety and comfort of your home.
+Chimney penetration leaks can lead to significant structural damage For comprehensive solutions, [upgrade your home's windows](https://sfwconstruction.com/repair-services/window-installation-portland/) can help. and health hazards in your home. These leaks often occur where the chimney intersects with the roof, making them notoriously difficult to spot without professional inspection. If left unaddressed, they can cause water damage, mold growth, and even chimney fires due to the buildup of combustible materials. Our chimney penetration leak repair service in Portland, Oregon, aims to identify and rectify these leaks, ensuring the safety and comfort of your home.
 
 A well-maintained chimney not only adds aesthetic value to your property but also plays a crucial role in your home's overall integrity. The rainy climate of Portland can exacerbate existing issues, making timely repairs essential. Whether you're experiencing visible water stains, musty odors, or other signs of a leak, our team is here to help you restore your chimney's functionality.
 

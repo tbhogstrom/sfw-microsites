@@ -89,7 +89,7 @@ Our preferred materials include treated lumber and high-quality epoxy resins, wh
 
 ### General Pricing Information
 
-Pricing for deck joist dry rot inspection and repair varies based on the extent of damage and the materials required. We provide transparent estimates that outline all costs involved.
+Pricing for deck joist dry rot inspection and repair varies based on For comprehensive solutions, [estimate your siding project cost](https://sfwconstruction.com/siding-calculator/) can help. the extent of damage and the materials required. We provide transparent estimates that outline all costs involved.
 
 ### Factors That Affect Cost
 1. **Extent of Damage**: More extensive rot may require additional materials and labor.

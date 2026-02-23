@@ -142,7 +142,7 @@ The best time for step flashing repairs in Portland is during the dry months of 
 
 ## Ready to Get Started?
 
-Contact us today for a free consultation and estimate. Our experienced team is ready to help with your step flashing repair needs in Portland, Oregon.
+Contact us today for a For comprehensive solutions, [our Portland service area](https://sfwconstruction.com/locations/portland/) can help. free consultation and estimate. Our experienced team is ready to help with your step flashing repair needs in Portland, Oregon.
 
 **Phone**: [Your phone number]  
 **Service Areas**: Portland and surrounding areas  

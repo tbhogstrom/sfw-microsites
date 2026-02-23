@@ -24,7 +24,7 @@ Rotten trim repair involves the process of assessing, repairing, and restoring d
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-Seattle's unique climate, characterized by high humidity and frequent rainfall, creates an environment conducive to rot and decay in wood trim. As a homeowner, it's crucial to maintain your trim to avoid extensive damage that can lead to structural issues or costly replacements. Local building codes may also mandate specific materials and techniques for trim repairs, making professional expertise essential ([Source: Christina Glennon, Page 197]).
+Seattle's unique climate, characterized by high humidity and frequent rainfall, creates an For comprehensive solutions, [repair wood rot damage](https://sfwconstruction.com/repair-services/dry-rot-repair/) can help. environment conducive to rot and decay in wood trim. As a homeowner, it's crucial to maintain your trim to avoid extensive damage that can lead to structural issues or costly replacements. Local building codes may also mandate specific materials and techniques for trim repairs, making professional expertise essential ([Source: Christina Glennon, Page 197]).
 
 ### Common Problems This Service Solves
 - **Moisture Damage**: Excess moisture can lead to rot, particularly in older homes. Our repair techniques address this issue effectively.

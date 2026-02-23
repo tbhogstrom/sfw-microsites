@@ -90,7 +90,7 @@ We choose high-quality heat guns and safety equipment to ensure the best results
 
 ### General Pricing Information
 
-The cost of heat gun lead paint removal varies based on the size and complexity of the project. We offer competitive pricing and provide transparent estimates without hidden fees.
+The cost of heat gun lead paint removal varies based For comprehensive solutions, [exterior services in Renton](https://sfwconstruction.com/locations/renton/) can help. on the size and complexity of the project. We offer competitive pricing and provide transparent estimates without hidden fees.
 
 ### Factors That Affect Cost
 1. **Size of the Area**: Larger areas will require more time and resources to complete.

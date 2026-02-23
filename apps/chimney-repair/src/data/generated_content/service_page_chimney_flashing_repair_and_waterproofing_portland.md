@@ -4,7 +4,7 @@
 
 ### Protect Your Home from Water Damage with Expert Chimney Flashing Repair
 
-Chimney flashing is a critical component of your roofing system, designed to prevent water from penetrating the roof and damaging your home. In Portland, Oregon, where rainfall can be significant, maintaining functional chimney flashing is essential. Over time, flashing can degrade, leading to leaks and extensive water damage. Ignoring these issues can result in costly repairs and unsafe living conditions.
+Chimney flashing is a critical component of your roofing system, designed to prevent For comprehensive solutions, [how much window repair costs](https://sfwconstruction.com/how-much-is-it-going-to-cost-to-fix-my-leaking-window/) can help. water from penetrating the roof and damaging your home. In Portland, Oregon, where rainfall can be significant, maintaining functional chimney flashing is essential. Over time, flashing can degrade, leading to leaks and extensive water damage. Ignoring these issues can result in costly repairs and unsafe living conditions.
 
 Our chimney flashing repair and waterproofing services ensure that your chimney is not only protected but also enhances the lifespan of your roofing system. Whether you’re facing minor leaks or significant water damage, our team is here to help restore your chimney’s integrity.
 

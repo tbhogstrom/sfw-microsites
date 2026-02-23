@@ -4,7 +4,7 @@
 
 ### Restore the Beauty of Your Home with Expert Rotten Trim Repair
 
-Rotting trim can undermine the beauty and structural integrity of your home. Whether it's due to weather exposure, age, or poor maintenance, it's crucial to address this issue promptly. Our rotten trim repair services in Portland, Oregon, offer a permanent solution that not only enhances your home's aesthetic appeal but also ensures its longevity. By utilizing advanced techniques and high-quality materials, we can repair or replace your rotting trim, preventing further damage and costly repairs down the line.
+Rotting trim can undermine the beauty and For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. structural integrity of your home. Whether it's due to weather exposure, age, or poor maintenance, it's crucial to address this issue promptly. Our rotten trim repair services in Portland, Oregon, offer a permanent solution that not only enhances your home's aesthetic appeal but also ensures its longevity. By utilizing advanced techniques and high-quality materials, we can repair or replace your rotting trim, preventing further damage and costly repairs down the line.
 
 Ignoring rotten trim can lead to more severe problems, such as water infiltration and pest infestations, which can affect your home's overall health. Our skilled professionals are dedicated to restoring your home’s exterior and providing you with peace of mind.
 

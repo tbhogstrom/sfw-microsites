@@ -4,7 +4,7 @@
 
 ### Restore Your Wooden Structures with Durable Epoxy Solutions
 
-Wooden structures can succumb to the ravages of time, weather, and pests, leading to costly repairs. Our epoxy reinforcement for wood service in Portland, Oregon, offers a robust solution to restore your wooden elements effectively. This innovative technique utilizes high-strength epoxy to fill gaps, reinforce weak areas, and extend the life of your wood, ensuring it withstands the test of time. 
+Wooden structures can succumb to the ravages of time, For comprehensive solutions, [repair construction defects](https://sfwconstruction.com/repair-services/construction-defect-repair-portland/) can help. weather, and pests, leading to costly repairs. Our epoxy reinforcement for wood service in Portland, Oregon, offers a robust solution to restore your wooden elements effectively. This innovative technique utilizes high-strength epoxy to fill gaps, reinforce weak areas, and extend the life of your wood, ensuring it withstands the test of time. 
 
 Whether you're dealing with rotting trim, damaged beams, or any form of wood degradation, epoxy reinforcement not only repairs but also fortifies the structural integrity of your home. This service is essential for homeowners looking to maintain their investments while enhancing the aesthetic appeal of their properties.
 

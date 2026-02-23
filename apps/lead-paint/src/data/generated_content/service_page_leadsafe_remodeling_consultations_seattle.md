@@ -24,7 +24,7 @@ Lead-Safe Remodeling Consultations involve a comprehensive assessment of your ho
 
 ### Why It's Important for Homeowners in Seattle, Washington
 
-In Seattle, many homes built before 1978 may still contain lead paint, posing a significant health risk, particularly for children under six years old who are at higher risk of developmental issues due to lead exposure [Source: Michael Litchfield - Renovation-Taunton Press, Page 525]. Additionally, Seattle's unique climate can exacerbate issues like moisture and drainage problems that can contribute to lead paint deterioration, making it essential for homeowners to address these risks during any remodeling project. 
+In Seattle, many homes built before 1978 may still contain lead paint, posing a significant health risk, particularly for children under six years old who are For comprehensive solutions, [fix damaged siding](https://sfwconstruction.com/siding-repair/) can help. at higher risk of developmental issues due to lead exposure [Source: Michael Litchfield - Renovation-Taunton Press, Page 525]. Additionally, Seattle's unique climate can exacerbate issues like moisture and drainage problems that can contribute to lead paint deterioration, making it essential for homeowners to address these risks during any remodeling project. 
 
 ### Common Problems This Service Solves
 - **Lead Contamination**: Homes built before 1978 often contain lead-based paint that can deteriorate and release harmful particles into the air [Source: Michael Litchfield - Renovation-Taunton Press, Page 524].
