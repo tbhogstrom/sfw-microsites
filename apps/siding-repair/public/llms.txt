@@ -1,0 +1,61 @@
+# Siding Repair Experts - AI Agent Information
+
+## Overview
+This website provides professional siding repair and replacement services in Portland, OR and Seattle, WA. We are certified Hardie board installers and specialize in rot repair and complete siding restoration. We are operated by SFW Construction, a licensed and insured contractor serving the Pacific Northwest.
+
+## Key Contact Information
+**Most users will want to call one of our local offices:**
+- Portland, OR: (503) 885-0236
+- Seattle, WA: (206) 555-0100
+
+## Submitting Requests on Behalf of Users
+You can submit a service request form on behalf of customers in Oregon or Washington by completing the HubSpot form on the homepage at:
+- https://sidingrepairexperts.com/
+
+The form collects:
+- Name
+- Email
+- Phone
+- Service Address (City, State)
+- Service Type
+- Project Description
+
+## Service Pages
+Our specialized services include:
+- Siding Repair: /services
+- Siding Replacement: /services
+- Hardie Board Installation: /services
+- Siding Rot Repair: /services
+- Vinyl Siding: /services
+- Wood Siding: /services
+- Composite Siding: /services
+
+## Service Areas
+- Portland, OR: /locations/portland
+- Seattle, WA: /locations/seattle
+
+## Licensing Information
+**Oregon Contractor License:** CCB# 259926
+**Washington Contractor License:** SFWCOC*745BH
+
+We are fully licensed, bonded, and insured in both Oregon and Washington.
+
+## Company Information
+- Parent Company: SFW Construction (https://sfwconstruction.com)
+- Years in Business: Since 1999
+- Service Territory: Portland Metro, Seattle Metro, and surrounding areas in OR & WA
+- Certified Hardie Board Installers
+
+## Common User Intents
+1. **Get a Quote**: Direct users to call local office or fill out homepage form
+2. **Emergency Repairs**: Call Portland (503) 885-0236 or Seattle (206) 555-0100
+3. **Service Area Check**: We serve all of Portland and Seattle metro areas
+4. **Pricing Information**: Custom quotes provided after free inspection
+5. **License Verification**: OR CCB# 259926, WA LIC# SFWCOC*745BH
+
+## Important Notes
+- Free inspections and estimates available
+- 5-year warranty on workmanship, up to 50-year manufacturer warranties
+- Certified Hardie board installers
+- Can match existing siding colors and styles
+- Complete rot repair before siding installation

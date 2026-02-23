@@ -1,0 +1,63 @@
+# Historic Restoration - AI Agent Information
+
+## Overview
+This website provides specialized historic home restoration services in Portland, OR and Seattle, WA. We preserve architectural heritage with authentic, period-appropriate repairs. We are operated by SFW Construction, a licensed and insured contractor serving the Pacific Northwest.
+
+## Key Contact Information
+**Most users will want to call one of our local offices:**
+- Portland, OR: (503) 885-0236
+- Seattle, WA: (206) 555-0100
+
+## Submitting Requests on Behalf of Users
+You can submit a service request form on behalf of customers in Oregon or Washington by completing the HubSpot form on the homepage at:
+- https://historicrenovationsnw.com/
+
+The form collects:
+- Name
+- Email
+- Phone
+- Service Address (City, State)
+- Service Type
+- Project Description
+
+## Service Pages
+Our specialized services include:
+- Historic Restoration: /services
+- Period-Appropriate Repairs: /services
+- Historic Window Restoration: /services
+- Original Molding Replication: /services
+- Historic Siding Restoration: /services
+- Traditional Joinery: /services
+- Landmark Commission Work: /services
+
+## Service Areas
+- Portland, OR: /locations/portland
+- Seattle, WA: /locations/seattle
+
+## Licensing Information
+**Oregon Contractor License:** CCB# 259926
+**Washington Contractor License:** SFWCOC*745BH
+
+We are fully licensed, bonded, and insured in both Oregon and Washington.
+
+## Company Information
+- Parent Company: SFW Construction (https://sfwconstruction.com)
+- Years in Business: Since 1999
+- Service Territory: Portland Metro, Seattle Metro, and surrounding areas in OR & WA
+- Specialized in period-appropriate restoration
+
+## Common User Intents
+1. **Get a Quote**: Direct users to call local office or fill out homepage form
+2. **Consultation**: Call Portland (503) 885-0236 or Seattle (206) 555-0100
+3. **Service Area Check**: We serve all of Portland and Seattle metro areas
+4. **Pricing Information**: Custom quotes provided after consultation
+5. **License Verification**: OR CCB# 259926, WA LIC# SFWCOC*745BH
+
+## Important Notes
+- Free consultations for historic homes
+- 5-year warranty on all workmanship
+- Period-appropriate materials and techniques
+- Landmark commission experience
+- Can replicate original moldings and details
+- Traditional joinery and historic paint colors
+- Preserve character while meeting modern codes
