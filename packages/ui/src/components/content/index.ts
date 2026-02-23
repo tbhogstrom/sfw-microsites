@@ -10,6 +10,7 @@ export { default as ProcessSteps } from './ProcessSteps.astro';
 export { default as FAQAccordion } from './FAQAccordion.astro';
 export { default as ServiceAreas } from './ServiceAreas.astro';
 export { default as TestimonialSlider } from './TestimonialSlider.astro';
+export { default as ServicesOffered } from './ServicesOffered.astro';
 
 export type { Props as ServiceCardProps } from './ServiceCard.astro';
 export type { Props as TestimonialCardProps } from './TestimonialCard.astro';
@@ -19,3 +20,4 @@ export type { Step, Props as ProcessStepsProps } from './ProcessSteps.astro';
 export type { Props as FAQAccordionProps } from './FAQAccordion.astro';
 export type { Props as ServiceAreasProps } from './ServiceAreas.astro';
 export type { Props as TestimonialSliderProps } from './TestimonialSlider.astro';
+export type { Service, Props as ServicesOfferedProps } from './ServicesOffered.astro';

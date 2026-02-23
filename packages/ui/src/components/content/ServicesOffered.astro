@@ -1,0 +1,159 @@
+---
+/**
+ * ServicesOffered.astro - Two-column services section with dropdowns
+ * Left column: Intro with bullet points and CTA
+ * Right column: Services list with accordion dropdowns
+ */
+import type { BaseProps } from '@sfw/ui/types';
+import Button from '../ui/Button.astro';
+
+export interface Service {
+  title: string;
+  description: string;
+}
+
+export interface Props extends BaseProps {
+  // Left column content
+  mainHeading: string;
+  bulletPoints: string[];
+  mainDescription: string;
+  ctaText?: string;
+  ctaHref: string;
+  ctaSubtext?: string;
+
+  // Right column content
+  servicesHeading: string;
+  services: Service[];
+  servicesDescription?: string;
+
+  // Styling
+  variant?: 'light' | 'dark';
+}
+
+const {
+  mainHeading,
+  bulletPoints,
+  mainDescription,
+  ctaText = 'Get Free Pricing',
+  ctaHref,
+  ctaSubtext = 'Talk to a local expert',
+  servicesHeading,
+  services,
+  servicesDescription,
+  variant = 'light',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const sectionClasses = [
+  'py-16 md:py-20',
+  variant === 'light' ? 'bg-white' : 'bg-gray-50',
+  className,
+].filter(Boolean).join(' ');
+---
+
+<section class={sectionClasses} {...rest}>
+  <div class="container mx-auto px-4 lg:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+
+      <!-- Left Column: Main Content & CTA -->
+      <div class="flex flex-col justify-center">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-dark mb-6">
+          {mainHeading}
+        </h2>
+
+        <!-- Bullet Points -->
+        <ul class="space-y-2 mb-6">
+          {bulletPoints.map((point) => (
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-primary mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-lg text-dark">{point}</span>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Main Description -->
+        <p class="text-gray-700 mb-8 leading-relaxed">
+          <strong class="text-dark">One call does it all</strong>. {mainDescription}
+        </p>
+
+        <!-- CTA Button -->
+        <div class="flex flex-col items-start">
+          <Button
+            href={ctaHref}
+            variant="primary"
+            size="lg"
+            class="uppercase tracking-widest font-bold"
+          >
+            {ctaText}
+          </Button>
+          <p class="text-sm italic text-gray-600 mt-3">
+            {ctaSubtext}
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Services Dropdowns -->
+      <div class="flex flex-col justify-center">
+        <h3 class="text-2xl md:text-3xl font-heading font-semibold text-dark mb-6 capitalize">
+          {servicesHeading}
+        </h3>
+
+        <!-- Service Dropdowns -->
+        <div class="space-y-3 mb-6">
+          {services.map((service) => (
+            <details class="group bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+              <summary class="cursor-pointer list-none px-5 py-4 font-semibold text-dark hover:bg-gray-50 transition-colors flex items-center justify-between">
+                <span>{service.title}</span>
+                <svg
+                  class="w-5 h-5 text-gray-500 transition-transform group-open:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-5 pb-4 text-gray-700 leading-relaxed">
+                {service.description}
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <!-- Optional Services Description -->
+        {servicesDescription && (
+          <p class="text-gray-700 leading-relaxed">
+            {servicesDescription}
+          </p>
+        )}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Remove default details marker */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Smooth animation for dropdown */
+  details[open] summary ~ * {
+    animation: slideDown 0.3s ease-in-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
