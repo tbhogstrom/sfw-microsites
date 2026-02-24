@@ -4,6 +4,7 @@
  * Wraps all pages with SEO, header, footer, and mobile nav
  */
 import type { SiteConfig, NavigationItem } from '@sfw/ui/types';
+import Analytics from '@vercel/analytics/astro';
 import SEO from '../components/ui/SEO.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -56,6 +57,9 @@ const {
       ogType={ogType}
       noindex={noindex}
     />
+
+    <!-- Vercel Web Analytics -->
+    <Analytics />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-933656781"></script>
