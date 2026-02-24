@@ -15,7 +15,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 24.1,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-Q9EZ1FYSNR'
   },
   'chimney-repair': {
     name: 'Chimney Repair Experts',

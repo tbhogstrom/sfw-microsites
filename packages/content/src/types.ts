@@ -12,6 +12,7 @@ export interface SiteConfig {
   phone: string;
   hubspotPortalId: string;
   hubspotFormId: string;
+  googleAnalyticsId?: string;
 }
 
 export interface CompanyInfo {
