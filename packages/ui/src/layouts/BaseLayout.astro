@@ -4,6 +4,7 @@
  * Wraps all pages with SEO, header, footer, and mobile nav
  */
 import type { SiteConfig, NavigationItem } from '@sfw/ui/types';
+import { Analytics } from '@vercel/analytics/astro';
 import SEO from '../components/ui/SEO.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
@@ -87,5 +88,7 @@ const {
         <Footer config={config} navigation={navigation} />
       </>
     )}
+
+    <Analytics />
   </body>
 </html>
