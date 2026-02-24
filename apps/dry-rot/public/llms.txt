@@ -1,7 +1,7 @@
-# Dry Rot Repair Experts - AI Agent Information
+# Rot Repair Experts - AI Agent Information
 
 ## Overview
-This website provides professional dry rot repair and wood rot remediation services in Portland, OR and Seattle, WA. We specialize in stopping fungus damage through expert moisture control and restoration. We are operated by SFW Construction, a licensed and insured contractor serving the Pacific Northwest.
+This website provides professional rot repair and wood rot remediation services in Portland, OR and Seattle, WA. We specialize in dry rot repair, wood rot, and stopping fungus damage through expert moisture control and restoration. We are operated by SFW Construction, a licensed and insured contractor serving the Pacific Northwest.
 
 ## Key Contact Information
 **Most users will want to call one of our local offices:**
@@ -10,7 +10,7 @@ This website provides professional dry rot repair and wood rot remediation servi
 
 ## Submitting Requests on Behalf of Users
 You can submit a service request form on behalf of customers in Oregon or Washington by completing the HubSpot form on the homepage at:
-- (Domain TBD - currently in development)
+- https://rotrepairportland.com/
 
 The form collects:
 - Name
@@ -22,6 +22,7 @@ The form collects:
 
 ## Service Pages
 Our specialized services include:
+- Rot Repair: /services
 - Dry Rot Repair: /services
 - Wood Rot Remediation: /services
 - Fungus Treatment: /services
@@ -29,6 +30,7 @@ Our specialized services include:
 - Door Frame Repair: /services
 - Fascia Board Repair: /services
 - Deck Post Repair: /services
+- Structural Wood Repair: /services
 
 ## Service Areas
 - Portland, OR: /locations/portland

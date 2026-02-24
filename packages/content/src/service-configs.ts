@@ -115,12 +115,12 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     googleAnalyticsId: 'G-REEL7WTPD1'
   },
   'dry-rot': {
-    name: 'Dry Rot Repair Experts',
+    name: 'Rot Repair Experts',
     domain: getDBABySlug('dry-rot')?.domain || '',
-    title: 'Portland Dry Rot Repair | Wood Rot Remediation Specialists',
-    description: 'Professional dry rot repair and wood rot remediation. Stop fungus damage with expert moisture control and restoration.',
-    primaryService: 'Dry Rot Repair',
-    serviceKeywords: ['dry rot repair', 'wood rot remediation', 'fungus treatment', 'rot removal'],
+    title: 'Portland Rot Repair | Wood Rot & Dry Rot Specialists',
+    description: 'Professional rot repair and wood rot remediation in Portland. Expert dry rot repair, moisture control, and structural restoration.',
+    primaryService: 'Rot Repair',
+    serviceKeywords: ['rot repair', 'dry rot repair', 'wood rot remediation', 'fungus treatment', 'rot removal'],
     searchVolume: 2570,
     avgDifficulty: 25.67,
     avgCPC: 3.38,

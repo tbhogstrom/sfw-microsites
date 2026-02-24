@@ -73,18 +73,13 @@ export const dbas: DBA[] = [
     slug: 'deck-repair',
   },
   {
-    name: 'Dry Rot Repair Experts',
-    domain: '', // TBD
+    name: 'Rot Repair Experts',
+    domain: 'https://rotrepairportland.com',
     type: 'microsite',
     slug: 'dry-rot',
   },
 
   // Non-microsites (Standalone sites)
-  {
-    name: 'Rot Repair Experts - Portland',
-    domain: 'https://rotrepairportland.com',
-    type: 'wordpress',
-  },
   {
     name: 'Rot Repair Experts - Seattle',
     domain: 'https://rotrepairseattle.com',
