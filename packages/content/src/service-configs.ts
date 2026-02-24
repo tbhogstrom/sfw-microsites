@@ -31,7 +31,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 23.7,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-25W9Z2M4HM'
   },
   'siding-repair': {
     name: 'Siding Repair Experts',
@@ -46,7 +47,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 23.1,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-D6C7VP5H03'
   },
   'crawlspace-rot': {
     name: 'Crawl Space Rot Repair',
@@ -61,7 +63,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 13.4,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-7P220HY6SN'
   },
   'leak-repair': {
     name: 'Leak Repair Experts',
@@ -76,7 +79,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 4.8,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-6EFXYCLWXM'
   },
   'lead-paint': {
     name: 'Lead Paint Services',
@@ -91,7 +95,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 4.3,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-GFGVJQ899X'
   },
   'flashing-repair': {
     name: 'Flashing Repair Experts',
@@ -106,7 +111,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 2.3,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-REEL7WTPD1'
   },
   'dry-rot': {
     name: 'Dry Rot Repair Experts',
@@ -136,7 +142,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 1.2,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-5LCQ98B842'
   },
   'restoration': {
     name: 'Historic Restoration',
@@ -151,7 +158,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 0.9,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-947760HMFH'
   },
   'beam-repair': {
     name: 'Beam Repair Experts',
@@ -166,6 +174,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 0.3,
     phone: '(503) 885-0236',
     hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotFormId: '',
+    googleAnalyticsId: 'G-NB9Z98QEH5'
   }
 };
