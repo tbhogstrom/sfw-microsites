@@ -5,7 +5,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ url }) => {
   try {
-    const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN || import.meta.env.BLOB_READ_WRITE_TOKEN;
 
     if (!blobToken) {
       return new Response(
@@ -53,7 +53,7 @@ export const GET: APIRoute = async ({ url }) => {
 
 export const DELETE: APIRoute = async ({ request }) => {
   try {
-    const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN || import.meta.env.BLOB_READ_WRITE_TOKEN;
 
     if (!blobToken) {
       return new Response(

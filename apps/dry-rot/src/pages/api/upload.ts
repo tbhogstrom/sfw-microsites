@@ -40,7 +40,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Check if Vercel Blob token is configured
-    const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN || import.meta.env.BLOB_READ_WRITE_TOKEN;
 
     if (!blobToken) {
       // Development fallback - convert to base64
