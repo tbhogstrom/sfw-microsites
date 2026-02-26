@@ -68,11 +68,17 @@ export default defineConfig({
     sitemap()
   ],
   output: 'static',
-  adapter: vercel()   // Required for API routes
+  adapter: vercel(),   // Required for API routes
+  security: {
+    checkOrigin: false // Disable CSRF for API routes
+  }
 });
 ```
 
-**Note**: In Astro 5.x, the `output: 'static'` mode now supports API routes when using an adapter.
+**Notes**:
+- In Astro 5.x, `output: 'static'` mode supports API routes when using an adapter
+- The `security.checkOrigin: false` setting disables CSRF protection to allow API form submissions
+- For production, consider implementing your own authentication/validation in the API routes
 
 ### 5. Deploy to Vercel
 
