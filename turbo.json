@@ -1,12 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["BLOB_READ_WRITE_TOKEN"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", ".astro/**"],
-      "env": ["BLOB_READ_WRITE_TOKEN"]
+      "outputs": ["dist/**", ".next/**", ".astro/**"]
     },
     "dev": {
       "cache": false,

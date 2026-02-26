@@ -1,0 +1,80 @@
+{
+  "microsites": {
+    "beam-repair": {
+      "name": "Beam Repair Experts",
+      "domain": "beamrepairexpert.com",
+      "tokenEnvVar": "BEAM_REPAIR_BLOB_TOKEN"
+    },
+    "chimney-repair": {
+      "name": "Chimney Repair Experts",
+      "domain": "woodchimneyrepair.com",
+      "tokenEnvVar": "CHIMNEY_REPAIR_BLOB_TOKEN"
+    },
+    "crawlspace-rot": {
+      "name": "Crawl Space Rot Repair",
+      "domain": "crawlspacerot.com",
+      "tokenEnvVar": "CRAWLSPACE_ROT_BLOB_TOKEN"
+    },
+    "deck-repair": {
+      "name": "Deck Repair Experts",
+      "domain": "deckrepairexpert.com",
+      "tokenEnvVar": "DECK_REPAIR_BLOB_TOKEN"
+    },
+    "dry-rot": {
+      "name": "Rot Repair Experts Portland",
+      "domain": "rotrepairportland.com",
+      "domains": ["rotrepairportland.com", "rotrepairseattle.com"],
+      "tokenEnvVar": "DRY_ROT_BLOB_TOKEN",
+      "note": "Handles both Portland and Seattle sites"
+    },
+    "flashing-repair": {
+      "name": "Flashing Repair Experts",
+      "domain": "flashingrepairs.com",
+      "tokenEnvVar": "FLASHING_REPAIR_BLOB_TOKEN"
+    },
+    "lead-paint": {
+      "name": "Lead Paint Services",
+      "domain": "leadpaintprofessionals.com",
+      "tokenEnvVar": "LEAD_PAINT_BLOB_TOKEN"
+    },
+    "leak-repair": {
+      "name": "Leak Repair Experts",
+      "domain": "leakingwindow.com",
+      "tokenEnvVar": "LEAK_REPAIR_BLOB_TOKEN"
+    },
+    "restoration": {
+      "name": "Historic Restoration Experts",
+      "domain": "historicrenovationsnw.com",
+      "tokenEnvVar": "RESTORATION_BLOB_TOKEN"
+    },
+    "siding-repair": {
+      "name": "Siding Repair Experts",
+      "domain": "sidingrepairexperts.com",
+      "tokenEnvVar": "SIDING_REPAIR_BLOB_TOKEN"
+    },
+    "trim-repair": {
+      "name": "Trim Repair Experts",
+      "domain": "exteriortrimrepairs.com",
+      "tokenEnvVar": "TRIM_REPAIR_BLOB_TOKEN"
+    }
+  },
+  "imageCategories": [
+    "before-after",
+    "process",
+    "damage",
+    "repair",
+    "team",
+    "equipment",
+    "completed",
+    "hero",
+    "gallery"
+  ],
+  "allowedExtensions": [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp",
+    ".gif"
+  ],
+  "maxFileSize": 10485760
+}

@@ -1,0 +1,30 @@
+{
+  "name": "blob-manager",
+  "version": "1.0.0",
+  "description": "Manage and upload images to microsite blob storage",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "blob-manager": "./src/cli.js"
+  },
+  "scripts": {
+    "upload": "node src/cli.js upload",
+    "list": "node src/cli.js list",
+    "delete": "node src/cli.js delete"
+  },
+  "dependencies": {
+    "@vercel/blob": "^0.27.1",
+    "yargs": "^17.7.2",
+    "dotenv": "^16.4.5",
+    "mime-types": "^2.1.35",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.1"
+  },
+  "keywords": [
+    "blob",
+    "storage",
+    "images",
+    "upload",
+    "vercel"
+  ]
+}
