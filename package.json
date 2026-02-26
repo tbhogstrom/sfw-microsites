@@ -13,11 +13,14 @@
     "clean": "turbo clean"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2"
   },
   "packageManager": "npm@10.9.2",
   "dependencies": {
-    "@vercel/analytics": "^1.6.1"
+    "@vercel/analytics": "^1.6.1",
+    "@vercel/blob": "^0.27.1",
+    "uuid": "^9.0.0"
   }
 }
