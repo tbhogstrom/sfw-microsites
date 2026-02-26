@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro';
 import { list, del } from '@vercel/blob';
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ url }) => {
   try {
     const blobToken = import.meta.env.BLOB_READ_WRITE_TOKEN;

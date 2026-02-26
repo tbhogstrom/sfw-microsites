@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   site: 'https://rotrepairportland.com',
@@ -8,5 +9,6 @@ export default defineConfig({
     tailwind(),
     sitemap()
   ],
-  output: 'static'
+  output: 'static',
+  adapter: vercel()
 });

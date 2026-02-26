@@ -26,6 +26,12 @@ Dependencies are already installed at the root level:
 }
 ```
 
+Each microsite also needs the Vercel adapter:
+```bash
+cd apps/YOUR-MICROSITE
+npm install @astrojs/vercel
+```
+
 ### 2. Get Vercel Blob Token
 
 1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
@@ -45,7 +51,30 @@ BLOB_READ_WRITE_TOKEN=vercel_blob_rw_xxxxxxxxxxxx
 
 **Important**: Add `.env` to your `.gitignore` if not already present!
 
-### 4. Deploy to Vercel
+### 4. Configure Astro with Vercel Adapter
+
+API routes require the Vercel adapter. Update `astro.config.mjs`:
+
+```javascript
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
+
+export default defineConfig({
+  site: 'https://your-site.com',
+  integrations: [
+    tailwind(),
+    sitemap()
+  ],
+  output: 'static',
+  adapter: vercel()   // Required for API routes
+});
+```
+
+**Note**: In Astro 5.x, the `output: 'static'` mode now supports API routes when using an adapter.
+
+### 5. Deploy to Vercel
 
 Add the environment variable to your Vercel project:
 
