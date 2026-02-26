@@ -66,7 +66,6 @@ export const POST: APIRoute = async ({ request }) => {
     const pathname = `${folder}/${uploadId}.${extension}`;
 
     const blob = await put(pathname, imageFile, {
-      access: 'public',
       contentType: imageFile.type,
       token: blobToken,
     });
