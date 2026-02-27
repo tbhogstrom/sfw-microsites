@@ -1,0 +1,45 @@
+---
+/**
+ * Blog Post Page - Dynamic route for individual blog posts
+ * URL: /blog/[slug]
+ */
+import BaseLayout from '@sfw/ui';
+import { BlogPost, CTASection } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { blogPosts } from '../../data/blog-posts';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const config = serviceConfigs['mold-testing'];
+---
+
+<BaseLayout
+  title={`${post.title} | ${config.name}`}
+  description={post.excerpt}
+  config={config}
+  logo="/logo.png"
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Blog Post Content -->
+  <BlogPost post={post} />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Need Expert Mold Testing?"
+    description="Contact us today for professional mold testing services in Portland."
+    primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'Read More Articles', href: '/blog' }}
+    variant="primary"
+  />
+</BaseLayout>

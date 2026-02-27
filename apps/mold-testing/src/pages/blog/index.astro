@@ -1,0 +1,58 @@
+---
+/**
+ * Blog Index - Lists all blog posts
+ * URL: /blog
+ */
+import BaseLayout from '@sfw/ui';
+import { HeroSection, BlogCard, CTASection } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { blogPosts } from '../../data/blog-posts';
+
+const config = serviceConfigs['mold-testing'];
+---
+
+<BaseLayout
+  title="Blog | Mold Testing & Home Health Tips"
+  description="Expert advice on mold testing and home health from Portland's trusted professionals."
+  config={config}
+  logo="/logo.png"
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline="Mold Testing & Home Health Blog"
+    subheadline="Expert tips, guides, and insights for Portland homeowners"
+    height="sm"
+  />
+
+  <!-- Blog Posts Grid -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {blogPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+
+      {blogPosts.length === 0 && (
+        <div class="text-center py-16">
+          <p class="text-xl text-gray-600">No blog posts yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Need Professional Mold Testing?"
+    description="Our experts are ready to help with your mold testing needs."
+    primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Services', href: '/' }}
+    variant="dark"
+  />
+</BaseLayout>

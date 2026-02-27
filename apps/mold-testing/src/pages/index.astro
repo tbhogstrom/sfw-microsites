@@ -1,0 +1,157 @@
+---
+import BaseLayout from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import type { FAQ, Service } from '@sfw/ui/types';
+import { blogPosts } from '../data/blog-posts';
+
+const config = serviceConfigs['mold-testing'];
+
+const stats = [
+  { value: '20', suffix: '+', label: 'Years Experience' },
+  { value: '1000', suffix: '+', label: 'Projects Completed' },
+  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
+  { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const services: Service[] = [
+  {
+    title: 'Visual Mold Inspection',
+    description: 'Detailed, non-invasive visual assessment identifying visible mold growth, moisture intrusion, water staining, active leaks, and musty odors. Starting at $150–$300.',
+  },
+  {
+    title: 'Air Quality Testing',
+    description: 'Air sampling detects airborne mold spores invisible during inspection. Ideal for persistent odors, hidden mold, respiratory concerns, or pre/post-remediation verification. $250–$350 per test.',
+  },
+  {
+    title: 'Surface Sampling',
+    description: 'Swab or tape lift sampling to confirm mold presence, identify species, and support remediation planning when visible growth is present. $200–$300 per sample.',
+  },
+  {
+    title: 'Laboratory Analysis',
+    description: 'Independent lab testing determines mold type/species, spore concentration, and comparative indoor/outdoor levels. $30–$150 per sample.',
+  },
+  {
+    title: 'Written Findings Report',
+    description: 'Comprehensive written report provided with all testing services, including photos, lab results, and detailed remediation recommendations.',
+  },
+  {
+    title: 'Clearance Testing',
+    description: 'Post-remediation verification to confirm successful mold removal and safe air quality levels. Quoted based on scope and testing requirements.',
+  },
+];
+
+const faqs: FAQ[] = [
+  {
+    question: 'What is mold testing and why is it important?',
+    answer: 'Mold testing involves collecting air or surface samples from your home to identify the presence, type, and concentration of mold spores. It\'s important because mold can cause health problems, structural damage, and affect indoor air quality. Testing helps determine if you have a mold problem, identifies the species involved, and guides proper remediation. In Portland, where moisture levels are high, testing can catch problems before they become serious health or structural issues.',
+  },
+  {
+    question: 'How much does mold testing cost in Portland?',
+    answer: 'Visual mold inspections start at $150–$300 for a detailed, non-invasive assessment. Air quality testing (spore trap sampling) runs $250–$350 per test, ideal for detecting hidden mold or verifying remediation. Surface sampling costs $200–$300 per sample when visible growth is present. Laboratory analysis fees range from $30–$150 per sample to identify mold species and concentration levels. Pricing varies based on property size and accessibility. Multiple samples may be recommended for accurate results, and a written findings report is provided with all testing services.',
+  },
+  {
+    question: 'What are the signs I need mold testing?',
+    answer: 'Common signs include visible mold growth, musty odors, water stains or damage, condensation on windows, peeling paint or wallpaper, warped floors or walls, and unexplained health symptoms like allergies or respiratory issues. You should also consider testing after water damage, flooding, or prolonged leaks. In Portland, homes with poor ventilation, chronic moisture problems, or those in damp areas are particularly susceptible. If you\'re buying a home or have concerns about hidden mold, professional testing provides peace of mind.',
+  },
+  {
+    question: 'Can I test for mold myself or should I hire a professional?',
+    answer: 'While DIY mold test kits are available, professional testing is more reliable and comprehensive. Professionals have specialized equipment, training to identify hidden mold, and access to certified laboratories for accurate analysis. They can assess moisture sources, use thermal imaging to find hidden water damage, and provide detailed reports with remediation guidance. DIY tests may miss hidden mold or provide inaccurate results. For Portland homes, where moisture is common, professional testing ensures you get accurate information and appropriate recommendations.',
+  },
+  {
+    question: 'What does mold testing involve?',
+    answer: 'Professional mold testing typically includes a visual inspection of your property, moisture detection using meters and thermal imaging, air sampling to capture airborne spores, surface sampling from suspected areas, and sometimes bulk samples of materials. Samples are sent to certified labs for analysis. The inspector documents conditions with photos and measurements. After lab results return, you receive a comprehensive report identifying mold types, concentration levels, moisture sources, and remediation recommendations. The process usually takes 1-2 hours for inspection, with results in 3-5 business days.',
+  },
+  {
+    question: 'What types of mold are commonly found in Portland homes?',
+    answer: 'Portland\'s damp climate creates ideal conditions for several mold types. Common species include Cladosporium (dark spots on walls and fabrics), Aspergillus (various colors, often in HVAC systems), Penicillium (blue-green, on water-damaged materials), Alternaria (bathrooms and damp areas), and Stachybotrys (black mold, on chronically wet materials). Each type has different health implications and remediation requirements. Professional testing identifies specific species, helping determine appropriate remediation methods and potential health risks for your household.',
+  },
+  {
+    question: 'How long does mold testing take?',
+    answer: 'The on-site inspection typically takes 1-2 hours, depending on home size and scope of testing. The inspector will examine visible areas, take samples, and use moisture detection equipment. Laboratory analysis takes 3-5 business days for most samples, though rush services may be available for an additional fee. You\'ll receive a detailed report once results are complete. The total process from inspection to receiving results is usually 5-7 business days. Time may vary based on lab schedules and complexity of testing.',
+  },
+  {
+    question: 'Will mold testing damage my home?',
+    answer: 'Professional mold testing is minimally invasive. Air sampling is completely non-destructive. Surface sampling may involve removing small paint chips or material samples, but damage is minimal and easily repaired. In some cases, inspectors may need to create small access holes to check behind walls or ceilings if hidden mold is suspected, but this is done carefully and locations are chosen to minimize damage. Any necessary access points can be easily patched. Overall, testing causes far less disruption than undetected mold would cause to your home\'s structure.',
+  },
+  {
+    question: 'What happens after mold testing?',
+    answer: 'After testing, you receive a detailed report with lab results identifying mold types, concentration levels, affected areas, and moisture sources. The report includes remediation recommendations tailored to your situation. For minor issues, you may be able to clean small areas yourself following EPA guidelines. Extensive contamination requires professional remediation. The report helps contractors develop accurate remediation plans and costs. You can use results for insurance claims if applicable. In Portland, addressing moisture sources is crucial to prevent recurrence after remediation.',
+  },
+  {
+    question: 'Is mold testing required for selling a home in Portland?',
+    answer: 'While not legally required for home sales in Oregon, mold testing may be requested by buyers, especially in Portland where moisture problems are common. Sellers must disclose known material defects, including mold issues. Proactive testing before listing can identify and address problems, potentially preventing deal complications. Many buyers request mold inspections during their due diligence period. Having recent testing and documentation can demonstrate transparency and home care. If you\'re aware of past water damage or moisture issues, testing can help establish current conditions.',
+  },
+];
+---
+
+<BaseLayout
+  title={config.title}
+  description={config.description}
+  config={config}
+  logo="/logo.png"
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline={config.name}
+    subheadline={config.description}
+    backgroundImage="https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/hero/default-home-inspection.png"
+    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- Stats Bar -->
+  <StatsBar stats={stats} variant="primary" />
+
+  <!-- Services Offered Section -->
+  <ServicesOffered
+    mainHeading="Professional Mold Testing in Portland — Transparent Pricing"
+    bulletPoints={[
+      'Visual inspections from $150',
+      'Lab-certified results',
+      'Same-week reporting',
+      'Clear pricing—no surprises',
+    ]}
+    mainDescription="Mold Testing Experts provides comprehensive mold inspection and testing services for Portland-area homes. From visual assessments to air quality sampling and laboratory analysis, our certified professionals deliver accurate results and actionable recommendations. Pricing varies based on property size and testing scope—multiple samples may be recommended for accurate results."
+    ctaText="Get Free Consultation"
+    ctaHref="#contact"
+    ctaSubtext="Talk to a local expert"
+    servicesHeading={`What ${config.name} Offers Portland Homeowners`}
+    services={services}
+    servicesDescription="Tired of guessing whether you have a mold problem? With Mold Testing Experts, you get certified professionals who identify the source of contamination and provide clear answers. Our specialists use advanced testing methods and certified laboratory analysis to give you accurate information for protecting your home and family."
+    variant="light"
+  />
+
+  <!-- FAQ Section -->
+  <FAQAccordion
+    faqs={faqs}
+    title="Mold Testing FAQ"
+  />
+
+  <!-- Blog Carousel -->
+  <BlogCarousel
+    posts={blogPosts.slice(0, 3)}
+    title="Latest Mold Testing Tips & Guides"
+    class="bg-gray-light"
+  />
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Get Professional Mold Testing Today"
+    description="Don't let mold compromise your home's air quality and your family's health. Contact us for a professional inspection and testing."
+    primaryCTA={{ text: 'Get Free Inspection', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>

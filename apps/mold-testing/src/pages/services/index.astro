@@ -1,0 +1,279 @@
+---
+/**
+ * Services Index Page
+ * Lists all available services by location
+ */
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { servicesByLocation } from '../../data/services';
+
+const config = serviceConfigs['mold-testing'];
+---
+
+<BaseLayout
+  title="Our Mold Testing Services | Portland"
+  description="Professional mold testing, inspection, and air quality analysis services in Portland, Oregon. Certified inspectors and lab-verified results."
+  config={config}
+  logo="/logo.png"
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Blog', url: '/blog' },
+    { label: 'Locations', url: '/locations' },
+  ]}
+>
+  <!-- Hero Section -->
+  <HeroSection
+    headline="Professional Mold Testing Services"
+    subheadline="Visual inspections from $150 • Air quality testing • Lab analysis • Clear pricing"
+    primaryCTA={{ text: 'Get Free Consultation', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    height="md"
+  />
+
+  <!-- Portland Services -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-heading font-bold mb-4">
+            Portland, Oregon Services
+          </h2>
+          <p class="text-xl text-gray-600">
+            Comprehensive mold testing services for homeowners in the Portland metro area
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {servicesByLocation.portland.map((service) => (
+            <a
+              href={`/services/${service.location}/${service.slug}`}
+              class="group bg-gray-light p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+            >
+              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                {service.name}
+              </h3>
+              <p class="text-gray-600 mb-4 line-clamp-3">
+                {service.heroSubheadline}
+              </p>
+              <div class="flex items-center text-primary font-semibold">
+                Learn More
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="/locations/portland"
+            class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            View Portland Location
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seattle Services -->
+  <section class="py-16 bg-gray-light">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-heading font-bold mb-4">
+            Seattle, Washington Services
+          </h2>
+          <p class="text-xl text-gray-600">
+            Comprehensive mold testing services for homeowners in the Seattle metro area
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {servicesByLocation.seattle.map((service) => (
+            <a
+              href={`/services/${service.location}/${service.slug}`}
+              class="group bg-white p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+            >
+              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                {service.name}
+              </h3>
+              <p class="text-gray-600 mb-4 line-clamp-3">
+                {service.heroSubheadline}
+              </p>
+              <div class="flex items-center text-primary font-semibold">
+                Learn More
+                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="text-center mt-12">
+          <a
+            href="/locations/seattle"
+            class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            View Seattle Location
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Overview Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-heading font-bold text-center mb-4">
+          Clear, Transparent Pricing
+        </h2>
+        <p class="text-xl text-center text-gray-600 mb-12">
+          No hidden fees—know what you're paying before we start
+        </p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div class="bg-gray-light p-6 rounded-lg">
+            <div class="text-3xl font-bold text-primary mb-2">$150–$300</div>
+            <h3 class="text-xl font-heading font-bold mb-3">Visual Inspection</h3>
+            <p class="text-gray-600 text-sm">
+              Non-invasive assessment of visible mold, moisture, water damage, and odors
+            </p>
+          </div>
+
+          <div class="bg-gray-light p-6 rounded-lg">
+            <div class="text-3xl font-bold text-primary mb-2">$250–$350</div>
+            <h3 class="text-xl font-heading font-bold mb-3">Air Quality Test</h3>
+            <p class="text-gray-600 text-sm">
+              Per test. Detects airborne spores for hidden mold or verification
+            </p>
+          </div>
+
+          <div class="bg-gray-light p-6 rounded-lg">
+            <div class="text-3xl font-bold text-primary mb-2">$200–$300</div>
+            <h3 class="text-xl font-heading font-bold mb-3">Surface Sampling</h3>
+            <p class="text-gray-600 text-sm">
+              Per sample. Confirms mold presence and identifies species
+            </p>
+          </div>
+
+          <div class="bg-gray-light p-6 rounded-lg">
+            <div class="text-3xl font-bold text-primary mb-2">$30–$150</div>
+            <h3 class="text-xl font-heading font-bold mb-3">Lab Analysis</h3>
+            <p class="text-gray-600 text-sm">
+              Per sample. Determines mold type and spore concentration
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-primary-light border-l-4 border-primary p-6 rounded-r-lg">
+          <h3 class="text-xl font-heading font-bold mb-2">What's Included</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Written findings report with all testing services
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Photos and detailed documentation
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Remediation recommendations
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              Multiple samples may be recommended based on property size
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="py-16 bg-gray-light">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl font-heading font-bold mb-8">
+          Why Choose Our Services?
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8 mt-12">
+          <div class="text-center">
+            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-heading font-bold mb-2">Certified Inspectors</h3>
+            <p class="text-gray-600">
+              Licensed professionals with years of experience in mold testing
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-heading font-bold mb-2">Transparent Pricing</h3>
+            <p class="text-gray-600">
+              Free estimates with no hidden fees or surprise charges
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-heading font-bold mb-2">Lab-Certified Results</h3>
+            <p class="text-gray-600">
+              Accurate testing with certified laboratory analysis
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <CTASection
+    headline="Ready to Get Started?"
+    description="Contact us today for a free consultation. We'll discuss your concerns and recommend the right testing package for your situation."
+    primaryCTA={{ text: 'Get Free Consultation', href: `tel:${config.phone}` }}
+    secondaryCTA={{ text: 'View Locations', href: '/locations' }}
+    variant="dark"
+  />
+</BaseLayout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

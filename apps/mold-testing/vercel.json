@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && npx turbo build --filter=mold-testing",
+  "installCommand": "cd ../.. && npm install",
+  "framework": "astro",
+  "outputDirectory": "dist"
+}

@@ -1,0 +1,79 @@
+{
+  "services": [
+    {
+      "name": "beam-repair",
+      "display_name": "Beam Repair",
+      "app_dir": "apps/beam-repair",
+      "keywords": ["beam repair", "structural beams", "beam replacement", "beam restoration"]
+    },
+    {
+      "name": "chimney-repair",
+      "display_name": "Chimney Repair",
+      "app_dir": "apps/chimney-repair",
+      "keywords": ["chimney repair", "chimney restoration", "chimney maintenance", "chimney rebuilding"]
+    },
+    {
+      "name": "crawlspace-rot",
+      "display_name": "Crawlspace Rot Repair",
+      "app_dir": "apps/crawlspace-rot",
+      "keywords": ["crawlspace rot", "crawlspace repair", "foundation rot", "subfloor repair"]
+    },
+    {
+      "name": "deck-repair",
+      "display_name": "Deck Repair",
+      "app_dir": "apps/deck-repair",
+      "keywords": ["deck repair", "deck restoration", "deck maintenance", "deck rebuilding"]
+    },
+    {
+      "name": "dry-rot",
+      "display_name": "Dry Rot Repair",
+      "app_dir": "apps/dry-rot",
+      "keywords": ["dry rot", "wood rot", "fungal decay", "dry rot repair"]
+    },
+    {
+      "name": "flashing-repair",
+      "display_name": "Flashing Repair",
+      "app_dir": "apps/flashing-repair",
+      "keywords": ["flashing repair", "roof flashing", "chimney flashing", "window flashing"]
+    },
+    {
+      "name": "lead-paint",
+      "display_name": "Lead Paint Removal",
+      "app_dir": "apps/lead-paint",
+      "keywords": ["lead paint", "lead abatement", "lead paint removal", "lead paint encapsulation"]
+    },
+    {
+      "name": "leak-repair",
+      "display_name": "Leak Repair",
+      "app_dir": "apps/leak-repair",
+      "keywords": ["leak repair", "water damage", "roof leak", "plumbing leak"]
+    },
+    {
+      "name": "restoration",
+      "display_name": "Home Restoration",
+      "app_dir": "apps/restoration",
+      "keywords": ["home restoration", "historic restoration", "renovation", "remodeling"]
+    },
+    {
+      "name": "siding-repair",
+      "display_name": "Siding Repair",
+      "app_dir": "apps/siding-repair",
+      "keywords": ["siding repair", "siding replacement", "exterior siding", "siding restoration"]
+    },
+    {
+      "name": "trim-repair",
+      "display_name": "Trim Repair",
+      "app_dir": "apps/trim-repair",
+      "keywords": ["trim repair", "trim replacement", "exterior trim", "decorative trim"]
+    },
+    {
+      "name": "mold-testing",
+      "display_name": "Mold Testing",
+      "app_dir": "apps/mold-testing",
+      "keywords": ["mold testing", "mold inspection", "mold detection", "mold assessment"]
+    }
+  ],
+  "default_location": "Portland, Oregon",
+  "default_author": "SFW Construction",
+  "default_category": "Home Maintenance"
+}

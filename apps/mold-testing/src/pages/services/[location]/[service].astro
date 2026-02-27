@@ -1,0 +1,100 @@
+---
+/**
+ * Dynamic Service Page Route
+ * URL: /services/portland/mold-inspection, /services/seattle/air-quality-testing, etc.
+ */
+import BaseLayout from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { getServicePaths, getService } from '../../../data/services';
+import ServiceContent from '../../../components/ServiceContent.astro';
+
+// Generate static paths for all services
+export async function getStaticPaths() {
+  return getServicePaths();
+}
+
+const { location, service } = Astro.params;
+const serviceData = getService(location as string, service as string);
+
+if (!serviceData) {
+  return Astro.redirect('/404');
+}
+
+const config = serviceConfigs['mold-testing'];
+
+// Get location-specific phone number
+const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
+---
+
+<BaseLayout
+  title={serviceData.metaTitle}
+  description={serviceData.metaDescription}
+  config={config}
+  logo="/logo.png"
+  navigation={[
+    { label: 'Home', url: '/' },
+    { label: 'Services', url: '/services' },
+    { label: 'Locations', url: '/locations' },
+    { label: serviceData.locationFull.split(',')[0], url: `/locations/${location}` },
+  ]}
+>
+  <!-- Hero Section with Form -->
+  <HeroSection
+    headline={serviceData.heroHeadline}
+    subheadline={serviceData.heroSubheadline}
+    primaryCTA={{ text: 'Get Free Inspection', href: `tel:${locationPhone}` }}
+    secondaryCTA={{ text: 'Learn More', href: '#overview' }}
+    height="lg"
+    hubspotForm={{
+      portalId: "8210108",
+      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      region: "na1"
+    }}
+  />
+
+  <!-- Key Benefits Section -->
+  {serviceData.keyBenefits.length > 0 && (
+    <section class="py-12 bg-gray-light">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-heading font-bold text-center mb-8">
+            Why Choose Our {serviceData.name}?
+          </h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {serviceData.keyBenefits.map((benefit) => (
+              <div class="bg-white p-6 rounded-lg shadow-sm">
+                <div class="flex items-start">
+                  <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <p class="text-gray-700">{benefit}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Service Content -->
+  <ServiceContent service={serviceData} />
+
+  <!-- FAQ Section -->
+  {serviceData.faqs.length > 0 && (
+    <FAQAccordion
+      faqs={serviceData.faqs}
+      title={`${serviceData.name} FAQ`}
+    />
+  )}
+
+  <!-- CTA Section -->
+  <CTASection
+    headline={`Ready for Professional ${serviceData.name}?`}
+    description={`Get a free consultation and inspection today. We're here to help with all your mold testing needs in ${serviceData.locationFull}.`}
+    primaryCTA={{ text: 'Get Free Inspection', href: `tel:${locationPhone}` }}
+    secondaryCTA={{ text: 'View All Services', href: '/services' }}
+    variant="dark"
+  />
+</BaseLayout>
