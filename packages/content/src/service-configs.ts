@@ -176,5 +176,21 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     hubspotPortalId: '',
     hubspotFormId: '',
     googleAnalyticsId: 'G-NB9Z98QEH5'
+  },
+  'mold-testing': {
+    name: 'Mold Testing Experts',
+    domain: getDBABySlug('mold-testing')?.domain || '',
+    title: 'Portland Mold Testing & Inspection | Certified Mold Inspectors',
+    description: 'Professional mold testing, inspection, and air quality analysis. Certified inspectors, lab-verified results, and detailed reporting.',
+    primaryService: 'Mold Testing',
+    serviceKeywords: ['mold testing', 'mold inspection', 'air quality testing', 'mold detection'],
+    searchVolume: 8900,
+    avgDifficulty: 28.5,
+    avgCPC: 12.45,
+    trafficShare: 6.3,
+    phone: '(503) 885-0236',
+    hubspotPortalId: '',
+    hubspotFormId: '',
+    googleAnalyticsId: ''
   }
 };

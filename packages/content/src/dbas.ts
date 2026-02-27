@@ -78,6 +78,12 @@ export const dbas: DBA[] = [
     type: 'microsite',
     slug: 'dry-rot',
   },
+  {
+    name: 'Mold Testing Experts',
+    domain: 'https://moldtestingexperts.com',
+    type: 'microsite',
+    slug: 'mold-testing',
+  },
 
   // Non-microsites (Standalone sites)
   {
