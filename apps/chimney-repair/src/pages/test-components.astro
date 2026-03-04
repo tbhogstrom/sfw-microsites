@@ -9,17 +9,13 @@ import {
   Icon,
   Breadcrumbs,
   HeroSection,
-  ContactForm,
-  ServiceCard,
-  TestimonialCard,
+  ContactForm,  TestimonialCard,
   StatsBar,
   CTASection,
   ProcessSteps,
   FAQAccordion,
   ServiceAreas,
-  BlogCard,
-  BlogGrid,
-  LinkCard,
+  BlogCard,  LinkCard,
 } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 
@@ -80,6 +76,7 @@ const blogPost = {
   publishDate: '2026-01-15',
   author: 'Mike Johnson',
   category: 'Design',
+  content: '<p>Test content</p>',
 };
 ---
 
@@ -224,15 +221,7 @@ const blogPost = {
     />
 
     <!-- Service Areas Test -->
-    {config.serviceAreas && (
-      <ServiceAreas
-        serviceAreas={config.serviceAreas}
-        title="Areas We Serve"
-        columns={4}
-      />
-    )}
-
-    <!-- Contact Form Test -->
+        <!-- Contact Form Test -->
     <section class="container mx-auto px-4">
       <div class="max-w-2xl mx-auto">
         <ContactForm
@@ -261,3 +250,4 @@ const blogPost = {
     />
   </div>
 </BaseLayout>
+

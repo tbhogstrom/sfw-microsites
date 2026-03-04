@@ -4,7 +4,7 @@
  * URL: /blog/[slug]
  */
 import BaseLayout from '@sfw/ui';
-import { BlogPost, CTASection } from '@sfw/ui';
+import { BlogPost, BlogGrid, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { blogPosts } from '../../data/blog-posts';
 
@@ -17,6 +17,10 @@ export function getStaticPaths() {
 
 const { post } = Astro.props;
 const config = serviceConfigs['deck-repair'];
+const relatedPosts = blogPosts
+  .filter((candidate) => candidate.slug !== post.slug)
+  .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -30,13 +34,21 @@ const config = serviceConfigs['deck-repair'];
     { label: 'Locations', url: '/locations' },
   ]}
 >
-  <!-- Blog Post Content -->
   <BlogPost post={post} />
 
-  <!-- CTA Section -->
+  {relatedPosts.length > 0 && (
+    <BlogGrid
+      posts={relatedPosts}
+      title="Related Articles"
+      subtitle="Continue reading practical guidance from our team."
+      showExcerpt={false}
+      class="bg-gray-50"
+    />
+  )}
+
   <CTASection
-    headline="Need Expert Deck Repair?"
-    description="Contact us today for professional deck repair and dry rot remediation services in Portland."
+    headline={`Need Expert ${config.primaryService}?`}
+    description={`Contact us for professional ${config.primaryService.toLowerCase()} services and project guidance.`}
     primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
     secondaryCTA={{ text: 'Read More Articles', href: '/blog' }}
     variant="primary"

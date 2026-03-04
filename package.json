@@ -9,10 +9,12 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "turbo lint",
-    "clean": "turbo clean"
+    "lint": "set APPDATA=%CD%\\.appdata&& turbo lint",
+    "clean": "turbo clean",
+    "typecheck": "set APPDATA=%CD%\\.appdata&& turbo typecheck"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.6",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2"
   },

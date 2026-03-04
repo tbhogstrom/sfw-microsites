@@ -20,6 +20,18 @@ const {
 } = Astro.props;
 
 const { title, excerpt, image, publishDate, author, category, content } = post;
+const strippedContent = content?.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() || '';
+const wordCount = strippedContent ? strippedContent.split(' ').length : 0;
+const readingTime = wordCount ? Math.max(1, Math.round(wordCount / 225)) : null;
+const headingMatches = content
+  ? Array.from(content.matchAll(/<h2[^>]*id=["']([^"']+)["'][^>]*>(.*?)<\/h2>/gi))
+  : [];
+const quickLinks = headingMatches
+  .map(([, id, rawTitle]) => ({
+    id,
+    title: rawTitle.replace(/<[^>]*>/g, '').trim(),
+  }))
+  .filter((section) => section.id && section.title);
 
 // Format date
 const formattedDate = publishDate ? new Date(publishDate).toLocaleDateString('en-US', {
@@ -62,7 +74,7 @@ const schema = {
     <!-- Article Header -->
     <header class="max-w-4xl mx-auto mb-8">
       {/* Category & Date */}
-      <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+      <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-4">
         {category && (
           <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
             {category}
@@ -70,6 +82,9 @@ const schema = {
         )}
         {formattedDate && (
           <time datetime={publishDate}>{formattedDate}</time>
+        )}
+        {readingTime && (
+          <span aria-label="Estimated reading time">{readingTime} min read</span>
         )}
       </div>
 
@@ -105,6 +120,19 @@ const schema = {
       </div>
     )}
 
+    {quickLinks.length > 1 && (
+      <nav class="max-w-3xl mx-auto mb-10 p-5 rounded-xl bg-gray-50 border border-gray-200" aria-label="In this article">
+        <p class="font-heading text-lg font-semibold text-dark mb-2">In this article</p>
+        <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+          {quickLinks.map((section) => (
+            <li>
+              <a href={`#${section.id}`} class="text-primary hover:underline">{section.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
     <!-- Article Content -->
     <div class="max-w-3xl mx-auto">
       <div class="prose prose-lg prose-gray max-w-none">
@@ -112,6 +140,12 @@ const schema = {
           {/* If content is provided as a prop */}
           {content && <Fragment set:html={content} />}
         </slot>
+      </div>
+
+      <div class="mt-12 pt-6 border-t border-gray-200">
+        <a href="/blog" class="inline-flex items-center text-primary font-semibold hover:underline">
+          Back to all articles
+        </a>
       </div>
     </div>
   </div>
@@ -133,6 +167,7 @@ const schema = {
     margin-top: 2rem;
     margin-bottom: 1rem;
     color: #1a1a1a;
+    scroll-margin-top: 6rem;
   }
 
   :global(.prose h3) {
@@ -141,6 +176,7 @@ const schema = {
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
     color: #1a1a1a;
+    scroll-margin-top: 6rem;
   }
 
   :global(.prose p) {

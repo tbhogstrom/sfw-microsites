@@ -35,3 +35,6 @@ pnpm-debug.log*
 
 # Turbo
 .turbo
+
+# Local tools
+tools/
