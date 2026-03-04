@@ -104,6 +104,24 @@ def test_run_pipeline_returns_original_if_no_agents(mocker):
     assert mock_caller.call_count == 0
 
 
+def test_run_pipeline_with_empty_filter_runs_no_agents(mocker):
+    agents = [make_agent("agent-a", 1), make_agent("agent-b", 2)]
+    config = make_pipeline_config()
+    mock_client = MagicMock()
+    mock_caller = mocker.patch("pipeline.call_agent", return_value="output")
+
+    result = run_pipeline(
+        content="Original",
+        agents=agents,
+        pipeline_config=config,
+        client=mock_client,
+        agent_filter=[],  # empty filter = run no agents
+    )
+
+    assert result == "Original"
+    assert mock_caller.call_count == 0
+
+
 def test_run_pipeline_passes_correct_model_and_temperature(mocker):
     agents = [make_agent("agent-a", 1)]
     agents[0] = AgentConfig(

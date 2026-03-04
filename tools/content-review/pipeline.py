@@ -12,7 +12,7 @@ def run_pipeline(
     agent_filter: list[str] | None = None,
 ) -> str:
     active_agents = agents
-    if agent_filter:
+    if agent_filter is not None:
         active_agents = [a for a in agents if a.id in agent_filter]
 
     shared_context = pipeline_config.build_context_string()
