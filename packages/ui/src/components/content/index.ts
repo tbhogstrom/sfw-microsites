@@ -11,6 +11,8 @@ export { default as FAQAccordion } from './FAQAccordion.astro';
 export { default as ServiceAreas } from './ServiceAreas.astro';
 export { default as TestimonialSlider } from './TestimonialSlider.astro';
 export { default as ServicesOffered } from './ServicesOffered.astro';
+export { default as ServicesGallery } from './ServicesGallery.astro';
+export type { GalleryService, Props as ServicesGalleryProps } from './ServicesGallery.astro';
 
 export type { Props as ServiceCardProps } from './ServiceCard.astro';
 export type { Props as TestimonialCardProps } from './TestimonialCard.astro';
