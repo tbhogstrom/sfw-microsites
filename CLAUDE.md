@@ -44,6 +44,22 @@ tools/         # blob-manager, content-generator, interlinking scripts
 - Deployment: each app deploys to Vercel independently via `vercel.json` domain mapping
 - Package manager: **pnpm** (use `pnpm`, not `npm`, for all commands)
 
+## Git Workflow
+
+Push to both `origin` (tfalcon_SFW/microsites) and `upstream` (tbhogstrom/sfw-microsites) in one command:
+
+```bash
+git pushall
+```
+
+This uses a local git alias (`push.default = current`), so it pushes the current branch to both remotes. No PRs needed — push directly to `main`.
+
+```bash
+git add <files>
+git commit -m "message"
+git pushall
+```
+
 ## Git Commit Guidelines
 
 - **Never include Co-Authored-By credits for Claude in commit messages**
