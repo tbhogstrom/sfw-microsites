@@ -1,11 +1,39 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import type { GalleryService } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ, Service } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['dry-rot'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Dry Rot Inspection',
+    description: 'Moisture meter assessment to locate all active and hidden fungal decay.',
+    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/hero/Rot_repair_experts_portland__rotrepairportlandcoma_delpmaspu.png',
+    href: '/services/dry-rot-inspection',
+  },
+  {
+    title: 'Wood Replacement',
+    description: 'Full replacement of compromised beams, joists, and framing with treated lumber.',
+    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/hero/Rot_repair_experts_portland__rotrepairportlandcoma_delpmaspu.png',
+    href: '/services/wood-replacement',
+  },
+  {
+    title: 'Moisture Control',
+    description: 'Vapor barriers, ventilation, and drainage solutions to stop rot from returning.',
+    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/hero/Rot_repair_experts_portland__rotrepairportlandcoma_delpmaspu.png',
+    href: '/services/moisture-control',
+  },
+  {
+    title: 'Structural Repair',
+    description: 'Restore load-bearing integrity with code-compliant structural repairs.',
+    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/hero/Rot_repair_experts_portland__rotrepairportlandcoma_delpmaspu.png',
+    href: '/services/structural-repair',
+  },
+];
 
 const stats = [
   { value: '20', suffix: '+', label: 'Years Experience' },
@@ -113,6 +141,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Our Rot Repair Services"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
