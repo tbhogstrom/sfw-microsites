@@ -92,7 +92,11 @@ const {
 
     {showFooter && (
       <>
-        <CCBBanner dbaName={config.name} />
+        <CCBBanner
+          dbaName={config.name}
+          ccbNumber={config.ccbNumber}
+          waLicenseNumber={config.waLicenseNumber}
+        />
         <Footer config={config} navigation={navigation} />
       </>
     )}

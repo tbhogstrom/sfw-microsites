@@ -94,6 +94,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 2.37,
     trafficShare: 4.3,
     phone: '(503) 885-0236',
+    ccbNumber: '239768',
+    waLicenseNumber: 'SFWPAP*782MK',
     hubspotPortalId: '',
     hubspotFormId: '',
     googleAnalyticsId: 'G-GFGVJQ899X'
@@ -157,6 +159,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 7.73,
     trafficShare: 0.9,
     phone: '(503) 885-0236',
+    ccbNumber: '239768',
+    waLicenseNumber: 'SFWPAP*782MK',
     hubspotPortalId: '',
     hubspotFormId: '',
     googleAnalyticsId: 'G-947760HMFH'

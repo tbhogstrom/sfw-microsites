@@ -10,6 +10,8 @@ export interface SiteConfig {
   avgCPC: number;
   trafficShare: number;
   phone: string;
+  ccbNumber?: string;
+  waLicenseNumber?: string;
   hubspotPortalId: string;
   hubspotFormId: string;
   googleAnalyticsId?: string;

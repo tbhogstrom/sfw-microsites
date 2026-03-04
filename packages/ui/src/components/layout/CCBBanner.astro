@@ -7,10 +7,14 @@ import type { BaseProps } from '@sfw/ui/types';
 
 export interface Props extends BaseProps {
   dbaName: string;
+  ccbNumber?: string;
+  waLicenseNumber?: string;
 }
 
 const {
   dbaName,
+  ccbNumber = '259926',
+  waLicenseNumber = 'SFWCOC*745BH',
   class: className = '',
   ...rest
 } = Astro.props;
@@ -29,9 +33,9 @@ const {
       Company
     </p>
     <p class="text-center text-xs text-gray-600 mt-2">
-      <span class="font-medium whitespace-nowrap">OR CCB# 259926</span>
+      <span class="font-medium whitespace-nowrap">OR CCB# {ccbNumber}</span>
       {' '}<span class="text-gray-400">|</span>{' '}
-      <span class="font-medium whitespace-nowrap">WA LIC# SFWCOC*745BH</span>
+      <span class="font-medium whitespace-nowrap">WA LIC# {waLicenseNumber}</span>
     </p>
   </div>
 </div>
