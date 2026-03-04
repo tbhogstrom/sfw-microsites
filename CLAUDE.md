@@ -46,18 +46,18 @@ tools/         # blob-manager, content-generator, interlinking scripts
 
 ## Git Workflow
 
-Push to both `origin` (tfalcon_SFW/microsites) and `upstream` (tbhogstrom/sfw-microsites) in one command:
+Push to both `origin` (tfalcon_SFW/microsites) and `upstream` (tbhogstrom/sfw-microsites) using the included script:
 
-```bash
-git pushall
+```powershell
+./pushall.ps1
 ```
 
-This uses a local git alias (`push.default = current`), so it pushes the current branch to both remotes. No PRs needed — push directly to `main`.
+No PRs needed — commit directly to `main` and push both remotes.
 
 ```bash
 git add <files>
 git commit -m "message"
-git pushall
+./pushall.ps1
 ```
 
 ## Git Commit Guidelines
