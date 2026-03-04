@@ -1,16 +1,12 @@
-# content-review
+# Content Review Pipeline
 
-A multi-agent editorial pipeline for reviewing and improving AI-generated markdown content across the SFW Construction microsites.
-
-## Overview
-
-This tool uses a pipeline of specialized AI agents to audit, score, and rewrite markdown content files in the `apps/` directory. Each agent focuses on a specific editorial concern (tone, accuracy, SEO, readability, etc.) and produces structured feedback stored in a LanceDB vector database for retrieval and reporting.
+Multi-agent editorial pipeline for SFW Construction microsites. Passes markdown content through specialist AI agents (quality cleaner → language editor) in sequence, improving content quality and brand alignment.
 
 ## Setup
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.11+ (3.11 or 3.12 recommended)
 - An OpenAI API key
 
 ### Install
@@ -30,68 +26,66 @@ pip install -r requirements-dev.txt
 
 ### Environment
 
-Copy `.env.example` to `.env` and fill in your key:
-
 ```bash
 cp .env.example .env
-# Edit .env and set OPENAI_API_KEY
+# Edit .env and set OPENAI_API_KEY=sk-...
 ```
 
 ## Usage
 
+Run from `tools/content-review/` with the venv active.
+
 ```bash
-# Run the full review pipeline on all sites
-python review.py
+# Single file, dry run (preview only — no writes)
+python review.py --file ../../apps/deck-repair/src/data/generated_content/some-file.md --dry-run
 
-# Review a single site
-python review.py --site dry-rot
+# Single file, apply changes
+python review.py --file ../../apps/deck-repair/src/data/generated_content/some-file.md
 
-# Review a specific file
-python review.py --file apps/dry-rot/src/content/home.md
+# All files in one site
+python review.py --microsite deck-repair
 
-# Output results as JSON
-python review.py --output json
+# All sites
+python review.py --all
 
-# Set verbosity
-python review.py --verbose
+# Run only the quality cleaner agent
+python review.py --file ../../apps/deck-repair/src/data/generated_content/some-file.md --agents quality-cleaner
 ```
 
 ### CLI Flags
 
 | Flag | Description |
 |------|-------------|
-| `--site <name>` | Limit review to a single microsite (e.g. `dry-rot`) |
-| `--file <path>` | Review a single markdown file |
-| `--output <format>` | Output format: `text` (default) or `json` |
-| `--verbose` | Enable verbose logging |
-| `--dry-run` | Run agents but do not write results to LanceDB |
+| `--file <path>` | Process a single markdown file (path relative to cwd) |
+| `--microsite <name>` | Process all content files for one microsite app |
+| `--all` | Process all 12 microsite apps |
+| `--dry-run` | Preview output without writing files |
+| `--agents <id,...>` | Comma-separated agent IDs to run (e.g. `quality-cleaner`) |
 
 ## Agents
 
-Agents live in the `agents/` directory. Each agent is a self-contained module that receives a document and returns structured feedback.
+Agent definitions live in `agents/`. Each agent is a markdown file with YAML frontmatter (model, temperature) and a prose system prompt.
 
-| Agent | Responsibility |
-|-------|---------------|
-| `tone_agent` | Checks for consistent, professional brand voice |
-| `accuracy_agent` | Flags factual claims that may need verification |
-| `seo_agent` | Evaluates keyword usage, headings, and meta descriptions |
-| `readability_agent` | Scores reading level and sentence complexity |
-| `completeness_agent` | Checks that all required content sections are present |
+| Agent file | ID | Purpose |
+|---|---|---|
+| `01-quality-cleaner.md` | `quality-cleaner` | Removes citation artifacts, fixes malformed link injections, dedupes H1 headings |
+| `02-language-editor.md` | `language-editor` | Improves tone, voice, clarity, and brand alignment |
+
+Pipeline order and shared context are configured in `pipeline.md`.
 
 ## Notebooks
 
-Exploratory notebooks live in `notebooks/`. Use them for one-off analysis, prompt tuning, and dataset inspection.
-
 | Notebook | Purpose |
-|----------|---------|
-| `explore_results.ipynb` | Browse and filter stored review results |
-| `prompt_tuning.ipynb` | Experiment with agent prompts interactively |
+|---|---|
+| `01-test-quality-agent.ipynb` | Test quality cleaner on real files, inspect diffs |
+| `02-test-language-agent.ipynb` | Test language editor, evaluate tone changes |
+| `03-test-full-pipeline.ipynb` | End-to-end pipeline test with quality metrics |
 
 ## LanceDB
 
-Review results are persisted to a local LanceDB database at `.lancedb/` (gitignored). LanceDB stores results as vector embeddings, enabling semantic search over past reviews. The database is created automatically on first run.
+After processing, content embeddings are stored in `.lancedb/` (gitignored). Used for near-duplicate detection — the CLI will warn when a processed file is very similar to another file across sites.
 
-To reset the database:
+To reset:
 
 ```bash
 rm -rf .lancedb/
