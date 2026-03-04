@@ -34,3 +34,16 @@ def test_load_agents_from_dir_orders_by_order_field(tmp_path):
     agents = load_agents_from_dir(tmp_path)
     assert agents[0].id == "first"
     assert agents[1].id == "second"
+
+
+def test_load_agent_raises_on_missing_field(tmp_path):
+    bad = tmp_path / "bad.md"
+    bad.write_text("---\nid: x\n---\n\nBody.")  # missing name, order, model, etc.
+    with pytest.raises((KeyError, ValueError)):
+        load_agent(bad)
+
+
+def test_load_agents_from_dir_raises_for_nonexistent_dir(tmp_path):
+    missing = tmp_path / "does-not-exist"
+    with pytest.raises(FileNotFoundError):
+        load_agents_from_dir(missing)
