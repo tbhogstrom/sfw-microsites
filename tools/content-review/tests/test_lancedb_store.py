@@ -25,7 +25,9 @@ def test_upsert_overwrites_existing_entry(tmp_path):
     with patch.object(store, "_embed", return_value=[0.1] * 1536):
         store.upsert(app="deck-repair", filename="file-a.md", content="Version 1")
         store.upsert(app="deck-repair", filename="file-a.md", content="Version 2")
-        # Should not raise; second upsert replaces the first
+
+    table = store.db.open_table(store.TABLE_NAME)
+    assert table.count_rows() == 1
 
 
 def test_find_similar_excludes_self(tmp_path):

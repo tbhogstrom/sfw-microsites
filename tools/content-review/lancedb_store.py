@@ -36,13 +36,15 @@ class ContentStore:
         )
         return response.data[0].embedding
 
+    def _safe_filter(self, app: str, filename: str) -> str:
+        safe_app = app.replace("'", "''")
+        safe_filename = filename.replace("'", "''")
+        return f"app = '{safe_app}' AND filename = '{safe_filename}'"
+
     def upsert(self, app: str, filename: str, content: str) -> None:
         vector = self._embed(content)
         table = self.db.open_table(self.TABLE_NAME)
-        try:
-            table.delete(f"app = '{app}' AND filename = '{filename}'")
-        except Exception:
-            pass
+        table.delete(self._safe_filter(app, filename))
         table.add([{
             "app": app,
             "filename": filename,
@@ -61,7 +63,7 @@ class ContentStore:
         vector = self._embed(content)
         results = (
             table.search(vector)
-            .where(f"NOT (app = '{app}' AND filename = '{filename}')")
+            .where(f"NOT ({self._safe_filter(app, filename)})")
             .limit(top_k)
             .to_list()
         )
