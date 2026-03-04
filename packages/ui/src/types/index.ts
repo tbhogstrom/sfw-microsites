@@ -21,5 +21,10 @@ export interface ImageProps extends BaseProps {
   loading?: 'lazy' | 'eager';
 }
 
+export interface Service {
+  title: string;
+  description: string;
+}
+
 // Re-export types from @sfw/content for convenience
 export type { SiteConfig, Testimonial, FAQ, ServiceArea, BlogPost } from '@sfw/content';

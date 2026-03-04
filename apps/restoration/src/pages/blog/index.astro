@@ -4,16 +4,19 @@
  * URL: /blog
  */
 import BaseLayout from '@sfw/ui';
-import { HeroSection, BlogCard, CTASection } from '@sfw/ui';
+import { HeroSection, BlogGrid, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { blogPosts } from '../../data/blog-posts';
 
 const config = serviceConfigs['restoration'];
+const sortedPosts = [...blogPosts].sort(
+  (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+);
 ---
 
 <BaseLayout
-  title="Blog | Historic Home Restoration Deck Repair & Home Maintenance Tips Home Maintenance Tips"
-  description="Expert advice on Historic Home Restoration and home maintenance from Portland's trusted professionals."
+  title={`Blog | ${config.primaryService} Tips & Insights`}
+  description={`Expert ${config.primaryService.toLowerCase()} guidance, repair checklists, and homeowner maintenance advice.`}
   config={config}
   navigation={[
     { label: 'Home', url: '/' },
@@ -22,36 +25,24 @@ const config = serviceConfigs['restoration'];
     { label: 'Locations', url: '/locations' },
   ]}
 >
-  <!-- Hero Section -->
   <HeroSection
-    headline="Historic Home Restoration Deck Repair & Home Maintenance Blog Home Maintenance Blog"
-    subheadline="Expert tips, guides, and insights for Portland homeowners"
+    headline={`${config.primaryService} Blog`}
+    subheadline="Actionable guides, prevention tips, and practical repair insights for homeowners."
     height="sm"
   />
 
-  <!-- Blog Posts Grid -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {blogPosts.map((post) => (
-          <BlogCard post={post} />
-        ))}
-      </div>
+  <BlogGrid
+    posts={sortedPosts}
+    title="Latest Articles"
+    subtitle="Use these resources to plan repairs, avoid common issues, and make better maintenance decisions."
+    class="bg-white"
+  />
 
-      {blogPosts.length === 0 && (
-        <div class="text-center py-16">
-          <p class="text-xl text-gray-600">No blog posts yet. Check back soon!</p>
-        </div>
-      )}
-    </div>
-  </section>
-
-  <!-- CTA Section -->
   <CTASection
     headline="Need Professional Help?"
-    description="Our experts are ready to help with your Historic Home Restoration needs."
+    description={`Talk with our team about your ${config.primaryService.toLowerCase()} project and next steps.`}
     primaryCTA={{ text: `Call ${config.phone}`, href: `tel:${config.phone}` }}
-    secondaryCTA={{ text: 'View Services', href: '/' }}
+    secondaryCTA={{ text: 'Explore Services', href: '/services' }}
     variant="dark"
   />
 </BaseLayout>

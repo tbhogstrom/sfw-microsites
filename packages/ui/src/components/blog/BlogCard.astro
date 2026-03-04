@@ -21,9 +21,15 @@ const {
 
 const { title, excerpt, image, slug, publishDate, author, category } = post;
 const postUrl = `/blog/${slug}`;
+const strippedContent = post.content?.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() || '';
+const wordCount = strippedContent ? strippedContent.split(' ').length : 0;
+const readingTime = wordCount ? Math.max(1, Math.round(wordCount / 225)) : null;
+const displayExcerpt = excerpt?.trim() && excerpt.trim() !== '`markdown'
+  ? excerpt.trim()
+  : strippedContent.slice(0, 165) + (strippedContent.length > 165 ? '...' : '');
 
 const classes = [
-  'bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 h-full flex flex-col',
+  'bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200 h-full flex flex-col',
   className,
 ].filter(Boolean).join(' ');
 
@@ -42,7 +48,7 @@ const formattedDate = publishDate ? new Date(publishDate).toLocaleDateString('en
       <Image
         src={image}
         alt={title}
-        class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+        class="w-full h-52 object-cover transition-transform duration-300 hover:scale-105"
       />
     </a>
   )}
@@ -50,26 +56,29 @@ const formattedDate = publishDate ? new Date(publishDate).toLocaleDateString('en
   <!-- Content -->
   <div class="p-6 flex-1 flex flex-col">
     <!-- Category & Date -->
-    <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+    <div class="flex items-center justify-between gap-3 text-xs sm:text-sm text-gray-500 mb-3">
       {category && (
-        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+        <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-semibold">
           {category}
         </span>
       )}
-      {formattedDate && (
-        <time datetime={publishDate}>{formattedDate}</time>
-      )}
+      <div class="text-right">
+        {formattedDate && (
+          <time datetime={publishDate} class="block">{formattedDate}</time>
+        )}
+        {readingTime && <span class="block">{readingTime} min read</span>}
+      </div>
     </div>
 
     <!-- Title -->
-    <h3 class="text-xl font-heading font-bold text-dark mb-3 hover:text-primary transition-colors">
-      <a href={postUrl}>{title}</a>
+    <h3 class="text-xl font-heading font-bold text-dark mb-3 line-clamp-2 hover:text-primary transition-colors">
+      <a href={postUrl} aria-label={`Read article: ${title}`}>{title}</a>
     </h3>
 
     <!-- Excerpt -->
-    {showExcerpt && excerpt && (
+    {showExcerpt && displayExcerpt && (
       <p class="text-gray-600 mb-4 flex-1 line-clamp-3">
-        {excerpt}
+        {displayExcerpt}
       </p>
     )}
 
@@ -83,7 +92,7 @@ const formattedDate = publishDate ? new Date(publishDate).toLocaleDateString('en
     <!-- Read More -->
     <div>
       <Button href={postUrl} variant="outline" size="sm">
-        Read More
+        Read article
       </Button>
     </div>
   </div>

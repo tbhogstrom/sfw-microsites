@@ -10,14 +10,20 @@ export interface Props extends BaseProps {
   posts: BlogPost[];
   columns?: 2 | 3;
   title?: string;
+  subtitle?: string;
   showExcerpt?: boolean;
+  emptyTitle?: string;
+  emptyMessage?: string;
 }
 
 const {
   posts,
   columns = 3,
   title,
+  subtitle,
   showExcerpt = true,
+  emptyTitle = 'No articles yet',
+  emptyMessage = 'We are publishing new resources soon. Check back shortly.',
   class: className = '',
   ...rest
 } = Astro.props;
@@ -34,9 +40,10 @@ const gridClasses = ['grid grid-cols-1 gap-8', columnClasses[columns]].join(' ')
 <section class={classes} {...rest}>
   <div class="container mx-auto px-4">
     {title && (
-      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-        {title}
-      </h2>
+      <header class="text-center mb-12 max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold mb-3">{title}</h2>
+        {subtitle && <p class="text-gray-600 text-lg">{subtitle}</p>}
+      </header>
     )}
 
     {posts.length > 0 ? (
@@ -46,7 +53,10 @@ const gridClasses = ['grid grid-cols-1 gap-8', columnClasses[columns]].join(' ')
         ))}
       </div>
     ) : (
-      <p class="text-center text-gray-500">No blog posts found.</p>
+      <div class="text-center py-14 border border-dashed border-gray-300 rounded-xl bg-gray-50">
+        <h3 class="font-heading text-2xl text-dark mb-2">{emptyTitle}</h3>
+        <p class="text-gray-600">{emptyMessage}</p>
+      </div>
     )}
 
     <!-- Optional slot for pagination or load more -->
