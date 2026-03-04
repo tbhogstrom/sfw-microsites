@@ -5,12 +5,14 @@
  */
 import type { ServicePageData } from '../data/services';
 import { marked } from 'marked';
+import { serviceConfigs } from '@sfw/content';
 
 interface Props {
   service: ServicePageData;
 }
 
 const { service } = Astro.props;
+const config = serviceConfigs['trim-repair'];
 
 /**
  * Convert markdown to HTML
@@ -147,7 +149,7 @@ const processSteps = service.sections.process
             We offer free, no-obligation estimates for all {service.name.toLowerCase()} projects in {service.locationFull}.
           </p>
           <a
-            href="tel:{serviceConfigs['deck-repair'].phone}"
+            href={`tel:${config.phone}`}
             class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors"
           >
             Call for Free Estimate
@@ -226,3 +228,4 @@ const processSteps = service.sections.process
     @apply pl-1;
   }
 </style>
+

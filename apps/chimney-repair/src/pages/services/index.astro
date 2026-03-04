@@ -8,12 +8,12 @@ import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { servicesByLocation } from '../../data/services';
 
-const config = serviceConfigs['deck-repair'];
+const config = serviceConfigs['chimney-repair'];
 ---
 
 <BaseLayout
-  title="Our Deck Services | Portland & Seattle"
-  description="Professional deck repair, installation, and maintenance services in Portland, Oregon and Seattle, Washington. Expert craftsmanship and quality materials."
+  title="Our Chimney Repair Services | Portland"
+  description="Professional wood chimney repair, restoration, and waterproofing services in Portland, Oregon. Expert craftsmanship and lasting protection."
   config={config}
   navigation={[
     { label: 'Home', url: '/' },
@@ -24,8 +24,8 @@ const config = serviceConfigs['deck-repair'];
 >
   <!-- Hero Section -->
   <HeroSection
-    headline="Professional Deck Services"
-    subheadline="Expert deck repair, installation, and maintenance in Portland and Seattle"
+    headline="Professional Chimney Repair Services"
+    subheadline="Expert wood chimney repair, structural restoration, and waterproofing in Portland and Seattle"
     primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
     secondaryCTA={{ text: 'View Locations', href: '/locations' }}
     height="md"
@@ -40,7 +40,7 @@ const config = serviceConfigs['deck-repair'];
             Portland, Oregon Services
           </h2>
           <p class="text-xl text-gray-600">
-            Comprehensive deck services for homeowners in the Portland metro area
+            Comprehensive chimney repair services for homeowners in the Portland metro area
           </p>
         </div>
 
@@ -90,7 +90,7 @@ const config = serviceConfigs['deck-repair'];
             Seattle, Washington Services
           </h2>
           <p class="text-xl text-gray-600">
-            Professional deck services throughout the Seattle metro area
+            Professional chimney repair services throughout the Seattle metro area
           </p>
         </div>
 
@@ -136,7 +136,7 @@ const config = serviceConfigs['deck-repair'];
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-4xl font-heading font-bold mb-8">
-          Why Choose Our Deck Services?
+          Why Choose Our Chimney Repair Services?
         </h2>
 
         <div class="grid md:grid-cols-3 gap-8 mt-12">
@@ -148,7 +148,7 @@ const config = serviceConfigs['deck-repair'];
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Expert Craftsmanship</h3>
             <p class="text-gray-600">
-              Licensed professionals with years of experience in deck construction and repair
+              Licensed professionals with years of experience in chimney repair and restoration
             </p>
           </div>
 
@@ -183,7 +183,7 @@ const config = serviceConfigs['deck-repair'];
   <!-- CTA Section -->
   <CTASection
     headline="Ready to Get Started?"
-    description="Contact us today for a free consultation and quote. We're here to help with all your deck needs."
+    description="Contact us today for a free consultation and quote. We're here to help with all your chimney repair needs."
     primaryCTA={{ text: 'Get Free Quote', href: `tel:${config.phone}` }}
     secondaryCTA={{ text: 'View Locations', href: '/locations' }}
     variant="dark"

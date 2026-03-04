@@ -1,5 +1,5 @@
 /**
- * Service pages data for deck-repair site
+ * Service pages data for chimney-repair site
  * Automatically generated from markdown files in generated_content/
  */
 
@@ -154,7 +154,7 @@ function parseServiceMarkdown(filePath: string, fileName: string): ServicePageDa
     const htmlContent = marked.parse(content) as string;
 
     // Create meta title and description
-    const metaTitle = `${serviceName} in ${locationFull} | Expert Deck Services`;
+    const metaTitle = `${serviceName} in ${locationFull} | Expert Chimney Services`;
     const metaDescription = heroSubheadline.substring(0, 155) ||
       `Professional ${serviceName.toLowerCase()} in ${locationFull}. Expert craftsmanship, quality materials, and exceptional customer service.`;
 
@@ -162,7 +162,7 @@ function parseServiceMarkdown(filePath: string, fileName: string): ServicePageDa
     const keywordsMatch = content.match(/\*\*Target Keywords:\*\*\s+(.+)/);
     const keywords = keywordsMatch
       ? keywordsMatch[1].split(',').map(k => k.trim())
-      : [serviceName.toLowerCase(), location, 'deck repair', 'deck services'];
+      : [serviceName.toLowerCase(), location, 'chimney repair', 'chimney services'];
 
     return {
       name: serviceName,
