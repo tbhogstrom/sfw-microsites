@@ -33,5 +33,23 @@ def test_load_pipeline_config_raises_for_missing_file(tmp_path):
 def test_load_pipeline_config_raises_for_missing_fields(tmp_path):
     bad = tmp_path / "bad-pipeline.md"
     bad.write_text("---\nbrand_name: Test\n---\n\nBody.")  # missing agent_ids and locations
-    with pytest.raises((KeyError, ValueError)):
+    with pytest.raises(ValueError):
+        load_pipeline_config(bad)
+
+
+def test_load_pipeline_config_raises_for_type_mismatch(tmp_path):
+    bad = tmp_path / "bad-types.md"
+    bad.write_text(
+        "---\nagent_ids: test-agent\nbrand_name: Test\nlocations: Portland\n---\n\nBody."
+    )
+    with pytest.raises(ValueError):
+        load_pipeline_config(bad)
+
+
+def test_load_pipeline_config_raises_for_empty_agent_ids(tmp_path):
+    bad = tmp_path / "empty-agents.md"
+    bad.write_text(
+        "---\nagent_ids: []\nbrand_name: Test\nlocations:\n  - Portland\n---\n\nBody."
+    )
+    with pytest.raises(ValueError):
         load_pipeline_config(bad)

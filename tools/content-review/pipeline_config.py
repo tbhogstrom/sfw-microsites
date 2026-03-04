@@ -1,12 +1,12 @@
 from pathlib import Path
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, ValidationError
 import frontmatter
 
 
 class PipelineConfig(BaseModel):
-    agent_ids: list[str]
+    agent_ids: list[str] = Field(min_length=1)
     brand_name: str
-    locations: list[str]
+    locations: list[str] = Field(min_length=1)
     shared_context: str
 
     def build_context_string(self) -> str:
@@ -22,13 +22,12 @@ def load_pipeline_config(path: Path) -> PipelineConfig:
     if not path.exists():
         raise FileNotFoundError(f"Pipeline config not found: {path}")
     post = frontmatter.load(str(path))
-    required = ["agent_ids", "brand_name", "locations"]
-    missing = [k for k in required if k not in post]
-    if missing:
-        raise ValueError(f"{path}: missing required frontmatter fields: {missing}")
-    return PipelineConfig(
-        agent_ids=post["agent_ids"],
-        brand_name=post["brand_name"],
-        locations=post["locations"],
-        shared_context=post.content,
-    )
+    try:
+        return PipelineConfig(
+            agent_ids=post.get("agent_ids"),
+            brand_name=post.get("brand_name"),
+            locations=post.get("locations"),
+            shared_context=post.content,
+        )
+    except (ValidationError, Exception) as e:
+        raise ValueError(f"{path}: invalid pipeline config — {e}") from e
