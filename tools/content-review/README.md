@@ -6,7 +6,7 @@ Multi-agent editorial pipeline for SFW Construction microsites. Passes markdown 
 
 ### Prerequisites
 
-- Python 3.11+ (3.11 or 3.12 recommended)
+- Python 3.11+
 - An OpenAI API key
 
 ### Install
@@ -81,9 +81,21 @@ Pipeline order and shared context are configured in `pipeline.md`.
 | `02-test-language-agent.ipynb` | Test language editor, evaluate tone changes |
 | `03-test-full-pipeline.ipynb` | End-to-end pipeline test with quality metrics |
 
+## Testing
+
+```bash
+cd tools/content-review
+source .venv/Scripts/activate
+pytest tests/ -v
+```
+
+All 27 tests cover: agent config parsing, pipeline config parsing, OpenAI caller (mocked), pipeline runner (mocked), and LanceDB dedup store (mocked).
+
 ## LanceDB
 
 After processing, content embeddings are stored in `.lancedb/` (gitignored). Used for near-duplicate detection — the CLI will warn when a processed file is very similar to another file across sites.
+
+Future plans: use the vector store for RAG-style retrieval to give agents cross-site context when reviewing content.
 
 To reset:
 
