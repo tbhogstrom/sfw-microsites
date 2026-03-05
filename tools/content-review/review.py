@@ -175,10 +175,23 @@ def main(filepath, microsite, all_sites, dry_run, agent_filter_str):
     else:
         click.echo(f"  Agents: {', '.join(a.name for a in agents)} (all)")
 
+    failures = []
     for f in files:
-        process_file(f, agents, pipeline_config, client, store, dry_run, agent_filter)
+        try:
+            process_file(f, agents, pipeline_config, client, store, dry_run, agent_filter)
+        except Exception as exc:
+            click.echo(click.style(f"  ERROR: {f.name}: {exc}", fg="red"))
+            failures.append(f)
 
-    click.echo(click.style(f"\nDone. {len(files)} file(s) processed.", fg="green"))
+    succeeded = len(files) - len(failures)
+    if failures:
+        click.echo(
+            click.style(f"\nDone. {succeeded}/{len(files)} file(s) processed. {len(failures)} failed.", fg="yellow")
+        )
+        for f in failures:
+            click.echo(click.style(f"  Failed: {f}", fg="red"))
+    else:
+        click.echo(click.style(f"\nDone. {len(files)} file(s) processed.", fg="green"))
 
 
 if __name__ == "__main__":
