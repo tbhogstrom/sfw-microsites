@@ -47,3 +47,34 @@ def test_load_agents_from_dir_raises_for_nonexistent_dir(tmp_path):
     missing = tmp_path / "does-not-exist"
     with pytest.raises(FileNotFoundError):
         load_agents_from_dir(missing)
+
+
+def test_load_agent_injects_voice_file(tmp_path):
+    voice = tmp_path / "voice.md"
+    voice.write_text("## Voice\n\nHe says 'protect your home'.")
+
+    agent_file = tmp_path / "03-bryan.md"
+    agent_file.write_text(
+        "---\nid: bryan\nname: Bryan\norder: 2\nmodel: gpt-4o\ntemperature: 0.3\n"
+        "input_format: markdown\noutput_format: markdown\nvoice_file: voice.md\n---\n\n## Role\n\nYou are Bryan."
+    )
+
+    agent = load_agent(agent_file)
+    assert "protect your home" in agent.system_prompt
+    assert "## Role" in agent.system_prompt
+
+
+def test_load_agent_voice_file_missing_raises(tmp_path):
+    agent_file = tmp_path / "03-bryan.md"
+    agent_file.write_text(
+        "---\nid: bryan\nname: Bryan\norder: 2\nmodel: gpt-4o\ntemperature: 0.3\n"
+        "input_format: markdown\noutput_format: markdown\nvoice_file: nonexistent.md\n---\n\n## Role\n\nYou are Bryan."
+    )
+    with pytest.raises(FileNotFoundError):
+        load_agent(agent_file)
+
+
+def test_load_agent_without_voice_file_unchanged():
+    agent = load_agent(FIXTURES / "sample-agent.md")
+    # system_prompt should be exactly the markdown body, no injection
+    assert "---" not in agent.system_prompt or agent.system_prompt.startswith("##")

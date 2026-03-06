@@ -12,6 +12,7 @@ class AgentConfig(BaseModel):
     input_format: str
     output_format: str
     system_prompt: str
+    voice_file: str | None = None
 
 
 def load_agent(path: Path) -> AgentConfig:
@@ -20,6 +21,16 @@ def load_agent(path: Path) -> AgentConfig:
     missing = [k for k in required if k not in post]
     if missing:
         raise ValueError(f"{path}: missing required frontmatter fields: {missing}")
+
+    system_prompt = post.content
+    voice_file = post.get("voice_file")
+    if voice_file:
+        voice_path = path.parent / voice_file
+        if not voice_path.exists():
+            raise FileNotFoundError(f"voice_file not found: {voice_path}")
+        voice_content = voice_path.read_text(encoding="utf-8")
+        system_prompt = f"{system_prompt}\n\n---\n\n{voice_content}"
+
     return AgentConfig(
         id=post["id"],
         name=post["name"],
@@ -28,7 +39,8 @@ def load_agent(path: Path) -> AgentConfig:
         temperature=post["temperature"],
         input_format=post["input_format"],
         output_format=post["output_format"],
-        system_prompt=post.content,
+        system_prompt=system_prompt,
+        voice_file=voice_file,
     )
 
 
