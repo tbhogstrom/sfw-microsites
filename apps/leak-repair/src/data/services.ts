@@ -197,7 +197,7 @@ function loadServicePages(): ServicePageData[] {
 
   for (const file of files) {
     // Skip non-service-page files and checkpoint files
-    if (!file.startsWith('service_page_') || !file.endsWith('.md') || file.includes('.ipynb_checkpoints')) {
+    if (!file.startsWith('service_page_') || file.startsWith('service_page_cluster_') || !file.endsWith('.md') || file.includes('.ipynb_checkpoints')) {
       continue;
     }
 

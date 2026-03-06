@@ -7,15 +7,17 @@ import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { getServicePaths, getService } from '../../../data/services';
+import { getClusterPaths, getClusterService } from '../../../data/cluster-services';
 import ServiceContent from '../../../components/ServiceContent.astro';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
-  return getServicePaths();
+  return [...getServicePaths(), ...getClusterPaths()];
 }
 
 const { location, service } = Astro.params;
-const serviceData = getService(location as string, service as string);
+const serviceData = getService(location as string, service as string)
+  ?? getClusterService(location as string, service as string);
 
 if (!serviceData) {
   return Astro.redirect('/404');
