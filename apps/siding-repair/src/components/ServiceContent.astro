@@ -43,8 +43,69 @@ const processSteps = service.sections.process
   : [];
 ---
 
-<!-- Service Overview Section -->
-{service.sections.overview && (
+<!-- Cluster: Subtopic Anchor Cards -->
+{service.clusterSections && service.clusterSections.length > 0 && (
+  <section class="py-10 bg-gray-light border-b border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-5">Jump to a topic</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {service.clusterSections.map((sec) => (
+            <a
+              href={`#${sec.anchor}`}
+              class="group flex items-center justify-between bg-white border border-gray-200 rounded-lg px-5 py-4 shadow-sm hover:border-primary hover:shadow-md transition-all"
+            >
+              <span class="font-semibold text-dark group-hover:text-primary text-sm leading-snug">
+                {sec.heading}
+              </span>
+              <svg class="w-4 h-4 text-gray-400 group-hover:text-primary flex-shrink-0 ml-2 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- Cluster: Individual Subtopic Sections -->
+{service.clusterSections && service.clusterSections.map((sec, i) => (
+  <section
+    id={sec.anchor}
+    class={`py-16 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-light'} scroll-mt-8`}
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-heading font-bold mb-6 text-dark">{sec.heading}</h2>
+        <div
+          class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-dark prose-p:text-gray-700 prose-li:text-gray-700 prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
+          set:html={markdownToHtml(sec.content)}
+        />
+      </div>
+    </div>
+  </section>
+))}
+
+<!-- Cluster: References Table -->
+{service.clusterReferences && (
+  <section class="py-12 bg-white border-t border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-heading font-bold mb-6 text-dark">References</h2>
+        <div class="overflow-x-auto">
+          <div
+            class="prose prose-sm max-w-none prose-table:w-full prose-th:text-left prose-th:font-semibold prose-th:bg-gray-light prose-th:py-2 prose-th:px-4 prose-td:py-2 prose-td:px-4 prose-td:text-gray-600 prose-td:border-b prose-td:border-gray-200"
+            set:html={markdownToHtml(service.clusterReferences)}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- Service Overview Section (non-cluster pages) -->
+{service.sections.overview && !service.clusterSections && (
   <section id="overview" class="py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">

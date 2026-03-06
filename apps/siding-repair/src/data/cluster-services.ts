@@ -32,6 +32,31 @@ function parseSubtopics(content: string): string[] {
     .map(l => l.replace(/^\s*-\s*/, '').trim());
 }
 
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function parseClusterSections(
+  content: string,
+  subtopics: string[]
+): Array<{ heading: string; anchor: string; content: string }> {
+  const sections: Array<{ heading: string; anchor: string; content: string }> = [];
+  for (const topic of subtopics) {
+    const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
+    if (!match) continue;
+    const body = match[1].trim();
+    if (!body || body === '*Content to be generated.*') continue;
+    sections.push({ heading: topic, anchor: slugify(topic), content: body });
+  }
+  return sections;
+}
+
+function parseReferences(content: string): string {
+  const match = content.match(/## References\n\n([\s\S]*?)(?=\n## |$)/);
+  return match ? match[1].trim() : '';
+}
+
 function extractBodyContent(content: string): string {
   // Remove H1, CLUSTER_META block, Hero Section stub, and Page Metadata section
   let body = content
@@ -81,6 +106,8 @@ function loadClusterPages(): ServicePageData[] {
 
     const isStub = meta['status'] === 'stub';
     const bodyContent = extractBodyContent(content);
+    const clusterSections = parseClusterSections(content, subtopics);
+    const clusterReferences = parseReferences(content);
 
     pages.push({
       name,
@@ -101,6 +128,8 @@ function loadClusterPages(): ServicePageData[] {
       keywords: [slug, location, SITE_KEY],
       rawMarkdown: content,
       htmlContent: bodyContent,
+      clusterSections: clusterSections.length ? clusterSections : undefined,
+      clusterReferences: clusterReferences || undefined,
     });
   }
 
