@@ -6,7 +6,11 @@
 import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import { servicesByLocation } from '../../data/services';
+import { allClusterServices } from '../../data/cluster-services';
+const servicesByLocation = {
+  portland: allClusterServices.filter(s => s.location === 'portland'),
+  seattle: allClusterServices.filter(s => s.location === 'seattle'),
+};
 
 const config = serviceConfigs['deck-repair'];
 ---
