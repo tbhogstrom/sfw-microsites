@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://flashingrepairs.com/sitemap-index.xml
+Sitemap: https://flashingrepairs.com/llms.txt

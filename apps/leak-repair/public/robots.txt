@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://leakingwindow.com/sitemap-index.xml
+Sitemap: https://leakingwindow.com/llms.txt

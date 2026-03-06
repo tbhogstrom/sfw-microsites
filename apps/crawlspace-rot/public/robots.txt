@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://crawlspacerot.com/sitemap-index.xml
+Sitemap: https://crawlspacerot.com/llms.txt

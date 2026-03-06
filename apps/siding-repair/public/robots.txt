@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://sidingrepairexperts.com/sitemap-index.xml
+Sitemap: https://sidingrepairexperts.com/llms.txt

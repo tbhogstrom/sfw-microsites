@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://rotrepairportland.com/sitemap-index.xml
+Sitemap: https://rotrepairportland.com/llms.txt

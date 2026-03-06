@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://leadpaintprofessionals.com/sitemap-index.xml
+Sitemap: https://leadpaintprofessionals.com/llms.txt

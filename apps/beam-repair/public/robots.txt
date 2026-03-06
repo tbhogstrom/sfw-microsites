@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://beamrepairexpert.com/sitemap-index.xml
+Sitemap: https://beamrepairexpert.com/llms.txt

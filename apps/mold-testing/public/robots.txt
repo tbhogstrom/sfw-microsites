@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://moldtestingexperts.com/sitemap-index.xml
+Sitemap: https://moldtestingexperts.com/llms.txt

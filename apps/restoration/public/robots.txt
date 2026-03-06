@@ -5,3 +5,4 @@ Disallow: /api/
 Disallow: /_astro/
 
 Sitemap: https://historicrenovationsnw.com/sitemap-index.xml
+Sitemap: https://historicrenovationsnw.com/llms.txt
