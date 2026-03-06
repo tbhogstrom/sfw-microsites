@@ -32,6 +32,24 @@ function parseSubtopics(content: string): string[] {
     .map(l => l.replace(/^\s*-\s*/, '').trim());
 }
 
+function extractBodyContent(content: string): string {
+  // Remove H1, CLUSTER_META block, Hero Section stub, and Page Metadata section
+  let body = content
+    .replace(/^#\s+.+\n/m, '')
+    .replace(/<!--\s*CLUSTER_META[\s\S]*?-->\n?/, '')
+    .replace(/## Hero Section[\s\S]*?(?=\n## |\n$)/, '')
+    .replace(/## Page Metadata[\s\S]*$/, '')
+    .trim();
+  return body;
+}
+
+function extractHeroSubheadline(content: string, name: string, locationFull: string): string {
+  // Use first non-empty paragraph after the hero heading as subheadline, else fallback
+  const heroMatch = content.match(/## Hero Section[\s\S]*?\n\n([^\n#][^\n]+)/);
+  if (heroMatch) return heroMatch[1].trim();
+  return `Expert ${name.toLowerCase()} services for Portland and Seattle homeowners — backed by local knowledge and quality craftsmanship.`;
+}
+
 function loadClusterPages(): ServicePageData[] {
   const contentDir = join(process.cwd(), 'src', 'data', 'generated_content');
   let files: string[];
@@ -61,21 +79,28 @@ function loadClusterPages(): ServicePageData[] {
     const nameMatch = content.match(/^#\s+(.+?)\s+-\s+/m);
     const name = nameMatch ? nameMatch[1].trim() : slug;
 
+    const isStub = meta['status'] === 'stub';
+    const bodyContent = extractBodyContent(content);
+
     pages.push({
       name,
       slug,
       location,
       locationFull,
-      heroHeadline: `[STUB] ${name} in ${locationFull}`,
-      heroSubheadline: `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`,
+      heroHeadline: isStub ? `[STUB] ${name} in ${locationFull}` : `${name} in ${locationFull}`,
+      heroSubheadline: isStub
+        ? `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`
+        : extractHeroSubheadline(content, name, locationFull),
       keyBenefits: subtopics.slice(0, 4),
-      sections: {},
+      sections: bodyContent
+        ? { overview: { title: name, content: bodyContent } }
+        : {},
       faqs: [],
       metaTitle: `${name} in ${locationFull} | SFW Construction`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
       keywords: [slug, location, SITE_KEY],
       rawMarkdown: content,
-      htmlContent: `<h1>${name}</h1><p>Content coming soon.</p>`,
+      htmlContent: bodyContent,
     });
   }
 
