@@ -32,14 +32,10 @@ for (const [site, slugMap] of Object.entries(redirectMap)) {
   let config = fs.readFileSync(configPath, 'utf-8');
 
   // Remove existing redirects block if present
-  config = config.replace(/\s*redirects:\s*\{[\s\S]*?\},?\n?/m, '\n');
+  config = config.replace(/,?\s*\n?\s*redirects:\s*\{[\s\S]*?\},?/m, '');
 
-  // Insert before the closing }); of defineConfig
-  if (config.includes("output: 'static'")) {
-    config = config.replace(/(  output: 'static'\s*\n)(}\);)/, `$1  ${redirectsBlock.trim()}\n$2`);
-  } else {
-    config = config.replace(/\n\}\);$/, `\n  ${redirectsBlock.trim()}\n});`);
-  }
+  // Insert before the final }); of defineConfig
+  config = config.replace(/\n\}\);[\s]*$/, `\n  ${redirectsBlock.trim()}\n});\n`);
 
   fs.writeFileSync(configPath, config, 'utf-8');
   console.log(`Updated ${site}/astro.config.mjs (${Object.keys(slugMap).length * 2} redirect entries)`);
