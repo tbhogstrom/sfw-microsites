@@ -75,6 +75,13 @@ const {
         </script>
       </>
     )}
+
+    {config.callRailScriptSrc && (
+      <script
+        type="text/javascript"
+        src={config.callRailScriptSrc}
+      />
+    )}
   </head>
   <body class="font-body text-dark antialiased">
     <Header
