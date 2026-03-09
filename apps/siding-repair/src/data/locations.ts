@@ -76,9 +76,9 @@ export const sidingLocations: Record<string, Location> = {
       { name: 'West Linn', description: 'Premium exterior restoration and trim integration' },
     ],
     stats: {
-      yearsInArea: '20+',
-      projectsCompleted: '1,800+',
-      satisfactionRate: '98%',
+      yearsInArea: '20',
+      projectsCompleted: '1,800',
+      satisfactionRate: '98',
     },
     coordinates: {
       lat: 45.5152,
@@ -157,9 +157,9 @@ export const sidingLocations: Record<string, Location> = {
       { name: 'Georgetown', description: 'Durable siding systems for mixed-use properties' },
     ],
     stats: {
-      yearsInArea: '25+',
-      projectsCompleted: '2,500+',
-      satisfactionRate: '99%',
+      yearsInArea: '25',
+      projectsCompleted: '2,500',
+      satisfactionRate: '99',
     },
     coordinates: {
       lat: 47.6062,
