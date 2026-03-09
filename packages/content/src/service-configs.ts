@@ -45,7 +45,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgDifficulty: 25.63,
     avgCPC: 10.93,
     trafficShare: 23.1,
-    phone: '(503) 885-0236',
+    phone: '(503) 905-9047',
     callRailScriptSrc: '//cdn.callrail.com/companies/502723596/c7fe7f042461aac0b87f/12/swap.js',
     hubspotPortalId: '',
     hubspotFormId: '',
