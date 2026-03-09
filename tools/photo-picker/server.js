@@ -125,6 +125,18 @@ app.post('/api/process', async (req, res) => {
   }
 });
 
+// GET /api/config — return microsites and categories for the UI dropdowns
+app.get('/api/config', (req, res) => {
+  const microsites = Object.entries(blobConfig.microsites).map(([key, val]) => ({
+    key,
+    name: val.name
+  }));
+  res.json({
+    microsites,
+    imageCategories: blobConfig.imageCategories
+  });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   const url = `http://localhost:${PORT}`;
