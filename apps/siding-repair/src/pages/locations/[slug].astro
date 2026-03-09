@@ -13,8 +13,8 @@ import {
   ContactForm,
   CTASection,
 } from '@sfw/ui';
-import { serviceConfigs, getLocationPaths, getLocation } from '@sfw/content';
-import type { Location } from '@sfw/content';
+import { serviceConfigs } from '@sfw/content';
+import { getLocationPaths, getLocation } from '../../data/locations';
 
 // Generate static paths for all locations
 export async function getStaticPaths() {
