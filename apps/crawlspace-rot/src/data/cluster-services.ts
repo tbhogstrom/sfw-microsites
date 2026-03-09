@@ -32,6 +32,68 @@ function parseSubtopics(content: string): string[] {
     .map(l => l.replace(/^\s*-\s*/, '').trim());
 }
 
+function extractFirstSentence(text: string): string {
+  const clean = text.replace(/<sup>\d+<\/sup>/g, '').replace(/\*\*/g, '');
+  const match = clean.match(/^.+?[.!?](?:\s|$)/);
+  return match ? match[0].trim() : clean.slice(0, 120).trim();
+}
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function parseClusterSections(
+  content: string,
+  subtopics: string[]
+): Array<{ heading: string; anchor: string; content: string }> {
+  const sections: Array<{ heading: string; anchor: string; content: string }> = [];
+  for (const topic of subtopics) {
+    const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
+    if (!match) continue;
+    const body = match[1].trim();
+    if (!body || body === '*Content to be generated.*') continue;
+    sections.push({ heading: topic, anchor: slugify(topic), content: body });
+  }
+  return sections;
+}
+
+function parseReferences(content: string): string {
+  const match = content.match(/## References\n\n([\s\S]*?)(?=\n## |$)/);
+  return match ? match[1].trim() : '';
+}
+
+function parseSubtopicDescriptors(
+  content: string,
+  subtopics: string[]
+): Array<{ heading: string; anchor: string; descriptor: string }> {
+  return subtopics.map((topic) => {
+    const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
+    const body = match ? match[1].trim() : '';
+    const descriptor = body && body !== '*Content to be generated.*'
+      ? extractFirstSentence(body)
+      : '';
+    return { heading: topic, anchor: slugify(topic), descriptor };
+  });
+}
+
+function extractBodyContent(content: string): string {
+  let body = content
+    .replace(/^#\s+.+\n/m, '')
+    .replace(/<!--\s*CLUSTER_META[\s\S]*?-->\n?/, '')
+    .replace(/## Hero Section[\s\S]*?(?=\n## |\n$)/, '')
+    .replace(/## Page Metadata[\s\S]*$/, '')
+    .trim();
+  return body;
+}
+
+function extractHeroSubheadline(content: string, name: string, locationFull: string): string {
+  const heroMatch = content.match(/## Hero Section[\s\S]*?\n\n([^\n#][^\n]+)/);
+  if (heroMatch) return heroMatch[1].trim();
+  return `Expert ${name.toLowerCase()} services for Portland and Seattle homeowners — backed by local knowledge and quality craftsmanship.`;
+}
+
 function loadClusterPages(): ServicePageData[] {
   const contentDir = join(process.cwd(), 'src', 'data', 'generated_content');
   let files: string[];
@@ -57,25 +119,36 @@ function loadClusterPages(): ServicePageData[] {
     if (!slug) continue;
     const subtopics = parseSubtopics(content);
 
-    // Extract name from first H1
     const nameMatch = content.match(/^#\s+(.+?)\s+-\s+/m);
     const name = nameMatch ? nameMatch[1].trim() : slug;
+
+    const isStub = meta['status'] === 'stub';
+    const bodyContent = extractBodyContent(content);
+    const clusterSections = parseClusterSections(content, subtopics);
+    const clusterReferences = parseReferences(content);
 
     pages.push({
       name,
       slug,
       location,
       locationFull,
-      heroHeadline: `[STUB] ${name} in ${locationFull}`,
-      heroSubheadline: `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`,
+      heroHeadline: isStub ? `[STUB] ${name} in ${locationFull}` : `${name} in ${locationFull}`,
+      heroSubheadline: isStub
+        ? `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`
+        : extractHeroSubheadline(content, name, locationFull),
       keyBenefits: subtopics.slice(0, 4),
-      sections: {},
+      sections: bodyContent
+        ? { overview: { title: name, content: bodyContent } }
+        : {},
       faqs: [],
       metaTitle: `${name} in ${locationFull} | SFW Construction`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
       keywords: [slug, location, SITE_KEY],
       rawMarkdown: content,
-      htmlContent: `<h1>${name}</h1><p>Content coming soon.</p>`,
+      htmlContent: bodyContent,
+      clusterSections: clusterSections.length ? clusterSections : undefined,
+      clusterReferences: clusterReferences || undefined,
+      subtopicDescriptors: parseSubtopicDescriptors(content, subtopics),
     });
   }
 
