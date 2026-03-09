@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Picker</title>
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-image-editor.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Left: Queue -->
+    <aside id="queue-panel">
+      <div id="queue-header">
+        <span id="queue-count">0 photos</span>
+      </div>
+      <div id="queue-list"></div>
+    </aside>
+
+    <!-- Center: Editor -->
+    <main id="editor-panel">
+      <div id="tui-editor"></div>
+      <div id="editor-nav">
+        <button id="btn-prev">← Prev</button>
+        <span id="editor-position"></span>
+        <button id="btn-next">Next →</button>
+      </div>
+    </main>
+
+    <!-- Right: Upload Options -->
+    <aside id="options-panel">
+      <h2>Upload Options</h2>
+
+      <label>Microsite
+        <select id="select-microsite"></select>
+      </label>
+
+      <label>Category
+        <select id="select-category"></select>
+      </label>
+
+      <label>Resize Preset
+        <select id="select-preset"></select>
+      </label>
+
+      <div id="manual-dimensions">
+        <label>Width <input type="number" id="input-width" placeholder="px" /></label>
+        <label>Height <input type="number" id="input-height" placeholder="px" /></label>
+      </div>
+
+      <label>Quality: <span id="quality-value">85</span>%
+        <input type="range" id="input-quality" min="60" max="100" value="85" />
+      </label>
+
+      <fieldset>
+        <legend>Format</legend>
+        <label><input type="radio" name="format" value="keep" checked /> Keep original</label>
+        <label><input type="radio" name="format" value="webp" /> Convert to WebP</label>
+      </fieldset>
+
+      <div id="action-buttons">
+        <button id="btn-skip">Skip</button>
+        <button id="btn-upload">Upload</button>
+      </div>
+
+      <div id="upload-result"></div>
+    </aside>
+  </div>
+
+  <script src="https://uicdn.toast.com/editor/latest/toastui-image-editor.min.js"></script>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
