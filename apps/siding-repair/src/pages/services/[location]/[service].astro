@@ -112,6 +112,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
               data-form-id="e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1"
             />
             <script>
+              declare const window: Window & { hbspt?: { forms: { create: (opts: Record<string, string>) => void } } };
               (function() {
                 if (window.hbspt) {
                   window.hbspt.forms.create({
@@ -122,7 +123,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
                 } else {
                   const s = document.createElement('script');
                   s.src = 'https://js.hsforms.net/forms/v2.js';
-                  s.onload = () => window.hbspt.forms.create({
+                  s.onload = () => window.hbspt!.forms.create({
                     portalId: '8210108',
                     formId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
                     target: '.hs-form-wrapper',
