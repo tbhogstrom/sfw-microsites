@@ -28,3 +28,6 @@ Write a single markdown section body of approximately the requested word count f
 - Ground technical claims in the provided reference material
 - End with one action-oriented sentence specific to the subtopic (not a generic "contact us")
 - Return only the markdown content, no preamble, no commentary
+- number references with superscript
+
+Add 2 references into the 'references' table at the bottom of the markdown file

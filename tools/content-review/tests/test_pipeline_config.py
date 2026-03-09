@@ -53,3 +53,11 @@ def test_load_pipeline_config_raises_for_empty_agent_ids(tmp_path):
     )
     with pytest.raises(ValueError):
         load_pipeline_config(bad)
+
+
+def test_pipeline_config_includes_bryan():
+    config = load_pipeline_config(Path("pipeline.md"))
+    assert "bryan" in config.agent_ids
+    idx_bryan = config.agent_ids.index("bryan")
+    idx_language = config.agent_ids.index("language-editor")
+    assert idx_bryan < idx_language

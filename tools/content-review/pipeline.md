@@ -1,6 +1,7 @@
 ---
 agent_ids:
   - quality-cleaner
+  - bryan
   - language-editor
 brand_name: SFW Construction
 locations:
