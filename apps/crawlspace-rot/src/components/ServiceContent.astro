@@ -43,8 +43,80 @@ const processSteps = service.sections.process
   : [];
 ---
 
-<!-- Service Overview Section -->
-{service.sections.overview && (
+<!-- Cluster: Individual Subtopic Sections -->
+{service.clusterSections && service.clusterSections.map((sec, i) => (
+  <section
+    id={sec.anchor}
+    class={`py-16 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-light'} scroll-mt-6`}
+  >
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Heading with left accent -->
+        <div class="flex items-start gap-4 mb-6">
+          <div class="w-1 flex-shrink-0 self-stretch bg-primary rounded-full mt-1" />
+          <h2 class="text-3xl font-heading font-bold text-dark">{sec.heading}</h2>
+        </div>
+
+        <!-- Content -->
+        <div
+          class="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-dark prose-p:text-gray-700 prose-li:text-gray-700 prose-a:text-primary prose-a:no-underline hover:prose-a:underline pl-5"
+          set:html={markdownToHtml(sec.content)}
+        />
+
+        <!-- Inline CTA bar -->
+        <div class="mt-8 pl-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-gray-200 rounded-lg px-6 py-4 bg-white shadow-sm">
+          <p class="text-gray-700 font-medium">
+            Dealing with {sec.heading.toLowerCase()}?
+            <span class="text-gray-500 font-normal"> Call us for a free assessment.</span>
+          </p>
+          <a
+            href={`tel:${config.phone.replace(/\D/g, '')}`}
+            class="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors text-sm whitespace-nowrap"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            {config.phone}
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+))}
+
+<!-- Cluster: Collapsible References -->
+{service.clusterReferences && (
+  <section class="py-10 bg-gray-light border-t border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <details class="group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none select-none w-fit">
+            <svg
+              class="w-4 h-4 text-gray-400 transition-transform group-open:rotate-90"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span class="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors">
+              View sources ({(service.clusterReferences.match(/^\|/gm) ?? []).length - 1})
+            </span>
+          </summary>
+          <div class="mt-4 overflow-x-auto">
+            <div
+              class="prose prose-sm max-w-none prose-table:w-full prose-th:text-left prose-th:font-semibold prose-th:bg-white prose-th:py-2 prose-th:px-4 prose-td:py-2 prose-td:px-4 prose-td:text-gray-600 prose-td:border-b prose-td:border-gray-100 [&_table]:border [&_table]:border-gray-200 [&_table]:rounded-lg [&_table]:overflow-hidden [&_tr:nth-child(even)]:bg-white [&_tr:nth-child(odd)]:bg-gray-50"
+              set:html={markdownToHtml(service.clusterReferences)}
+            />
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- Service Overview Section (non-cluster pages) -->
+{service.sections.overview && !service.clusterSections && (
   <section id="overview" class="py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
@@ -228,4 +300,3 @@ const processSteps = service.sections.process
     @apply pl-1;
   }
 </style>
-
