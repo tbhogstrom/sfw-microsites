@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 import express from 'express';
-import { readdir } from 'fs/promises';
+import { readdir, readFile } from 'fs/promises';
+import { createReadStream } from 'fs';
+import { Readable } from 'stream';
+import dotenv from 'dotenv';
+import { BlobClient } from '../blob-manager/src/blob-client.js';
 import { resolve, extname, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import open from 'open';
@@ -8,6 +12,12 @@ import sharp from 'sharp';
 import { presets } from './presets.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Load blob-manager config and tokens
+dotenv.config({ path: resolve(__dirname, '../blob-manager/.env') });
+const blobConfig = JSON.parse(
+  await readFile(resolve(__dirname, '../blob-manager/config.json'), 'utf-8')
+);
 
 // The photos folder is the first CLI arg
 const photosDir = resolve(process.argv[2] || '.');
@@ -33,6 +43,44 @@ app.get('/api/photos', async (req, res) => {
 app.get('/api/photos/:file', (req, res) => {
   const filePath = join(photosDir, req.params.file);
   res.sendFile(filePath);
+});
+
+// POST /api/upload
+// Body: { imageData: <base64>, mimeType: string, filename: string, microsite: string, category: string }
+// Returns: { url: string, pathname: string, size: number }
+app.post('/api/upload', async (req, res) => {
+  try {
+    const { imageData, mimeType, filename, microsite, category } = req.body;
+
+    if (!microsite || !filename) {
+      return res.status(400).json({ error: 'microsite and filename are required' });
+    }
+
+    // Determine file extension from mimeType
+    const ext = mimeType === 'image/webp' ? '.webp'
+      : mimeType === 'image/png' ? '.png'
+      : '.jpg';
+
+    // Strip original extension and apply correct one
+    const baseName = filename.replace(/\.[^.]+$/, '');
+    const finalFilename = `${baseName}${ext}`;
+
+    // Write buffer to a temp file so BlobClient can read it
+    const { tmpdir } = await import('os');
+    const { writeFile, unlink } = await import('fs/promises');
+    const tmpPath = join(tmpdir(), finalFilename);
+    await writeFile(tmpPath, Buffer.from(imageData, 'base64'));
+
+    const client = new BlobClient(microsite, blobConfig);
+    const result = await client.upload(tmpPath, { category });
+
+    // Clean up temp file
+    await unlink(tmpPath);
+
+    res.json({ url: result.url, pathname: result.pathname, size: result.size });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // POST /api/process
