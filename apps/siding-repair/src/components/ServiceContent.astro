@@ -43,32 +43,6 @@ const processSteps = service.sections.process
   : [];
 ---
 
-<!-- Cluster: Subtopic Anchor Cards -->
-{service.clusterSections && service.clusterSections.length > 0 && (
-  <section class="py-10 bg-gray-light border-b border-gray-200">
-    <div class="container mx-auto px-4">
-      <div class="max-w-5xl mx-auto">
-        <p class="text-sm font-semibold uppercase tracking-widest text-gray-500 mb-5">Jump to a topic</p>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {service.clusterSections.map((sec) => (
-            <a
-              href={`#${sec.anchor}`}
-              class="group flex items-center justify-between bg-white border border-gray-200 rounded-lg px-5 py-4 shadow-sm hover:border-primary hover:shadow-md transition-all"
-            >
-              <span class="font-semibold text-dark group-hover:text-primary text-sm leading-snug">
-                {sec.heading}
-              </span>
-              <svg class="w-4 h-4 text-gray-400 group-hover:text-primary flex-shrink-0 ml-2 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-)}
-
 <!-- Cluster: Individual Subtopic Sections -->
 {service.clusterSections && service.clusterSections.map((sec, i) => (
   <section
@@ -112,18 +86,30 @@ const processSteps = service.sections.process
   </section>
 ))}
 
-<!-- Cluster: References Table -->
+<!-- Cluster: Collapsible References -->
 {service.clusterReferences && (
-  <section class="py-12 bg-white border-t border-gray-200">
+  <section class="py-10 bg-gray-light border-t border-gray-200">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl font-heading font-bold mb-6 text-dark">References</h2>
-        <div class="overflow-x-auto">
-          <div
-            class="prose prose-sm max-w-none prose-table:w-full prose-th:text-left prose-th:font-semibold prose-th:bg-gray-light prose-th:py-2 prose-th:px-4 prose-td:py-2 prose-td:px-4 prose-td:text-gray-600 prose-td:border-b prose-td:border-gray-200"
-            set:html={markdownToHtml(service.clusterReferences)}
-          />
-        </div>
+        <details class="group">
+          <summary class="flex items-center gap-2 cursor-pointer list-none select-none w-fit">
+            <svg
+              class="w-4 h-4 text-gray-400 transition-transform group-open:rotate-90"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span class="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors">
+              View sources ({(service.clusterReferences.match(/^\|/gm) ?? []).length - 1})
+            </span>
+          </summary>
+          <div class="mt-4 overflow-x-auto">
+            <div
+              class="prose prose-sm max-w-none prose-table:w-full prose-th:text-left prose-th:font-semibold prose-th:bg-white prose-th:py-2 prose-th:px-4 prose-td:py-2 prose-td:px-4 prose-td:text-gray-600 prose-td:border-b prose-td:border-gray-100 [&_table]:border [&_table]:border-gray-200 [&_table]:rounded-lg [&_table]:overflow-hidden [&_tr:nth-child(even)]:bg-white [&_tr:nth-child(odd)]:bg-gray-50"
+              set:html={markdownToHtml(service.clusterReferences)}
+            />
+          </div>
+        </details>
       </div>
     </div>
   </section>
