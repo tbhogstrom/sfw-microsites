@@ -32,6 +32,13 @@ function parseSubtopics(content: string): string[] {
     .map(l => l.replace(/^\s*-\s*/, '').trim());
 }
 
+function extractFirstSentence(text: string): string {
+  // Strip markdown superscripts and inline HTML, then grab first sentence
+  const clean = text.replace(/<sup>\d+<\/sup>/g, '').replace(/\*\*/g, '');
+  const match = clean.match(/^.+?[.!?](?:\s|$)/);
+  return match ? match[0].trim() : clean.slice(0, 120).trim();
+}
+
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
@@ -55,6 +62,21 @@ function parseClusterSections(
 function parseReferences(content: string): string {
   const match = content.match(/## References\n\n([\s\S]*?)(?=\n## |$)/);
   return match ? match[1].trim() : '';
+}
+
+function parseSubtopicDescriptors(
+  content: string,
+  subtopics: string[]
+): Array<{ heading: string; anchor: string; descriptor: string }> {
+  return subtopics.map((topic) => {
+    const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
+    const body = match ? match[1].trim() : '';
+    const descriptor = body && body !== '*Content to be generated.*'
+      ? extractFirstSentence(body)
+      : '';
+    return { heading: topic, anchor: slugify(topic), descriptor };
+  });
 }
 
 function extractBodyContent(content: string): string {
@@ -130,6 +152,7 @@ function loadClusterPages(): ServicePageData[] {
       htmlContent: bodyContent,
       clusterSections: clusterSections.length ? clusterSections : undefined,
       clusterReferences: clusterReferences || undefined,
+      subtopicDescriptors: parseSubtopicDescriptors(content, subtopics),
     });
   }
 

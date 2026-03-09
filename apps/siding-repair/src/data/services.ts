@@ -41,6 +41,7 @@ export interface ServicePageData {
   htmlContent: string;
   clusterSections?: Array<{ heading: string; anchor: string; content: string }>;
   clusterReferences?: string;
+  subtopicDescriptors?: Array<{ heading: string; anchor: string; descriptor: string }>;
 }
 
 /**
