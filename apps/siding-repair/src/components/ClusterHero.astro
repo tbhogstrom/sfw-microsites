@@ -27,19 +27,19 @@ const {
 const formattedPhone = phone.replace(/\D/g, '');
 ---
 
-<section class="flex flex-col md:flex-row md:min-h-screen md:max-h-screen">
+<section class="flex flex-col md:flex-row md:min-h-[600px]">
 
   <!-- ── Left: image + conversion (60%) ── -->
   <div
-    class="relative flex flex-col justify-between p-8 md:p-12 md:w-3/5 min-h-[420px]"
+    class="relative flex flex-col justify-center p-8 md:p-12 md:w-3/5 min-h-[420px]"
     style={`background-image:url('${backgroundImage}');background-size:cover;background-position:center;`}
   >
     <!-- Gradient overlay -->
     <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/80 pointer-events-none" />
 
-    <!-- Breadcrumbs -->
+    <!-- Breadcrumbs (absolute top) -->
     {breadcrumbs.length > 0 && (
-      <nav class="relative z-10 flex flex-wrap items-center gap-1.5 text-white/70 text-sm" aria-label="Breadcrumb">
+      <nav class="absolute top-8 left-8 md:left-12 z-10 flex flex-wrap items-center gap-1.5 text-white/70 text-sm" aria-label="Breadcrumb">
         {breadcrumbs.map((crumb, i) => (
           <>
             {i > 0 && <span class="text-white/40">/</span>}
@@ -52,8 +52,8 @@ const formattedPhone = phone.replace(/\D/g, '');
       </nav>
     )}
 
-    <!-- Headline + CTAs pinned to bottom -->
-    <div class="relative z-10 mt-auto">
+    <!-- Headline + CTAs centered -->
+    <div class="relative z-10">
       <p class="text-white/75 text-sm font-semibold uppercase tracking-wide mb-3">{locationLine}</p>
       <h1 class="text-4xl md:text-5xl font-heading font-bold text-white leading-tight mb-8 max-w-xl">
         {headline}
