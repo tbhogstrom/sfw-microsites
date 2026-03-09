@@ -9,6 +9,7 @@ import { serviceConfigs } from '@sfw/content';
 import { getServicePaths, getService } from '../../../data/services';
 import { getClusterPaths, getClusterService } from '../../../data/cluster-services';
 import ServiceContent from '../../../components/ServiceContent.astro';
+import ClusterHero from '../../../components/ClusterHero.astro';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
@@ -36,26 +37,108 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
   navigation={[
     { label: 'Home', url: '/' },
     { label: 'Services', url: '/services' },
-    { label: 'Locations', url: '/locations' },
     { label: serviceData.locationFull.split(',')[0], url: `/locations/${location}` },
+    { label: serviceData.name, url: '#' },
   ]}
 >
-  <!-- Hero Section with Form -->
-  <HeroSection
-    headline={serviceData.heroHeadline}
-    subheadline={serviceData.heroSubheadline}
-    primaryCTA={{ text: 'Get Free Quote', href: `tel:${locationPhone}` }}
-    secondaryCTA={{ text: 'Learn More', href: '#overview' }}
-    height="lg"
-    hubspotForm={{
-      portalId: "8210108",
-      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
-      region: "na1"
-    }}
-  />
+  {serviceData.clusterSections && serviceData.subtopicDescriptors ? (
+    <!-- Cluster pages: split hero -->
+    <ClusterHero
+      headline={serviceData.name}
+      locationLine={`Serving ${serviceData.locationFull}`}
+      phone={locationPhone}
+      subtopics={serviceData.subtopicDescriptors}
+      breadcrumbs={[
+        { label: 'Services', url: '/services' },
+        { label: serviceData.locationFull.split(',')[0], url: `/locations/${location}` },
+        { label: serviceData.name, url: '#' },
+      ]}
+    />
+  ) : (
+    <!-- Non-cluster pages: existing hero with form -->
+    <HeroSection
+      headline={serviceData.heroHeadline}
+      subheadline={serviceData.heroSubheadline}
+      primaryCTA={{ text: 'Get Free Quote', href: `tel:${locationPhone}` }}
+      secondaryCTA={{ text: 'Learn More', href: '#overview' }}
+      height="lg"
+      hubspotForm={{
+        portalId: "8210108",
+        formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+        region: "na1"
+      }}
+    />
+  )}
 
-  <!-- Key Benefits Section -->
-  {serviceData.keyBenefits.length > 0 && (
+  <!-- Trust + Form (cluster pages only) -->
+  {serviceData.clusterSections && (
+    <section id="form" class="py-16 bg-gray-light">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+
+          <!-- Trust block -->
+          <div>
+            <h2 class="text-3xl font-heading font-bold text-dark mb-8">
+              Why homeowners choose SFW Construction
+            </h2>
+            <ul class="space-y-6">
+              {[
+                { icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', label: 'Licensed & Bonded', detail: 'Fully licensed in Oregon and Washington. All work is bonded and insured.' },
+                { icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', label: 'Free Estimates', detail: 'No-obligation quotes on every job. We show up, assess, and give you a straight answer.' },
+                { icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', label: 'Local Family Business', detail: 'Serving Portland and Seattle homeowners for over 20 years — not a franchise.' },
+              ].map(({ icon, label, detail }) => (
+                <li class="flex items-start gap-4">
+                  <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-dark">{label}</p>
+                    <p class="text-gray-600 text-sm mt-0.5">{detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- HubSpot Form -->
+          <div class="bg-white rounded-xl shadow-sm p-8">
+            <h3 class="text-2xl font-heading font-bold text-dark mb-2">Get your free quote</h3>
+            <p class="text-gray-600 mb-6">We'll get back to you within one business day.</p>
+            <div
+              class="hs-form-wrapper"
+              data-portal-id="8210108"
+              data-form-id="e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1"
+            />
+            <script>
+              (function() {
+                if (window.hbspt) {
+                  window.hbspt.forms.create({
+                    portalId: '8210108',
+                    formId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
+                    target: '.hs-form-wrapper',
+                  });
+                } else {
+                  const s = document.createElement('script');
+                  s.src = 'https://js.hsforms.net/forms/v2.js';
+                  s.onload = () => window.hbspt.forms.create({
+                    portalId: '8210108',
+                    formId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
+                    target: '.hs-form-wrapper',
+                  });
+                  document.head.appendChild(s);
+                }
+              })();
+            </script>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Key Benefits (non-cluster pages only — cluster pages use the hero nav) -->
+  {!serviceData.clusterSections && serviceData.keyBenefits.length > 0 && (
     <section class="py-12 bg-gray-light">
       <div class="container mx-auto px-4">
         <div class="max-w-6xl mx-auto">
