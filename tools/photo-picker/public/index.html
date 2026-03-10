@@ -18,7 +18,12 @@
 
     <!-- Center: Editor -->
     <main id="editor-panel">
+      <div id="center-tabs">
+        <button class="center-tab active" data-tab="photo">Photo</button>
+        <button class="center-tab" data-tab="preview">Preview in component</button>
+      </div>
       <img id="photo-preview" alt="" />
+      <div id="component-preview"></div>
       <div id="editor-nav">
         <button id="btn-prev">← Prev</button>
         <span id="editor-position"></span>
@@ -37,6 +42,14 @@
       <label>Category
         <select id="select-category"></select>
       </label>
+
+      <div id="page-assign-row" style="display:none">
+        <label>Assign to page
+          <select id="select-page">
+            <option value="index">Homepage (index)</option>
+          </select>
+        </label>
+      </div>
 
       <label>Resize Preset
         <select id="select-preset"></select>
@@ -63,7 +76,34 @@
       </div>
 
       <div id="upload-result"></div>
+
+      <!-- URL Log -->
+      <div id="url-log-section">
+        <div id="url-log-header">
+          <span>Uploaded this session</span>
+          <button id="btn-copy-all">Copy all</button>
+        </div>
+        <div id="url-log-list"></div>
+      </div>
+
+      <!-- Generate gallery button -->
+      <div id="gallery-generate-section" style="display:none">
+        <button id="btn-generate-gallery">⬇ Generate gallery component</button>
+        <div id="gallery-generate-hint"></div>
+      </div>
     </aside>
+  </div>
+
+  <!-- Gallery snippet modal -->
+  <div id="gallery-modal" style="display:none">
+    <div id="gallery-modal-inner">
+      <div id="gallery-modal-header">
+        <span>Gallery component snippet</span>
+        <button id="btn-modal-copy">Copy</button>
+        <button id="btn-modal-close">✕</button>
+      </div>
+      <pre id="gallery-snippet-text"></pre>
+    </div>
   </div>
 
   <script src="app.js" type="module"></script>

@@ -28,6 +28,9 @@ const PRESET_LABELS = {
 let photos = [];
 let currentIndex = 0;
 let photoStatus = {}; // filename -> 'uploaded' | 'skipped' | null
+let uploadLog = []; // { filename, category, page, url, microsite }
+let sessionGalleryCounts = {}; // microsite -> count of gallery uploads this session
+let lastUploadedUrl = null; // used by preview tab
 
 // --- DOM refs ---
 const queueList = document.getElementById('queue-list');
@@ -46,6 +49,118 @@ const btnUpload = document.getElementById('btn-upload');
 const btnSkip = document.getElementById('btn-skip');
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
+
+// New refs — URL log + gallery
+const pageAssignRow = document.getElementById('page-assign-row');
+const selectPage = document.getElementById('select-page');
+const urlLogList = document.getElementById('url-log-list');
+const btnCopyAll = document.getElementById('btn-copy-all');
+const galleryGenerateSection = document.getElementById('gallery-generate-section');
+const galleryGenerateHint = document.getElementById('gallery-generate-hint');
+const btnGenerateGallery = document.getElementById('btn-generate-gallery');
+const galleryModal = document.getElementById('gallery-modal');
+const gallerySnippetText = document.getElementById('gallery-snippet-text');
+const btnModalCopy = document.getElementById('btn-modal-copy');
+const btnModalClose = document.getElementById('btn-modal-close');
+
+// New refs — preview tab
+const centerTabs = document.querySelectorAll('.center-tab');
+const componentPreview = document.getElementById('component-preview');
+
+// --- Helpers ---
+
+function showPageAssign() {
+  const cat = selectCategory.value;
+  pageAssignRow.style.display = cat === 'hero' ? '' : 'none';
+}
+
+function addToLog(entry) {
+  uploadLog.push(entry);
+
+  const div = document.createElement('div');
+  div.className = 'log-entry';
+  div.title = 'Click to copy URL';
+
+  const label = document.createElement('div');
+  label.className = 'log-entry-label';
+  label.textContent = `${entry.filename} → ${entry.category}${entry.page ? ` (${entry.page})` : ''}`;
+
+  const url = document.createElement('div');
+  url.className = 'log-entry-url';
+  url.textContent = entry.url;
+
+  div.appendChild(label);
+  div.appendChild(url);
+
+  div.addEventListener('click', () => {
+    navigator.clipboard.writeText(entry.url);
+    div.classList.add('copied');
+    url.textContent = 'Copied!';
+    setTimeout(() => {
+      div.classList.remove('copied');
+      url.textContent = entry.url;
+    }, 1500);
+  });
+
+  urlLogList.appendChild(div);
+  urlLogList.scrollTop = urlLogList.scrollHeight;
+}
+
+function updateGalleryButton() {
+  const microsite = selectMicrosite.value;
+  const count = sessionGalleryCounts[microsite] || 0;
+  if (count >= 4) {
+    galleryGenerateSection.style.display = '';
+    galleryGenerateHint.textContent = `${count} gallery images ready for ${microsite}`;
+  } else {
+    galleryGenerateSection.style.display = 'none';
+  }
+}
+
+function renderPreview(imageUrl, category, microsite) {
+  const micrositeOption = Array.from(selectMicrosite.options).find(o => o.value === microsite);
+  const siteName = micrositeOption ? micrositeOption.textContent.split(' — ')[1] : microsite;
+
+  if (category === 'hero') {
+    componentPreview.innerHTML = `
+      <div class="preview-hero">
+        <img src="${imageUrl}" alt="" />
+        <div class="preview-hero-overlay">
+          <div class="preview-hero-headline">${siteName}</div>
+          <div class="preview-hero-sub">Professional repair services in Portland &amp; Seattle</div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  if (category === 'gallery') {
+    const galleryUrls = uploadLog
+      .filter(e => e.microsite === microsite && e.category === 'gallery')
+      .map(e => e.url)
+      .slice(-4);
+
+    while (galleryUrls.length < 4) galleryUrls.push(imageUrl);
+    galleryUrls[galleryUrls.length - 1] = imageUrl;
+
+    componentPreview.innerHTML = `
+      <div class="preview-gallery">
+        ${galleryUrls.map(url => `
+          <div class="preview-gallery-card">
+            <img src="${url}" alt="" />
+            <div class="preview-gallery-card-overlay">
+              <div class="preview-gallery-card-title">Service</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    return;
+  }
+
+  componentPreview.innerHTML = `
+    <div class="preview-single" style="position:relative">
+      <img src="${imageUrl}" alt="" />
+      <div class="preview-label">${category}</div>
+    </div>`;
+}
 
 // --- Init ---
 async function init() {
@@ -154,6 +269,7 @@ function bindEvents() {
   });
 
   selectCategory.addEventListener('change', () => {
+    showPageAssign();
     const cat = selectCategory.value;
     if (PRESETS[cat]) {
       selectPreset.value = cat;
@@ -163,6 +279,12 @@ function bindEvents() {
       selectPreset.value = '';
       inputWidth.value = '';
       inputHeight.value = '';
+    }
+
+    // Refresh preview if on preview tab
+    const activeTab = document.querySelector('.center-tab.active');
+    if (activeTab && activeTab.dataset.tab === 'preview' && lastUploadedUrl) {
+      renderPreview(lastUploadedUrl, selectCategory.value, selectMicrosite.value);
     }
   });
 
@@ -176,6 +298,64 @@ function bindEvents() {
       inputHeight.value = '';
     }
   });
+
+  selectMicrosite.addEventListener('change', () => {
+    updateGalleryButton();
+
+    // Refresh preview if on preview tab
+    const activeTab = document.querySelector('.center-tab.active');
+    if (activeTab && activeTab.dataset.tab === 'preview' && lastUploadedUrl) {
+      renderPreview(lastUploadedUrl, selectCategory.value, selectMicrosite.value);
+    }
+  });
+
+  // Copy all log button
+  btnCopyAll.addEventListener('click', () => {
+    const text = uploadLog.map(e => `${e.filename}: ${e.url}`).join('\n');
+    navigator.clipboard.writeText(text);
+    btnCopyAll.textContent = 'Copied!';
+    setTimeout(() => { btnCopyAll.textContent = 'Copy all'; }, 1500);
+  });
+
+  // Generate gallery button
+  btnGenerateGallery.addEventListener('click', async () => {
+    const microsite = selectMicrosite.value;
+    try {
+      const res = await fetch(`/api/gallery-snippet?microsite=${encodeURIComponent(microsite)}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      gallerySnippetText.textContent = data.snippet;
+      galleryModal.style.display = 'flex';
+    } catch (err) {
+      alert(`Could not generate snippet: ${err.message}`);
+    }
+  });
+
+  btnModalClose.addEventListener('click', () => { galleryModal.style.display = 'none'; });
+  btnModalCopy.addEventListener('click', () => {
+    navigator.clipboard.writeText(gallerySnippetText.textContent);
+    btnModalCopy.textContent = 'Copied!';
+    setTimeout(() => { btnModalCopy.textContent = 'Copy'; }, 1500);
+  });
+
+  // Center panel tabs
+  centerTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      centerTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const isPreview = tab.dataset.tab === 'preview';
+      photoPreview.classList.toggle('hidden', isPreview);
+      componentPreview.classList.toggle('visible', isPreview);
+      if (isPreview) {
+        const url = lastUploadedUrl || (photos[currentIndex] ? `/api/photos/${encodeURIComponent(photos[currentIndex])}` : null);
+        if (url) renderPreview(url, selectCategory.value, selectMicrosite.value);
+      }
+    });
+  });
+
+  // Initialize on load
+  showPageAssign();
+  updateGalleryButton();
 }
 
 async function handleUpload() {
@@ -186,6 +366,7 @@ async function handleUpload() {
   const format = document.querySelector('input[name="format"]:checked').value;
   const width = inputWidth.value ? parseInt(inputWidth.value, 10) : null;
   const height = inputHeight.value ? parseInt(inputHeight.value, 10) : null;
+  const page = selectPage ? selectPage.value : null;
 
   if (!microsite) {
     uploadResult.textContent = 'Please select a microsite.';
@@ -239,6 +420,29 @@ async function handleUpload() {
     updateQueueUI();
     uploadResult.textContent = `✓ ${result.url}`;
     uploadResult.className = 'success';
+
+    // Write URL to images.json
+    fetch('/api/write-images', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ microsite, category, page, url: result.url, filename })
+    }).catch(err => console.warn('write-images failed:', err));
+
+    // Update URL log
+    lastUploadedUrl = result.url;
+    addToLog({ filename, category, page: category === 'hero' ? page : null, url: result.url, microsite });
+
+    // Track gallery count
+    if (category !== 'hero') {
+      sessionGalleryCounts[microsite] = (sessionGalleryCounts[microsite] || 0) + 1;
+      updateGalleryButton();
+    }
+
+    // Refresh preview if preview tab is active
+    const activeTab = document.querySelector('.center-tab.active');
+    if (activeTab && activeTab.dataset.tab === 'preview') {
+      renderPreview(result.url, category, microsite);
+    }
 
     setTimeout(() => {
       if (currentIndex < photos.length - 1) goToPhoto(currentIndex + 1);
