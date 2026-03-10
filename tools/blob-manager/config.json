@@ -68,7 +68,8 @@
     "completed",
     "hero",
     "background",
-    "gallery"
+    "gallery",
+    "service-page"
   ],
   "allowedExtensions": [
     ".jpg",

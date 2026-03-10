@@ -4,6 +4,7 @@ const PRESETS = {
   'hero':         { width: 1440, height: 810 },
   'background':   { width: 1440, height: 810 },
   'gallery':      { width: 800,  height: 600 },
+  'service-page': { width: 800,  height: 600 },
   'before-after': { width: 1000, height: 667 },
   'completed':    { width: 1000, height: 667 },
   'damage':       { width: 800,  height: 600 },
@@ -17,6 +18,7 @@ const PRESET_LABELS = {
   'hero':         'Hero — 1440×810',
   'background':   'Background — 1440×810',
   'gallery':      'Gallery — 800×600',
+  'service-page': 'Service page — 800×600',
   'before-after': 'Before/After — 1000×667',
   'completed':    'Completed — 1000×667',
   'damage':       'Damage — 800×600',
@@ -33,6 +35,7 @@ let photoStatus = {}; // filename -> 'uploaded' | 'skipped' | null
 let uploadLog = []; // { filename, category, page, url, microsite }
 let sessionGalleryCounts = {}; // microsite -> count of gallery uploads this session
 let lastUploadedUrl = null; // used by preview tab
+let serviceTopicsCache = {}; // microsite -> [{ clusterSlug, title, subtopics }]
 
 // --- DOM refs ---
 const queueList = document.getElementById('queue-list');
@@ -51,6 +54,12 @@ const btnUpload = document.getElementById('btn-upload');
 const btnSkip = document.getElementById('btn-skip');
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
+
+// New refs — service-page selector
+const servicePageRow = document.getElementById('service-page-row');
+const selectServiceLocation = document.getElementById('select-service-location');
+const selectServiceCluster = document.getElementById('select-service-cluster');
+const selectServiceSubtopic = document.getElementById('select-service-subtopic');
 
 // New refs — URL log + gallery
 const pageAssignRow = document.getElementById('page-assign-row');
@@ -74,6 +83,50 @@ const componentPreview = document.getElementById('component-preview');
 function showPageAssign() {
   const cat = selectCategory.value;
   pageAssignRow.style.display = (cat === 'hero' || cat === 'background') ? '' : 'none';
+  servicePageRow.style.display = cat === 'service-page' ? '' : 'none';
+  if (cat === 'service-page') loadServiceTopics(selectMicrosite.value);
+}
+
+async function loadServiceTopics(microsite) {
+  if (serviceTopicsCache[microsite]) {
+    populateClusters(serviceTopicsCache[microsite]);
+    return;
+  }
+  selectServiceCluster.innerHTML = '<option value="">Loading...</option>';
+  selectServiceSubtopic.innerHTML = '<option value="">—</option>';
+  try {
+    const res = await fetch(`/api/service-topics?microsite=${encodeURIComponent(microsite)}`);
+    const data = await res.json();
+    serviceTopicsCache[microsite] = data.topics;
+    populateClusters(data.topics);
+  } catch {
+    selectServiceCluster.innerHTML = '<option value="">Failed to load</option>';
+  }
+}
+
+function populateClusters(topics) {
+  selectServiceCluster.innerHTML = '<option value="">— select page —</option>';
+  selectServiceSubtopic.innerHTML = '<option value="">— select subtopic —</option>';
+  topics.forEach(({ clusterSlug, title }) => {
+    const opt = document.createElement('option');
+    opt.value = clusterSlug;
+    opt.textContent = title;
+    selectServiceCluster.appendChild(opt);
+  });
+}
+
+function populateSubtopics(clusterSlug) {
+  selectServiceSubtopic.innerHTML = '<option value="">— select subtopic —</option>';
+  const microsite = selectMicrosite.value;
+  const topics = serviceTopicsCache[microsite] || [];
+  const cluster = topics.find(t => t.clusterSlug === clusterSlug);
+  if (!cluster) return;
+  cluster.subtopics.forEach(subtopic => {
+    const opt = document.createElement('option');
+    opt.value = subtopic;
+    opt.textContent = subtopic;
+    selectServiceSubtopic.appendChild(opt);
+  });
 }
 
 function addToLog(entry) {
@@ -85,7 +138,9 @@ function addToLog(entry) {
 
   const label = document.createElement('div');
   label.className = 'log-entry-label';
-  label.textContent = `${entry.filename} → ${entry.category}${entry.page ? ` (${entry.page})` : ''}`;
+  label.textContent = entry.label
+    ? `${entry.filename} → ${entry.label}`
+    : `${entry.filename} → ${entry.category}${entry.page ? ` (${entry.page})` : ''}`;
 
   const url = document.createElement('div');
   url.className = 'log-entry-url';
@@ -159,10 +214,13 @@ function renderPreview(imageUrl, category, microsite) {
     return;
   }
 
+  const previewLabel = category === 'service-page' && selectServiceSubtopic.value
+    ? selectServiceSubtopic.value
+    : category;
   componentPreview.innerHTML = `
     <div class="preview-single" style="position:relative">
       <img src="${imageUrl}" alt="" />
-      <div class="preview-label">${category}</div>
+      <div class="preview-label">${previewLabel}</div>
     </div>`;
 }
 
@@ -305,12 +363,19 @@ function bindEvents() {
 
   selectMicrosite.addEventListener('change', () => {
     updateGalleryButton();
+    if (selectCategory.value === 'service-page') {
+      loadServiceTopics(selectMicrosite.value);
+    }
 
     // Refresh preview if on preview tab
     const activeTab = document.querySelector('.center-tab.active');
     if (activeTab && activeTab.dataset.tab === 'preview' && lastUploadedUrl) {
       renderPreview(lastUploadedUrl, selectCategory.value, selectMicrosite.value);
     }
+  });
+
+  selectServiceCluster.addEventListener('change', () => {
+    populateSubtopics(selectServiceCluster.value);
   });
 
   // Copy all log button
@@ -425,23 +490,36 @@ async function handleUpload() {
     uploadResult.textContent = `✓ ${result.url}`;
     uploadResult.className = 'success';
 
-    // Write URL to images.json (skip if "just upload to blob" — page is empty)
+    // Write URL to images.json
+    const isServicePage = category === 'service-page' && selectServiceCluster.value && selectServiceSubtopic.value;
     const shouldWriteBack = category === 'gallery' ||
-      ((category === 'hero' || category === 'background') && page);
+      ((category === 'hero' || category === 'background') && page) ||
+      isServicePage;
     if (shouldWriteBack) {
+      const body = { microsite, category, url: result.url, filename };
+      if (category === 'hero' || category === 'background') {
+        body.page = page;
+      } else if (isServicePage) {
+        body.serviceTitle = selectServiceSubtopic.value;
+        body.serviceHref = `/services/${selectServiceLocation.value}/${selectServiceCluster.value}`;
+      }
       fetch('/api/write-images', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ microsite, category, page, url: result.url, filename })
+        body: JSON.stringify(body)
       }).catch(err => console.warn('write-images failed:', err));
     }
 
     // Update URL log
     lastUploadedUrl = result.url;
-    addToLog({ filename, category, page: category === 'hero' ? page : null, url: result.url, microsite });
+    const logPage = (category === 'hero' || category === 'background') ? page : null;
+    const logLabel = isServicePage
+      ? `${selectServiceSubtopic.value} — ${selectServiceCluster.options[selectServiceCluster.selectedIndex].text}`
+      : null;
+    addToLog({ filename, category, page: logPage, label: logLabel, url: result.url, microsite });
 
     // Track gallery count
-    if (category !== 'hero' && category !== 'background') {
+    if (category !== 'hero' && category !== 'background' && category !== 'service-page') {
       sessionGalleryCounts[microsite] = (sessionGalleryCounts[microsite] || 0) + 1;
       updateGalleryButton();
     }

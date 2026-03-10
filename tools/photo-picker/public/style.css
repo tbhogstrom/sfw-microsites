@@ -208,6 +208,27 @@ fieldset label {
 #upload-result.success { color: #22c55e; }
 #upload-result.error { color: #ef4444; }
 
+/* Service page selector block */
+#service-page-row {
+  background: #0a1a2a;
+  border: 1px solid #1a3a5a;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#service-page-row label {
+  color: #6ab0d0;
+}
+
+#service-page-row select {
+  background: #111;
+  border-color: #2a4a6a;
+  color: #cce;
+}
+
 /* Widen right panel for URL log */
 #app {
   grid-template-columns: 180px 1fr 260px;
