@@ -47,6 +47,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 10.93,
     trafficShare: 23.1,
     phone: '(503) 905-9047',
+    backgroundImage: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/background/Siding%20-1501066353101175978.webp',
     callRailScriptSrc: '//cdn.callrail.com/companies/502723596/c7fe7f042461aac0b87f/12/swap.js',
     hubspotPortalId: '',
     hubspotFormId: '',
