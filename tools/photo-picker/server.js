@@ -27,6 +27,7 @@ const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.static(join(__dirname, 'public')));
+app.use('/vendor', express.static(join(__dirname, 'node_modules')));
 
 // GET /api/photos — list all image files in the target folder
 app.get('/api/photos', async (req, res) => {
