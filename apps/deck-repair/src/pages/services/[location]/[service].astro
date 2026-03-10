@@ -4,12 +4,13 @@
  * URL: /services/portland/deck-repair-services, /services/seattle/deck-joist-repair-replacement, etc.
  */
 import BaseLayout from '@sfw/ui';
-import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { getServicePaths, getService } from '../../../data/services';
 import { getClusterPaths, getClusterService } from '../../../data/cluster-services';
 import ServiceContent from '../../../components/ServiceContent.astro';
 import ClusterHero from '../../../components/ClusterHero.astro';
+import type { GalleryService } from '@sfw/ui';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
@@ -25,6 +26,32 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['deck-repair'];
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Structural Deck Framing',
+    description: 'Rebuild compromised joists, beams, and posts with rot-resistant lumber.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220808_150710189_HDR.webp',
+    href: '/services/portland/deck-structural-repair',
+  },
+  {
+    title: 'Deck Board Replacement',
+    description: 'Replace decking and railings using quality materials matched to your home.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220819_084204797_HDR.webp',
+    href: '/services/portland/deck-board-replacement',
+  },
+  {
+    title: 'Waterproofing & Sealing',
+    description: 'Field-applied sealants and coatings to protect deck boards from moisture.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220823_101404615.webp',
+    href: '/services/portland/deck-waterproofing',
+  },
+  {
+    title: 'Dry Rot & Moisture Control',
+    description: 'Identify hidden decay and install drainage to keep substructure dry.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_2848.webp',
+    href: '/services/portland/dry-rot-inspection',
+  },
+];
 
 // Get location-specific phone number
 const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
@@ -117,6 +144,15 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
         </div>
       </div>
     </section>
+  )}
+
+  {serviceData.clusterSections && (
+    <ServicesGallery
+      heading="More Deck Repair Work"
+      services={galleryServices}
+      variant="light"
+      class="border-t border-gray-200"
+    />
   )}
 
   {!serviceData.clusterSections && serviceData.keyBenefits.length > 0 && (
