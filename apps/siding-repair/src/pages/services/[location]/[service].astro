@@ -4,12 +4,13 @@
  * URL: /services/portland/aluminum-siding-repair, /services/seattle/vinyl-siding-replacement, etc.
  */
 import BaseLayout from '@sfw/ui';
-import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { getServicePaths, getService } from '../../../data/services';
 import { getClusterPaths, getClusterService } from '../../../data/cluster-services';
 import ServiceContent from '../../../components/ServiceContent.astro';
 import ClusterHero from '../../../components/ClusterHero.astro';
+import type { GalleryService } from '@sfw/ui';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
@@ -25,6 +26,33 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['siding-repair'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Aluminum Siding Repair',
+    description: 'Precision patching that keeps metal panels flush and weatherproof.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp',
+    href: '/services/portland/aluminum-siding-repair',
+  },
+  {
+    title: 'Vinyl Siding Replacement',
+    description: 'Color-matched panels for a seamless vinyl repair or refresh.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp',
+    href: '/services/portland/vinyl-siding-replacement',
+  },
+  {
+    title: 'Storm Damage Recovery',
+    description: 'Rapid restoration of blown-off or hail-damaged siding.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp',
+    href: '/services/portland/siding-repair-for-storm-damage',
+  },
+  {
+    title: 'Siding Maintenance',
+    description: 'Seasonal inspections, sealing, and preventative care',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp',
+    href: '/services/portland/siding-maintenance-and-inspection',
+  },
+];
 
 // Get location-specific phone number
 const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
@@ -136,6 +164,15 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
         </div>
       </div>
     </section>
+  )}
+
+  {serviceData.clusterSections && (
+    <ServicesGallery
+      heading="More Siding Services"
+      services={galleryServices}
+      variant="light"
+      class="border-t border-gray-200"
+    />
   )}
 
   <!-- Key Benefits (non-cluster pages only — cluster pages use the hero nav) -->
