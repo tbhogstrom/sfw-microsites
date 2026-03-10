@@ -56,6 +56,11 @@ export interface Location {
     lat: number;
     lng: number;
   };
+
+  // GMB embed
+  mapEmbedSrc?: string;
+  // Full iframe src URL from Google Maps → Share → Embed a map.
+  // References the GMB listing CID directly. No API key needed.
 }
 
 // Location data by service type
