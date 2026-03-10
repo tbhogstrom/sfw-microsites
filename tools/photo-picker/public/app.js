@@ -57,7 +57,6 @@ const btnNext = document.getElementById('btn-next');
 
 // New refs — service-page selector
 const servicePageRow = document.getElementById('service-page-row');
-const selectServiceLocation = document.getElementById('select-service-location');
 const selectServiceCluster = document.getElementById('select-service-cluster');
 const selectServiceSubtopic = document.getElementById('select-service-subtopic');
 
@@ -501,7 +500,7 @@ async function handleUpload() {
         body.page = page;
       } else if (isServicePage) {
         body.serviceTitle = selectServiceSubtopic.value;
-        body.serviceHref = `/services/${selectServiceLocation.value}/${selectServiceCluster.value}`;
+        body.clusterSlug = selectServiceCluster.value;
       }
       fetch('/api/write-images', {
         method: 'POST',

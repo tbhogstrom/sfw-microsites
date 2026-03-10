@@ -175,14 +175,15 @@ app.post('/api/write-images', async (req, res) => {
       data.backgroundImages[page] = url;
     } else if (category === 'service-page') {
       if (!data.servicePageImages) data.servicePageImages = [];
-      const exists = data.servicePageImages.some(img => img.image === url);
-      if (!exists) {
-        data.servicePageImages.push({
-          title: req.body.serviceTitle || '',
-          description: '',
-          image: url,
-          href: req.body.serviceHref || ''
-        });
+      const clusterSlug = req.body.clusterSlug || '';
+      const serviceTitle = req.body.serviceTitle || '';
+      // Write one entry per location — same image, portland + seattle hrefs
+      for (const location of ['portland', 'seattle']) {
+        const href = `/services/${location}/${clusterSlug}`;
+        const exists = data.servicePageImages.some(img => img.image === url && img.href === href);
+        if (!exists) {
+          data.servicePageImages.push({ title: serviceTitle, description: '', image: url, href });
+        }
       }
     } else if (category === 'gallery') {
       const exists = data.galleryImages.some(img => img.image === url);
