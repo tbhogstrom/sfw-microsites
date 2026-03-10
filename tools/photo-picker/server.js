@@ -30,6 +30,48 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.static(join(__dirname, 'public')));
 app.use('/vendor', express.static(join(__dirname, 'node_modules')));
 
+// Returns [{ clusterSlug, title, subtopics }] for a microsite.
+// Reads from apps/{microsite}/src/data/generated_content/service_page_cluster_*_portland.md
+async function getClusterTopics(microsite) {
+  const contentDir = resolve(REPO_ROOT, 'apps', microsite, 'src', 'data', 'generated_content');
+  let files;
+  try {
+    files = await readdir(contentDir);
+  } catch {
+    return [];
+  }
+
+  const clusterFiles = files.filter(f => /^service_page_cluster_.+_portland\.md$/.test(f));
+  const topics = [];
+
+  for (const file of clusterFiles) {
+    const raw = await readFile(resolve(contentDir, file), 'utf-8');
+
+    const titleMatch = raw.match(/^#\s+(.+)/m);
+    const title = titleMatch
+      ? titleMatch[1].replace(/\s*[-–]\s*(Portland|Seattle).*/i, '').trim()
+      : '';
+
+    const metaMatch = raw.match(/<!--\s*CLUSTER_META([\s\S]+?)-->/);
+    if (!metaMatch) continue;
+    const meta = metaMatch[1];
+
+    const slugMatch = meta.match(/cluster_slug:\s*(.+)/);
+    const clusterSlug = slugMatch ? slugMatch[1].trim() : '';
+    if (!clusterSlug) continue;
+
+    const subtopicsMatch = meta.match(/subtopics:([\s\S]+?)(?=\n[a-z_]+:|$)/);
+    const subtopics = subtopicsMatch
+      ? (subtopicsMatch[1].match(/^\s*-\s*(.+)$/gm) || []).map(s => s.replace(/^\s*-\s*/, '').trim())
+      : [];
+
+    topics.push({ clusterSlug, title: title || clusterSlug, subtopics });
+  }
+
+  topics.sort((a, b) => a.title.localeCompare(b.title));
+  return topics;
+}
+
 // GET /api/photos — list all image files in the target folder
 app.get('/api/photos', async (req, res) => {
   try {
@@ -205,46 +247,7 @@ app.get('/api/service-topics', async (req, res) => {
   try {
     const { microsite } = req.query;
     if (!microsite) return res.status(400).json({ error: 'microsite is required' });
-
-    const contentDir = resolve(REPO_ROOT, 'apps', microsite, 'src', 'data', 'generated_content');
-    let files;
-    try {
-      files = await readdir(contentDir);
-    } catch {
-      return res.json({ topics: [] });
-    }
-
-    // Only read portland files — subtopics are the same for both locations
-    const clusterFiles = files.filter(f => /^service_page_cluster_.+_portland\.md$/.test(f));
-    const topics = [];
-
-    for (const file of clusterFiles) {
-      const raw = await readFile(resolve(contentDir, file), 'utf-8');
-
-      // Title: first H1 line, strip " - Portland, Oregon" suffix
-      const titleMatch = raw.match(/^#\s+(.+)/m);
-      const title = titleMatch
-        ? titleMatch[1].replace(/\s*[-–]\s*(Portland|Seattle).*/i, '').trim()
-        : '';
-
-      // Parse CLUSTER_META block
-      const metaMatch = raw.match(/<!--\s*CLUSTER_META([\s\S]+?)-->/);
-      if (!metaMatch) continue;
-      const meta = metaMatch[1];
-
-      const slugMatch = meta.match(/cluster_slug:\s*(.+)/);
-      const clusterSlug = slugMatch ? slugMatch[1].trim() : '';
-      if (!clusterSlug) continue;
-
-      const subtopicsMatch = meta.match(/subtopics:([\s\S]+?)(?=\n[a-z_]+:|$)/);
-      const subtopics = subtopicsMatch
-        ? (subtopicsMatch[1].match(/^\s*-\s*(.+)$/gm) || []).map(s => s.replace(/^\s*-\s*/, '').trim())
-        : [];
-
-      topics.push({ clusterSlug, title: title || clusterSlug, subtopics });
-    }
-
-    topics.sort((a, b) => a.title.localeCompare(b.title));
+    const topics = await getClusterTopics(microsite);
     res.json({ topics });
   } catch (err) {
     res.status(500).json({ error: err.message });
