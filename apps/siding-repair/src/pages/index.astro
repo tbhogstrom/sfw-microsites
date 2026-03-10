@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery, GoogleMapEmbed } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
+import { getAllLocations } from '../data/locations';
 
 const config = serviceConfigs['siding-repair'];
+const locationsWithMaps = getAllLocations().filter(l => l.mapEmbedSrc);
 const stats = [
   { value: '20', suffix: '+', label: 'Years Experience' },
   { value: '1000', suffix: '+', label: 'Projects Completed' },
@@ -177,6 +179,29 @@ const faqs: FAQ[] = [
     title="Latest Siding Repair Tips & Guides"
     class="bg-gray-light"
   />
+
+  <!-- Maps Section -->
+  {locationsWithMaps.length > 0 && (
+    <section class="py-16 bg-gray-light">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-heading font-bold text-center mb-12">
+          Find Us on Google Maps
+        </h2>
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {locationsWithMaps.map((location) => (
+            <div>
+              <h3 class="text-xl font-heading font-bold mb-3">{location.fullName}</h3>
+              <GoogleMapEmbed
+                src={location.mapEmbedSrc!}
+                variant="compact"
+                title={`${config.name} ${location.name} on Google Maps`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- CTA Section -->
   <CTASection
