@@ -67,6 +67,7 @@
     "equipment",
     "completed",
     "hero",
+    "background",
     "gallery"
   ],
   "allowedExtensions": [

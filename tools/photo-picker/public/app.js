@@ -2,6 +2,7 @@
 
 const PRESETS = {
   'hero':         { width: 1440, height: 810 },
+  'background':   { width: 1440, height: 810 },
   'gallery':      { width: 800,  height: 600 },
   'before-after': { width: 1000, height: 667 },
   'completed':    { width: 1000, height: 667 },
@@ -14,6 +15,7 @@ const PRESETS = {
 
 const PRESET_LABELS = {
   'hero':         'Hero — 1440×810',
+  'background':   'Background — 1440×810',
   'gallery':      'Gallery — 800×600',
   'before-after': 'Before/After — 1000×667',
   'completed':    'Completed — 1000×667',
@@ -71,7 +73,7 @@ const componentPreview = document.getElementById('component-preview');
 
 function showPageAssign() {
   const cat = selectCategory.value;
-  pageAssignRow.style.display = cat === 'hero' ? '' : 'none';
+  pageAssignRow.style.display = (cat === 'hero' || cat === 'background') ? '' : 'none';
 }
 
 function addToLog(entry) {
@@ -121,13 +123,15 @@ function renderPreview(imageUrl, category, microsite) {
   const micrositeOption = Array.from(selectMicrosite.options).find(o => o.value === microsite);
   const siteName = micrositeOption ? micrositeOption.textContent.split(' — ')[1] : microsite;
 
-  if (category === 'hero') {
+  if (category === 'hero' || category === 'background') {
+    const label = category === 'background' ? 'Section background' : siteName;
+    const sub = category === 'background' ? 'Background image preview' : 'Professional repair services in Portland &amp; Seattle';
     componentPreview.innerHTML = `
       <div class="preview-hero">
         <img src="${imageUrl}" alt="" />
         <div class="preview-hero-overlay">
-          <div class="preview-hero-headline">${siteName}</div>
-          <div class="preview-hero-sub">Professional repair services in Portland &amp; Seattle</div>
+          <div class="preview-hero-headline">${label}</div>
+          <div class="preview-hero-sub">${sub}</div>
         </div>
       </div>`;
     return;
@@ -421,19 +425,23 @@ async function handleUpload() {
     uploadResult.textContent = `✓ ${result.url}`;
     uploadResult.className = 'success';
 
-    // Write URL to images.json
-    fetch('/api/write-images', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ microsite, category, page, url: result.url, filename })
-    }).catch(err => console.warn('write-images failed:', err));
+    // Write URL to images.json (skip if "just upload to blob" — page is empty)
+    const shouldWriteBack = category === 'gallery' ||
+      ((category === 'hero' || category === 'background') && page);
+    if (shouldWriteBack) {
+      fetch('/api/write-images', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ microsite, category, page, url: result.url, filename })
+      }).catch(err => console.warn('write-images failed:', err));
+    }
 
     // Update URL log
     lastUploadedUrl = result.url;
     addToLog({ filename, category, page: category === 'hero' ? page : null, url: result.url, microsite });
 
     // Track gallery count
-    if (category !== 'hero') {
+    if (category !== 'hero' && category !== 'background') {
       sessionGalleryCounts[microsite] = (sessionGalleryCounts[microsite] || 0) + 1;
       updateGalleryButton();
     }
