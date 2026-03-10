@@ -1,0 +1,177 @@
+{
+  "heroImages": {
+    "index": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/hero/Siding_repair_experts__sidingrepairexpertscoma_pac_delpmaspu.webp"
+  },
+  "backgroundImages": {},
+  "galleryImages": [],
+  "servicePageImages": [
+    {
+      "title": "Siding Integration Repair with Windows",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_1898.webp",
+      "href": "/services/portland/siding-integration-repairs"
+    },
+    {
+      "title": "Siding Integration Repair with Windows",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_1898.webp",
+      "href": "/services/seattle/siding-integration-repairs"
+    },
+    {
+      "title": "Siding Integration Repair with Doors",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3252.webp",
+      "href": "/services/portland/siding-integration-repairs"
+    },
+    {
+      "title": "Siding Integration Repair with Doors",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3252.webp",
+      "href": "/services/seattle/siding-integration-repairs"
+    },
+    {
+      "title": "Siding & Deck Ledger Integration Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_6206.webp",
+      "href": "/services/portland/siding-integration-repairs"
+    },
+    {
+      "title": "Siding & Deck Ledger Integration Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_6206.webp",
+      "href": "/services/seattle/siding-integration-repairs"
+    },
+    {
+      "title": "Siding Rot Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8276%20%281%29.webp",
+      "href": "/services/portland/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Siding Rot Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8276%20%281%29.webp",
+      "href": "/services/seattle/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Dry Rot Siding Replacement",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8307.webp",
+      "href": "/services/portland/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Dry Rot Siding Replacement",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8307.webp",
+      "href": "/services/seattle/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Water Damaged Siding Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8333.webp",
+      "href": "/services/portland/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Water Damaged Siding Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8333.webp",
+      "href": "/services/seattle/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Siding Board Replacement",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/PXL_20240508_183333535.webp",
+      "href": "/services/portland/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Siding Board Replacement",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/PXL_20240508_183333535.webp",
+      "href": "/services/seattle/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Wall Framing Rot Repair Behind Siding",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/PXL_20240508_205441660.webp",
+      "href": "/services/portland/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Wall Framing Rot Repair Behind Siding",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/PXL_20240508_205441660.webp",
+      "href": "/services/seattle/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Siding Panel Replacement",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3862.webp",
+      "href": "/services/portland/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Siding Panel Replacement",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3862.webp",
+      "href": "/services/seattle/siding-rot-repair-replacement"
+    },
+    {
+      "title": "Siding Trim Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/PXL_20240510_163403786.webp",
+      "href": "/services/portland/siding-trim-corner-board-repair"
+    },
+    {
+      "title": "Siding Trim Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/PXL_20240510_163403786.webp",
+      "href": "/services/seattle/siding-trim-corner-board-repair"
+    },
+    {
+      "title": "Corner Board Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_1824.webp",
+      "href": "/services/portland/siding-trim-corner-board-repair"
+    },
+    {
+      "title": "Corner Board Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_1824.webp",
+      "href": "/services/seattle/siding-trim-corner-board-repair"
+    },
+    {
+      "title": "Wood Siding Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3096.webp",
+      "href": "/services/portland/lap-cedar-wood-specialty-siding-repair"
+    },
+    {
+      "title": "Wood Siding Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3096.webp",
+      "href": "/services/seattle/lap-cedar-wood-specialty-siding-repair"
+    },
+    {
+      "title": "Lap Siding Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3630.webp",
+      "href": "/services/portland/lap-cedar-wood-specialty-siding-repair"
+    },
+    {
+      "title": "Lap Siding Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3630.webp",
+      "href": "/services/seattle/lap-cedar-wood-specialty-siding-repair"
+    },
+    {
+      "title": "Siding Seam Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3633.webp",
+      "href": "/services/portland/lap-cedar-wood-specialty-siding-repair"
+    },
+    {
+      "title": "Siding Seam Repair",
+      "description": "",
+      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_3633.webp",
+      "href": "/services/seattle/lap-cedar-wood-specialty-siding-repair"
+    }
+  ]
+}
