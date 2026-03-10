@@ -26,6 +26,8 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['siding-repair'];
+const heroBackgroundImage =
+  'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/background/Siding%20-1501066353101175978.webp';
 
 const galleryServices: GalleryService[] = [
   {
@@ -75,6 +77,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
       headline={serviceData.name}
       locationLine={`Serving ${serviceData.locationFull}`}
       phone={locationPhone}
+      backgroundImage={heroBackgroundImage}
       subtopics={serviceData.subtopicDescriptors}
       breadcrumbs={[
         { label: 'Services', url: '/services' },
@@ -87,6 +90,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     <HeroSection
       headline={serviceData.heroHeadline}
       subheadline={serviceData.heroSubheadline}
+      backgroundImage={heroBackgroundImage}
       primaryCTA={{ text: 'Get Free Quote', href: `tel:${locationPhone}` }}
       secondaryCTA={{ text: 'Learn More', href: '#overview' }}
       height="lg"
