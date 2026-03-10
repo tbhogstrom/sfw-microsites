@@ -13,6 +13,7 @@ export const sidingLocations: Record<string, Location> = {
     metaDescription:
       'Professional siding repair and replacement in Portland, OR. We repair rot, moisture intrusion, damaged trim, and fiber cement siding across the Portland metro area.',
     phone: config.phone,
+    mapEmbedSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d719303.6326424527!2d-122.71848044999999!3d45.23202155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x44cadef93ff257b1%3A0x3e1d5266b25851b6!2sSiding%20Repair%20Experts!5e0!3m2!1sen!2sus!4v1773167464475!5m2!1sen!2sus',
     heroHeadline: "Portland's Trusted Siding Repair Experts",
     heroSubheadline:
       'Repairing damaged siding, moisture intrusion, and exterior rot across the Portland metro area with durable, weather-ready solutions.',
