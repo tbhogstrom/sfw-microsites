@@ -38,10 +38,6 @@ const {
   transparentHeader = false,
   showFooter = true,
 } = Astro.props;
-
-const bodyStyle = config.backgroundImage
-  ? `background-image: url('${config.backgroundImage}'); background-size: cover; background-repeat: no-repeat; background-position: center; background-attachment: fixed;`
-  : undefined;
 ---
 
 <!doctype html>
@@ -81,7 +77,7 @@ const bodyStyle = config.backgroundImage
     )}
 
   </head>
-  <body class="font-body text-dark antialiased" style={bodyStyle}>
+  <body class="font-body text-dark antialiased">
     <Header
       config={config}
       navigation={navigation}

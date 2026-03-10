@@ -10,7 +10,6 @@ export interface SiteConfig {
   avgCPC: number;
   trafficShare: number;
   phone: string;
-  backgroundImage?: string;
   callRailScriptSrc?: string;
   ccbNumber?: string;
   waLicenseNumber?: string;
