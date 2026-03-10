@@ -2,16 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(xargs cat:*)",
-      "Bash(source:*)",
-      "Bash(node:*)",
-      "Bash(for site in beam-repair chimney-repair crawlspace-rot deck-repair dry-rot flashing-repair lead-paint leak-repair siding-repair trim-repair)",
-      "Bash(do)",
-      "Read(//c/Users/tfalcon/microsites/apps/$site/src/**)",
-      "Bash(echo \"$site: no src/data dir\")",
-      "Bash(done)",
-      "Bash(ls:*)"
+      "Bash(git commit:*)"
     ]
   }
 }
