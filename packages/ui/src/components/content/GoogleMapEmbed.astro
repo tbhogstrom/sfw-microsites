@@ -1,0 +1,31 @@
+---
+/**
+ * GoogleMapEmbed.astro — embeds a Google Maps GMB listing iframe
+ * src: full embed src URL from Google Maps Share → Embed
+ * variant: 'compact' (200px, neighborhoods) | 'full' (450px, contact)
+ */
+
+export interface Props {
+  src: string;
+  variant: 'compact' | 'full';
+  title: string;
+  class?: string;
+}
+
+const { src, variant, title, class: className = '' } = Astro.props;
+
+const height = variant === 'compact' ? '200' : '450';
+---
+
+<div class:list={['w-full overflow-hidden rounded-lg', className]}>
+  <iframe
+    src={src}
+    width="100%"
+    height={height}
+    style="border:0;display:block;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title={title}
+  ></iframe>
+</div>

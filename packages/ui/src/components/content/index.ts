@@ -23,3 +23,6 @@ export type { Props as FAQAccordionProps } from './FAQAccordion.astro';
 export type { Props as ServiceAreasProps } from './ServiceAreas.astro';
 export type { Props as TestimonialSliderProps } from './TestimonialSlider.astro';
 export type { Service, Props as ServicesOfferedProps } from './ServicesOffered.astro';
+
+export { default as GoogleMapEmbed } from './GoogleMapEmbed.astro';
+export type { Props as GoogleMapEmbedProps } from './GoogleMapEmbed.astro';
