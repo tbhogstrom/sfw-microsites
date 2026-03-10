@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['siding-repair'];
@@ -11,6 +11,33 @@ const stats = [
   { value: '1000', suffix: '+', label: 'Projects Completed' },
   { value: '99', suffix: '%', label: 'Customer Satisfaction' },
   { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Aluminum Siding Repair',
+    description: 'Precision patching that keeps metal siding flush, straight, and weatherproof.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp',
+    href: '/services/portland/aluminum-siding-repair',
+  },
+  {
+    title: 'Vinyl Siding Replacement',
+    description: 'Matching panels and color blends for smooth, uniform vinyl siding.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp',
+    href: '/services/portland/vinyl-siding-replacement',
+  },
+  {
+    title: 'Storm Damage Recovery',
+    description: 'Rapid restoration of blown-off or hail-damaged siding to block leaks.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp',
+    href: '/services/portland/siding-repair-for-storm-damage',
+  },
+  {
+    title: 'Siding Inspection & Maintenance',
+    description: 'Seasonal checks, sealing, and preventative work to keep siding watertight.',
+    image: 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp',
+    href: '/services/portland/siding-maintenance-and-inspection',
+  },
 ];
 
 const services: Service[] = [
@@ -111,6 +138,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Siding Solutions Backed by Real Work"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
