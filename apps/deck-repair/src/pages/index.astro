@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['deck-repair'];
@@ -11,6 +11,33 @@ const stats = [
   { value: '1000', suffix: '+', label: 'Projects Completed' },
   { value: '99', suffix: '%', label: 'Customer Satisfaction' },
   { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Structural Deck Framing',
+    description: 'Rebuild compromised joists, beams, and posts with rot-resistant lumber.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220808_150710189_HDR.webp',
+    href: '/services/portland/deck-structural-repair',
+  },
+  {
+    title: 'Deck Board Replacement',
+    description: 'Replace decking and railings using quality materials matched to your home.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220819_084204797_HDR.webp',
+    href: '/services/portland/deck-board-replacement',
+  },
+  {
+    title: 'Waterproofing & Sealing',
+    description: 'Field-applied sealants and coatings to protect deck boards from moisture.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220823_101404615.webp',
+    href: '/services/portland/deck-waterproofing',
+  },
+  {
+    title: 'Dry Rot & Moisture Control',
+    description: 'Identify hidden decay and install drainage to keep substructure dry.',
+    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_2848.webp',
+    href: '/services/portland/dry-rot-inspection',
+  },
 ];
 
 const services: Service[] = [
@@ -111,6 +138,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Deck Repair Work We've Completed"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
