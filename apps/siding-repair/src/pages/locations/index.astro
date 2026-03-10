@@ -4,12 +4,13 @@
  * URL: /locations
  */
 import BaseLayout from '@sfw/ui';
-import { HeroSection, CTASection } from '@sfw/ui';
+import { HeroSection, CTASection, GoogleMapEmbed } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { getAllLocations } from '../../data/locations';
 
 const config = serviceConfigs['siding-repair'];
 const locations = getAllLocations();
+const locationsWithMaps = locations.filter(l => l.mapEmbedSrc);
 ---
 
 <BaseLayout
@@ -95,6 +96,29 @@ const locations = getAllLocations();
       </div>
     </div>
   </section>
+
+  <!-- Maps Section -->
+  {locationsWithMaps.length > 0 && (
+    <section class="py-16 bg-gray-light">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-heading font-bold text-center mb-12">
+          Find Us on Google Maps
+        </h2>
+        <div class={locationsWithMaps.length > 1 ? 'grid md:grid-cols-2 gap-8 max-w-5xl mx-auto' : 'max-w-2xl mx-auto'}>
+          {locationsWithMaps.map((location) => (
+            <div>
+              <h3 class="text-xl font-heading font-bold mb-3">{location.fullName}</h3>
+              <GoogleMapEmbed
+                src={location.mapEmbedSrc!}
+                variant="compact"
+                title={`${config.name} ${location.name} on Google Maps`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Why Choose Us -->
   <section class="py-16 bg-gray-light">
