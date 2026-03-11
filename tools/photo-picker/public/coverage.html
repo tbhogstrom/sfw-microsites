@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Picker — Coverage</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; font-size: 14px; background: #1a1a1a; color: #e0e0e0; }
+
+    #tab-nav { display: flex; gap: 2px; background: #111; border-bottom: 1px solid #333; padding: 0 16px; }
+    #tab-nav a { padding: 10px 18px; color: #888; text-decoration: none; font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    #tab-nav a.active { color: #fff; border-bottom-color: #4a9eff; }
+    #tab-nav a:hover { color: #ccc; }
+
+    #content { padding: 24px; overflow-y: auto; height: calc(100vh - 41px); }
+
+    h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .subtitle { color: #666; font-size: 12px; margin-bottom: 24px; }
+
+    .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 28px; }
+
+    .site-card { background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 16px; cursor: pointer; transition: border-color 0.15s; }
+    .site-card:hover { border-color: #555; }
+    .site-card.selected { border-color: #4a9eff; background: #0d1a2e; }
+
+    .site-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .site-name { font-weight: 600; font-size: 14px; }
+    .site-domain { font-size: 11px; color: #555; margin-top: 2px; }
+    .site-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-good { background: #14532d; color: #4ade80; }
+    .badge-mid  { background: #713f12; color: #fbbf24; }
+    .badge-low  { background: #1c1c1c; color: #555; border: 1px solid #2a2a2a; }
+
+    .progress-bar { height: 6px; background: #222; border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+    .progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+    .fill-good { background: #22c55e; }
+    .fill-mid  { background: #f59e0b; }
+    .fill-low  { background: #333; }
+
+    .site-stats { font-size: 11px; color: #555; }
+    .site-stats span { color: #888; }
+
+    #detail-panel { background: #111; border: 1px solid #2a2a2a; border-radius: 8px; padding: 20px; display: none; }
+    #detail-panel.visible { display: block; }
+
+    .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .detail-header h2 { font-size: 15px; font-weight: 600; }
+    .detail-header a { font-size: 12px; color: #4a9eff; text-decoration: none; }
+    .detail-header a:hover { text-decoration: underline; }
+
+    table { width: 100%; border-collapse: collapse; }
+    th { font-size: 11px; color: #555; text-align: left; padding: 6px 10px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #222; }
+    td { padding: 9px 10px; border-bottom: 1px solid #1e1e1e; font-size: 13px; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #141414; }
+
+    .dot-row { display: flex; gap: 4px; flex-wrap: wrap; min-height: 14px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .dot-img     { background: #22c55e; }
+    .dot-hero    { background: #4a9eff; }
+    .dot-texture { background: #a78bfa; }
+    .dot-empty   { background: #2a2a2a; border: 1px solid #333; }
+
+    .chip { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 600; }
+    .chip-done    { background: #14532d; color: #4ade80; }
+    .chip-partial { background: #713f12; color: #fbbf24; }
+    .chip-none    { background: #1c1c1c; color: #555; border: 1px solid #2a2a2a; }
+
+    #loading { color: #555; font-size: 13px; padding: 40px 0; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <nav id="tab-nav">
+    <a href="/">Upload</a>
+    <a href="/coverage.html" class="active">Coverage</a>
+    <a href="/gallery.html">Gallery</a>
+  </nav>
+
+  <div id="content">
+    <h1>Image Coverage</h1>
+    <p class="subtitle">Service page image instrumentation across all microsites</p>
+
+    <div id="loading">Loading...</div>
+    <div id="site-grid" class="site-grid" style="display:none"></div>
+    <div id="detail-panel"></div>
+  </div>
+
+  <script>
+    let allSites = [];
+    let selectedMicrosite = null;
+
+    async function init() {
+      const res = await fetch('/api/coverage');
+      allSites = await res.json();
+      renderSiteGrid();
+    }
+
+    function renderSiteGrid() {
+      document.getElementById('loading').style.display = 'none';
+      const grid = document.getElementById('site-grid');
+      grid.style.display = 'grid';
+      grid.innerHTML = '';
+
+      allSites.forEach(site => {
+        const pct = site.totalClusters ? site.coveredClusters / site.totalClusters : 0;
+        const badgeClass = pct === 1 ? 'badge-good' : pct > 0 ? 'badge-mid' : 'badge-low';
+        const fillClass  = pct === 1 ? 'fill-good'  : pct > 0 ? 'fill-mid'  : 'fill-low';
+
+        const card = document.createElement('div');
+        card.className = 'site-card' + (selectedMicrosite === site.key ? ' selected' : '');
+        card.innerHTML = `
+          <div class="site-card-header">
+            <div>
+              <div class="site-name">${site.key}</div>
+              <div class="site-domain">${site.domain}</div>
+            </div>
+            <span class="site-badge ${badgeClass}">${site.coveredClusters} / ${site.totalClusters}</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill ${fillClass}" style="width:${Math.round(pct * 100)}%"></div></div>
+          <div class="site-stats"><span>${site.coveredClusters}</span> covered &nbsp;·&nbsp; <span>${site.totalClusters - site.coveredClusters}</span> missing</div>
+        `;
+        card.addEventListener('click', () => selectSite(site.key));
+        grid.appendChild(card);
+      });
+    }
+
+    async function selectSite(key) {
+      selectedMicrosite = key;
+      renderSiteGrid();
+
+      const panel = document.getElementById('detail-panel');
+      panel.className = 'visible';
+      panel.innerHTML = '<div style="color:#555;padding:16px 0">Loading...</div>';
+
+      const res = await fetch(`/api/coverage/${key}`);
+      const data = await res.json();
+
+      const rows = data.clusters.map(c => {
+        const dots = c.imageCount > 0
+          ? Array(c.imageCount).fill('<div class="dot dot-img"></div>').join('')
+          : '<div class="dot dot-empty"></div>';
+
+        const heroDot    = `<div class="dot ${c.hasHero          ? 'dot-hero'    : 'dot-empty'}"></div>`;
+        const textureDot = `<div class="dot ${c.hasHeaderTexture ? 'dot-texture' : 'dot-empty'}"></div>`;
+
+        let chipClass, chipLabel;
+        if (c.imageCount === 0) {
+          chipClass = 'chip-none'; chipLabel = 'Missing';
+        } else if (!c.hasHero) {
+          chipClass = 'chip-partial'; chipLabel = 'No hero';
+        } else if (!c.hasHeaderTexture) {
+          chipClass = 'chip-partial'; chipLabel = 'No texture';
+        } else {
+          chipClass = 'chip-done'; chipLabel = 'Done';
+        }
+
+        return `<tr>
+          <td>${c.title}</td>
+          <td><div class="dot-row">${dots}</div></td>
+          <td>${heroDot}</td>
+          <td>${textureDot}</td>
+          <td><span class="chip ${chipClass}">${chipLabel}</span></td>
+        </tr>`;
+      }).join('');
+
+      panel.innerHTML = `
+        <div class="detail-header">
+          <h2>${key} — cluster breakdown</h2>
+          <a href="/gallery.html?site=${key}">View gallery →</a>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Service cluster</th>
+              <th>Images</th>
+              <th>Hero</th>
+              <th>Header texture</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    init();
+  </script>
+</body>
+</html>
