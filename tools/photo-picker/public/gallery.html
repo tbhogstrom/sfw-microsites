@@ -69,8 +69,15 @@
 
   <script>
     async function init() {
-      const configRes = await fetch('/api/config');
-      const config = await configRes.json();
+      let config;
+      try {
+        const configRes = await fetch('/api/config');
+        if (!configRes.ok) throw new Error(`Server error: ${configRes.status}`);
+        config = await configRes.json();
+      } catch (err) {
+        document.getElementById('loading').textContent = `Failed to load: ${err.message}`;
+        return;
+      }
 
       const picker = document.getElementById('site-picker');
       config.microsites.forEach(({ key }) => {
@@ -97,8 +104,15 @@
       loading.style.display = 'block';
       body.innerHTML = '';
 
-      const res = await fetch(`/api/gallery/${microsite}`);
-      const data = await res.json();
+      let data;
+      try {
+        const res = await fetch(`/api/gallery/${microsite}`);
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        data = await res.json();
+      } catch (err) {
+        loading.textContent = `Failed to load: ${err.message}`;
+        return;
+      }
 
       loading.style.display = 'none';
 

@@ -92,9 +92,14 @@
     let selectedMicrosite = null;
 
     async function init() {
-      const res = await fetch('/api/coverage');
-      allSites = await res.json();
-      renderSiteGrid();
+      try {
+        const res = await fetch('/api/coverage');
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        allSites = await res.json();
+        renderSiteGrid();
+      } catch (err) {
+        document.getElementById('loading').textContent = `Failed to load: ${err.message}`;
+      }
     }
 
     function renderSiteGrid() {
