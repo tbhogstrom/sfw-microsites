@@ -340,6 +340,96 @@ app.get('/api/coverage', async (req, res) => {
   }
 });
 
+// GET /api/coverage/:microsite
+// Returns per-cluster breakdown: image count, hero set, header texture set.
+app.get('/api/coverage/:microsite', async (req, res) => {
+  try {
+    const { microsite } = req.params;
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
+
+    const [topics, imagesData] = await Promise.all([
+      getClusterTopics(microsite),
+      readImagesJson(microsite)
+    ]);
+
+    const servicePageImages = imagesData.servicePageImages || [];
+    const heroImages = imagesData.heroImages || {};
+    const backgroundImages = imagesData.backgroundImages || {};
+
+    // Group servicePageImages by clusterSlug (deduplicated by URL)
+    const imagesBySlug = {};
+    for (const img of servicePageImages) {
+      const slug = img.href.replace(/\/+$/, '').split('/').pop();
+      if (!imagesBySlug[slug]) imagesBySlug[slug] = new Set();
+      imagesBySlug[slug].add(img.image);
+    }
+
+    const clusters = topics.map(({ clusterSlug, title }) => ({
+      clusterSlug,
+      title,
+      imageCount: imagesBySlug[clusterSlug] ? imagesBySlug[clusterSlug].size : 0,
+      hasHero: !!heroImages[clusterSlug],
+      hasHeaderTexture: !!backgroundImages[clusterSlug]
+    }));
+
+    res.json({ microsite, clusters });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/gallery/:microsite
+// Returns servicePageImages grouped by clusterSlug, deduplicated by URL, with hero/texture flags.
+app.get('/api/gallery/:microsite', async (req, res) => {
+  try {
+    const { microsite } = req.params;
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
+
+    const [topics, imagesData] = await Promise.all([
+      getClusterTopics(microsite),
+      readImagesJson(microsite)
+    ]);
+
+    const servicePageImages = imagesData.servicePageImages || [];
+    const heroImages = imagesData.heroImages || {};
+    const backgroundImages = imagesData.backgroundImages || {};
+
+    // Group images by clusterSlug, deduplicating by URL
+    const imagesBySlug = {};
+    for (const img of servicePageImages) {
+      const slug = img.href.replace(/\/+$/, '').split('/').pop();
+      if (!imagesBySlug[slug]) imagesBySlug[slug] = new Map();
+      // Use URL as key to deduplicate (portland + seattle produce the same image twice)
+      if (!imagesBySlug[slug].has(img.image)) {
+        imagesBySlug[slug].set(img.image, {
+          url: img.image,
+          title: img.title,
+          isHero: heroImages[slug] === img.image,
+          isHeaderTexture: backgroundImages[slug] === img.image
+        });
+      }
+    }
+
+    const clusters = topics.map(({ clusterSlug, title }) => ({
+      clusterSlug,
+      title,
+      images: imagesBySlug[clusterSlug]
+        ? Array.from(imagesBySlug[clusterSlug].values())
+        : []
+    }));
+
+    res.json({ microsite, clusters });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   const url = `http://localhost:${PORT}`;
