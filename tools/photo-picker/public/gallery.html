@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Picker — Gallery</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; font-size: 14px; background: #1a1a1a; color: #e0e0e0; }
+
+    #tab-nav { display: flex; gap: 2px; background: #111; border-bottom: 1px solid #333; padding: 0 16px; }
+    #tab-nav a { padding: 10px 18px; color: #888; text-decoration: none; font-size: 13px; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+    #tab-nav a.active { color: #fff; border-bottom-color: #4a9eff; }
+    #tab-nav a:hover { color: #ccc; }
+
+    #content { padding: 24px; overflow-y: auto; height: calc(100vh - 41px); }
+
+    .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .page-header h1 { font-size: 18px; font-weight: 600; }
+
+    select#site-picker {
+      background: #222; color: #e0e0e0; border: 1px solid #444;
+      border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer;
+    }
+
+    .cluster-section { margin-bottom: 32px; }
+    .cluster-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+    .cluster-title { font-size: 15px; font-weight: 600; }
+    .cluster-meta { font-size: 11px; color: #555; }
+
+    .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+
+    .img-card { background: #111; border: 1px solid #222; border-radius: 6px; overflow: hidden; }
+    .img-card.has-hero    { border-color: #1e3a5c; }
+    .img-card.has-texture { border-color: #2d1f5c; }
+
+    .img-thumb { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: #1e1e1e; }
+
+    .img-info { padding: 7px 8px; }
+    .img-tags { display: flex; gap: 4px; margin-bottom: 4px; flex-wrap: wrap; }
+    .tag { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+    .tag-hero    { background: #1a3a5c; color: #4a9eff; }
+    .tag-texture { background: #2a1a4a; color: #a78bfa; }
+    .img-title { font-size: 11px; color: #ccc; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .img-filename { font-size: 10px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .empty-slot { border: 1px dashed #252525; background: transparent; display: flex; align-items: center; justify-content: center; aspect-ratio: 4/3; color: #333; font-size: 11px; flex-direction: column; gap: 6px; border-radius: 6px; }
+    .empty-slot .plus { font-size: 22px; color: #2a2a2a; }
+
+    #loading { color: #555; font-size: 13px; padding: 40px 0; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <nav id="tab-nav">
+    <a href="/">Upload</a>
+    <a href="/coverage.html">Coverage</a>
+    <a href="/gallery.html" class="active">Gallery</a>
+  </nav>
+
+  <div id="content">
+    <div class="page-header">
+      <h1>Gallery by Service</h1>
+      <select id="site-picker"></select>
+    </div>
+    <div id="loading">Loading...</div>
+    <div id="gallery-body"></div>
+  </div>
+
+  <script>
+    async function init() {
+      const configRes = await fetch('/api/config');
+      const config = await configRes.json();
+
+      const picker = document.getElementById('site-picker');
+      config.microsites.forEach(({ key }) => {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = key;
+        picker.appendChild(opt);
+      });
+
+      // Check for ?site= query param (from coverage "View gallery" link)
+      const params = new URLSearchParams(location.search);
+      const siteParam = params.get('site');
+      if (siteParam && config.microsites.some(m => m.key === siteParam)) {
+        picker.value = siteParam;
+      }
+
+      picker.addEventListener('change', () => loadGallery(picker.value));
+      loadGallery(picker.value);
+    }
+
+    async function loadGallery(microsite) {
+      const body = document.getElementById('gallery-body');
+      const loading = document.getElementById('loading');
+      loading.style.display = 'block';
+      body.innerHTML = '';
+
+      const res = await fetch(`/api/gallery/${microsite}`);
+      const data = await res.json();
+
+      loading.style.display = 'none';
+
+      data.clusters.forEach(cluster => {
+        const section = document.createElement('div');
+        section.className = 'cluster-section';
+
+        const imageCount = cluster.images.length;
+        section.innerHTML = `
+          <div class="cluster-header">
+            <div class="cluster-title">${cluster.title}</div>
+            <div class="cluster-meta">${imageCount > 0 ? `${imageCount} image${imageCount !== 1 ? 's' : ''}` : 'No images yet'}</div>
+          </div>
+          <div class="img-grid" id="grid-${cluster.clusterSlug}"></div>
+        `;
+        body.appendChild(section);
+
+        const grid = section.querySelector('.img-grid');
+
+        if (imageCount === 0) {
+          grid.innerHTML = '<div class="empty-slot"><div class="plus">+</div><span>No images</span></div>';
+          return;
+        }
+
+        cluster.images.forEach(img => {
+          const filename = img.url.split('/').pop();
+          const tags = [
+            img.isHero          ? '<span class="tag tag-hero">HERO</span>'    : '',
+            img.isHeaderTexture ? '<span class="tag tag-texture">TEXTURE</span>' : ''
+          ].join('');
+
+          const card = document.createElement('div');
+          card.className = 'img-card' + (img.isHero ? ' has-hero' : '') + (img.isHeaderTexture ? ' has-texture' : '');
+          card.innerHTML = `
+            <img class="img-thumb" src="${img.url}" alt="${img.title}" loading="lazy" />
+            <div class="img-info">
+              ${tags ? `<div class="img-tags">${tags}</div>` : ''}
+              <div class="img-title">${img.title || '—'}</div>
+              <div class="img-filename">${filename}</div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
