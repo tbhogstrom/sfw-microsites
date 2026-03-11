@@ -559,3 +559,35 @@ fieldset label {
   padding: 2px 6px;
   border-radius: 3px;
 }
+
+/* Deep-link context banner */
+#upload-context {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  background: #1a1400;
+  border: 1px solid #3a2e00;
+  border-radius: 5px;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+}
+
+#upload-context-label {
+  font-size: 11px;
+  color: #c8a020;
+  line-height: 1.4;
+}
+
+#upload-context-dismiss {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+#upload-context-dismiss:hover { color: #aaa; }

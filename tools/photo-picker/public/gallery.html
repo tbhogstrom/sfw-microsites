@@ -44,8 +44,13 @@
     .img-title { font-size: 11px; color: #ccc; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .img-filename { font-size: 10px; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .empty-slot { border: 1px dashed #252525; background: transparent; display: flex; align-items: center; justify-content: center; aspect-ratio: 4/3; color: #333; font-size: 11px; flex-direction: column; gap: 6px; border-radius: 6px; }
+    .empty-slot { border: 1px dashed #252525; background: transparent; display: flex; align-items: center; justify-content: center; aspect-ratio: 4/3; color: #444; font-size: 11px; flex-direction: column; gap: 4px; border-radius: 6px; text-decoration: none; transition: border-color 0.15s, background 0.15s; padding: 8px; text-align: center; }
+    .empty-slot:hover { border-color: #4a9eff; background: #0d1a2e; }
     .empty-slot .plus { font-size: 22px; color: #2a2a2a; }
+    .empty-slot:hover .plus { color: #4a9eff; }
+    .empty-slot-title { color: #555; font-size: 10px; line-height: 1.3; }
+    .empty-slot-hint { color: #333; font-size: 10px; display: none; }
+    .empty-slot:hover .empty-slot-hint { display: block; color: #4a9eff; }
 
     #loading { color: #555; font-size: 13px; padding: 40px 0; text-align: center; }
   </style>
@@ -133,7 +138,12 @@
         const grid = section.querySelector('.img-grid');
 
         if (imageCount === 0) {
-          grid.innerHTML = '<div class="empty-slot"><div class="plus">+</div><span>No images</span></div>';
+          const uploadUrl = `/?microsite=${encodeURIComponent(microsite)}&category=service-page&cluster=${encodeURIComponent(cluster.clusterSlug)}&clusterTitle=${encodeURIComponent(cluster.title)}`;
+          grid.innerHTML = `<a href="${uploadUrl}" class="empty-slot">
+            <div class="plus">+</div>
+            <span class="empty-slot-title">${cluster.title}</span>
+            <span class="empty-slot-hint">Upload →</span>
+          </a>`;
           return;
         }
 

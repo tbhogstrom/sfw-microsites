@@ -73,6 +73,11 @@ const gallerySnippetText = document.getElementById('gallery-snippet-text');
 const btnModalCopy = document.getElementById('btn-modal-copy');
 const btnModalClose = document.getElementById('btn-modal-close');
 
+// Deep-link context banner refs
+const uploadContext = document.getElementById('upload-context');
+const uploadContextLabel = document.getElementById('upload-context-label');
+const uploadContextDismiss = document.getElementById('upload-context-dismiss');
+
 // New refs — preview tab
 const centerTabs = document.querySelectorAll('.center-tab');
 const componentPreview = document.getElementById('component-preview');
@@ -223,11 +228,47 @@ function renderPreview(imageUrl, category, microsite) {
     </div>`;
 }
 
+// --- Deep-link from gallery ---
+async function applyDeepLink() {
+  const params = new URLSearchParams(location.search);
+  const microsite    = params.get('microsite');
+  const category     = params.get('category');
+  const cluster      = params.get('cluster');
+  const clusterTitle = params.get('clusterTitle');
+
+  if (!microsite && !category) return;
+
+  if (microsite) selectMicrosite.value = microsite;
+
+  if (category) {
+    selectCategory.value = category;
+    selectCategory.dispatchEvent(new Event('change'));
+  }
+
+  if (category === 'service-page' && cluster && microsite) {
+    await loadServiceTopics(microsite);
+    selectServiceCluster.value = cluster;
+    selectServiceCluster.dispatchEvent(new Event('change'));
+  }
+
+  if (category && PRESETS[category]) {
+    selectPreset.value = category;
+    inputWidth.value = PRESETS[category].width;
+    inputHeight.value = PRESETS[category].height;
+  }
+
+  if (clusterTitle || cluster) {
+    uploadContextLabel.textContent = `Uploading for: ${clusterTitle || cluster}`;
+    uploadContext.style.display = '';
+  }
+}
+
 // --- Init ---
 async function init() {
   await loadConfig();
   await loadPhotos();
   bindEvents();
+  await applyDeepLink();
 }
 
 async function loadConfig() {
@@ -309,6 +350,11 @@ function updateQueueUI() {
 }
 
 function bindEvents() {
+  uploadContextDismiss.addEventListener('click', () => {
+    uploadContext.style.display = 'none';
+    history.replaceState({}, '', '/');
+  });
+
   btnPrev.addEventListener('click', () => {
     if (currentIndex > 0) goToPhoto(currentIndex - 1);
   });
