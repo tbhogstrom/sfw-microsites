@@ -1,3 +1,25 @@
+#tab-nav {
+  display: flex;
+  gap: 2px;
+  background: #111;
+  border-bottom: 1px solid #333;
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
+}
+
+#tab-nav a {
+  padding: 10px 18px;
+  color: #888;
+  text-decoration: none;
+  font-size: 13px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+#tab-nav a.active { color: #fff; border-bottom-color: #4a9eff; }
+#tab-nav a:hover { color: #ccc; }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -12,7 +34,7 @@ body {
 #app {
   display: grid;
   grid-template-columns: 180px 1fr 220px;
-  height: 100vh;
+  height: calc(100vh - 41px);
 }
 
 /* Queue panel */
