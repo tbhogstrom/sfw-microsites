@@ -314,7 +314,7 @@ app.get('/api/coverage', async (req, res) => {
 
         const servicePageImages = imagesData.servicePageImages || [];
         const coveredSlugs = new Set(
-          servicePageImages.map(img => img.href.split('/').pop())
+          servicePageImages.map(img => img.href.replace(/\/+$/, '').split('/').pop())
         );
 
         return {
