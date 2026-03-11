@@ -45,7 +45,12 @@ async function getClusterTopics(microsite) {
   const topics = [];
 
   for (const file of clusterFiles) {
-    const raw = await readFile(resolve(contentDir, file), 'utf-8');
+    let raw;
+    try {
+      raw = await readFile(resolve(contentDir, file), 'utf-8');
+    } catch {
+      continue;
+    }
 
     const titleMatch = raw.match(/^#\s+(.+)/m);
     const title = titleMatch
@@ -247,6 +252,10 @@ app.get('/api/service-topics', async (req, res) => {
   try {
     const { microsite } = req.query;
     if (!microsite) return res.status(400).json({ error: 'microsite is required' });
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
     const topics = await getClusterTopics(microsite);
     res.json({ topics });
   } catch (err) {
