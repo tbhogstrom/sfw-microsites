@@ -300,6 +300,46 @@ app.get('/api/config', (req, res) => {
   });
 });
 
+// GET /api/coverage
+// Returns coverage summary for all microsites.
+// A cluster is "covered" if it has ≥1 entry in servicePageImages.
+app.get('/api/coverage', async (req, res) => {
+  try {
+    const results = await Promise.all(
+      Object.entries(blobConfig.microsites).map(async ([key, site]) => {
+        const [topics, imagesData] = await Promise.all([
+          getClusterTopics(key),
+          readImagesJson(key)
+        ]);
+
+        const servicePageImages = imagesData.servicePageImages || [];
+        const coveredSlugs = new Set(
+          servicePageImages.map(img => img.href.split('/').pop())
+        );
+
+        return {
+          key,
+          name: site.name,
+          domain: site.domain,
+          totalClusters: topics.length,
+          coveredClusters: topics.filter(t => coveredSlugs.has(t.clusterSlug)).length
+        };
+      })
+    );
+
+    // Sort: most coverage % first, then alphabetically
+    results.sort((a, b) => {
+      const aPct = a.totalClusters ? a.coveredClusters / a.totalClusters : 0;
+      const bPct = b.totalClusters ? b.coveredClusters / b.totalClusters : 0;
+      return bPct - aPct || a.key.localeCompare(b.key);
+    });
+
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   const url = `http://localhost:${PORT}`;
