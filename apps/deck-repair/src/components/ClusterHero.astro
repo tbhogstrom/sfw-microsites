@@ -9,6 +9,7 @@
 interface Props {
   headline: string;
   locationLine: string;
+  subheadline?: string;
   phone: string;
   subtopics: Array<{ heading: string; anchor: string; descriptor: string }>;
   backgroundImage?: string;
@@ -18,6 +19,7 @@ interface Props {
 const {
   headline,
   locationLine,
+  subheadline = '',
   phone,
   subtopics,
   backgroundImage = 'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
@@ -58,6 +60,11 @@ const formattedPhone = phone.replace(/\D/g, '');
       <h1 class="text-4xl md:text-5xl font-heading font-bold text-white leading-tight mb-8 max-w-xl">
         {headline}
       </h1>
+      {subheadline && (
+        <p class="text-lg text-white/85 leading-relaxed mb-8 max-w-2xl">
+          {subheadline}
+        </p>
+      )}
       <div class="flex flex-col sm:flex-row gap-3">
         <a
           href={`tel:${formattedPhone}`}

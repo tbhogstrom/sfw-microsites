@@ -72,6 +72,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     <ClusterHero
       headline={serviceData.name}
       locationLine={`Serving ${serviceData.locationFull}`}
+      subheadline={serviceData.heroSubheadline}
       phone={locationPhone}
       subtopics={serviceData.subtopicDescriptors}
       breadcrumbs={[

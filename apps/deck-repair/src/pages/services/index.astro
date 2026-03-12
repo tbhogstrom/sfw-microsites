@@ -7,12 +7,29 @@ import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { allClusterServices } from '../../data/cluster-services';
+
 const servicesByLocation = {
   portland: allClusterServices.filter(s => s.location === 'portland'),
   seattle: allClusterServices.filter(s => s.location === 'seattle'),
 };
 
 const config = serviceConfigs['deck-repair'];
+
+function getCardDescription(service: (typeof allClusterServices)[number]) {
+  const headings = service.subtopicDescriptors
+    ?.map((item) => item.heading.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+
+  if (headings && headings.length > 0) {
+    return `Includes ${headings.join(', ')}.`;
+  }
+
+  return service.heroSubheadline
+    .replace(/^\[STUB\]\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 ---
 
 <BaseLayout
@@ -58,7 +75,7 @@ const config = serviceConfigs['deck-repair'];
                 {service.name}
               </h3>
               <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
+                {getCardDescription(service)}
               </p>
               <div class="flex items-center text-primary font-semibold">
                 Learn More
@@ -108,7 +125,7 @@ const config = serviceConfigs['deck-repair'];
                 {service.name}
               </h3>
               <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
+                {getCardDescription(service)}
               </p>
               <div class="flex items-center text-primary font-semibold">
                 Learn More

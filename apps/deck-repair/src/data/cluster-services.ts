@@ -38,6 +38,11 @@ function extractFirstSentence(text: string): string {
   return match ? match[0].trim() : clean.slice(0, 120).trim();
 }
 
+function isPlaceholderContent(text: string): boolean {
+  const normalized = text.replace(/\*\*/g, '').trim().toLowerCase();
+  return normalized === '*content to be generated.*' || normalized === 'content to be generated.';
+}
+
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
@@ -52,7 +57,7 @@ function parseClusterSections(
     const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
     if (!match) continue;
     const body = match[1].trim();
-    if (!body || body === '*Content to be generated.*') continue;
+    if (!body || isPlaceholderContent(body)) continue;
     sections.push({ heading: topic, anchor: slugify(topic), content: body });
   }
   return sections;
@@ -71,7 +76,7 @@ function parseSubtopicDescriptors(
     const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
     const body = match ? match[1].trim() : '';
-    const descriptor = body && body !== '*Content to be generated.*'
+    const descriptor = body && !isPlaceholderContent(body)
       ? extractFirstSentence(body)
       : '';
     return { heading: topic, anchor: slugify(topic), descriptor };
@@ -88,9 +93,12 @@ function extractBodyContent(content: string): string {
   return body;
 }
 
-function extractHeroSubheadline(content: string, name: string, locationFull: string): string {
+function extractHeroSubheadline(content: string, name: string): string {
   const heroMatch = content.match(/## Hero Section[\s\S]*?\n\n([^\n#][^\n]+)/);
-  if (heroMatch) return heroMatch[1].trim();
+  if (heroMatch) {
+    const candidate = heroMatch[1].trim();
+    if (!isPlaceholderContent(candidate)) return candidate;
+  }
   return `Expert ${name.toLowerCase()} services for Portland and Seattle homeowners — backed by local knowledge and quality craftsmanship.`;
 }
 
@@ -132,10 +140,10 @@ function loadClusterPages(): ServicePageData[] {
       slug,
       location,
       locationFull,
-      heroHeadline: isStub ? `[STUB] ${name} in ${locationFull}` : `${name} in ${locationFull}`,
+      heroHeadline: `${name} in ${locationFull}`,
       heroSubheadline: isStub
         ? `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`
-        : extractHeroSubheadline(content, name, locationFull),
+        : extractHeroSubheadline(content, name),
       keyBenefits: subtopics.slice(0, 4),
       sections: bodyContent
         ? { overview: { title: name, content: bodyContent } }
