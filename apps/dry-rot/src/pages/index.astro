@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery, GoogleMapEmbed } from '@sfw/ui';
 import type { GalleryService } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ, Service } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['dry-rot'];
+const googleMapEmbedSrc = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d716251.5385569318!2d-122.71848044999999!3d45.47267295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xad5e3ad74c43a045%3A0xf875049f0c21743b!2sRot%20Repair%20Experts!5e0!3m2!1sen!2sus!4v1773330252687!5m2!1sen!2sus';
 
 const galleryServices: GalleryService[] = [
   {
@@ -180,6 +181,23 @@ const faqs: FAQ[] = [
     title="Latest Dry Rot Repair Tips & Guides"
     class="bg-gray-light"
   />
+
+  <!-- Maps Section -->
+  <section class="py-16 bg-gray-light">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-heading font-bold text-center mb-12">
+        Find Us on Google Maps
+      </h2>
+      <div class="max-w-2xl mx-auto">
+        <h3 class="text-xl font-heading font-bold mb-3">Portland, OR</h3>
+        <GoogleMapEmbed
+          src={googleMapEmbedSrc}
+          variant="compact"
+          title={`${config.name} Portland, OR on Google Maps`}
+        />
+      </div>
+    </div>
+  </section>
 
   <!-- CTA Section -->
   <CTASection
