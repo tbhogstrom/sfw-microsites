@@ -12,9 +12,9 @@ import {
   FAQAccordion,
   ContactForm,
   CTASection,
+  GoogleMapEmbed,
 } from '@sfw/ui';
 import { serviceConfigs, getLocationPaths, getLocation } from '@sfw/content';
-import type { Location } from '@sfw/content';
 
 // Generate static paths for all locations
 export async function getStaticPaths() {
@@ -150,6 +150,16 @@ const faqs = [
         Providing expert services throughout the {location.fullName} metro area
       </p>
 
+      {location.mapEmbedSrc && (
+        <div class="max-w-6xl mx-auto mb-8">
+          <GoogleMapEmbed
+            src={location.mapEmbedSrc}
+            variant="compact"
+            title={`${config.name} ${location.name} service area on Google Maps`}
+          />
+        </div>
+      )}
+
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
         {location.neighborhoods.map((neighborhood) => (
           <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
@@ -238,15 +248,25 @@ const faqs = [
                 </div>
               )}
 
-              <div class="flex items-start">
-                <svg class="w-6 h-6 text-primary mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <div>
-                  <div class="font-semibold">Service Area</div>
-                  <div class="text-gray-600">{location.fullName} Metro</div>
+              {location.mapEmbedSrc ? (
+                <div class="mt-4">
+                  <GoogleMapEmbed
+                    src={location.mapEmbedSrc}
+                    variant="full"
+                    title={`${config.name} ${location.name} contact location on Google Maps`}
+                  />
                 </div>
-              </div>
+              ) : (
+                <div class="flex items-start">
+                  <svg class="w-6 h-6 text-primary mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <div>
+                    <div class="font-semibold">Service Area</div>
+                    <div class="text-gray-600">{location.fullName} Metro</div>
+                  </div>
+                </div>
+              )}
 
               <div class="flex items-start">
                 <svg class="w-6 h-6 text-primary mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
