@@ -39,6 +39,9 @@ export interface ServicePageData {
   keywords: string[];
   rawMarkdown: string;
   htmlContent: string;
+  clusterSections?: Array<{ heading: string; anchor: string; content: string }>;
+  clusterReferences?: string;
+  subtopicDescriptors?: Array<{ heading: string; anchor: string; descriptor: string }>;
 }
 
 /**
