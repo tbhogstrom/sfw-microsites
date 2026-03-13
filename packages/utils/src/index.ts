@@ -1,2 +1,2 @@
 // Shared utility functions will go here
-export {}
+export { selectServicePhotos } from './gallery';
