@@ -1,18 +1,16 @@
 ---
 /**
  * CCBBanner.astro - CCB License banner above footer
- * Displays license information and SFW Construction affiliation
+ * Displays license information above footer
  */
 import type { BaseProps } from '@sfw/ui/types';
 
 export interface Props extends BaseProps {
-  dbaName: string;
   ccbNumber?: string;
   waLicenseNumber?: string;
 }
 
 const {
-  dbaName,
   ccbNumber = '259926',
   waLicenseNumber = 'SFWCOC*745BH',
   class: className = '',
@@ -22,37 +20,10 @@ const {
 
 <div class={`bg-gray-100 border-t border-gray-200 py-4 ${className}`} {...rest}>
   <div class="container mx-auto px-4">
-    <p class="text-center text-sm text-gray-700">
-      <strong>{dbaName}</strong> is a{' '}
-      <a
-        href="https://sfwconstruction.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-primary hover:text-primary-dark underline font-semibold transition-colors"
-      >SFW Construction</a>{' '}
-      Company
-    </p>
-    <p class="text-center text-xs text-gray-600 mt-2">
+    <p class="text-center text-xs text-gray-600">
       <span class="font-medium whitespace-nowrap">OR CCB# {ccbNumber}</span>
       {' '}<span class="text-gray-400">|</span>{' '}
       <span class="font-medium whitespace-nowrap">WA LIC# {waLicenseNumber}</span>
     </p>
   </div>
 </div>
-
-<style>
-  a {
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
-
-  a:hover {
-    text-decoration-thickness: 2px;
-  }
-
-  a:focus {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-</style>
