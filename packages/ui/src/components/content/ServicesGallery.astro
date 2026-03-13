@@ -26,9 +26,9 @@ const {
   ...rest
 } = Astro.props;
 
-// Validate: need exactly 4 services, all with images
+// Accept 0-4+ services; only invalid if empty or has missing images
 const missingCount = services.filter((s) => !s.image).length;
-const isValid = services.length >= 4 && missingCount === 0;
+const isValid = services.length > 0 && missingCount === 0;
 const isDev = import.meta.env.DEV;
 
 const sectionClasses = [
@@ -40,10 +40,7 @@ const sectionClasses = [
 
 {!isValid && isDev && (
   <div class="bg-yellow-400 text-yellow-900 text-sm font-mono px-4 py-3 border-b border-yellow-600">
-    ⚠️ <strong>ServicesGallery:</strong> hidden —{' '}
-    {services.length < 4
-      ? `only ${services.length} of 4 services provided`
-      : `${missingCount} of 4 services missing images`}
+    ⚠️ <strong>ServicesGallery:</strong> hidden — {missingCount > 0 ? `${missingCount} services missing images` : 'no services provided'}
   </div>
 )}
 
@@ -58,7 +55,7 @@ const sectionClasses = [
       )}
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {services.slice(0, 4).map((service) => (
+        {services.map((service) => (
           <a
             href={service.href}
             class="group relative overflow-hidden rounded-lg block h-72 focus:outline-none focus:ring-2 focus:ring-primary"
