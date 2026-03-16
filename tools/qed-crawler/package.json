@@ -1,0 +1,21 @@
+{
+  "name": "qed-crawler",
+  "version": "1.0.0",
+  "description": "CLI tool to crawl URLs and grade content with QED.systems",
+  "type": "module",
+  "main": "crawler.js",
+  "scripts": {
+    "start": "node crawler.js",
+    "test": "node --test lib/*.test.js",
+    "test:unit": "node --test lib/**/*.test.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "xml2js": "^0.6.2",
+    "csv-stringify": "^6.4.5"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
