@@ -5,27 +5,27 @@
   "servicePageImages": [
     {
       "title": "down-net http20260311-233-ubm3wg-1773263594732",
-      "description": "",
+      "description": "Crawlspace Ventilation Improvements",
       "image": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260311-233-ubm3wg-1773263594732.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/crawlspace-moisture-vapor-waterproofing"
     },
     {
       "title": "down-net http20260316-157-7m87mc-1773682474148",
-      "description": "",
+      "description": "Subfloor Repair",
       "image": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-157-7m87mc-1773682474148.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/subfloor-sagging-floor-repair"
     },
     {
       "title": "down-net http20260316-369-wkqifm-1773682217695",
-      "description": "",
+      "description": "Subfloor Water Damage Repair",
       "image": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-369-wkqifm-1773682217695.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/subfloor-sagging-floor-repair"
     },
     {
       "title": "down-net http20260316-382-f93e9y-1773682527997",
-      "description": "",
+      "description": "Crawlspace Structural Rot Repair",
       "image": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-382-f93e9y-1773682527997.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/crawlspace-structural-rot-dry-rot-repair"
     }
   ]
 }
