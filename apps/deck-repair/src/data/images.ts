@@ -4,3 +4,4 @@ import data from './images.json';
 export const heroImages: Record<string, string> = data.heroImages as Record<string, string>;
 export const backgroundImages: Record<string, string> = (data.backgroundImages ?? {}) as Record<string, string>;
 export const galleryImages: { title: string; description: string; image: string; href: string }[] = data.galleryImages;
+export const servicePageImages: { title: string; description: string; image: string; href: string }[] = (data as any).servicePageImages ?? [];

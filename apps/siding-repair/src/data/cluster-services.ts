@@ -145,7 +145,7 @@ function loadClusterPages(): ServicePageData[] {
         ? { overview: { title: name, content: bodyContent } }
         : {},
       faqs: [],
-      metaTitle: `${name} in ${locationFull} | SFW Construction`,
+      metaTitle: `${name} in ${locationFull} | Siding Repair Experts`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
       keywords: [slug, location, SITE_KEY],
       rawMarkdown: content,

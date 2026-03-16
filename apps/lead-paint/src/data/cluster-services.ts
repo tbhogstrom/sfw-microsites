@@ -71,7 +71,7 @@ function loadClusterPages(): ServicePageData[] {
       keyBenefits: subtopics.slice(0, 4),
       sections: {},
       faqs: [],
-      metaTitle: `${name} in ${locationFull} | SFW Construction`,
+      metaTitle: `${name} in ${locationFull} | Lead Paint Removal Experts`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
       keywords: [slug, location, SITE_KEY],
       rawMarkdown: content,
