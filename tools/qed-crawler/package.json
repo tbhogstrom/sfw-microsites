@@ -10,11 +10,11 @@
     "test:unit": "node --test lib/**/*.test.js"
   },
   "dependencies": {
+    "csv-stringify": "^6.4.5",
     "dotenv": "^16.4.5",
-    "xml2js": "^0.6.2",
-    "csv-stringify": "^6.4.5"
+    "node-fetch": "^3.3.2",
+    "xml2js": "^0.6.2"
   },
-  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }
