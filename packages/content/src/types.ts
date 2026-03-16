@@ -1,6 +1,7 @@
 export interface SiteConfig {
   name: string;
   domain: string;
+  dbaName: string;
   title: string;
   description: string;
   primaryService: string;

@@ -5,6 +5,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'deck-repair': {
     name: 'Deck Repair Experts',
     domain: getDBABySlug('deck-repair')?.domain || '',
+    dbaName: 'Deck Repair Experts',
     title: 'Portland Deck Repair Experts | Professional Deck Restoration',
     description: 'Expert deck repair and restoration services in Portland. Licensed, bonded, and insured. Free inspections and estimates.',
     primaryService: 'Deck Repair',
@@ -22,6 +23,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'chimney-repair': {
     name: 'Chimney Repair Experts',
     domain: getDBABySlug('chimney-repair')?.domain || '',
+    dbaName: 'Chimney Repair Experts',
     title: 'Portland Chimney Repair | Wood Chimney Framing & Rot Repair',
     description: 'Professional wood chimney repair and structural restoration in Portland. Specialized in chimney rot, framing, and waterproofing.',
     primaryService: 'Wood Chimney Repair',
@@ -38,6 +40,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'siding-repair': {
     name: 'Siding Repair Experts',
     domain: getDBABySlug('siding-repair')?.domain || '',
+    dbaName: 'Siding Repair Experts',
     title: 'Portland Siding Repair & Replacement | Hardie Board Specialists',
     description: 'Professional siding repair and replacement in Portland. Experts in rot repair, Hardie board installation, and complete siding restoration.',
     primaryService: 'Siding Repair',
@@ -55,6 +58,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'crawlspace-rot': {
     name: 'Crawl Space Rot Repair',
     domain: getDBABySlug('crawlspace-rot')?.domain || '',
+    dbaName: 'Crawlspace Repair Experts',
     title: 'Portland Crawl Space Rot Repair | Subfloor & Foundation Experts',
     description: 'Emergency crawl space rot repair and structural restoration. Subfloor repair, foundation wood replacement, moisture control.',
     primaryService: 'Crawl Space Rot Repair',
@@ -72,6 +76,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'leak-repair': {
     name: 'Leak Repair Experts',
     domain: getDBABySlug('leak-repair')?.domain || '',
+    dbaName: 'Window Leak Experts',
     title: 'Portland Leak Detection & Repair | Water Damage Prevention',
     description: 'Professional leak detection and repair services. Stop water damage before it starts with expert moisture intrusion solutions.',
     primaryService: 'Leak Repair',
@@ -88,6 +93,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'lead-paint': {
     name: 'Lead Paint Services',
     domain: getDBABySlug('lead-paint')?.domain || '',
+    dbaName: 'Lead Paint Removal Experts',
     title: 'Portland Lead Paint Removal | Certified Lead-Safe Renovation',
     description: 'Certified lead paint removal and lead-safe renovation services. Protecting families in historic Portland homes.',
     primaryService: 'Lead Paint Services',
@@ -106,6 +112,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'flashing-repair': {
     name: 'Flashing Repair Experts',
     domain: getDBABySlug('flashing-repair')?.domain || '',
+    dbaName: 'Flashing Repair Experts',
     title: 'Portland Flashing Repair & Replacement | Waterproofing Specialists',
     description: 'Professional flashing repair and replacement services. Protect your home from water intrusion with expert installation.',
     primaryService: 'Flashing Repair',
@@ -122,6 +129,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'dry-rot': {
     name: 'Rot Repair Experts',
     domain: getDBABySlug('dry-rot')?.domain || '',
+    dbaName: 'Rot Repair Experts',
     title: 'Portland Rot Repair | Wood Rot & Dry Rot Specialists',
     description: 'Professional rot repair and wood rot remediation in Portland. Expert dry rot repair, moisture control, and structural restoration.',
     primaryService: 'Rot Repair',
@@ -137,6 +145,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'trim-repair': {
     name: 'Trim Repair Experts',
     domain: getDBABySlug('trim-repair')?.domain || '',
+    dbaName: 'Exterior Trim Repair Experts',
     title: 'Portland Trim Repair | Fascia, Soffit & Exterior Trim Restoration',
     description: 'Professional trim, fascia, and soffit repair services. Restore your home\'s exterior beauty and protection.',
     primaryService: 'Trim Repair',
@@ -153,6 +162,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'restoration': {
     name: 'Historic Restoration',
     domain: getDBABySlug('restoration')?.domain || '',
+    dbaName: 'Historic Home Restoration Experts',
     title: 'Portland Historic Home Restoration | Period-Appropriate Repairs',
     description: 'Specialized historic home restoration services. Preserving Portland\'s architectural heritage with authentic, period-appropriate repairs.',
     primaryService: 'Historic Restoration',
@@ -171,6 +181,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'beam-repair': {
     name: 'Beam Repair Experts',
     domain: getDBABySlug('beam-repair')?.domain || '',
+    dbaName: 'Beam Repair Experts',
     title: 'Portland Structural Beam Repair | Load-Bearing Beam Replacement',
     description: 'Professional structural beam repair and replacement. Expert load-bearing beam restoration and reinforcement.',
     primaryService: 'Beam Repair',
@@ -187,6 +198,7 @@ export const serviceConfigs: Record<string, SiteConfig> = {
   'mold-testing': {
     name: 'Mold Testing Experts',
     domain: getDBABySlug('mold-testing')?.domain || '',
+    dbaName: 'Mold Testing Experts',
     title: 'Portland Mold Testing & Inspection | Certified Mold Inspectors',
     description: 'Professional mold testing, inspection, and air quality analysis. Certified inspectors, lab-verified results, and detailed reporting.',
     primaryService: 'Mold Testing',

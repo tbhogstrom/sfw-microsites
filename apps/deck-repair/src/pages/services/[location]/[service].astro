@@ -11,6 +11,8 @@ import { getClusterPaths, getClusterService } from '../../../data/cluster-servic
 import ServiceContent from '../../../components/ServiceContent.astro';
 import ClusterHero from '../../../components/ClusterHero.astro';
 import type { GalleryService } from '@sfw/ui';
+import { servicePageImages } from '../../../data/images';
+import { selectServicePhotos } from '@sfw/utils';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
@@ -26,32 +28,11 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['deck-repair'];
-const galleryServices: GalleryService[] = [
-  {
-    title: 'Deck Board Repair & Replacement',
-    description: 'Expert deck board repair and replacement services in Portland, Oregon.',
-    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220808_150710189_HDR.webp',
-    href: '/services/portland/deck-board-repair-replacement',
-  },
-  {
-    title: 'Deck Ledger, Flashing & Water Protection',
-    description: 'Professional deck ledger and flashing installation to protect your home from water damage.',
-    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220819_084204797_HDR.webp',
-    href: '/services/portland/deck-ledger-flashing-water-protection',
-  },
-  {
-    title: 'Deck Posts, Footings & Foundation',
-    description: 'Structural deck post and footing repairs to keep your deck safe and stable.',
-    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_20220823_101404615.webp',
-    href: '/services/portland/deck-posts-footings-foundation',
-  },
-  {
-    title: 'Deck Safety, Code & Hardware Upgrades',
-    description: 'Code-compliant deck safety upgrades and hardware replacement in Portland.',
-    image: 'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_2848.webp',
-    href: '/services/portland/deck-safety-code-hardware-upgrades',
-  },
-];
+
+const currentHref = `/services/${location}/${service}`;
+
+const myImages = servicePageImages.filter((img: GalleryService) => img.href === currentHref);
+const galleryServices = selectServicePhotos(servicePageImages, myImages, location as string);
 
 // Get location-specific phone number
 const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
@@ -102,7 +83,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
           <div>
             <h2 class="text-3xl font-heading font-bold text-dark mb-8">
-              Why homeowners choose SFW Construction
+              Why homeowners choose {config.dbaName}
             </h2>
             <ul class="space-y-6">
               {[
