@@ -26,5 +26,43 @@
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/IMG_2848.webp",
       "href": "/services/portland/deck-safety-code-hardware-upgrades"
     }
+  ],
+  "servicePageImages": [
+    {
+      "title": "IMG 20220805 131547847 HDR",
+      "description": "",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_20220805_131547847_HDR.jpg",
+      "href": "/services/portland/uncategorized"
+    },
+    {
+      "title": "IMG 20220805 131550458 HDR",
+      "description": "",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_20220805_131550458_HDR.webp",
+      "href": "/services/portland/uncategorized"
+    },
+    {
+      "title": "IMG 20220819 084213185 HDR",
+      "description": "",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_20220819_084213185_HDR.jpg",
+      "href": "/services/portland/uncategorized"
+    },
+    {
+      "title": "IMG 2848",
+      "description": "",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_2848.jpg",
+      "href": "/services/portland/uncategorized"
+    },
+    {
+      "title": "down-net http20260316-152-unkzk6-1773681114487",
+      "description": "",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260316-152-unkzk6-1773681114487.webp",
+      "href": "/services/portland/uncategorized"
+    },
+    {
+      "title": "down-net http20260316-314-2zybwf-1773681982074",
+      "description": "",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260316-314-2zybwf-1773681982074.webp",
+      "href": "/services/portland/uncategorized"
+    }
   ]
 }

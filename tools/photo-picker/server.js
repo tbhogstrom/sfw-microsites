@@ -340,6 +340,70 @@ app.get('/api/coverage', async (req, res) => {
   }
 });
 
+// POST /api/reconcile/:microsite
+// Queries blob storage for service-page images and syncs missing ones to images.json
+app.post('/api/reconcile/:microsite', async (req, res) => {
+  try {
+    const { microsite } = req.params;
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
+
+    const client = new BlobClient(microsite, blobConfig);
+    const data = await readImagesJson(microsite);
+    const servicePageImages = data.servicePageImages || [];
+
+    // List all service-page images in blob storage
+    const blobs = await client.list({ prefix: 'service-page/' });
+    const blobUrls = new Set(blobs.map(b => b.url));
+    const existingUrls = new Set(servicePageImages.map(img => img.image));
+
+    // Find missing images
+    const missing = [];
+    for (const blob of blobs) {
+      if (!existingUrls.has(blob.url)) {
+        // Extract filename to guess the service
+        const filename = blob.pathname.split('/').pop();
+        missing.push({
+          url: blob.url,
+          filename,
+          uploadedAt: blob.uploadedAt
+        });
+      }
+    }
+
+    // Auto-add missing images with placeholder data
+    let added = 0;
+    if (missing.length > 0) {
+      for (const img of missing) {
+        // Try to parse cluster slug from filename or just use 'uncategorized'
+        const entry = {
+          title: img.filename.replace(/\.[^.]+$/, '').replace(/_/g, ' '),
+          description: '',
+          image: img.url,
+          href: '/services/portland/uncategorized' // placeholder href
+        };
+        data.servicePageImages.push(entry);
+        added++;
+      }
+      await writeImagesJson(microsite, data);
+    }
+
+    res.json({
+      ok: true,
+      microsite,
+      totalInStorage: blobs.length,
+      currentInJson: servicePageImages.length,
+      missing: missing.length,
+      added,
+      details: missing
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/coverage/:microsite
 // Returns per-cluster breakdown: image count, hero set, header texture set.
 app.get('/api/coverage/:microsite', async (req, res) => {
