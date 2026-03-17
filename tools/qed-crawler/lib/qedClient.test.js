@@ -2,31 +2,32 @@ import { strict as assert } from 'assert';
 import { test } from 'node:test';
 import { QEDClient } from './qedClient.js';
 
-test('qedClient: should initialize with API key', (t) => {
-  const client = new QEDClient('test-key');
-  assert.equal(client.apiKey, 'test-key');
+test('qedClient: should initialize with handle', (t) => {
+  const client = new QEDClient('sfw-construction');
+  assert.equal(client.handle, 'sfw-construction');
 });
 
 test('qedClient: should format recommendations from scores', (t) => {
-  const client = new QEDClient('test-key');
+  const client = new QEDClient('sfw-construction');
   const scores = {
-    engagement: 0.5,
-    readability: 0.8,
-    tone: 0.6
+    engagement: 50,
+    readability: 80,
+    tone: 60
   };
   const recommendations = client.generateRecommendations(scores);
   assert.equal(Array.isArray(recommendations), true);
   assert.equal(recommendations.length > 0, true);
-  // Should have recommendation for low engagement
+  // Should have recommendation for low engagement (below 70)
   assert.equal(recommendations.some(r => r.toLowerCase().includes('engagement')), true);
 });
 
 test('qedClient: should cache results', async (t) => {
-  const client = new QEDClient('test-key');
+  const client = new QEDClient('sfw-construction');
   const url = 'https://example.com/test';
   const mockResult = {
     url,
-    scores: { engagement: 0.7, readability: 0.8, tone: 0.6 },
+    scores: { engagement: 70, readability: 80, tone: 60 },
+    composite: 72,
     status: 'success'
   };
 

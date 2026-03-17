@@ -5,54 +5,55 @@ dotenv.config();
 
 /**
  * QED.systems API client with rate limiting and caching
+ * Uses public QED API - no authentication required
  */
 export class QEDClient {
-  constructor(apiKey = process.env.QED_API_KEY) {
-    if (!apiKey) {
-      throw new Error('QED_API_KEY not provided. Set it in .env or pass it as argument.');
-    }
-    this.apiKey = apiKey;
-    this.apiUrl = process.env.QED_API_URL || 'https://api.qed.systems';
+  constructor(handle = process.env.QED_HANDLE || 'default') {
+    this.handle = handle;
+    this.apiUrl = process.env.QED_API_URL || 'https://qed.systems';
     this.timeout = parseInt(process.env.QED_API_TIMEOUT || '30000', 10);
     this.cache = new Map();
-    this.rateLimitDelay = 100; // ms between requests
+    this.rateLimitDelay = 500; // ms between requests to avoid rate limiting
     this.lastRequestTime = 0;
     this.maxRetries = 3;
   }
 
   /**
-   * Generate recommendations based on QED scores
-   * @param {object} scores - Scores object from QED
+   * Generate recommendations based on QED scores (0-100 scale)
+   * @param {object} scores - Scores object from QED with trait scores
    * @returns {string[]} - Array of recommendations
    */
-  generateRecommendations(scores) {
+  generateRecommendations(scores = {}) {
     const recommendations = [];
-    const threshold = 0.7; // Score below 0.7 gets a recommendation
+    const threshold = 70; // Score below 70/100 gets a recommendation
 
-    if (scores.engagement && scores.engagement < threshold) {
-      recommendations.push(
-        'Strengthen your opening hook and add more compelling call-to-action elements to improve engagement.'
-      );
+    // Map QED trait names to recommendations
+    const traitRecommendations = {
+      'human_readability': 'Improve human readability: simplify sentence structure, reduce jargon, use shorter paragraphs.',
+      'readability': 'Improve readability: simplify sentence structure, reduce jargon, use shorter paragraphs.',
+      'clarity': 'Enhance clarity: make language more precise and avoid ambiguous phrasing.',
+      'tone': 'Align tone with brand voice: ensure consistent, professional messaging throughout.',
+      'engagement': 'Strengthen engagement: improve opening hook, add compelling CTAs, use conversational language.',
+      'professional': 'Maintain professional tone: ensure expertise and credibility signals throughout.',
+      'trust': 'Build trust: add social proof, testimonials, credentials, and transparency about process.',
+      'cta': 'Strengthen calls-to-action: make next steps explicit and easy to follow.',
+      'local_relevance': 'Increase local relevance: add geographic specificity and local context.'
+    };
+
+    // Check all available traits in the scores
+    for (const [trait, score] of Object.entries(scores)) {
+      if (typeof score === 'number' && score < threshold) {
+        const rec = traitRecommendations[trait] || `Improve ${trait}: score is ${score}/100.`;
+        recommendations.push(rec);
+      }
     }
 
-    if (scores.readability && scores.readability < threshold) {
-      recommendations.push(
-        'Simplify sentence structure and reduce jargon to improve readability scores.'
-      );
-    }
-
-    if (scores.tone && scores.tone < threshold) {
-      recommendations.push(
-        'Align your messaging with brand voice guidelines for consistency.'
-      );
-    }
-
-    // If no recommendations yet, add a general one
+    // If no recommendations, content meets baseline
     if (recommendations.length === 0) {
-      recommendations.push('Content meets baseline quality standards.');
+      recommendations.push('Content meets baseline quality standards across all evaluated dimensions.');
     }
 
-    return recommendations;
+    return recommendations.slice(0, 3); // Return top 3 recommendations
   }
 
   /**
@@ -71,7 +72,7 @@ export class QEDClient {
   }
 
   /**
-   * Fetch and grade a single URL with QED.systems
+   * Fetch and grade a single URL with QED.systems public API
    * @param {string} url - URL to grade
    * @returns {Promise<object>} - Result object with scores and status
    */
@@ -86,13 +87,14 @@ export class QEDClient {
       try {
         await this.applyRateLimit();
 
-        const response = await fetch(`${this.apiUrl}/grade`, {
+        // QED endpoint: POST /p/{handle} with content (URL or text)
+        const response = await fetch(`${this.apiUrl}/p/${this.handle}`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${this.apiKey}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
           },
-          body: JSON.stringify({ url }),
+          body: JSON.stringify({ content: url }),
           timeout: this.timeout
         });
 
@@ -109,10 +111,12 @@ export class QEDClient {
         }
 
         const data = await response.json();
+
+        // QED returns { scores: { trait: score, ... }, composite: score, ... }
         const result = {
           url,
           scores: data.scores || {},
-          metrics: data.metrics || {},
+          composite: data.composite || 0,
           status: 'success',
           timestamp: new Date().toISOString()
         };

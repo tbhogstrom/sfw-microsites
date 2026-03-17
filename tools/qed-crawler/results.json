@@ -1,0 +1,13 @@
+[
+  {
+    "url": "https://www.sidingrepairexperts.com/",
+    "status": "failed",
+    "error": "request to https://api.qed.systems/grade failed, reason: getaddrinfo ENOTFOUND api.qed.systems",
+    "timestamp": "2026-03-17T17:12:19.934Z",
+    "recommendations": [
+      "Strengthen your opening hook and add compelling call-to-action elements.",
+      "Simplify sentence structure and reduce jargon for better readability.",
+      "Ensure consistent brand voice throughout the content."
+    ]
+  }
+]

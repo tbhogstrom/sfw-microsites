@@ -1,0 +1,23 @@
+[
+  {
+    "url": "https://www.sidingrepairexperts.com",
+    "scores": {
+      "Concrete Usage Demonstration": 79,
+      "Copy-Pasteable Setup": 60,
+      "Hook Speed": 86,
+      "Hype-Free Credibility": 74,
+      "Problem Framing": 78,
+      "Progressive Disclosure": 74,
+      "Structural Scannability": 73,
+      "Value Proposition Clarity": 81
+    },
+    "composite": 75,
+    "status": "success",
+    "timestamp": "2026-03-17T20:08:31.294Z",
+    "recommendations": [
+      "Strengthen your opening hook and add compelling call-to-action elements.",
+      "Simplify sentence structure and reduce jargon for better readability.",
+      "Ensure consistent brand voice throughout the content."
+    ]
+  }
+]

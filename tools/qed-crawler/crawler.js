@@ -21,6 +21,7 @@ function parseArgs(argv) {
     target: null,
     format: 'json',
     output: null,
+    handle: process.env.QED_HANDLE || 'default',
     concurrency: 3,
     dryRun: false,
     timeout: 30000
@@ -37,6 +38,7 @@ function parseArgs(argv) {
       } else if (nextArg && !nextArg.startsWith('--')) {
         if (key === 'format') args.format = nextArg;
         if (key === 'output') args.output = nextArg;
+        if (key === 'handle') args.handle = nextArg;
         if (key === 'concurrency') args.concurrency = parseInt(nextArg, 10);
         if (key === 'timeout') args.timeout = parseInt(nextArg, 10);
         i++;
@@ -63,6 +65,7 @@ Arguments:
   <target>              URL, sitemap URL, or file path containing URLs (one per line)
 
 Options:
+  --handle <handle>     QED profile handle to use (default: 'default', env: QED_HANDLE)
   --format json|csv     Output format (default: json)
   --output <file>       Write results to file (default: stdout)
   --concurrency <n>     Parallel QED requests (default: 3)
@@ -71,6 +74,7 @@ Options:
 
 Examples:
   node crawler.js https://example.com
+  node crawler.js https://example.com --handle sfw-construction
   node crawler.js https://example.com/sitemap.xml --format csv --output results.csv
   node crawler.js urls.txt --concurrency 5
   node crawler.js urls.txt --dry-run
@@ -106,9 +110,9 @@ async function main() {
       process.exit(0);
     }
 
-    console.log(`\n📊 Grading content with QED.systems (${args.concurrency} parallel)...`);
+    console.log(`\n📊 Grading content with QED.systems [${args.handle}] (${args.concurrency} parallel)...`);
 
-    const qedClient = new QEDClient();
+    const qedClient = new QEDClient(args.handle);
     const results = await qedClient.gradeUrls(urls, args.concurrency);
 
     const successful = results.filter(r => r.status === 'success').length;
