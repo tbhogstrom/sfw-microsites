@@ -4,14 +4,35 @@ import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, Services
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
-import { servicePageImages } from '../data/images';
-import { selectServicePhotos } from '@sfw/utils';
 
 const config = serviceConfigs['crawlspace-rot'];
 
-// Select gallery services dynamically - prefer Portland, fallback to any location
-const portlandPhotos = servicePageImages.filter((img: GalleryService) => img.href.includes('/services/portland/'));
-const galleryServices = selectServicePhotos(servicePageImages, portlandPhotos, 'portland');
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Crawlspace Moisture Control & Encapsulation',
+    description: 'Complete vapor barrier systems and sealed environments to prevent moisture infiltration.',
+    image: 'https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260311-233-ubm3wg-1773263594732.webp',
+    href: '/services/portland/crawlspace-moisture-vapor-waterproofing',
+  },
+  {
+    title: 'Subfloor & Floor Joist Repair',
+    description: 'Expert replacement of rotted or damaged floor joists and beams to restore structural integrity.',
+    image: 'https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-157-7m87mc-1773682474148.webp',
+    href: '/services/portland/subfloor-sagging-floor-repair',
+  },
+  {
+    title: 'Crawlspace Drainage & Water Management',
+    description: 'Professional installation of drainage systems to locate moisture sources and keep crawlspaces dry.',
+    image: 'https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-369-wkqifm-1773682217695.webp',
+    href: '/services/portland/crawlspace-drainage-solutions',
+  },
+  {
+    title: 'Structural Rot & Decay Repair',
+    description: 'Comprehensive identification and repair of dry rot at its source, preventing future structural damage.',
+    image: 'https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-382-f93e9y-1773682527997.webp',
+    href: '/services/portland/crawlspace-structural-rot-dry-rot-repair',
+  },
+];
 
 const stats = [
   { value: '20', suffix: '+', label: 'Years Experience' },
