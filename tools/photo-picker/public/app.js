@@ -467,6 +467,44 @@ function bindEvents() {
     });
   });
 
+  // Upload drop zone
+  const dropZone = document.getElementById('upload-drop-zone');
+
+  ['dragover', 'dragenter'].forEach(evt => {
+    dropZone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropZone.classList.add('drag-over');
+    });
+  });
+
+  dropZone.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+  });
+
+  dropZone.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.classList.remove('drag-over');
+
+    const files = e.dataTransfer.files;
+    Array.from(files).forEach(file => {
+      if (['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) {
+        // Add file to queue — store both name and file object
+        photos.push(file.name);
+      }
+    });
+
+    if (photos.length > 0) {
+      updateQueueUI();
+      if (currentIndex < 0) {
+        currentIndex = 0;
+        goToPhoto(0);
+      }
+    }
+  });
+
   // Initialize on load
   showPageAssign();
   updateGalleryButton();
