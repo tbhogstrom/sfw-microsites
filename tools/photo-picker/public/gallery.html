@@ -61,6 +61,7 @@
     <a href="/">Upload</a>
     <a href="/coverage.html">Coverage</a>
     <a href="/gallery.html" class="active">Gallery</a>
+    <a href="/organize.html">Organize</a>
   </nav>
 
   <div id="content">
@@ -72,104 +73,6 @@
     <div id="gallery-body"></div>
   </div>
 
-  <script>
-    async function init() {
-      let config;
-      try {
-        const configRes = await fetch('/api/config');
-        if (!configRes.ok) throw new Error(`Server error: ${configRes.status}`);
-        config = await configRes.json();
-      } catch (err) {
-        document.getElementById('loading').textContent = `Failed to load: ${err.message}`;
-        return;
-      }
-
-      const picker = document.getElementById('site-picker');
-      config.microsites.forEach(({ key }) => {
-        const opt = document.createElement('option');
-        opt.value = key;
-        opt.textContent = key;
-        picker.appendChild(opt);
-      });
-
-      // Check for ?site= query param (from coverage "View gallery" link)
-      const params = new URLSearchParams(location.search);
-      const siteParam = params.get('site');
-      if (siteParam && config.microsites.some(m => m.key === siteParam)) {
-        picker.value = siteParam;
-      }
-
-      picker.addEventListener('change', () => loadGallery(picker.value));
-      loadGallery(picker.value);
-    }
-
-    async function loadGallery(microsite) {
-      const body = document.getElementById('gallery-body');
-      const loading = document.getElementById('loading');
-      loading.style.display = 'block';
-      body.innerHTML = '';
-
-      let data;
-      try {
-        const res = await fetch(`/api/gallery/${microsite}`);
-        if (!res.ok) throw new Error(`Server error: ${res.status}`);
-        data = await res.json();
-      } catch (err) {
-        loading.textContent = `Failed to load: ${err.message}`;
-        return;
-      }
-
-      loading.style.display = 'none';
-
-      data.clusters.forEach(cluster => {
-        const section = document.createElement('div');
-        section.className = 'cluster-section';
-
-        const imageCount = cluster.images.length;
-        section.innerHTML = `
-          <div class="cluster-header">
-            <div class="cluster-title">${cluster.title}</div>
-            <div class="cluster-meta">${imageCount > 0 ? `${imageCount} image${imageCount !== 1 ? 's' : ''}` : 'No images yet'}</div>
-          </div>
-          <div class="img-grid" id="grid-${cluster.clusterSlug}"></div>
-        `;
-        body.appendChild(section);
-
-        const grid = section.querySelector('.img-grid');
-
-        if (imageCount === 0) {
-          const uploadUrl = `/?microsite=${encodeURIComponent(microsite)}&category=service-page&cluster=${encodeURIComponent(cluster.clusterSlug)}&clusterTitle=${encodeURIComponent(cluster.title)}`;
-          grid.innerHTML = `<a href="${uploadUrl}" class="empty-slot">
-            <div class="plus">+</div>
-            <span class="empty-slot-title">${cluster.title}</span>
-            <span class="empty-slot-hint">Upload →</span>
-          </a>`;
-          return;
-        }
-
-        cluster.images.forEach(img => {
-          const filename = img.url.split('/').pop();
-          const tags = [
-            img.isHero          ? '<span class="tag tag-hero">HERO</span>'    : '',
-            img.isHeaderTexture ? '<span class="tag tag-texture">TEXTURE</span>' : ''
-          ].join('');
-
-          const card = document.createElement('div');
-          card.className = 'img-card' + (img.isHero ? ' has-hero' : '') + (img.isHeaderTexture ? ' has-texture' : '');
-          card.innerHTML = `
-            <img class="img-thumb" src="${img.url}" alt="${img.title}" loading="lazy" />
-            <div class="img-info">
-              ${tags ? `<div class="img-tags">${tags}</div>` : ''}
-              <div class="img-title">${img.title || '—'}</div>
-              <div class="img-filename">${filename}</div>
-            </div>
-          `;
-          grid.appendChild(card);
-        });
-      });
-    }
-
-    init();
-  </script>
+  <script src="gallery.js"></script>
 </body>
 </html>
