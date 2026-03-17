@@ -136,16 +136,22 @@
       "href": "/services/seattle/comprehensive-dry-rot-emergency-services"
     },
     {
-      "title": "Structural Framing Rot Repair",
+      "title": "Exterior Siding Wall Rot Repair",
       "description": "General",
       "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260317-367-98ph7p.jpg",
-      "href": "/services/portland/structural-framing-rot-repair"
+      "href": "/services/seattle/exterior-siding-wall-rot-repair"
     },
     {
-      "title": "Structural Framing Rot Repair",
+      "title": "Exterior Siding Wall Rot Repair",
       "description": "General",
       "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260317-367-98ph7p.jpg",
-      "href": "/services/seattle/structural-framing-rot-repair"
+      "href": "/services/seattle/exterior-siding-wall-rot-repair"
+    },
+    {
+      "title": "Exterior Siding Wall Rot Repair",
+      "description": "General",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260313-505-byn7jh.jpg",
+      "href": "/services/seattle/exterior-siding-wall-rot-repair"
     },
     {
       "title": "Exterior Siding Wall Rot Repair",
@@ -156,8 +162,38 @@
     {
       "title": "Exterior Siding Wall Rot Repair",
       "description": "General",
-      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260313-505-byn7jh.jpg",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260317-161-i91nml.jpg",
+      "href": "/services/portland/exterior-siding-wall-rot-repair"
+    },
+    {
+      "title": "Exterior Siding Wall Rot Repair",
+      "description": "General",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260317-161-i91nml.jpg",
       "href": "/services/seattle/exterior-siding-wall-rot-repair"
+    },
+    {
+      "title": "Roofline Overhang Rot Repair",
+      "description": "General",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/19_mobile-photo%20%284%29.jpg",
+      "href": "/services/portland/roofline-overhang-rot-repair"
+    },
+    {
+      "title": "Roofline Overhang Rot Repair",
+      "description": "General",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/19_mobile-photo%20%284%29.jpg",
+      "href": "/services/seattle/roofline-overhang-rot-repair"
+    },
+    {
+      "title": "Roofline Overhang Rot Repair",
+      "description": "General",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/IMG_0749.jpg",
+      "href": "/services/portland/roofline-overhang-rot-repair"
+    },
+    {
+      "title": "Roofline Overhang Rot Repair",
+      "description": "General",
+      "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/IMG_0749.jpg",
+      "href": "/services/seattle/roofline-overhang-rot-repair"
     }
   ]
 }
