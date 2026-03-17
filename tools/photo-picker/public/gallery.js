@@ -79,8 +79,13 @@ async function loadGallery(microsite) {
     });
 
     // Add empty slots (4 per subtopic)
-    Object.keys(imagesBySubtopic).forEach(subtopic => {
-      const images = imagesBySubtopic[subtopic];
+    // If no images exist, create default 'General' subtopic with 4 empty slots
+    const subtopics = Object.keys(imagesBySubtopic).length > 0
+      ? Object.keys(imagesBySubtopic)
+      : ['General'];
+
+    subtopics.forEach(subtopic => {
+      const images = imagesBySubtopic[subtopic] || [];
       const slotsNeeded = Math.max(4 - images.length, 0);
       for (let i = 0; i < slotsNeeded; i++) {
         allCards.push({
@@ -203,7 +208,10 @@ async function handlePhotoDrop(event, slot, microsite) {
       })
     });
 
-    if (!assignRes.ok) throw new Error('Assignment failed');
+    if (!assignRes.ok) {
+      const errData = await assignRes.json().catch(() => ({}));
+      throw new Error(`Assignment failed: ${errData.error || assignRes.statusText}`);
+    }
 
     // Show image
     const card = document.createElement('div');
