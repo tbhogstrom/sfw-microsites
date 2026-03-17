@@ -17,6 +17,10 @@
 
     h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
     .subtitle { color: #666; font-size: 12px; margin-bottom: 24px; }
+    .header-actions { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; }
+    #btn-refresh { background: #333; color: #888; border: 1px solid #444; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+    #btn-refresh:hover { background: #4a9eff; color: white; border-color: #4a9eff; }
+    #btn-refresh.loading { opacity: 0.5; cursor: not-allowed; }
 
     .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 28px; }
 
@@ -83,6 +87,10 @@
     <h1>Image Coverage</h1>
     <p class="subtitle">Service page image instrumentation across all microsites</p>
 
+    <div class="header-actions">
+      <button id="btn-refresh">🔄 Refresh</button>
+    </div>
+
     <div id="loading">Loading...</div>
     <div id="site-grid" class="site-grid" style="display:none"></div>
     <div id="detail-panel"></div>
@@ -93,13 +101,35 @@
     let selectedMicrosite = null;
 
     async function init() {
+      const btn = document.getElementById('btn-refresh');
+      btn.addEventListener('click', refresh);
+      await refresh();
+    }
+
+    async function refresh() {
+      const btn = document.getElementById('btn-refresh');
+      const loading = document.getElementById('loading');
+
+      btn.classList.add('loading');
+      btn.disabled = true;
+
       try {
+        loading.style.display = 'block';
         const res = await fetch('/api/coverage');
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
         allSites = await res.json();
+        loading.style.display = 'none';
         renderSiteGrid();
+
+        // If a site was selected, reload its details too
+        if (selectedMicrosite) {
+          await selectSite(selectedMicrosite);
+        }
       } catch (err) {
-        document.getElementById('loading').textContent = `Failed to load: ${err.message}`;
+        loading.textContent = `Failed to load: ${err.message}`;
+      } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
       }
     }
 
