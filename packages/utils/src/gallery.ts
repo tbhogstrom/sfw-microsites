@@ -35,8 +35,11 @@ export function selectServicePhotos(
     return shuffleArray(deduped).slice(0, 4);
   }
 
+  // Deduplicate current service photos first
+  const dedupedCurrentPhotos = deduplicateByTitle(currentServicePhotos);
+
   // Get all other services in the same location, excluding titles already in current service
-  const currentTitles = new Set(currentServicePhotos.map((p) => p.title));
+  const currentTitles = new Set(dedupedCurrentPhotos.map((p) => p.title));
   const otherServicesInLocation = allPhotos.filter(
     (photo) =>
       !currentServicePhotos.includes(photo) &&
@@ -45,17 +48,17 @@ export function selectServicePhotos(
   );
 
   // How many photos do we need to fill the gallery?
-  const needed = 4 - currentServicePhotos.length;
+  const needed = 4 - dedupedCurrentPhotos.length;
 
   if (otherServicesInLocation.length === 0) {
     // No other services in this location, return what we have
-    return currentServicePhotos;
+    return dedupedCurrentPhotos;
   }
 
   // Pick a random service and take photos from it
   const randomServicePhotos = shuffleArray(otherServicesInLocation).slice(0, needed);
 
-  return [...currentServicePhotos, ...randomServicePhotos];
+  return [...dedupedCurrentPhotos, ...randomServicePhotos];
 }
 
 /**
