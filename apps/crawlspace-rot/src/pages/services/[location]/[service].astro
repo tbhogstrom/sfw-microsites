@@ -4,12 +4,15 @@
  * URL: /services/portland/crawlspace-services, /services/seattle/crawlspace-insulation, etc.
  */
 import BaseLayout from '@sfw/ui';
-import { HeroSection, CTASection, FAQAccordion } from '@sfw/ui';
+import { HeroSection, CTASection, FAQAccordion, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
+import type { GalleryService } from '@sfw/ui';
 import { getServicePaths, getService } from '../../../data/services';
 import { getClusterPaths, getClusterService } from '../../../data/cluster-services';
 import ServiceContent from '../../../components/ServiceContent.astro';
 import ClusterHero from '../../../components/ClusterHero.astro';
+import { servicePageImages } from '../../../data/images';
+import { selectServicePhotos } from '@sfw/utils';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
@@ -25,6 +28,10 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['crawlspace-rot'];
+
+const currentHref = `/services/${location}/${service}`;
+const myImages = servicePageImages.filter((img: GalleryService) => img.href === currentHref);
+const galleryServices = selectServicePhotos(servicePageImages, myImages, location as string);
 
 // Get location-specific phone number
 const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
@@ -65,6 +72,15 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
         formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
         region: "na1"
       }}
+    />
+  )}
+
+  {serviceData.clusterSections && (
+    <ServicesGallery
+      heading="More Crawlspace Services"
+      services={galleryServices}
+      variant="light"
+      class="border-t border-gray-200"
     />
   )}
 
