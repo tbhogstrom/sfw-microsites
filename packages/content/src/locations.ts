@@ -100,29 +100,7 @@ export const deckRepairLocations: Record<string, Location> = {
       },
     ],
 
-    testimonials: [
-      {
-        name: 'Michael Chen',
-        location: 'Capitol Hill, Seattle',
-        text: 'They completely transformed our old, rotting deck into a beautiful outdoor space. The team was professional and finished on time despite the rainy weather.',
-        rating: 5,
-        service: 'Deck Restoration',
-      },
-      {
-        name: 'Sarah Johnson',
-        location: 'Ballard, Seattle',
-        text: 'Outstanding work on our deck rebuild. They understood the unique challenges of our hillside property and created a stunning multi-level deck.',
-        rating: 5,
-        service: 'Custom Deck Building',
-      },
-      {
-        name: 'David Martinez',
-        location: 'West Seattle',
-        text: 'Best deck contractors in Seattle! They repaired our water-damaged deck and it looks brand new. Highly recommend their staining service.',
-        rating: 5,
-        service: 'Deck Repair',
-      },
-    ],
+    testimonials: [],
 
     neighborhoods: [
       { name: 'Capitol Hill', description: 'Historic homes with unique deck requirements' },
@@ -186,29 +164,7 @@ export const deckRepairLocations: Record<string, Location> = {
       },
     ],
 
-    testimonials: [
-      {
-        name: 'Emily Rodriguez',
-        location: 'Pearl District, Portland',
-        text: 'Incredible attention to detail! Our new rooftop deck is the perfect addition to our condo. The team worked around our busy schedule.',
-        rating: 5,
-        service: 'Custom Deck Building',
-      },
-      {
-        name: 'James Wilson',
-        location: 'Hawthorne, Portland',
-        text: 'They saved our old cedar deck! We thought we\'d need a complete rebuild, but they restored it beautifully at half the cost.',
-        rating: 5,
-        service: 'Deck Restoration',
-      },
-      {
-        name: 'Lisa Thompson',
-        location: 'Lake Oswego',
-        text: 'Professional, punctual, and their work is top-notch. Our backyard deck is now our favorite space in the house.',
-        rating: 5,
-        service: 'Deck Building',
-      },
-    ],
+    testimonials: [],
 
     neighborhoods: [
       { name: 'Pearl District', description: 'Urban rooftop and balcony decks' },
