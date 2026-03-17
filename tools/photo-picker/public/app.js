@@ -36,6 +36,7 @@ let uploadLog = []; // { filename, category, page, url, microsite }
 let sessionGalleryCounts = {}; // microsite -> count of gallery uploads this session
 let lastUploadedUrl = null; // used by preview tab
 let serviceTopicsCache = {}; // microsite -> [{ clusterSlug, title, subtopics }]
+let droppedFiles = {}; // filename -> File object (for drag-dropped files)
 
 // --- DOM refs ---
 const queueList = document.getElementById('queue-list');
@@ -330,7 +331,18 @@ async function loadPhotos() {
 function goToPhoto(index) {
   currentIndex = index;
   const filename = photos[index];
-  photoPreview.src = `/api/photos/${encodeURIComponent(filename)}`;
+
+  // Check if this is a dropped file
+  if (droppedFiles[filename]) {
+    const fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      photoPreview.src = e.target.result;
+    };
+    fileReader.readAsDataURL(droppedFiles[filename]);
+  } else {
+    photoPreview.src = `/api/photos/${encodeURIComponent(filename)}`;
+  }
+
   photoPreview.alt = filename;
   updateQueueUI();
   editorPosition.textContent = `${index + 1} / ${photos.length}`;
@@ -489,14 +501,18 @@ function bindEvents() {
     dropZone.classList.remove('drag-over');
 
     const files = e.dataTransfer.files;
+    let addedFiles = false;
+
     Array.from(files).forEach(file => {
       if (['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.type)) {
-        // Add file to queue — store both name and file object
+        // Store the File object and add to queue
         photos.push(file.name);
+        droppedFiles[file.name] = file;
+        addedFiles = true;
       }
     });
 
-    if (photos.length > 0) {
+    if (addedFiles) {
       updateQueueUI();
       if (currentIndex < 0) {
         currentIndex = 0;
@@ -531,10 +547,21 @@ async function handleUpload() {
   uploadResult.className = '';
 
   try {
-    // 1. Fetch the original photo as a blob and convert to base64
-    const photoRes = await fetch(`/api/photos/${encodeURIComponent(filename)}`);
-    const photoBlob = await photoRes.blob();
-    const mimeType = photoBlob.type || 'image/jpeg';
+    // 1. Get the original photo (from server or dropped file)
+    let photoBlob;
+    let mimeType;
+
+    if (droppedFiles[filename]) {
+      // Use dropped file directly
+      photoBlob = droppedFiles[filename];
+      mimeType = photoBlob.type || 'image/jpeg';
+    } else {
+      // Fetch from server
+      const photoRes = await fetch(`/api/photos/${encodeURIComponent(filename)}`);
+      photoBlob = await photoRes.blob();
+      mimeType = photoBlob.type || 'image/jpeg';
+    }
+
     const base64 = await new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result.split(',')[1]);
