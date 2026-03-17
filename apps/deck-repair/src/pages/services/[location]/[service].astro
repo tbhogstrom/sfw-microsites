@@ -28,6 +28,8 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['deck-repair'];
+const heroBackgroundImage =
+  'https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/background/5794875680046139643.jpg.webp';
 
 const currentHref = `/services/${location}/${service}`;
 
@@ -66,6 +68,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     <HeroSection
       headline={serviceData.heroHeadline}
       subheadline={serviceData.heroSubheadline}
+      backgroundImage={heroBackgroundImage}
       primaryCTA={{ text: 'Get Free Quote', href: `tel:${locationPhone}` }}
       secondaryCTA={{ text: 'Learn More', href: '#overview' }}
       height="lg"
