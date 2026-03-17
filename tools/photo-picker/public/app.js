@@ -305,25 +305,44 @@ async function loadConfig() {
   });
 }
 
-async function loadPhotos() {
-  const res = await fetch('/api/photos');
-  const data = await res.json();
-  photos = data.photos;
-
+function renderQueueItems() {
   queueCount.textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''}`;
-
   queueList.innerHTML = '';
+
   photos.forEach((filename, i) => {
     const item = document.createElement('div');
     item.className = 'queue-item';
     item.dataset.index = i;
+
+    // Determine image source
+    let imgSrc;
+    if (droppedFiles[filename]) {
+      // For dropped files, use FileReader to create data URL
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        img.src = e.target.result;
+      };
+      fileReader.readAsDataURL(droppedFiles[filename]);
+      imgSrc = 'about:blank'; // placeholder while loading
+    } else {
+      // For server files, use API endpoint
+      imgSrc = `/api/photos/${encodeURIComponent(filename)}`;
+    }
+
     const img = document.createElement('img');
-    img.src = `/api/photos/${encodeURIComponent(filename)}`;
+    img.src = imgSrc;
     img.alt = filename;
     item.appendChild(img);
     item.addEventListener('click', () => goToPhoto(i));
     queueList.appendChild(item);
   });
+}
+
+async function loadPhotos() {
+  const res = await fetch('/api/photos');
+  const data = await res.json();
+  photos = data.photos;
+  renderQueueItems();
 
   if (photos.length > 0) goToPhoto(0);
 }
@@ -513,8 +532,12 @@ function bindEvents() {
     });
 
     if (addedFiles) {
-      updateQueueUI();
-      if (currentIndex < 0) {
+      renderQueueItems();
+      if (currentIndex === 0 && photos.length === 1) {
+        // If this was the first file, show it in preview
+        goToPhoto(0);
+      } else if (currentIndex >= photos.length) {
+        // If current index is out of bounds, reset
         currentIndex = 0;
         goToPhoto(0);
       }

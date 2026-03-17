@@ -1,5 +1,7 @@
 {
-  "heroImages": {},
+  "heroImages": {
+    "index": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/hero/5794875680046139643.jpg.webp"
+  },
   "backgroundImages": {},
   "galleryImages": [
     {
@@ -63,6 +65,114 @@
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260316-314-2zybwf-1773681982074.webp",
       "href": "/services/seattle/deck-safety-code-hardware-upgrades"
+    },
+    {
+      "title": "Deck Ledger Flashing Water Protection",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260317-150-rmerao.jpg",
+      "href": "/services/portland/deck-ledger-flashing-water-protection"
+    },
+    {
+      "title": "Deck Ledger Flashing Water Protection",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260317-150-rmerao.jpg",
+      "href": "/services/seattle/deck-ledger-flashing-water-protection"
+    },
+    {
+      "title": "Deck Structural Framing Repair",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20241119_150832.jpg",
+      "href": "/services/portland/deck-structural-framing-repair"
+    },
+    {
+      "title": "Deck Structural Framing Repair",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20241119_150832.jpg",
+      "href": "/services/seattle/deck-structural-framing-repair"
+    },
+    {
+      "title": "Deck Structural Framing Repair",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20241120_082350.jpg",
+      "href": "/services/portland/deck-structural-framing-repair"
+    },
+    {
+      "title": "Deck Structural Framing Repair",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20241120_082350.jpg",
+      "href": "/services/seattle/deck-structural-framing-repair"
+    },
+    {
+      "title": "Deck Structural Framing Repair",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20241112_120647.jpg",
+      "href": "/services/portland/deck-structural-framing-repair"
+    },
+    {
+      "title": "Deck Structural Framing Repair",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20241112_120647.jpg",
+      "href": "/services/seattle/deck-structural-framing-repair"
+    },
+    {
+      "title": "Deck Stairs Railings",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20250527_091955.jpg",
+      "href": "/services/portland/deck-stairs-railings"
+    },
+    {
+      "title": "Deck Stairs Railings",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/20250527_091955.jpg",
+      "href": "/services/seattle/deck-stairs-railings"
+    },
+    {
+      "title": "Deck Safety Code Hardware Upgrades",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/1678924765108.jpg",
+      "href": "/services/portland/deck-safety-code-hardware-upgrades"
+    },
+    {
+      "title": "Deck Safety Code Hardware Upgrades",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/1678924765108.jpg",
+      "href": "/services/seattle/deck-safety-code-hardware-upgrades"
+    },
+    {
+      "title": "Deck Skirting Lattice Accessories",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/4244467351863255712%5B1%5D.jpg",
+      "href": "/services/portland/deck-skirting-lattice-accessories"
+    },
+    {
+      "title": "Deck Skirting Lattice Accessories",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/4244467351863255712%5B1%5D.jpg",
+      "href": "/services/seattle/deck-skirting-lattice-accessories"
+    },
+    {
+      "title": "Deck Board Repair Replacement",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_6179.jpg",
+      "href": "/services/portland/deck-board-repair-replacement"
+    },
+    {
+      "title": "Deck Board Repair Replacement",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_6179.jpg",
+      "href": "/services/seattle/deck-board-repair-replacement"
+    },
+    {
+      "title": "Deck Board Repair Replacement",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_6193.jpg",
+      "href": "/services/portland/deck-board-repair-replacement"
+    },
+    {
+      "title": "Deck Board Repair Replacement",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_6193.jpg",
+      "href": "/services/seattle/deck-board-repair-replacement"
     }
   ]
 }
