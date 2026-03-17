@@ -47,100 +47,87 @@ async function loadGallery(microsite) {
 
   loading.style.display = 'none';
 
-  // Build expandable tree
+  // Create 2-column grid
+  const grid = document.createElement('div');
+  grid.className = 'gallery-grid';
+
+  // Collect all images with cluster/subtopic info
+  const allCards = [];
+
   data.clusters.forEach(cluster => {
-    const clusterDiv = document.createElement('div');
-    clusterDiv.className = 'cluster-section';
-
-    const imageCount = (cluster.images || []).length;
-    const clusterHeader = document.createElement('div');
-    clusterHeader.className = 'cluster-header';
-    clusterHeader.style.cursor = 'pointer';
-
-    const toggle = document.createElement('span');
-    toggle.className = 'cluster-toggle';
-    toggle.textContent = '▼';
-    toggle.style.marginRight = '8px';
-
-    const title = document.createElement('span');
-    title.className = 'cluster-title';
-    title.textContent = cluster.title;
-
-    const meta = document.createElement('span');
-    meta.className = 'cluster-meta';
-    meta.textContent = `${imageCount} image${imageCount !== 1 ? 's' : ''}`;
-
-    clusterHeader.appendChild(toggle);
-    clusterHeader.appendChild(title);
-    clusterHeader.appendChild(meta);
-
-    const clusterContent = document.createElement('div');
-    clusterContent.className = 'cluster-content';
-
-    // Group images by subtopic (description field)
     const imagesBySubtopic = {};
     if (cluster.images) {
       cluster.images.forEach(img => {
-        const subtopic = img.description || 'Images';
+        const subtopic = img.description || 'General';
         if (!imagesBySubtopic[subtopic]) imagesBySubtopic[subtopic] = [];
         imagesBySubtopic[subtopic].push(img);
       });
     }
 
-    if (Object.keys(imagesBySubtopic).length === 0) {
-      const emptyMsg = document.createElement('div');
-      emptyMsg.style.padding = '16px';
-      emptyMsg.style.color = '#888';
-      emptyMsg.textContent = 'No images. Drag photos here to add them.';
-      clusterContent.appendChild(emptyMsg);
-    } else {
-      Object.entries(imagesBySubtopic).forEach(([subtopic, images]) => {
-        const subtopicDiv = document.createElement('div');
-        subtopicDiv.className = 'subtopic-section';
-
-        const label = document.createElement('div');
-        label.className = 'subtopic-label';
-        label.textContent = subtopic;
-
-        const grid = document.createElement('div');
-        grid.className = 'image-grid';
-
-        images.forEach(img => {
-          const card = document.createElement('div');
-          card.className = 'image-card';
-          card.innerHTML = `<img src="${img.url}" alt="" class="image-thumb" /><button class="image-remove">×</button>`;
-          grid.appendChild(card);
+    // Add images first
+    Object.entries(imagesBySubtopic).forEach(([subtopic, images]) => {
+      images.forEach(img => {
+        allCards.push({
+          type: 'image',
+          cluster: cluster.title,
+          clusterSlug: cluster.clusterSlug,
+          subtopic: subtopic,
+          image: img,
+          microsite: microsite
         });
-
-        // Add empty slots for drag-drop
-        const slotsNeeded = Math.max(4 - images.length, 0);
-        for (let i = 0; i < slotsNeeded; i++) {
-          const slot = document.createElement('div');
-          slot.className = 'empty-slot';
-          slot.dataset.clusterSlug = cluster.clusterSlug;
-          slot.dataset.subtopic = subtopic;
-          slot.dataset.microsite = microsite;
-          slot.innerHTML = '<div class="empty-slot-content"><div class="empty-slot-icon">+</div><div class="empty-slot-text">Drop</div></div>';
-          grid.appendChild(slot);
-        }
-
-        subtopicDiv.appendChild(label);
-        subtopicDiv.appendChild(grid);
-        clusterContent.appendChild(subtopicDiv);
       });
-    }
-
-    clusterHeader.addEventListener('click', () => {
-      const visible = clusterContent.style.display !== 'none';
-      clusterContent.style.display = visible ? 'none' : 'block';
-      toggle.textContent = visible ? '▶' : '▼';
     });
 
-    clusterDiv.appendChild(clusterHeader);
-    clusterDiv.appendChild(clusterContent);
-    body.appendChild(clusterDiv);
+    // Add empty slots (4 per subtopic)
+    Object.keys(imagesBySubtopic).forEach(subtopic => {
+      const images = imagesBySubtopic[subtopic];
+      const slotsNeeded = Math.max(4 - images.length, 0);
+      for (let i = 0; i < slotsNeeded; i++) {
+        allCards.push({
+          type: 'empty',
+          cluster: cluster.title,
+          clusterSlug: cluster.clusterSlug,
+          subtopic: subtopic,
+          microsite: microsite
+        });
+      }
+    });
   });
 
+  // Render all cards in grid
+  allCards.forEach(cardData => {
+    if (cardData.type === 'image') {
+      const card = document.createElement('div');
+      card.className = 'image-card';
+      card.innerHTML = `
+        <div class="image-card-labels">
+          <div class="image-card-cluster">${cardData.cluster}</div>
+          <div class="image-card-subtopic">${cardData.subtopic}</div>
+        </div>
+        <div class="image-card-image">
+          <img src="${cardData.image.url}" alt="" />
+          <button class="image-remove">×</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    } else if (cardData.type === 'empty') {
+      const slot = document.createElement('div');
+      slot.className = 'empty-slot';
+      slot.dataset.clusterSlug = cardData.clusterSlug;
+      slot.dataset.subtopic = cardData.subtopic;
+      slot.dataset.microsite = cardData.microsite;
+      slot.innerHTML = `
+        <div class="empty-slot-icon">⬇</div>
+        <div class="empty-slot-text">
+          <strong>${cardData.cluster}</strong><br/>
+          ${cardData.subtopic}
+        </div>
+      `;
+      grid.appendChild(slot);
+    }
+  });
+
+  body.appendChild(grid);
   setupDragDrop(microsite);
 }
 
