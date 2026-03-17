@@ -4,9 +4,9 @@ import type { GalleryService } from '@sfw/ui';
  * Select gallery photos for a service page.
  *
  * Rules:
- * - If service has 4+ photos: randomly select 4
- * - If service has 1-3 photos: return those + random padding from same location
- * - If service has 0 photos: return 4 from random service in same location
+ * - If service has 4+ photos: randomly select 4 (deduplicated by title)
+ * - If service has 1-3 photos: return those + random padding from same location (no duplicate titles)
+ * - If service has 0 photos: return 4 from random service in same location (no duplicate titles)
  * - If no other services exist in location: return all current service photos (may be fewer than 4)
  *
  * @param allPhotos - All photos across all services
@@ -19,14 +19,29 @@ export function selectServicePhotos(
   currentServicePhotos: GalleryService[],
   currentLocation: string
 ): GalleryService[] {
+  // Deduplicate by title, keeping first occurrence
+  const deduplicateByTitle = (photos: GalleryService[]): GalleryService[] => {
+    const seen = new Set<string>();
+    return photos.filter((photo) => {
+      if (seen.has(photo.title)) return false;
+      seen.add(photo.title);
+      return true;
+    });
+  };
+
   // If we have 4 or more photos for this service, shuffle and take 4
   if (currentServicePhotos.length >= 4) {
-    return shuffleArray(currentServicePhotos).slice(0, 4);
+    const deduped = deduplicateByTitle(currentServicePhotos);
+    return shuffleArray(deduped).slice(0, 4);
   }
 
-  // Get all other services in the same location
+  // Get all other services in the same location, excluding titles already in current service
+  const currentTitles = new Set(currentServicePhotos.map((p) => p.title));
   const otherServicesInLocation = allPhotos.filter(
-    (photo) => !currentServicePhotos.includes(photo) && photo.href.includes(`/services/${currentLocation}/`)
+    (photo) =>
+      !currentServicePhotos.includes(photo) &&
+      photo.href.includes(`/services/${currentLocation}/`) &&
+      !currentTitles.has(photo.title)
   );
 
   // How many photos do we need to fill the gallery?
