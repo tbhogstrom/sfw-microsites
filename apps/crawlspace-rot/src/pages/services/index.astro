@@ -13,6 +13,22 @@ const servicesByLocation = {
 };
 
 const config = serviceConfigs['crawlspace-rot'];
+
+function getCardDescription(service: (typeof allClusterServices)[number]) {
+  const headings = service.subtopicDescriptors
+    ?.map((item) => item.heading.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+
+  if (headings && headings.length > 0) {
+    return `Includes ${headings.join(', ')}.`;
+  }
+
+  return service.heroSubheadline
+    .replace(/^\[STUB\]\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 ---
 
 <BaseLayout
@@ -58,7 +74,7 @@ const config = serviceConfigs['crawlspace-rot'];
                 {service.name}
               </h3>
               <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
+                {getCardDescription(service)}
               </p>
               <div class="flex items-center text-primary font-semibold">
                 Learn More
@@ -108,7 +124,7 @@ const config = serviceConfigs['crawlspace-rot'];
                 {service.name}
               </h3>
               <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
+                {getCardDescription(service)}
               </p>
               <div class="flex items-center text-primary font-semibold">
                 Learn More
