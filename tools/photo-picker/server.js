@@ -10,6 +10,8 @@ import { fileURLToPath } from 'url';
 import open from 'open';
 import sharp from 'sharp';
 import { presets } from './presets.js';
+import { log, getLogs, getLogStats } from './logger.js';
+import { createBackup, listBackups, restoreBackup } from './backup.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../../');
@@ -125,8 +127,22 @@ app.post('/api/upload', async (req, res) => {
     // Clean up temp file
     await unlink(tmpPath);
 
+    // Log the upload
+    await log('upload', microsite, {
+      filename: finalFilename,
+      category,
+      url: result.url,
+      size: result.size,
+      status: 'success'
+    });
+
     res.json({ url: result.url, pathname: result.pathname, size: result.size });
   } catch (err) {
+    await log('upload', req.body.microsite || 'unknown', {
+      filename: req.body.filename,
+      status: 'error',
+      error: err.message
+    });
     res.status(500).json({ error: err.message });
   }
 });
@@ -191,6 +207,15 @@ async function writeImagesJson(microsite, data) {
   const tsPath = resolve(dataDir, 'images.ts');
 
   await mkdir(dataDir, { recursive: true });
+
+  // Create backup before writing
+  try {
+    const oldData = JSON.parse(await readFile(jsonPath, 'utf-8'));
+    await createBackup(microsite, oldData);
+  } catch {
+    // First time creating this file, no backup needed
+  }
+
   await writeFile(jsonPath, JSON.stringify(data, null, 2) + '\n', 'utf-8');
 
   // Create the TypeScript wrapper once — never overwrite if it exists
@@ -490,6 +515,172 @@ app.get('/api/gallery/:microsite', async (req, res) => {
 
     res.json({ microsite, clusters });
   } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/uncategorized/:microsite
+// Returns service-page images that are uncategorized (href contains 'uncategorized')
+app.get('/api/uncategorized/:microsite', async (req, res) => {
+  try {
+    const { microsite } = req.params;
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
+
+    const imagesData = await readImagesJson(microsite);
+    const servicePageImages = imagesData.servicePageImages || [];
+
+    // Filter images with 'uncategorized' in their href
+    const uncategorized = servicePageImages
+      .filter(img => img.href.includes('uncategorized'))
+      .map(img => ({
+        url: img.image,
+        title: img.title || '',
+        clusterSlug: 'uncategorized'
+      }));
+
+    // Deduplicate by URL
+    const seen = new Set();
+    const unique = uncategorized.filter(img => {
+      if (seen.has(img.url)) return false;
+      seen.add(img.url);
+      return true;
+    });
+
+    res.json(unique);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/update-image
+// Body: { microsite, imageUrl, clusterSlug, subtopic, title }
+// Updates an image's href to point to the correct cluster
+app.post('/api/update-image', async (req, res) => {
+  try {
+    const { microsite, imageUrl, clusterSlug, subtopic, title } = req.body;
+
+    if (!microsite || !imageUrl || !clusterSlug) {
+      return res.status(400).json({ error: 'microsite, imageUrl, and clusterSlug are required' });
+    }
+
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
+
+    const data = await readImagesJson(microsite);
+    const servicePageImages = data.servicePageImages || [];
+
+    // Use cluster title as title, subtopic as description
+    const finalTitle = title || clusterSlug;
+    const finalDescription = subtopic || '';
+
+    // Find all entries for this image URL and update them
+    let updated = false;
+    for (const img of servicePageImages) {
+      if (img.image === imageUrl) {
+        img.title = finalTitle;
+        img.description = finalDescription;
+        // Update href for both locations (portland + seattle)
+        for (const location of ['portland', 'seattle']) {
+          img.href = `/services/${location}/${clusterSlug}`;
+        }
+        updated = true;
+      }
+    }
+
+    if (!updated) {
+      // If image not found, add it
+      for (const location of ['portland', 'seattle']) {
+        servicePageImages.push({
+          title: finalTitle,
+          description: finalDescription,
+          image: imageUrl,
+          href: `/services/${location}/${clusterSlug}`
+        });
+      }
+    }
+
+    await writeImagesJson(microsite, data);
+
+    // Log the update
+    await log('update', microsite, {
+      imageUrl: imageUrl.slice(0, 80),
+      clusterSlug,
+      subtopic: subtopic || null,
+      status: 'success'
+    });
+
+    res.json({ ok: true, microsite, clusterSlug, subtopic });
+  } catch (err) {
+    await log('update', microsite, {
+      imageUrl: imageUrl ? imageUrl.slice(0, 80) : 'unknown',
+      status: 'error',
+      error: err.message
+    });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/logs?microsite=deck-repair&limit=50
+app.get('/api/logs', async (req, res) => {
+  try {
+    const { microsite, limit = 100 } = req.query;
+    const logs = await getLogs(microsite, parseInt(limit));
+    res.json({ logs, count: logs.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/log-stats
+app.get('/api/log-stats', async (req, res) => {
+  try {
+    const stats = await getLogStats();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/backups/:microsite
+app.get('/api/backups/:microsite', async (req, res) => {
+  try {
+    const { microsite } = req.params;
+    const backups = await listBackups(microsite);
+    res.json({ microsite, backups });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/restore/:microsite/:filename
+app.post('/api/restore/:microsite/:filename', async (req, res) => {
+  try {
+    const { microsite, filename } = req.params;
+    const validMicrosites = Object.keys(blobConfig.microsites);
+    if (!validMicrosites.includes(microsite)) {
+      return res.status(400).json({ error: 'unknown microsite' });
+    }
+
+    const data = await restoreBackup(microsite, filename);
+    await writeImagesJson(microsite, data);
+
+    await log('restore', microsite, {
+      filename,
+      status: 'success'
+    });
+
+    res.json({ ok: true, microsite, filename });
+  } catch (err) {
+    await log('restore', req.params.microsite, {
+      filename: req.params.filename,
+      status: 'error',
+      error: err.message
+    });
     res.status(500).json({ error: err.message });
   }
 });

@@ -1,0 +1,97 @@
+<h2>Where should the map live on the location page?</h2>
+<p class="subtitle">Current page order: Hero → Stats → Services → Neighborhoods → Process → Testimonials → FAQ → Contact → CTA</p>
+
+<div class="options">
+
+  <div class="option" data-choice="contact" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Inside the Contact section ★ recommended</h3>
+      <p>Replace the text "Service Area" block with a live map. Contact info left, map right — same grid, more visual weight. User intent at contact = high trust moment.</p>
+      <div style="margin-top:12px;border:1px solid #ddd;border-radius:6px;overflow:hidden;font-size:11px">
+        <div style="background:#1a3a5c;color:white;padding:6px 10px;font-size:10px;font-weight:600;letter-spacing:.05em">CONTACT SECTION</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+          <div style="padding:10px;background:#f9f9f9;border-right:1px solid #eee">
+            <div style="font-weight:600;font-size:11px;margin-bottom:6px">Contact Information</div>
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <div style="background:#eee;height:10px;border-radius:2px;width:80%"></div>
+              <div style="background:#eee;height:10px;border-radius:2px;width:60%"></div>
+              <div style="background:#eee;height:10px;border-radius:2px;width:70%"></div>
+              <div style="margin-top:6px;background:#4a9eff;height:10px;border-radius:2px;width:50%;opacity:.4"></div>
+              <div style="background:#eee;height:10px;border-radius:2px;width:40%"></div>
+            </div>
+          </div>
+          <div style="background:#c8d8e8;display:flex;align-items:center;justify-content:center;min-height:90px;position:relative">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#b8c8d8,#c8d8e8)"></div>
+            <div style="position:relative;text-align:center">
+              <div style="font-size:18px">🗺️</div>
+              <div style="font-size:9px;color:#555;margin-top:2px">Google Map</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="neighborhoods" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>In the Neighborhoods section</h3>
+      <p>Map above or alongside the neighborhood grid. Reinforces geographic coverage. Good for "do you serve my area" queries but farther from the conversion moment.</p>
+      <div style="margin-top:12px;border:1px solid #ddd;border-radius:6px;overflow:hidden;font-size:11px">
+        <div style="background:#2d6a4f;color:white;padding:6px 10px;font-size:10px;font-weight:600;letter-spacing:.05em">NEIGHBORHOODS SECTION</div>
+        <div style="padding:10px;background:#f5f5f5">
+          <div style="background:#c8d8e8;border-radius:4px;height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;position:relative;overflow:hidden">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#b8c8d8,#c8d8e8)"></div>
+            <div style="position:relative;text-align:center"><div style="font-size:16px">🗺️</div><div style="font-size:9px;color:#555">Google Map — full width</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+            <div style="background:white;padding:4px;border-radius:3px;text-align:center;font-size:9px;border:1px solid #eee">Pearl Dist.</div>
+            <div style="background:white;padding:4px;border-radius:3px;text-align:center;font-size:9px;border:1px solid #eee">Hawthorne</div>
+            <div style="background:white;padding:4px;border-radius:3px;text-align:center;font-size:9px;border:1px solid #eee">Sellwood</div>
+            <div style="background:white;padding:4px;border-radius:3px;text-align:center;font-size:9px;border:1px solid #eee">NW Hills</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="both" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Both — small in Neighborhoods, full in Contact</h3>
+      <p>Map appears twice: compact view in the neighborhoods section to show coverage area, then full-size in the contact section as a trust anchor. Maximum GMB signal surface.</p>
+      <div style="margin-top:12px;border:1px solid #ddd;border-radius:6px;overflow:hidden;font-size:11px">
+        <div style="background:#2d6a4f;color:white;padding:4px 10px;font-size:10px;font-weight:600;letter-spacing:.05em">NEIGHBORHOODS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+          <div style="padding:8px;background:#f5f5f5">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">
+              <div style="background:white;padding:3px;border-radius:2px;text-align:center;font-size:8px;border:1px solid #eee">Pearl Dist.</div>
+              <div style="background:white;padding:3px;border-radius:2px;text-align:center;font-size:8px;border:1px solid #eee">Hawthorne</div>
+              <div style="background:white;padding:3px;border-radius:2px;text-align:center;font-size:8px;border:1px solid #eee">Sellwood</div>
+              <div style="background:white;padding:3px;border-radius:2px;text-align:center;font-size:8px;border:1px solid #eee">NW Hills</div>
+            </div>
+          </div>
+          <div style="background:#c8d8e8;display:flex;align-items:center;justify-content:center;min-height:60px;position:relative">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#b8c8d8,#c8d8e8)"></div>
+            <div style="position:relative;text-align:center"><div style="font-size:12px">🗺️</div><div style="font-size:8px;color:#555">compact</div></div>
+          </div>
+        </div>
+        <div style="background:#1a3a5c;color:white;padding:4px 10px;font-size:10px;font-weight:600;letter-spacing:.05em;margin-top:4px">CONTACT</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+          <div style="padding:8px;background:#f9f9f9">
+            <div style="display:flex;flex-direction:column;gap:3px">
+              <div style="background:#eee;height:8px;border-radius:2px;width:80%"></div>
+              <div style="background:#eee;height:8px;border-radius:2px;width:60%"></div>
+            </div>
+          </div>
+          <div style="background:#c8d8e8;display:flex;align-items:center;justify-content:center;min-height:60px;position:relative">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#b8c8d8,#c8d8e8)"></div>
+            <div style="position:relative;text-align:center"><div style="font-size:12px">🗺️</div><div style="font-size:8px;color:#555">full</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

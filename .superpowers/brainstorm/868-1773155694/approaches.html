@@ -1,0 +1,81 @@
+<h2>Two features, three design decisions</h2>
+<p class="subtitle">Pick an approach for each. I'll recommend, but your call.</p>
+
+<div class="section">
+  <h3>① Where do uploaded URLs live in the codebase?</h3>
+  <div class="options">
+    <div class="option" data-choice="images-a" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>One <code>images.ts</code> per app <span style="color:#a1b770;font-size:12px;margin-left:6px">★ recommended</span></h3>
+        <p>Each site gets <code>apps/deck-repair/src/data/images.ts</code> exporting <code>heroImages</code> (page → URL map) and <code>galleryImages</code> (array). Pages import from it. Photo-picker writes/updates this file after upload.</p>
+        <div class="pros-cons" style="margin-top:8px;font-size:12px">
+          <div class="pros"><ul><li>One place to look per site</li><li>Easy to bulk-edit manually</li><li>Consistent pattern across all 11 apps</li></ul></div>
+          <div class="cons"><ul><li>Pages need a one-time refactor to import from it</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="option" data-choice="images-b" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>Separate per-category files</h3>
+        <p><code>hero-images.ts</code>, <code>gallery-images.ts</code>, etc. per app. More granular but more files to manage.</p>
+        <div class="pros-cons" style="margin-top:8px;font-size:12px">
+          <div class="pros"><ul><li>Each category fully isolated</li></ul></div>
+          <div class="cons"><ul><li>11 apps × N categories = many files</li><li>Pages import from multiple places</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="option" data-choice="images-c" onclick="toggleSelect(this)">
+      <div class="letter">C</div>
+      <div class="content">
+        <h3>Keep hardcoded, just log URLs</h3>
+        <p>Don't touch page files at all. Photo-picker just shows a copyable URL log — paste manually where needed.</p>
+        <div class="pros-cons" style="margin-top:8px;font-size:12px">
+          <div class="pros"><ul><li>Zero codebase changes</li><li>Fastest to ship</li></ul></div>
+          <div class="cons"><ul><li>Manual copy-paste per page</li><li>No bulk hero assignment</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>② How does photo-picker generate gallery components?</h3>
+  <div class="options">
+    <div class="option" data-choice="gallery-a" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>Generate ready-to-paste Astro snippet <span style="color:#a1b770;font-size:12px;margin-left:6px">★ recommended</span></h3>
+        <p>After uploading 4+ gallery images, a "Generate Gallery" button appears. It writes <code>apps/deck-repair/src/data/images.ts</code> with the <code>galleryImages</code> array, and shows a ready-to-paste <code>&lt;ServicesGallery /&gt;</code> snippet with all props filled in.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="gallery-b" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>Generate a standalone <code>SiteGallery.astro</code></h3>
+        <p>Writes a full Astro component file per site with the images hardcoded inside. Drop <code>&lt;SiteGallery /&gt;</code> anywhere.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>③ Component preview — how accurate does it need to be?</h3>
+  <div class="options">
+    <div class="option" data-choice="preview-a" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>Inline HTML mock in photo-picker <span style="color:#a1b770;font-size:12px;margin-left:6px">★ recommended</span></h3>
+        <p>After selecting category + microsite, the center panel shows the uploaded image rendered inside a faithful mockup of the target component (hero section, gallery card, etc.). No Astro dev server needed.</p>
+      </div>
+    </div>
+    <div class="option" data-choice="preview-b" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>Live iframe to Astro dev server</h3>
+        <p>Embed the running <code>pnpm dev</code> site in an iframe and hot-reload a preview page with the new image. Pixel-perfect but requires dev server running alongside.</p>
+      </div>
+    </div>
+  </div>
+</div>

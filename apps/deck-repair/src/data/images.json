@@ -29,40 +29,40 @@
   ],
   "servicePageImages": [
     {
-      "title": "IMG 20220805 131547847 HDR",
+      "title": "IMG 20220805 131547847 HDR - Handrail Repair",
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_20220805_131547847_HDR.jpg",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/deck-stairs-railings"
     },
     {
-      "title": "IMG 20220805 131550458 HDR",
+      "title": "IMG 20220805 131550458 HDR - Deck Guardrail Repair",
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_20220805_131550458_HDR.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/deck-stairs-railings"
     },
     {
-      "title": "IMG 20220819 084213185 HDR",
+      "title": "IMG 20220819 084213185 HDR - Deck Baluster Replacement",
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_20220819_084213185_HDR.jpg",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/deck-stairs-railings"
     },
     {
-      "title": "IMG 2848",
+      "title": "IMG 2848 - Deck Post Replacement",
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_2848.jpg",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/deck-posts-footings-foundation"
     },
     {
-      "title": "down-net http20260316-152-unkzk6-1773681114487",
+      "title": "down-net http20260316-152-unkzk6-1773681114487 - Rotten Deck Board Replacement",
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260316-152-unkzk6-1773681114487.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/deck-board-repair-replacement"
     },
     {
-      "title": "down-net http20260316-314-2zybwf-1773681982074",
+      "title": "down-net http20260316-314-2zybwf-1773681982074 - Deck Structural Reinforcement",
       "description": "",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/down-net_http20260316-314-2zybwf-1773681982074.webp",
-      "href": "/services/portland/uncategorized"
+      "href": "/services/seattle/deck-safety-code-hardware-upgrades"
     }
   ]
 }

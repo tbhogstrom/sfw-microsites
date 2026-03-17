@@ -1,0 +1,114 @@
+<h2>Google Maps Embed — Full Design</h2>
+<p class="subtitle">Two placements, one component, one data field. Does this look right?</p>
+
+<!-- Placement 1 -->
+<div class="section">
+  <h3>Placement 1 — Neighborhoods section (compact, above grid)</h3>
+  <div class="mockup" style="max-width:860px;margin:0 auto">
+    <div class="mockup-header">Neighborhoods We Serve in Portland</div>
+    <div class="mockup-body" style="padding:0;background:#f3f4f6">
+
+      <!-- Map above grid -->
+      <div style="position:relative;height:200px;background:linear-gradient(135deg,#b8cfe0 0%,#c8dce8 40%,#d0e4ee 100%);overflow:hidden;border-bottom:1px solid #dde">
+        <!-- Fake map tiles -->
+        <div style="position:absolute;inset:0;opacity:.25;background-image:repeating-linear-gradient(0deg,#aaa 0,#aaa 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,#aaa 0,#aaa 1px,transparent 1px,transparent 60px)"></div>
+        <!-- Roads -->
+        <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:#c9d6df;transform:translateY(-50%)"></div>
+        <div style="position:absolute;top:0;bottom:0;left:40%;width:2px;background:#c9d6df"></div>
+        <div style="position:absolute;top:30%;left:0;right:0;height:1px;background:#d5dfe6;transform:rotate(-8deg)"></div>
+        <!-- Pin -->
+        <div style="position:absolute;top:50%;left:40%;transform:translate(-50%,-100%)">
+          <div style="background:#d93025;width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 4px rgba(0,0,0,.3)"></div>
+        </div>
+        <!-- GMB card peek -->
+        <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:white;border-radius:6px;padding:6px 10px;box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;gap:8px;white-space:nowrap">
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#202124">Siding Repair Experts</div>
+            <div style="font-size:10px;color:#70757a">4.9 ★★★★★ · Contractor</div>
+          </div>
+        </div>
+        <div style="position:absolute;top:8px;right:10px;font-size:9px;color:#70757a;background:white;padding:2px 5px;border-radius:3px;opacity:.8">View larger map ↗</div>
+      </div>
+
+      <!-- Neighborhood grid below map -->
+      <div style="padding:16px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Pearl District</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Hawthorne</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Sellwood</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>NW Hills</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Lake Oswego</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Beaverton</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Gresham</div>
+        <div style="background:white;padding:8px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08);font-size:11px;display:flex;align-items:center;gap:4px"><span style="color:#1a6bc9">📍</span>Tigard</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Placement 2 -->
+<div class="section">
+  <h3>Placement 2 — Contact section (full, replaces Service Area text block)</h3>
+  <div class="mockup" style="max-width:860px;margin:0 auto">
+    <div class="mockup-header">Get Your Free Quote in Portland</div>
+    <div class="mockup-body" style="padding:16px;background:#fff">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+        <!-- Left: contact info (existing) -->
+        <div style="background:#f3f4f6;border-radius:8px;padding:16px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px">Contact Information</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <span style="font-size:14px">📞</span>
+              <div><div style="font-size:11px;font-weight:600">Phone</div><div style="font-size:11px;color:#1a6bc9">(503) 555-0100</div></div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <span style="font-size:14px">🕐</span>
+              <div><div style="font-size:11px;font-weight:600">Business Hours</div><div style="font-size:10px;color:#555">Mon–Fri: 8am–6pm</div><div style="font-size:10px;color:#555">Sat: 9am–4pm</div></div>
+            </div>
+            <!-- Service Area text block REPLACED by map -->
+            <div style="border-top:1px solid #ddd;padding-top:8px;font-size:10px;color:#888;font-style:italic">Service area map →</div>
+          </div>
+        </div>
+
+        <!-- Right: map (replaces Service Area text block) -->
+        <div style="border-radius:8px;overflow:hidden;position:relative;min-height:200px;background:linear-gradient(135deg,#b8cfe0 0%,#c8dce8 40%,#d0e4ee 100%)">
+          <div style="position:absolute;inset:0;opacity:.2;background-image:repeating-linear-gradient(0deg,#aaa 0,#aaa 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,#aaa 0,#aaa 1px,transparent 1px,transparent 60px)"></div>
+          <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:#c9d6df;transform:translateY(-50%)"></div>
+          <div style="position:absolute;top:0;bottom:0;left:45%;width:2px;background:#c9d6df"></div>
+          <div style="position:absolute;top:50%;left:45%;transform:translate(-50%,-100%)">
+            <div style="background:#d93025;width:20px;height:20px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 4px rgba(0,0,0,.3)"></div>
+          </div>
+          <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:white;border-radius:6px;padding:6px 10px;box-shadow:0 2px 8px rgba(0,0,0,.2);white-space:nowrap">
+            <div style="font-size:11px;font-weight:600;color:#202124">Siding Repair Experts</div>
+            <div style="font-size:10px;color:#70757a">4.9 ★★★★★ · Portland, OR</div>
+          </div>
+          <div style="position:absolute;top:8px;right:10px;font-size:9px;color:#70757a;background:white;padding:2px 5px;border-radius:3px;opacity:.8">View larger map ↗</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Component + Data design -->
+<div class="section">
+  <h3>Component & data design</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px">
+    <div style="background:#f8f8f8;border:1px solid #ddd;border-radius:6px;padding:12px">
+      <div class="label">Location type (packages/content)</div>
+      <pre style="margin-top:8px;font-size:11px;color:#333;white-space:pre-wrap">mapEmbedSrc?: string
+// Full iframe src URL from
+// Google Maps Share → Embed</pre>
+    </div>
+    <div style="background:#f8f8f8;border:1px solid #ddd;border-radius:6px;padding:12px">
+      <div class="label">GoogleMapEmbed component (packages/ui)</div>
+      <pre style="margin-top:8px;font-size:11px;color:#333;white-space:pre-wrap">Props:
+  src: string
+  variant: 'compact' | 'full'
+  title: string  // a11y
+
+compact → height: 200px, w: 100%
+full    → height: 450px, w: 100%</pre>
+    </div>
+  </div>
+</div>

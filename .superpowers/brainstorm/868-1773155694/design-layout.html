@@ -1,0 +1,121 @@
+<h2>Photo Picker — Upgraded Layout</h2>
+<p class="subtitle">Three panels, two new capabilities. Does this layout look right?</p>
+
+<div class="mockup" style="max-width:960px;margin:0 auto">
+  <div class="mockup-header">Photo Picker — proposed layout</div>
+  <div class="mockup-body" style="padding:0;display:grid;grid-template-columns:180px 1fr 240px;height:560px;gap:0;background:#1a1a1a;border-radius:0 0 8px 8px;overflow:hidden">
+
+    <!-- Left: Queue (unchanged) -->
+    <div style="background:#111;border-right:1px solid #333;display:flex;flex-direction:column">
+      <div style="padding:8px 10px;font-size:11px;color:#666;border-bottom:1px solid #333">710 photos</div>
+      <div style="flex:1;padding:6px;display:flex;flex-direction:column;gap:4px;overflow:hidden">
+        <div style="background:#222;border-radius:3px;aspect-ratio:4/3;border:2px solid #4a9eff"></div>
+        <div style="background:#222;border-radius:3px;aspect-ratio:4/3;position:relative">
+          <div style="position:absolute;top:3px;right:3px;background:#22c55e;color:white;border-radius:50%;width:14px;height:14px;font-size:9px;display:flex;align-items:center;justify-content:center">✓</div>
+        </div>
+        <div style="background:#222;border-radius:3px;aspect-ratio:4/3"></div>
+        <div style="background:#222;border-radius:3px;aspect-ratio:4/3"></div>
+      </div>
+    </div>
+
+    <!-- Center: Preview + component mock -->
+    <div style="display:flex;flex-direction:column;overflow:hidden;background:#000">
+      <!-- Tabs -->
+      <div style="display:flex;background:#111;border-bottom:1px solid #333">
+        <div style="padding:7px 14px;font-size:12px;color:#4a9eff;border-bottom:2px solid #4a9eff">Photo</div>
+        <div style="padding:7px 14px;font-size:12px;color:#666">Preview in component</div>
+      </div>
+      <!-- Photo view (current) -->
+      <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#111;position:relative">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#2a2a2a 0%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center">
+          <span style="color:#444;font-size:13px">IMG_1793.JPG</span>
+        </div>
+      </div>
+      <!-- Nav -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:#111;border-top:1px solid #333">
+        <button style="background:#333;color:#ccc;border:none;padding:4px 10px;border-radius:3px;font-size:11px">← Prev</button>
+        <span style="color:#666;font-size:11px">1 / 710</span>
+        <button style="background:#333;color:#ccc;border:none;padding:4px 10px;border-radius:3px;font-size:11px">Next →</button>
+      </div>
+    </div>
+
+    <!-- Right: Upload options + URL log -->
+    <div style="background:#111;border-left:1px solid #333;display:flex;flex-direction:column;overflow:hidden">
+      <div style="padding:10px 12px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em">Upload Options</div>
+
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:11px;color:#888">Microsite</span>
+          <div style="background:#222;border:1px solid #444;border-radius:3px;padding:4px 7px;font-size:12px;color:#ccc">deck-repair — Deck Repair Experts</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:11px;color:#888">Category</span>
+          <div style="background:#222;border:1px solid #444;border-radius:3px;padding:4px 7px;font-size:12px;color:#ccc">hero</div>
+        </div>
+
+        <!-- NEW: Page assignment (hero only) -->
+        <div style="display:flex;flex-direction:column;gap:3px;background:#1a2a1a;border:1px solid #2a4a2a;border-radius:4px;padding:8px">
+          <span style="font-size:11px;color:#6a9;font-weight:600">★ Assign to page</span>
+          <div style="background:#222;border:1px solid #444;border-radius:3px;padding:4px 7px;font-size:12px;color:#ccc">Homepage (index)</div>
+          <span style="font-size:10px;color:#4a6a4a">Shown when category = hero</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:11px;color:#888">Resize Preset</span>
+          <div style="background:#222;border:1px solid #444;border-radius:3px;padding:4px 7px;font-size:12px;color:#ccc">Hero — 1440×810</div>
+        </div>
+
+        <div style="font-size:11px;color:#888">Quality: 85% <span style="float:right;color:#555;font-size:10px">WebP</span></div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <button style="background:#333;color:#aaa;border:none;padding:8px;border-radius:3px;font-size:12px">Skip</button>
+          <button style="background:#4a9eff;color:white;border:none;padding:8px;border-radius:3px;font-size:12px;font-weight:600">Upload</button>
+        </div>
+
+        <!-- NEW: URL log -->
+        <div style="border-top:1px solid #333;padding-top:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em">Uploaded this session</span>
+            <button style="background:#222;color:#888;border:1px solid #333;padding:2px 6px;border-radius:3px;font-size:10px">Copy all</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="background:#0a1a0a;border:1px solid #1a3a1a;border-radius:3px;padding:5px 7px">
+              <div style="font-size:10px;color:#6a9">IMG_1793.JPG → homepage hero</div>
+              <div style="font-size:10px;color:#4a6a4a;word-break:break-all;margin-top:2px">blob.vercel.../hero/IMG_1793.webp</div>
+            </div>
+            <div style="background:#0a1a0a;border:1px solid #1a3a1a;border-radius:3px;padding:5px 7px">
+              <div style="font-size:10px;color:#6a9">IMG_1794.JPG → gallery</div>
+              <div style="font-size:10px;color:#4a6a4a;word-break:break-all;margin-top:2px">blob.vercel.../gallery/IMG_1794.webp</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW: Generate gallery button (appears when 4+ gallery images) -->
+        <div style="border-top:1px solid #333;padding-top:8px">
+          <button style="width:100%;background:#1a3a1a;color:#6f6;border:1px solid #2a5a2a;padding:8px;border-radius:4px;font-size:12px;font-weight:600">⬇ Generate gallery component</button>
+          <div style="font-size:10px;color:#4a6a4a;margin-top:4px;text-align:center">4 gallery images ready for deck-repair</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px">
+  <h3>The "Preview in component" tab — switching to it shows:</h3>
+  <div class="mockup" style="max-width:500px">
+    <div class="mockup-header">For category: hero</div>
+    <div class="mockup-body" style="padding:0;overflow:hidden;border-radius:0 0 8px 8px">
+      <div style="position:relative;height:160px;background:#222;overflow:hidden">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,#333 0%,#222 100%)"></div>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5)"></div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:16px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:4px">Deck Repair Experts Portland</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.7)">Professional deck repair and restoration services</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="subtitle" style="margin-top:8px">Image fills the hero. Overlay and headline shown. For gallery category: shows a 4-card grid mock.</p>
+</div>
