@@ -94,10 +94,15 @@ function extractBodyContent(content: string): string {
 }
 
 function extractHeroSubheadline(content: string, name: string): string {
-  const heroMatch = content.match(/## Hero Section[\s\S]*?\n\n([^\n#][^\n]+)/);
-  if (heroMatch) {
-    const candidate = heroMatch[1].trim();
-    if (!isPlaceholderContent(candidate)) return candidate;
+  // Extract only the Hero Section block (up to the next ## heading)
+  const heroBlock = content.match(/## Hero Section\n([\s\S]*?)(?=\n## )/);
+  if (heroBlock) {
+    const lines = heroBlock[1].split('\n')
+      .map(l => l.trim())
+      .filter(l => l && !l.startsWith('#'));
+    for (const line of lines) {
+      if (!isPlaceholderContent(line)) return line;
+    }
   }
   return `Expert ${name.toLowerCase()} services for Portland and Seattle homeowners — backed by local knowledge and quality craftsmanship.`;
 }
@@ -116,7 +121,7 @@ function loadClusterPages(): ServicePageData[] {
   const pages: ServicePageData[] = [];
 
   for (const file of files) {
-    const content = readFileSync(join(contentDir, file), 'utf-8');
+    const content = readFileSync(join(contentDir, file), 'utf-8').replace(/\r\n/g, '\n');
     const meta = parseClusterMeta(content);
     if (!meta) continue;
 

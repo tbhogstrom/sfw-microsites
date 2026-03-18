@@ -46,7 +46,7 @@ function loadClusterPages(): ServicePageData[] {
   const pages: ServicePageData[] = [];
 
   for (const file of files) {
-    const content = readFileSync(join(contentDir, file), 'utf-8');
+    const content = readFileSync(join(contentDir, file), 'utf-8').replace(/\r\n/g, '\n');
     const meta = parseClusterMeta(content);
     if (!meta) continue;
 

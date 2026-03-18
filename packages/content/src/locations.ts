@@ -72,9 +72,9 @@ export const deckRepairLocations: Record<string, Location> = {
     fullName: 'Seattle, WA',
 
     metaTitle: 'Deck Repair Seattle | Expert Deck Services in Seattle, WA',
-    metaDescription: 'Professional deck repair and building services in Seattle, WA. Serving all Seattle neighborhoods with expert craftsmanship. Free estimates. Call (206) 555-0100.',
+    metaDescription: 'Professional deck repair and building services in Seattle, WA. Serving all Seattle neighborhoods with expert craftsmanship. Free estimates.',
 
-    phone: '(206) 555-0100',
+    phone: '(503) 905-9046',
     email: 'seattle@deckrepair.com',
 
     heroHeadline: 'Seattle\'s Trusted Deck Repair Experts',
@@ -136,9 +136,9 @@ export const deckRepairLocations: Record<string, Location> = {
     fullName: 'Portland, OR',
 
     metaTitle: 'Deck Repair Portland | Expert Deck Services in Portland, OR',
-    metaDescription: 'Professional deck repair and building services in Portland, OR. Serving all Portland metro neighborhoods with expert craftsmanship. Free estimates. Call (503) 555-0200.',
+    metaDescription: 'Professional deck repair and building services in Portland, OR. Serving all Portland metro neighborhoods with expert craftsmanship. Free estimates.',
 
-    phone: '(503) 555-0200',
+    phone: '(503) 905-9046',
     email: 'portland@deckrepair.com',
 
     heroHeadline: 'Portland\'s Premier Deck Builders',
