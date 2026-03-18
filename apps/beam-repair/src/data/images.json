@@ -2,5 +2,54 @@
   "heroImages": {},
   "backgroundImages": {},
   "galleryImages": [],
-  "servicePageImages": []
+  "servicePageImages": [
+    {
+      "title": "Deck Porch Exterior Beam Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-460-2gcj4v.jpg",
+      "href": "/services/portland/deck-porch-exterior-beam-repair"
+    },
+    {
+      "title": "Deck Porch Exterior Beam Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-460-2gcj4v.jpg",
+      "href": "/services/seattle/deck-porch-exterior-beam-repair"
+    },
+    {
+      "title": "Structural Beam Repair Replacement",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-335-pnc35c.jpg",
+      "href": "/services/portland/structural-beam-repair-replacement"
+    },
+    {
+      "title": "Structural Beam Repair Replacement",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-335-pnc35c.jpg",
+      "href": "/services/seattle/structural-beam-repair-replacement"
+    },
+    {
+      "title": "Floor Interior Structural Support Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-257-rwyup6.jpg",
+      "href": "/services/portland/floor-interior-structural-support-repair"
+    },
+    {
+      "title": "Floor Interior Structural Support Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-257-rwyup6.jpg",
+      "href": "/services/seattle/floor-interior-structural-support-repair"
+    },
+    {
+      "title": "Footing Foundation Support",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/scaffolding_in_use.jpg",
+      "href": "/services/portland/footing-foundation-support"
+    },
+    {
+      "title": "Footing Foundation Support",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/scaffolding_in_use.jpg",
+      "href": "/services/seattle/footing-foundation-support"
+    }
+  ]
 }
