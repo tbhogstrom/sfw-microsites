@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['chimney-repair'];
@@ -12,6 +12,33 @@ const stats = [
   { value: '1000', suffix: '+', label: 'Projects Completed' },
   { value: '99', suffix: '%', label: 'Customer Satisfaction' },
   { value: '24', suffix: '/7', label: 'Available' },
+];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Chimney Chase Flashing & Leak Repair',
+    description: 'Professional flashing repair to stop leaks where your chimney meets the roof.',
+    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/IMG_20250421_090230497_HDR_AE.jpg',
+    href: '/services/portland/chimney-chase-flashing-leak-repair',
+  },
+  {
+    title: 'Chimney Chase Siding & Exterior Repair',
+    description: 'Expert siding replacement and exterior restoration for damaged chimney chases.',
+    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/down-net_http20260318-176-t64996.jpg',
+    href: '/services/portland/chimney-chase-siding-exterior-repair',
+  },
+  {
+    title: 'Chimney Chase Water Damage & Rot Repair',
+    description: 'Complete remediation of water damage and wood rot in chimney chase structures.',
+    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/down-net_http20260318-305-vza78s.jpg',
+    href: '/services/portland/chimney-chase-water-damage-rot-repair',
+  },
+  {
+    title: 'Chimney Chase Structural Repair & Rebuilding',
+    description: 'Full structural rebuilds for severely compromised chimney chases.',
+    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/2f6d160e-9ca0-44f4-ade0-ffd8eead3b08.jpg',
+    href: '/services/portland/chimney-chase-structural-repair-rebuilding',
+  },
 ];
 
 const services: Service[] = [
@@ -112,6 +139,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Chimney Repair Work We've Completed"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
