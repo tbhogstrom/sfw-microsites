@@ -59,6 +59,25 @@ function parseClusterSections(
   return sections;
 }
 
+function parseFAQs(content: string): Array<{ question: string; answer: string }> {
+  const faqBlock = content.match(/## FAQ Section\n([\s\S]*?)(?=\n## |$)/);
+  if (!faqBlock) return [];
+  const body = faqBlock[1].trim();
+  if (!body || body === '*Content to be generated.*') return [];
+  const faqs: Array<{ question: string; answer: string }> = [];
+  const parts = body.split(/\n### /);
+  for (const part of parts) {
+    const trimmed = part.trim();
+    if (!trimmed) continue;
+    const newlineIdx = trimmed.indexOf('\n');
+    if (newlineIdx === -1) continue;
+    const question = trimmed.slice(0, newlineIdx).replace(/^#+\s*/, '').trim();
+    const answer = trimmed.slice(newlineIdx + 1).trim();
+    if (question && answer) faqs.push({ question, answer });
+  }
+  return faqs;
+}
+
 function parseReferences(content: string): string {
   const match = content.match(/## References\n\n([\s\S]*?)(?=\n## |$)/);
   return match ? match[1].trim() : '';
@@ -156,7 +175,7 @@ function loadClusterPages(): ServicePageData[] {
       sections: bodyContent
         ? { overview: { title: name, content: bodyContent } }
         : {},
-      faqs: [],
+      faqs: parseFAQs(content),
       metaTitle: `${name} in ${locationFull} | Siding Repair Experts`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
       keywords: [slug, location, SITE_KEY],
