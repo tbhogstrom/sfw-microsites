@@ -16,8 +16,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 24.1,
     phone: '(503) 905-9046',
     callRailScriptSrc: '//cdn.callrail.com/companies/773893181/7e39ab1ce39b2aa927bb/12/swap.js',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-Q9EZ1FYSNR'
   },
   'chimney-repair': {
@@ -33,8 +33,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 8.80,
     trafficShare: 23.7,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-25W9Z2M4HM'
   },
   'siding-repair': {
@@ -51,8 +51,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 23.1,
     phone: '(503) 905-9047',
     callRailScriptSrc: '//cdn.callrail.com/companies/502723596/c7fe7f042461aac0b87f/12/swap.js',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-D6C7VP5H03'
   },
   'crawlspace-rot': {
@@ -69,8 +69,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 13.4,
     phone: '(503) 905-9050',
     callRailScriptSrc: '//cdn.callrail.com/companies/625345848/dd94cfb8eb8f4c16533f/12/swap.js',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-7P220HY6SN'
   },
   'leak-repair': {
@@ -86,8 +86,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 14.62,
     trafficShare: 4.8,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-6EFXYCLWXM'
   },
   'lead-paint': {
@@ -105,8 +105,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     phone: '(503) 885-0236',
     ccbNumber: '239768',
     waLicenseNumber: 'SFWPAP*782MK',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-GFGVJQ899X'
   },
   'flashing-repair': {
@@ -122,8 +122,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 8.95,
     trafficShare: 2.3,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-REEL7WTPD1'
   },
   'dry-rot': {
@@ -139,8 +139,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 3.38,
     trafficShare: 1.8,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: ''
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1'
   },
   'trim-repair': {
     name: 'Trim Repair Experts',
@@ -155,8 +155,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 6.14,
     trafficShare: 1.2,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-5LCQ98B842'
   },
   'restoration': {
@@ -174,8 +174,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     phone: '(503) 885-0236',
     ccbNumber: '239768',
     waLicenseNumber: 'SFWPAP*782MK',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-947760HMFH'
   },
   'beam-repair': {
@@ -191,8 +191,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 7.02,
     trafficShare: 0.3,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: 'G-NB9Z98QEH5'
   },
   'mold-testing': {
@@ -208,8 +208,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     avgCPC: 12.45,
     trafficShare: 6.3,
     phone: '(503) 885-0236',
-    hubspotPortalId: '',
-    hubspotFormId: '',
+    hubspotPortalId: '8210108',
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
     googleAnalyticsId: ''
   }
 };

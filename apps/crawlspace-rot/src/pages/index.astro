@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@sfw/ui';
 import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
-import { serviceConfigs } from '@sfw/content';
+import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
@@ -32,13 +32,6 @@ const galleryServices: GalleryService[] = [
     image: 'https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260316-382-f93e9y-1773682527997.webp',
     href: '/services/portland/crawlspace-structural-rot-dry-rot-repair',
   },
-];
-
-const stats = [
-  { value: '20', suffix: '+', label: 'Years Experience' },
-  { value: '1000', suffix: '+', label: 'Projects Completed' },
-  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
-  { value: '24', suffix: '/7', label: 'Available' },
 ];
 
 const services: Service[] = [
@@ -116,12 +109,7 @@ const faqs: FAQ[] = [
   title={config.title}
   description={config.description}
   config={config}
-  navigation={[
-    { label: 'Home', url: '/' },
-    { label: 'Services', url: '/services' },
-    { label: 'Blog', url: '/blog' },
-    { label: 'Locations', url: '/locations' },
-  ]}
+  navigation={defaultNav}
 >
   <!-- Hero Section -->
   <HeroSection
@@ -131,14 +119,14 @@ const faqs: FAQ[] = [
     primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
-      portalId: "8210108",
-      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      portalId: config.hubspotPortalId,
+      formId: config.hubspotFormId,
       region: "na1"
     }}
   />
 
   <!-- Stats Bar -->
-  <StatsBar stats={stats} variant="primary" />
+  <StatsBar stats={companyStats} variant="primary" />
 
   <!-- Services Gallery -->
   <ServicesGallery

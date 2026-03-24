@@ -1,5 +1,5 @@
 {
-  "installCommand": "cd ../.. && npm install",
+  "installCommand": "cd ../.. && pnpm install",
   "buildCommand": "npx turbo run build --filter=chimney-repair",
   "outputDirectory": "dist"
 }

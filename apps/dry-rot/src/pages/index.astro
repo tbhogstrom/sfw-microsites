@@ -2,7 +2,7 @@
 import BaseLayout from '@sfw/ui';
 import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery, GoogleMapEmbed } from '@sfw/ui';
 import type { GalleryService } from '@sfw/ui';
-import { serviceConfigs } from '@sfw/content';
+import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
@@ -34,13 +34,6 @@ const galleryServices: GalleryService[] = [
     image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-369-wkqifm-1773682217695.webp',
     href: '/services/portland/subfloor-sagging-floor-repair',
   },
-];
-
-const stats = [
-  { value: '20', suffix: '+', label: 'Years Experience' },
-  { value: '1000', suffix: '+', label: 'Projects Completed' },
-  { value: '99', suffix: '%', label: 'Customer Satisfaction' },
-  { value: '24', suffix: '/7', label: 'Available' },
 ];
 
 const services: Service[] = [
@@ -119,12 +112,7 @@ const faqs: FAQ[] = [
   description={config.description}
   config={config}
   logo="/logo.png"
-  navigation={[
-    { label: 'Home', url: '/' },
-    { label: 'Services', url: '/services' },
-    { label: 'Blog', url: '/blog' },
-    { label: 'Locations', url: '/locations' },
-  ]}
+  navigation={defaultNav}
 >
   <!-- Hero Section -->
   <HeroSection
@@ -134,14 +122,14 @@ const faqs: FAQ[] = [
     primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
-      portalId: "8210108",
-      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
+      portalId: config.hubspotPortalId,
+      formId: config.hubspotFormId,
       region: "na1"
     }}
   />
 
   <!-- Stats Bar -->
-  <StatsBar stats={stats} variant="primary" />
+  <StatsBar stats={companyStats} variant="primary" />
 
   <!-- Services Gallery -->
   <ServicesGallery

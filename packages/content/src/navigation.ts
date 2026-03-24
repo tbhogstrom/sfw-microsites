@@ -1,5 +1,13 @@
 import { NavigationItem } from './types';
 
+/** Default navigation used by most microsite homepages */
+export const defaultNav: NavigationItem[] = [
+  { label: 'Home', url: '/' },
+  { label: 'Services', url: '/services' },
+  { label: 'Blog', url: '/blog' },
+  { label: 'Locations', url: '/locations' },
+];
+
 export const primaryNav: NavigationItem[] = [
   { label: 'Home', url: '/' },
   { label: 'Services', url: '/services' },

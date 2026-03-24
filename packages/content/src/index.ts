@@ -8,3 +8,5 @@ export * from './navigation';
 export * from './locations';
 export * from './dbas';
 export * from './sfw-links';
+export * from './stats';
+export * from './redirects';
