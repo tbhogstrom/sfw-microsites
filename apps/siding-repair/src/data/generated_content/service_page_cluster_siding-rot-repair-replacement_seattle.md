@@ -26,7 +26,7 @@ Seattle's relentless rain and moisture create perfect conditions for siding rot 
 
 In Seattle's wet climate, siding rot isn't just cosmetic — it's a structural threat that often starts hidden behind your siding. What begins as a small soft spot can escalate to **$10,000+ in framing damage** if left unchecked.
 
-**Spot Rot Early — Before It Spreads**
+### Spot Rot Early — Before It Spreads
 
 Seattle's constant moisture means rot often starts where you can't see it — behind siding, around windows, or at the base of walls.
 
@@ -36,7 +36,7 @@ Seattle's constant moisture means rot often starts where you can't see it — be
 - **Inspect after heavy rains** for discoloration, soft spots, musty smells, or bubbling paint
 - **Pay extra attention to** north-facing walls, areas near gutters, and where siding meets trim or the roofline
 
-**Why speed matters:** Rot spreads 2–3x faster in our damp climate. What looks like surface damage often hides extensive decay underneath.
+**Why speed matters:** Rot spreads 2–3x faster in our damp climate<sup>1</sup>. What looks like surface damage often hides extensive decay underneath.
 
 **How we fix it:** We remove or repair the damaged areas while protecting your housewrap moisture barrier<sup>2</sup>. Once repairs are complete, we seal and caulk every joint to prevent future moisture intrusion. Common in Seattle's Ballard bungalows (1920s–40s), Magnolia cedar homes, and Rainier Valley craftsman builds.
 
@@ -44,16 +44,16 @@ Seattle's constant moisture means rot often starts where you can't see it — be
 
 ## Dry Rot Siding Replacement
 
-**Is Repair or Replacement Right for Your Home?**
+### Is Repair or Replacement Right for Your Home?
 
 - **Choose repair when:** Rot covers less than 15% of a board, is limited to the surface, and was caught early
 - **Choose replacement when:** Rot spans multiple boards, affects framing, or you see recurring issues in the same area
 
 **Signs you need replacement:** Peeling paint, spongy wood, recurring soft spots, or visible fungal growth on your siding.
 
-Dry rot is a common issue in the Pacific Northwest, where moisture levels are high and older homes often show signs of wear. This type of fungal decay weakens wood siding and compromises your home's exterior protection.
+Dry rot is a sneaky problem in the Pacific Northwest — despite the name, it thrives in damp conditions where moisture levels are high and older homes often show signs of wear. This type of fungal decay weakens wood siding and compromises your home's exterior protection.
 
-**Seattle-Smart Material Upgrade**
+### Seattle-Smart Material Upgrade
 
 While we can repair wood siding, we often recommend upgrading to fiber cement during replacement because it<sup>3</sup>:
 
@@ -62,11 +62,13 @@ While we can repair wood siding, we often recommend upgrading to fiber cement du
 - **Lasts 30+ years** vs. 15–20 for untreated wood in our climate
 - **Comes pre-finished** in colors that match Pacific Northwest aesthetics
 
-During replacement, we install the new siding over a weather-resistive barrier like housewrap to further protect against moisture infiltration<sup>4</sup>.
+During replacement, we install new siding over a weather-resistive barrier like housewrap to further protect against moisture infiltration<sup>4</sup>.
 
 ## Water Damaged Siding Repair
 
-**How water damage happens in Seattle:** Even when installed with care, water finds its way through gaps, cracks, or the natural expansion and contraction of wood siding<sup>5</sup>. Seattle's heavy rainfall and moisture-rich environment accelerate this process.
+### How Water Damage Happens in Seattle
+
+Even with careful installation, water finds its way through gaps, cracks, or the natural expansion and contraction of wood siding<sup>5</sup>. Seattle's heavy rainfall and moisture-rich environment accelerate this process.
 
 **Warning signs to watch for:**
 
@@ -109,7 +111,7 @@ If you notice cracked, warped, or loose siding panels, schedule an inspection be
 
 **This is where siding damage becomes a safety issue.** When rot reaches the framing behind your siding, it can compromise wall studs and headers, creating structural hazards that require major reconstruction if ignored.
 
-**How to tell if framing is affected:**
+### How to Tell If Framing Is Affected
 
 - Siding feels spongy or gives way when pressed
 - Visible discoloration or softness extending beyond individual boards<sup>11</sup>
@@ -140,7 +142,7 @@ Wall framing rot behind siding is the most serious form of moisture damage — a
 
 **Don't ignore the warning signs.** What looks like a small cosmetic issue on the outside often hides extensive framing damage behind your siding. The longer you wait, the more expensive the repair.
 
-## FAQ Section
+## Frequently Asked Questions
 
 ### How do I know if it's just surface rot or has reached the framing?
 
