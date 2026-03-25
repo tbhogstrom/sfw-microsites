@@ -50,6 +50,66 @@
       "description": "General",
       "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/scaffolding_in_use.jpg",
       "href": "/services/seattle/footing-foundation-support"
+    },
+    {
+      "title": "Beam Post Connection Repairs",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260325-288-fjqb61.jpg",
+      "href": "/services/portland/beam-post-connection-repairs"
+    },
+    {
+      "title": "Beam Post Connection Repairs",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260325-288-fjqb61.jpg",
+      "href": "/services/seattle/beam-post-connection-repairs"
+    },
+    {
+      "title": "Post Column Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/1764785893562.jpg",
+      "href": "/services/portland/post-column-repair"
+    },
+    {
+      "title": "Post Column Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/1764785893562.jpg",
+      "href": "/services/seattle/post-column-repair"
+    },
+    {
+      "title": "Structural Beam Repair Replacement",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/1764785899821.jpg",
+      "href": "/services/portland/structural-beam-repair-replacement"
+    },
+    {
+      "title": "Structural Beam Repair Replacement",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/1764785899821.jpg",
+      "href": "/services/seattle/structural-beam-repair-replacement"
+    },
+    {
+      "title": "Structural Beam Repair Replacement",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/1764630555935.jpg",
+      "href": "/services/portland/structural-beam-repair-replacement"
+    },
+    {
+      "title": "Structural Beam Repair Replacement",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/1764630555935.jpg",
+      "href": "/services/seattle/structural-beam-repair-replacement"
+    },
+    {
+      "title": "Post Column Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/91d67549-094d-451c-9447-8bd1ce598e4d.jpg",
+      "href": "/services/portland/post-column-repair"
+    },
+    {
+      "title": "Post Column Repair",
+      "description": "General",
+      "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/91d67549-094d-451c-9447-8bd1ce598e4d.jpg",
+      "href": "/services/seattle/post-column-repair"
     }
   ]
 }
