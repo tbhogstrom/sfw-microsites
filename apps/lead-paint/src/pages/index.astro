@@ -1,11 +1,38 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['lead-paint'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Lead Paint Testing & Inspection',
+    description: 'Professional XRF analyzer testing to accurately identify lead paint hazards throughout your home.',
+    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/down-net_http20260325-331-o6v4a6.jpg',
+    href: '/services/portland/lead-paint-testing-inspection',
+  },
+  {
+    title: 'Lead Paint Removal & Surface Preparation',
+    description: 'EPA-certified removal using HEPA filtration and proper containment for safe, compliant abatement.',
+    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/20241008_161603.jpg',
+    href: '/services/portland/lead-paint-removal-surface-preparation',
+  },
+  {
+    title: 'Lead Paint Stabilization & Encapsulation',
+    description: 'Cost-effective sealing of lead paint with specialized coatings that create durable protective barriers.',
+    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/imagejpeg_1%20%282%29.jpg',
+    href: '/services/portland/lead-paint-stabilization-encapsulation',
+  },
+  {
+    title: 'Lead Paint Containment & Cleanup',
+    description: 'Thorough post-abatement containment removal, HEPA cleanup, and clearance testing to verify safety.',
+    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/IMG_8276%20%281%29.jpg',
+    href: '/services/portland/lead-paint-containment-cleanup',
+  },
+];
 
 const services: Service[] = [
   {
@@ -100,6 +127,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={companyStats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Lead Paint Services We Provide"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
