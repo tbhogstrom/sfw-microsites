@@ -36,8 +36,9 @@ pnpm-debug.log*
 # Turbo
 .turbo
 
-# Local tools
-tools/
+# Local tools (except committed ones)
+tools/*
+!tools/visual-qa/
 
 # Git worktrees
 .worktrees/

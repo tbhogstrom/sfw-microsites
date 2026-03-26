@@ -1,0 +1,16 @@
+{
+  "name": "visual-qa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright-based visual QA for SFW microsites",
+  "type": "module",
+  "bin": {
+    "visual-qa": "./run.js"
+  },
+  "scripts": {
+    "postinstall": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.50.0"
+  }
+}
