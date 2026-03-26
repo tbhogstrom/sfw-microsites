@@ -19,4 +19,9 @@ export default defineConfig({
   ],
   output: 'static',
   redirects,
+  vite: {
+    ssr: {
+      noExternal: ['@sfw/content', '@sfw/ui', '@sfw/utils', '@sfw/config'],
+    },
+  },
 });

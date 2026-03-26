@@ -8,5 +8,10 @@ export default defineConfig({
     tailwind(),
     sitemap()
   ],
-  output: 'static'
+  output: 'static',
+  vite: {
+    ssr: {
+      noExternal: ['@sfw/content', '@sfw/ui', '@sfw/utils', '@sfw/config'],
+    },
+  },
 });
