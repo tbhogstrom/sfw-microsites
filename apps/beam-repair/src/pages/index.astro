@@ -1,11 +1,38 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['beam-repair'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Deck & Porch Exterior Beam Repair',
+    description: 'Professional repair and replacement of deteriorated deck and porch beams to restore structural safety.',
+    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-460-2gcj4v.jpg',
+    href: '/services/portland/deck-porch-exterior-beam-repair',
+  },
+  {
+    title: 'Structural Beam Repair & Replacement',
+    description: 'Complete beam replacement and sistering for compromised load-bearing members throughout your home.',
+    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-335-pnc35c.jpg',
+    href: '/services/portland/structural-beam-repair-replacement',
+  },
+  {
+    title: 'Floor & Interior Structural Support Repair',
+    description: 'Expert repair of interior floor joists, support beams, and subfloor structures to eliminate sagging and bouncing.',
+    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-257-rwyup6.jpg',
+    href: '/services/portland/floor-interior-structural-support-repair',
+  },
+  {
+    title: 'Beam-to-Post Connection Repairs',
+    description: 'Reinforcement and repair of critical beam-to-post connections to ensure safe load transfer.',
+    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260325-288-fjqb61.jpg',
+    href: '/services/portland/beam-post-connection-repairs',
+  },
+];
 
 const services: Service[] = [
   {
@@ -100,6 +127,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={companyStats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Structural Beam Repair Work We've Completed"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
