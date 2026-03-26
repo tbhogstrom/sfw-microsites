@@ -2,5 +2,102 @@
   "heroImages": {},
   "backgroundImages": {},
   "galleryImages": [],
-  "servicePageImages": []
+  "servicePageImages": [
+    {
+      "title": "Exterior Trim Rot Repair Replacement",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20260108_110411.jpg",
+      "href": "/services/portland/exterior-trim-rot-repair-replacement"
+    },
+    {
+      "title": "Exterior Trim Rot Repair Replacement",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20260108_110411.jpg",
+      "href": "/services/seattle/exterior-trim-rot-repair-replacement"
+    },
+    {
+      "title": "Exterior Trim Rot Repair Replacement",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20250120_155341.jpg",
+      "href": "/services/portland/exterior-trim-rot-repair-replacement"
+    },
+    {
+      "title": "Exterior Trim Rot Repair Replacement",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20250120_155341.jpg",
+      "href": "/services/seattle/exterior-trim-rot-repair-replacement"
+    },
+    {
+      "title": "Corner Boards Decorative Trim",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_1866.jpg",
+      "href": "/services/portland/corner-boards-decorative-trim"
+    },
+    {
+      "title": "Corner Boards Decorative Trim",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_1866.jpg",
+      "href": "/services/seattle/corner-boards-decorative-trim"
+    },
+    {
+      "title": "Fascia Soffit Roofline Trim",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/19_mobile-photo%20%284%29.jpg",
+      "href": "/services/portland/fascia-soffit-roofline-trim"
+    },
+    {
+      "title": "Fascia Soffit Roofline Trim",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/19_mobile-photo%20%284%29.jpg",
+      "href": "/services/seattle/fascia-soffit-roofline-trim"
+    },
+    {
+      "title": "Siding Flashing Integration Repairs",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_3619.jpg",
+      "href": "/services/portland/siding-flashing-integration-repairs"
+    },
+    {
+      "title": "Siding Flashing Integration Repairs",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_3619.jpg",
+      "href": "/services/seattle/siding-flashing-integration-repairs"
+    },
+    {
+      "title": "Window Door Trim Repair",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20240711_133817.jpg",
+      "href": "/services/portland/window-door-trim-repair"
+    },
+    {
+      "title": "Window Door Trim Repair",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20240711_133817.jpg",
+      "href": "/services/seattle/window-door-trim-repair"
+    },
+    {
+      "title": "Window Door Trim Repair",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_20220428_192924196.jpg",
+      "href": "/services/portland/window-door-trim-repair"
+    },
+    {
+      "title": "Window Door Trim Repair",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_20220428_192924196.jpg",
+      "href": "/services/seattle/window-door-trim-repair"
+    },
+    {
+      "title": "Trim By Material Cedar Pvc Fiber Cement",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_2848.jpg",
+      "href": "/services/portland/trim-by-material-cedar-pvc-fiber-cement"
+    },
+    {
+      "title": "Trim By Material Cedar Pvc Fiber Cement",
+      "description": "General",
+      "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_2848.jpg",
+      "href": "/services/seattle/trim-by-material-cedar-pvc-fiber-cement"
+    }
+  ]
 }

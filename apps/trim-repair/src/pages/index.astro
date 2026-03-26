@@ -1,11 +1,38 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['trim-repair'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Exterior Trim Rot Repair & Replacement',
+    description: 'Complete removal and replacement of rot-damaged exterior trim with durable, weather-resistant materials.',
+    image: 'https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20260108_110411.jpg',
+    href: '/services/portland/exterior-trim-rot-repair-replacement',
+  },
+  {
+    title: 'Corner Boards & Decorative Trim',
+    description: 'Professional repair and replacement of corner boards and decorative trim to restore your home\'s architectural detail.',
+    image: 'https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_1866.jpg',
+    href: '/services/portland/corner-boards-decorative-trim',
+  },
+  {
+    title: 'Fascia, Soffit & Roofline Trim',
+    description: 'Expert fascia and soffit repair with proper ventilation and moisture protection for lasting results.',
+    image: 'https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/19_mobile-photo%20%284%29.jpg',
+    href: '/services/portland/fascia-soffit-roofline-trim',
+  },
+  {
+    title: 'Window & Door Trim Repair',
+    description: 'Precision repair of window and door trim including sills, casings, and brick mold damaged by moisture.',
+    image: 'https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/20240711_133817.jpg',
+    href: '/services/portland/window-door-trim-repair',
+  },
+];
 
 const services: Service[] = [
   {
@@ -100,6 +127,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={companyStats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Trim Repair Work We've Completed"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
