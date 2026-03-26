@@ -140,7 +140,8 @@ export const serviceConfigs: Record<string, SiteConfig> = {
     trafficShare: 1.8,
     phone: '(503) 885-0236',
     hubspotPortalId: '8210108',
-    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1'
+    hubspotFormId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
+    googleAnalyticsId: 'G-GY6GKQF75Y'
   },
   'trim-repair': {
     name: 'Trim Repair Experts',
