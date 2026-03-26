@@ -2,5 +2,114 @@
   "heroImages": {},
   "backgroundImages": {},
   "galleryImages": [],
-  "servicePageImages": []
+  "servicePageImages": [
+    {
+      "title": "Bay Window Specialty Window Repairs",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_0528.jpg",
+      "href": "/services/portland/bay-window-specialty-window-repairs"
+    },
+    {
+      "title": "Bay Window Specialty Window Repairs",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_0528.jpg",
+      "href": "/services/seattle/bay-window-specialty-window-repairs"
+    },
+    {
+      "title": "Window Leak Repair Waterproofing",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/PXL_20260217_181529866.jpg",
+      "href": "/services/portland/window-leak-repair-waterproofing"
+    },
+    {
+      "title": "Window Leak Repair Waterproofing",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/PXL_20260217_181529866.jpg",
+      "href": "/services/seattle/window-leak-repair-waterproofing"
+    },
+    {
+      "title": "Door Frame Leak Rot Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220428_192949728.jpg",
+      "href": "/services/portland/door-frame-leak-rot-repair"
+    },
+    {
+      "title": "Door Frame Leak Rot Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220428_192949728.jpg",
+      "href": "/services/seattle/door-frame-leak-rot-repair"
+    },
+    {
+      "title": "Siding Building Envelope Integration",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_7324.jpg",
+      "href": "/services/portland/siding-building-envelope-integration"
+    },
+    {
+      "title": "Siding Building Envelope Integration",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_7324.jpg",
+      "href": "/services/seattle/siding-building-envelope-integration"
+    },
+    {
+      "title": "Window Door Frame Rot Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220504_183455463_HDR.jpg",
+      "href": "/services/portland/window-door-frame-rot-repair"
+    },
+    {
+      "title": "Window Door Frame Rot Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220504_183455463_HDR.jpg",
+      "href": "/services/seattle/window-door-frame-rot-repair"
+    },
+    {
+      "title": "Siding Building Envelope Integration",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_7380.jpg",
+      "href": "/services/portland/siding-building-envelope-integration"
+    },
+    {
+      "title": "Siding Building Envelope Integration",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_7380.jpg",
+      "href": "/services/seattle/siding-building-envelope-integration"
+    },
+    {
+      "title": "Window Flashing Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/mobile-photo%20%287%29.jpg",
+      "href": "/services/portland/window-flashing-repair"
+    },
+    {
+      "title": "Window Flashing Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/mobile-photo%20%287%29.jpg",
+      "href": "/services/seattle/window-flashing-repair"
+    },
+    {
+      "title": "Window Door Frame Rot Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_4701.jpg",
+      "href": "/services/portland/window-door-frame-rot-repair"
+    },
+    {
+      "title": "Window Door Frame Rot Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_4701.jpg",
+      "href": "/services/seattle/window-door-frame-rot-repair"
+    },
+    {
+      "title": "Sliding Glass Door Leak Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/20251113_161159.jpg",
+      "href": "/services/portland/sliding-glass-door-leak-repair"
+    },
+    {
+      "title": "Sliding Glass Door Leak Repair",
+      "description": "General",
+      "image": "https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/20251113_161159.jpg",
+      "href": "/services/seattle/sliding-glass-door-leak-repair"
+    }
+  ]
 }
