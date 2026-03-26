@@ -66,13 +66,40 @@ Sequential versioned releases. Each version bundles four tracks (Features, UI/UX
 
 ### DX/Tooling
 
-Minimal — just enough to ship confidently:
+#### Visual QA Tool (`tools/visual-qa/`)
+A Playwright-based CLI tool that lets agents (and humans) verify a site visually after making changes. This is the first thing built in V1 — every subsequent task uses it for verification.
+
+**Capabilities:**
+- Starts a site's Astro dev server programmatically
+- Navigates key page types: homepage, a service page, a blog post, a location page
+- Per-page checks:
+  - Page loads without console errors or uncaught exceptions
+  - No broken images (all `<img>` tags resolve and load)
+  - Key components present (hero section, header, footer detected in DOM)
+  - No empty sections (content areas have visible content)
+  - Screenshots captured for each page
+- Shuts down the dev server when done
+
+**Output:**
+- Machine-readable: JSON report with pass/fail per page and per check, suitable for agent parsing
+- Human-friendly: screenshots saved to `tools/visual-qa/reports/{site}/{timestamp}/`, summary printed to stdout
+
+**Usage:**
+```bash
+node tools/visual-qa/run.js siding-repair          # Check one site
+node tools/visual-qa/run.js beam-repair --page /    # Check just the homepage
+```
+
+**Agent workflow:** Make a change → run visual QA → read pass/fail → fix failures → re-run.
+
+#### Other DX
 - `pnpm lint` passes clean across all 12 sites and 4 packages
 - Fix any existing type errors or Astro check warnings
 - Document V1 completion state in a checklist
 
 ### V1 Exit Criteria
 
+- [ ] Visual QA tool operational and tested against at least 3 sites
 - [ ] All 12 sites have service pages rendering for both Portland and Seattle
 - [ ] All 12 sites have at least 8 gallery images uploaded and rendering
 - [ ] 6 logos deployed to their sites; 6 sites have clean fallback logo
