@@ -10,11 +10,13 @@ import Icon from '../ui/Icon.astro';
 export interface Props extends BaseProps {
   config: SiteConfig;
   navigation: NavigationItem[];
+  logo?: string;
 }
 
 const {
   config,
   navigation,
+  logo,
   class: className = '',
   ...rest
 } = Astro.props;
@@ -29,7 +31,11 @@ const classes = [
   <div class="flex flex-col h-full">
     <!-- Mobile Nav Header -->
     <div class="flex items-center justify-between p-4 border-b border-gray-200">
-      <span class="text-xl font-heading font-bold text-dark">{config.name}</span>
+      {logo ? (
+        <img src={logo} alt={config.name} class="h-10 w-auto" />
+      ) : (
+        <span class="text-xl font-heading font-bold text-dark">{config.name}</span>
+      )}
       <button
         id="mobile-menu-close"
         class="p-2 text-dark hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary rounded"
