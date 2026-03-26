@@ -1,11 +1,38 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['flashing-repair'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Roof To Wall Penetration Flashing',
+    description: 'Professional flashing installation at roof-to-wall junctions to prevent water infiltration.',
+    image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/1767052254206.jpg',
+    href: '/services/portland/roof-to-wall-penetration-flashing',
+  },
+  {
+    title: 'Structural Damage Flashing Failure',
+    description: 'Expert repair of structural damage caused by failed or deteriorated flashing systems.',
+    image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/1764630555935.jpg',
+    href: '/services/portland/structural-damage-flashing-failure',
+  },
+  {
+    title: 'Chimney Flashing Repair',
+    description: 'Specialized chimney flashing replacement to stop leaks where your chimney meets the roof.',
+    image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/IMG_3619.jpg',
+    href: '/services/portland/chimney-flashing-repair',
+  },
+  {
+    title: 'Deck Ledger Flashing Waterproofing',
+    description: 'Critical flashing installation at deck ledger boards to prevent water damage and rot.',
+    image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/696e159b-81e0-4870-8ee5-f2834b68b33b.jpg',
+    href: '/services/portland/deck-ledger-flashing-waterproofing',
+  },
+];
 
 const services: Service[] = [
   {
@@ -101,6 +128,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={companyStats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Flashing Repair Work We've Completed"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
