@@ -1,11 +1,38 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered } from '@sfw/ui';
+import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
-import type { FAQ, Service } from '@sfw/ui';
+import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['leak-repair'];
+
+const galleryServices: GalleryService[] = [
+  {
+    title: 'Bay Window Specialty Window Repairs',
+    description: 'Expert repair and weatherproofing for bay and specialty windows to stop leaks and restore function.',
+    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_0528.jpg',
+    href: '/services/portland/bay-window-specialty-window-repairs',
+  },
+  {
+    title: 'Window Leak Repair Waterproofing',
+    description: 'Comprehensive waterproofing solutions to seal window leaks and prevent future water intrusion.',
+    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/PXL_20260217_181529866.jpg',
+    href: '/services/portland/window-leak-repair-waterproofing',
+  },
+  {
+    title: 'Door Frame Leak Rot Repair',
+    description: 'Professional repair of water-damaged door frames including rot remediation and weatherproofing.',
+    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220428_192949728.jpg',
+    href: '/services/portland/door-frame-leak-rot-repair',
+  },
+  {
+    title: 'Window Flashing Repair',
+    description: 'Precision flashing installation and repair to protect windows from water penetration.',
+    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/mobile-photo%20%287%29.jpg',
+    href: '/services/portland/window-flashing-repair',
+  },
+];
 
 const services: Service[] = [
   {
@@ -101,6 +128,13 @@ const faqs: FAQ[] = [
 
   <!-- Stats Bar -->
   <StatsBar stats={companyStats} variant="primary" />
+
+  <!-- Services Gallery -->
+  <ServicesGallery
+    heading="Leak Repair Work We've Completed"
+    services={galleryServices}
+    variant="light"
+  />
 
   <!-- Services Offered Section -->
   <ServicesOffered
