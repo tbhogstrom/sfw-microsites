@@ -1,0 +1,111 @@
+---
+/**
+ * BeforeAfter.astro - Image comparison slider
+ * Two images overlapping with a draggable divider using CSS clip-path
+ */
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface Props extends BaseProps {
+  before: string;
+  after: string;
+  alt?: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+}
+
+const {
+  before,
+  after,
+  alt = 'Before and after comparison',
+  beforeLabel = 'Before',
+  afterLabel = 'After',
+  class: className = '',
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class={cn('relative select-none overflow-hidden rounded-lg', className)}
+  data-before-after
+  {...rest}
+>
+  <img src={after} alt={`${alt} - after`} class="block w-full" loading="lazy" />
+  <div
+    class="absolute inset-0 overflow-hidden"
+    style="clip-path: inset(0 50% 0 0);"
+    data-before-clip
+  >
+    <img
+      src={before}
+      alt={`${alt} - before`}
+      class="block w-full h-full object-cover"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Slider handle -->
+  <div
+    class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+    style="left: 50%;"
+    data-slider-handle
+  >
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 text-neutral-600"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M6.707 4.293a1 1 0 010 1.414L3.414 9H10a1 1 0 110 2H3.414l3.293 3.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0zm6.586 0a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L16.586 11H10a1 1 0 110-2h6.586l-3.293-3.293a1 1 0 010-1.414z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Labels -->
+  <span class="absolute top-4 left-4 bg-black/50 text-white text-sm px-2 py-1 rounded"
+    >{beforeLabel}</span
+  >
+  <span class="absolute top-4 right-4 bg-black/50 text-white text-sm px-2 py-1 rounded"
+    >{afterLabel}</span
+  >
+</div>
+
+<script>
+  document.querySelectorAll('[data-before-after]').forEach((container) => {
+    const clip = container.querySelector('[data-before-clip]') as HTMLElement;
+    const handle = container.querySelector('[data-slider-handle]') as HTMLElement;
+    if (!clip || !handle) return;
+
+    let isDragging = false;
+
+    const updatePosition = (x: number) => {
+      const rect = (container as HTMLElement).getBoundingClientRect();
+      const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      clip.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      handle.style.left = `${percent}%`;
+    };
+
+    handle.addEventListener('mousedown', () => (isDragging = true));
+    handle.addEventListener('touchstart', () => (isDragging = true), { passive: true });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) updatePosition(e.clientX);
+    });
+    document.addEventListener(
+      'touchmove',
+      (e) => {
+        if (isDragging) updatePosition(e.touches[0].clientX);
+      },
+      { passive: true },
+    );
+
+    document.addEventListener('mouseup', () => (isDragging = false));
+    document.addEventListener('touchend', () => (isDragging = false));
+  });
+</script>
