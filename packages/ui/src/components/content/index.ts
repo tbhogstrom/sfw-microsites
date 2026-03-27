@@ -26,3 +26,9 @@ export type { Service, Props as ServicesOfferedProps } from './ServicesOffered.a
 
 export { default as GoogleMapEmbed } from './GoogleMapEmbed.astro';
 export type { Props as GoogleMapEmbedProps } from './GoogleMapEmbed.astro';
+
+export { default as TrustBadges } from './TrustBadges.astro';
+export type { TrustBadge, Props as TrustBadgesProps } from './TrustBadges.astro';
+
+export { default as BeforeAfter } from './BeforeAfter.astro';
+export type { Props as BeforeAfterProps } from './BeforeAfter.astro';

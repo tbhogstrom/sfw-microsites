@@ -1,0 +1,38 @@
+---
+/**
+ * TrustBadges.astro - Trust signals display bar
+ * Horizontal bar showing trust signals (CCB license, insurance, years in business, etc.)
+ */
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface TrustBadge {
+  icon: string;
+  label: string;
+  value: string;
+}
+
+export interface Props extends BaseProps {
+  badges: TrustBadge[];
+}
+
+const { badges, class: className = '', ...rest } = Astro.props;
+---
+
+<div class={cn('bg-neutral-100 py-6', className)} {...rest}>
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+      {
+        badges.map((badge) => (
+          <div class="flex items-center gap-3 text-center">
+            <div class="text-accent text-2xl" set:html={badge.icon} />
+            <div>
+              <div class="text-xl font-bold text-neutral-900">{badge.value}</div>
+              <div class="text-sm text-neutral-500">{badge.label}</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
