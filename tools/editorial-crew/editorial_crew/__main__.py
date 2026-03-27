@@ -39,6 +39,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                         help="Override the LLM model")
     parser.add_argument("--debug", action="store_true",
                         help="Show raw SDK messages for debugging")
+    parser.add_argument("--json", action="store_true",
+                        help="Output structured JSON instead of Rich console output")
     return parser.parse_args(argv)
 
 

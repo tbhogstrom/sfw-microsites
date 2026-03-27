@@ -21,3 +21,13 @@ def test_parse_args_with_output():
 def test_parse_args_model():
     args = parse_args(["readme.md", "--model", "anthropic/claude-haiku-3-5"])
     assert args.model == "anthropic/claude-haiku-3-5"
+
+
+def test_parse_args_json_flag():
+    args = parse_args(["readme.md", "--json"])
+    assert args.json is True
+
+
+def test_parse_args_json_default_false():
+    args = parse_args(["readme.md"])
+    assert args.json is False
