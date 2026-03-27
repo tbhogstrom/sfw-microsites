@@ -100,7 +100,7 @@ function parseSubtopicDescriptors(
 
 function extractBodyContent(content: string): string {
   // Remove H1, CLUSTER_META block, Hero Section stub, and Page Metadata section
-  let body = content
+  const body = content
     .replace(/^#\s+.+\n/m, '')
     .replace(/<!--\s*CLUSTER_META[\s\S]*?-->\n?/, '')
     .replace(/## Hero Section[\s\S]*?(?=\n## |\n$)/, '')
@@ -114,7 +114,7 @@ function isPlaceholderContent(text: string): boolean {
   return normalized === '*content to be generated.*' || normalized === 'content to be generated.';
 }
 
-function extractHeroSubheadline(content: string, name: string, locationFull: string): string {
+function extractHeroSubheadline(content: string, name: string, _locationFull: string): string {
   // Extract only the Hero Section block (up to the next ## heading)
   const heroBlock = content.match(/## Hero Section\n([\s\S]*?)(?=\n## )/);
   if (heroBlock) {

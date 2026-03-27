@@ -53,7 +53,6 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
   ]}
 >
   {serviceData.clusterSections && serviceData.subtopicDescriptors ? (
-    <!-- Cluster pages: split hero -->
     <ClusterHero
       headline={serviceData.name}
       locationLine={`Serving ${serviceData.locationFull}`}
@@ -68,7 +67,6 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
       ]}
     />
   ) : (
-    <!-- Non-cluster pages: existing hero with form -->
     <HeroSection
       headline={serviceData.heroHeadline}
       subheadline={serviceData.heroSubheadline}

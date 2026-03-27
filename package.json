@@ -11,12 +11,19 @@
     "build": "turbo build",
     "lint": "set APPDATA=%CD%\\.appdata&& turbo lint",
     "clean": "turbo clean",
-    "typecheck": "set APPDATA=%CD%\\.appdata&& turbo typecheck"
+    "typecheck": "set APPDATA=%CD%\\.appdata&& turbo typecheck",
+    "lint:eslint": "eslint ."
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
+    "@eslint/js": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
+    "eslint": "^10.1.0",
+    "eslint-plugin-astro": "^1.6.0",
     "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.57.2"
   },
   "packageManager": "npm@10.9.2",
   "dependencies": {

@@ -84,7 +84,7 @@ function parseSubtopicDescriptors(
 }
 
 function extractBodyContent(content: string): string {
-  let body = content
+  const body = content
     .replace(/^#\s+.+\n/m, '')
     .replace(/<!--\s*CLUSTER_META[\s\S]*?-->\n?/, '')
     .replace(/## Hero Section[\s\S]*?(?=\n## |\n$)/, '')

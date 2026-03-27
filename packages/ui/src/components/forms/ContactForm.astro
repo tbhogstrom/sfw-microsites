@@ -18,7 +18,7 @@ export interface Props extends BaseProps {
 }
 
 const {
-  config,
+  config: _config,
   title = 'Get a Free Quote',
   description = 'Fill out the form below and we\'ll get back to you shortly.',
   hubspotPortalId,
@@ -42,7 +42,7 @@ const useHubSpot = hubspotPortalId && hubspotFormId;
   )}
 
   {useHubSpot ? (
-    <!-- HubSpot Form Container -->
+    <>
     <div id="hubspot-form" class="hubspot-form"></div>
 
     <script define:vars={{ portalId: hubspotPortalId, formId: hubspotFormId }}>
@@ -76,8 +76,8 @@ const useHubSpot = hubspotPortalId && hubspotFormId;
 
       document.head.appendChild(script);
     </script>
+    </>
   ) : (
-    <!-- Fallback HTML Form -->
     <form method="POST" action="/api/contact" class="space-y-4">
       <FormInput
         type="text"
