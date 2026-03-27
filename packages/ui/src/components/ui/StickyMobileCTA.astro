@@ -1,0 +1,69 @@
+---
+/**
+ * StickyMobileCTA.astro - Fixed bottom bar on mobile
+ * Shows a phone button and "Free Estimate" CTA. Hidden when hero is in viewport.
+ */
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface Props extends BaseProps {
+  phone: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const { phone, ctaText, ctaHref, class: className = '', ...rest } = Astro.props;
+---
+
+<div
+  id="sticky-mobile-cta"
+  class={cn(
+    'fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-neutral-200 p-3 lg:hidden translate-y-full transition-transform duration-300',
+    className,
+  )}
+  {...rest}
+>
+  <div class="flex gap-3">
+    <a
+      href={`tel:${phone}`}
+      class="flex-1 inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold py-3 px-4 rounded-lg"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+        ></path>
+      </svg>
+      Call Now
+    </a>
+    <a
+      href={ctaHref || '#contact'}
+      class="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-white font-semibold py-3 px-4 rounded-lg"
+    >
+      {ctaText || 'Free Estimate'}
+    </a>
+  </div>
+</div>
+
+<script>
+  const stickyBar = document.getElementById('sticky-mobile-cta');
+  const hero = document.querySelector('section');
+
+  if (stickyBar && hero) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          stickyBar.classList.add('translate-y-full');
+        } else {
+          stickyBar.classList.remove('translate-y-full');
+        }
+      },
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+  }
+</script>

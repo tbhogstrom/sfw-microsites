@@ -15,3 +15,6 @@ export type { Props as ImageProps } from './Image.astro';
 export type { Props as SEOProps } from './SEO.astro';
 export type { BreadcrumbItem, Props as BreadcrumbsProps } from './Breadcrumbs.astro';
 export type { Props as LinkCardProps } from './LinkCard.astro';
+
+export { default as StickyMobileCTA } from './StickyMobileCTA.astro';
+export type { Props as StickyMobileCTAProps } from './StickyMobileCTA.astro';
