@@ -1,0 +1,15 @@
+dist/
+node_modules/
+.astro/
+.turbo/
+.vercel/
+pnpm-lock.yaml
+package-lock.json
+tools/
+*.md
+
+# prettier-plugin-astro can't parse inline scripts with complex JS/TS
+packages/ui/src/layouts/BaseLayout.astro
+packages/ui/src/components/forms/ContactForm.astro
+packages/ui/src/components/hero/HeroSection.astro
+**/services/**/\[service\].astro
