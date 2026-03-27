@@ -25,7 +25,10 @@ const {
   ...rest
 } = Astro.props;
 
-const classes = ['relative overflow-hidden rounded-lg group h-full', className]
+const classes = [
+  'relative overflow-hidden rounded-lg group h-full transition-shadow duration-200 hover:shadow-card-hover',
+  className,
+]
   .filter(Boolean)
   .join(' ');
 ---
