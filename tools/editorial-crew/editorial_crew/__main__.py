@@ -173,6 +173,71 @@ async def process_file(filepath: Path, args: argparse.Namespace) -> bool:
         return False
 
 
+async def process_file_json(filepath: Path, args: argparse.Namespace) -> bool:
+    """Process a single file in JSON mode. Prints JSON to stdout. Returns True on success."""
+    try:
+        document = filepath.read_text(encoding="utf-8")
+    except Exception as e:
+        print(format_json_result(filepath=str(filepath), status="error", error=str(e)))
+        return False
+
+    result = None
+    specialists: list[str] = []
+
+    try:
+        async for event in process_document(
+            document=document,
+            filename=filepath.name,
+            filter_agents=args.agents,
+            model_override=args.model,
+            debug=False,
+        ):
+            if isinstance(event, AgentEvent):
+                if event.kind == "subagent_done":
+                    specialists.append(event.agent_name)
+            elif isinstance(event, EditorialResult):
+                result = event
+
+        if result is None:
+            print(format_json_result(filepath=str(filepath), status="error", error="No result received"))
+            return False
+
+        if result.error:
+            print(format_json_result(filepath=str(filepath), status="error", error=result.error))
+            return False
+
+        if result.final_diff:
+            # Extract summary from raw_result — take the first paragraph before the markdown
+            summary = ""
+            raw = result.raw_result.strip()
+            if raw and not raw.startswith("#"):
+                # Any text before the first heading is the summary
+                idx = raw.find("\n#")
+                if idx > 0:
+                    summary = raw[:idx].strip()
+
+            print(format_json_result(
+                filepath=str(filepath),
+                status="improved",
+                specialists=specialists,
+                diff=result.final_diff,
+                improved_document=result.improved_document,
+                summary=summary if summary else f"{len(specialists)} specialist(s) consulted.",
+            ))
+        else:
+            print(format_json_result(
+                filepath=str(filepath),
+                status="no_changes",
+                specialists=specialists,
+            ))
+
+        return True
+
+    except Exception as e:
+        print(format_json_result(filepath=str(filepath), status="error", error=str(e)))
+        return False
+
+
 async def async_main(args: argparse.Namespace) -> int:
     files = expand_globs(args.files)
     if not files:
@@ -185,12 +250,18 @@ async def async_main(args: argparse.Namespace) -> int:
     failures = 0
 
     for filepath in files:
-        if await process_file(filepath, args):
-            successes += 1
+        if args.json:
+            if await process_file_json(filepath, args):
+                successes += 1
+            else:
+                failures += 1
         else:
-            failures += 1
+            if await process_file(filepath, args):
+                successes += 1
+            else:
+                failures += 1
 
-    if len(files) > 1:
+    if not args.json and len(files) > 1:
         summary = f"Summary: {successes}/{len(files)} files processed"
         if failures:
             summary += f", {failures} failed"
