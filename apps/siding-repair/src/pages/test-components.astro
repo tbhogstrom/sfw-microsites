@@ -1,0 +1,304 @@
+---
+import BaseLayout from '@sfw/ui';
+import {
+  TrustBadges,
+  BeforeAfter,
+  StickyMobileCTA,
+  ComparisonTable,
+  Tabs,
+  VideoEmbed,
+  PricingCard,
+  ImageLightbox,
+  Button,
+  FAQAccordion,
+} from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import type { FAQ } from '@sfw/ui';
+
+const config = serviceConfigs['siding-repair'];
+
+// Trust Badges data
+const badges = [
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    label: 'CCB License',
+    value: '#244912',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    label: 'Years Experience',
+    value: '20+',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+    label: 'Projects Completed',
+    value: '1,000+',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    label: 'Coverage',
+    value: 'Fully Insured',
+  },
+];
+
+// Blob image URLs from the siding-repair gallery
+const img1 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp';
+const img2 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp';
+const img3 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp';
+const img4 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp';
+const imgHero =
+  'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/hero/Siding_repair_experts__sidingrepairexpertscoma_pac_delpmaspu.webp';
+
+// Comparison Table data
+const comparisonHeaders = ['Spot Repair', 'Section Replacement', 'Full Re-Side'];
+const comparisonRows = [
+  { label: 'Fixes visible damage', values: [true, true, true] },
+  { label: 'Addresses moisture barrier', values: [false, true, true] },
+  { label: 'Replaces sheathing if needed', values: [false, true, true] },
+  { label: 'Matches existing siding', values: [true, true, false] as (string | boolean)[] },
+  { label: 'Improves energy efficiency', values: [false, false, true] },
+  { label: 'New color/style options', values: [false, false, true] },
+  { label: 'Typical cost range', values: ['$300 - $800', '$1,500 - $5,000', '$8,000 - $20,000+'] },
+  { label: 'Timeline', values: ['1 day', '2 - 5 days', '1 - 3 weeks'] },
+];
+
+// Tabs data
+const sidingTabs = [
+  {
+    label: 'Hardie Board',
+    content: `
+      <h3 class="text-lg font-bold mb-2">James Hardie Fiber Cement Siding</h3>
+      <p class="text-neutral-700 mb-3">James Hardie fiber cement siding is the gold standard for Portland homes. Engineered to resist moisture, rot, and pest damage, it holds up exceptionally well in the Pacific Northwest's wet climate.</p>
+      <ul class="list-disc pl-5 space-y-1 text-neutral-600">
+        <li>50-year limited warranty on most products</li>
+        <li>Non-combustible and resistant to woodpecker damage</li>
+        <li>ColorPlus technology for factory-applied, baked-on color</li>
+        <li>Available in lap, panel, shingle, and trim profiles</li>
+      </ul>
+    `,
+  },
+  {
+    label: 'Vinyl Siding',
+    content: `
+      <h3 class="text-lg font-bold mb-2">Vinyl Siding Repair &amp; Installation</h3>
+      <p class="text-neutral-700 mb-3">Vinyl is the most cost-effective siding option, offering low maintenance and decent weather resistance. While it can expand and contract with temperature swings, quality vinyl siding paired with proper installation lasts 20 to 30 years.</p>
+      <ul class="list-disc pl-5 space-y-1 text-neutral-600">
+        <li>Lowest cost per square foot of any siding material</li>
+        <li>Never needs painting — color is molded through</li>
+        <li>Easy to clean with a garden hose</li>
+        <li>Wide range of styles and textures available</li>
+      </ul>
+    `,
+  },
+  {
+    label: 'Wood Siding',
+    content: `
+      <h3 class="text-lg font-bold mb-2">Cedar &amp; Wood Siding Restoration</h3>
+      <p class="text-neutral-700 mb-3">Natural wood siding offers unmatched beauty and character, but Portland's moisture-heavy climate demands vigilant maintenance. We specialize in restoring cedar lap, shingle, and board-and-batten siding to like-new condition.</p>
+      <ul class="list-disc pl-5 space-y-1 text-neutral-600">
+        <li>Cedar naturally resists insects and decay</li>
+        <li>Can be stained or painted to any color</li>
+        <li>Requires re-sealing every 3 to 5 years in Portland</li>
+        <li>Repairable — individual boards can be replaced without full removal</li>
+      </ul>
+    `,
+  },
+  {
+    label: 'Fiber Cement',
+    content: `
+      <h3 class="text-lg font-bold mb-2">Engineered Fiber Cement Products</h3>
+      <p class="text-neutral-700 mb-3">Beyond Hardie, several manufacturers produce fiber cement siding that performs well in the Pacific Northwest. These products combine Portland cement, sand, and cellulose fibers for a durable, fire-resistant exterior.</p>
+      <ul class="list-disc pl-5 space-y-1 text-neutral-600">
+        <li>Brands include Allura, Nichiha, and Cemplank</li>
+        <li>Available in wood-grain textures and smooth finishes</li>
+        <li>Resistant to termites, rot, and fire</li>
+        <li>Typical lifespan of 30 to 50 years with minimal upkeep</li>
+      </ul>
+    `,
+  },
+];
+
+// Lightbox images
+const lightboxImages = [
+  { src: img1, alt: 'Wall sheathing and weather barrier repair in progress' },
+  { src: img2, alt: 'Hardie board fiber cement siding installation' },
+  { src: img3, alt: 'Cedar lap siding repair with matched materials' },
+  { src: img4, alt: 'Siding flashing and water intrusion repair' },
+  { src: imgHero, alt: 'Completed siding repair project — full exterior view' },
+  { src: img1, alt: 'Close-up of moisture barrier installation behind siding' },
+];
+
+// FAQ data
+const faqs: FAQ[] = [
+  {
+    question: 'How quickly can you start a siding repair project?',
+    answer:
+      'We typically schedule inspections within 2 to 3 business days and can begin most repairs within one to two weeks. Emergency moisture intrusion repairs may be scheduled sooner depending on severity.',
+  },
+  {
+    question: 'Do you offer free estimates for siding work?',
+    answer:
+      'Yes. Every project begins with a free on-site inspection where we assess the damage, identify moisture issues, and provide a detailed written estimate with no obligation.',
+  },
+  {
+    question: 'What warranty do you provide on siding repairs?',
+    answer:
+      'We stand behind our work with a 5-year labor warranty on all siding repairs and installations. Material warranties vary by manufacturer — Hardie products carry up to a 30-year warranty, for example.',
+  },
+];
+---
+
+<BaseLayout
+  config={config}
+  title="V2 Component Showcase"
+  description="Test page for V2 design system components"
+>
+  <div class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-heading font-bold mb-2">V2 Component Showcase</h1>
+      <p class="text-neutral-500 mb-12">All new design system components for siding-repair</p>
+
+      <!-- Section: Trust Badges -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Trust Badges</h2>
+        <TrustBadges badges={badges} />
+      </section>
+
+      <!-- Section: Before/After -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Before / After Slider</h2>
+        <div class="max-w-2xl">
+          <BeforeAfter
+            before={img1}
+            after={img2}
+            alt="Siding repair comparison"
+            beforeLabel="Damaged Siding"
+            afterLabel="After Repair"
+          />
+        </div>
+      </section>
+
+      <!-- Section: Comparison Table -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Comparison Table</h2>
+        <ComparisonTable
+          title="Repair vs. Replace: Which Option Is Right for You?"
+          headers={comparisonHeaders}
+          rows={comparisonRows}
+        />
+      </section>
+
+      <!-- Section: Tabs -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Siding Material Tabs</h2>
+        <Tabs tabs={sidingTabs} />
+      </section>
+
+      <!-- Section: Video Embed -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Video Embed</h2>
+        <div class="max-w-2xl">
+          <VideoEmbed
+            url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            title="Siding Repair Process Overview"
+          />
+        </div>
+      </section>
+
+      <!-- Section: Pricing Cards -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Pricing Cards</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <PricingCard
+            title="Basic Repair"
+            priceRange="$300 - $800"
+            features={[
+              'Single panel replacement',
+              'Caulking and sealing',
+              'Color-matched finish',
+              'Same-day service available',
+            ]}
+            ctaText="Get Estimate"
+            ctaHref="#contact"
+          />
+          <PricingCard
+            title="Standard Repair"
+            priceRange="$1,500 - $5,000"
+            features={[
+              'Multi-panel replacement',
+              'Moisture barrier repair',
+              'Sheathing inspection',
+              'Flashing replacement',
+              '5-year labor warranty',
+            ]}
+            ctaText="Get Estimate"
+            ctaHref="#contact"
+            highlighted={true}
+          />
+          <PricingCard
+            title="Full Replacement"
+            priceRange="$8,000 - $20,000+"
+            features={[
+              'Complete siding removal',
+              'New moisture barrier system',
+              'Sheathing repair or replacement',
+              'Premium material options',
+              'Energy efficiency upgrade',
+              '5-year labor warranty',
+            ]}
+            ctaText="Get Estimate"
+            ctaHref="#contact"
+          />
+        </div>
+      </section>
+
+      <!-- Section: Image Lightbox -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Image Lightbox Gallery</h2>
+        <ImageLightbox images={lightboxImages} columns={3} />
+      </section>
+
+      <!-- Section: Buttons -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Button Variants</h2>
+
+        <h3 class="text-lg font-semibold mb-3 text-neutral-700">Variants</h3>
+        <div class="flex flex-wrap gap-4 mb-8">
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
+          <Button variant="ghost">Ghost</Button>
+        </div>
+
+        <h3 class="text-lg font-semibold mb-3 text-neutral-700">Sizes</h3>
+        <div class="flex flex-wrap items-center gap-4 mb-8">
+          <Button size="sm">Small</Button>
+          <Button size="md">Medium</Button>
+          <Button size="lg">Large</Button>
+        </div>
+
+        <h3 class="text-lg font-semibold mb-3 text-neutral-700">Loading State</h3>
+        <div class="flex flex-wrap gap-4 mb-8">
+          <Button loading={true}>Submitting...</Button>
+          <Button variant="outline" loading={true}>Loading...</Button>
+        </div>
+
+        <h3 class="text-lg font-semibold mb-3 text-neutral-700">With Icons</h3>
+        <div class="flex flex-wrap gap-4">
+          <Button icon="phone" iconPosition="left">Call Now</Button>
+          <Button icon="arrow-right">Learn More</Button>
+          <Button variant="outline" icon="email" iconPosition="left">Email Us</Button>
+        </div>
+      </section>
+
+      <!-- Section: FAQ Accordion -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">FAQ Accordion</h2>
+        <FAQAccordion faqs={faqs} title="Common Siding Repair Questions" />
+      </section>
+    </div>
+  </div>
+
+  <!-- StickyMobileCTA (fixed position, outside container) -->
+  <StickyMobileCTA phone={config.phone} />
+</BaseLayout>
