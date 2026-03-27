@@ -78,6 +78,24 @@ git commit -m "message"
 ./pushall.ps1
 ```
 
+## Editorial Crew (Content QA)
+
+Run the editorial crew tool to lint and improve markdown content files:
+
+```bash
+# Install (one-time setup)
+pip install -e tools/editorial-crew
+
+# Run on any markdown file
+python -m editorial_crew path/to/file.md
+
+# Run on multiple files with a glob
+python -m editorial_crew "apps/siding-repair/src/data/generated_content/*.md"
+
+# Run specific agents only
+python -m editorial_crew file.md --agents grammar,structure
+```
+
 ## Git Commit Guidelines
 
 - **Never include Co-Authored-By credits for Claude in commit messages**

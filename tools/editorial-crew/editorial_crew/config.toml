@@ -1,0 +1,9 @@
+[model]
+default = "anthropic/claude-sonnet-4-20250514"
+
+[agents]
+# Override model per agent if desired
+# grammar = "anthropic/claude-haiku-3-5"
+
+[output]
+diff_context_lines = 3

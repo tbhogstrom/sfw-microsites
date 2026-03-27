@@ -39,6 +39,7 @@ pnpm-debug.log*
 # Local tools (except committed ones)
 tools/*
 !tools/visual-qa/
+!tools/editorial-crew/
 
 # Git worktrees
 .worktrees/
