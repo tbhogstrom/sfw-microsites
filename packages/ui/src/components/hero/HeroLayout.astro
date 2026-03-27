@@ -1,0 +1,52 @@
+---
+/**
+ * HeroLayout.astro - Background image, overlay, responsive container, height variants
+ * Low-level layout primitive for hero sections. Use <slot /> for content.
+ */
+import type { BaseProps } from '@sfw/ui/types';
+import { cn } from '@sfw/utils';
+
+export interface Props extends BaseProps {
+  backgroundImage?: string;
+  overlay?: boolean;
+  height?: 'sm' | 'md' | 'lg' | 'full';
+}
+
+const heightClasses: Record<string, string> = {
+  sm: 'min-h-[400px]',
+  md: 'min-h-[500px]',
+  lg: 'min-h-[600px]',
+  full: 'min-h-screen',
+};
+
+const {
+  backgroundImage = 'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
+  overlay = true,
+  height = 'lg',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = cn('relative flex items-center justify-center', heightClasses[height], className);
+---
+
+<section class={classes} {...rest}>
+  {
+    backgroundImage && (
+      <div class="absolute inset-0 z-0">
+        <img
+          src={backgroundImage}
+          alt=""
+          class="w-full h-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+        {overlay && <div class="absolute inset-0 bg-dark/60" />}
+      </div>
+    )
+  }
+
+  <div class="relative z-10 container mx-auto px-4">
+    <slot />
+  </div>
+</section>

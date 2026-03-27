@@ -1,0 +1,51 @@
+---
+/**
+ * HeroContent.astro - Headline, subheadline, and CTA buttons
+ * Pure presentational component for hero text and actions.
+ */
+import Button from '../ui/Button.astro';
+
+export interface Props {
+  headline: string;
+  subheadline?: string;
+  primaryCTA?: { text: string; href: string };
+  secondaryCTA?: { text: string; href: string };
+  constrainWidth?: boolean;
+}
+
+const { headline, subheadline, primaryCTA, secondaryCTA, constrainWidth = false } = Astro.props;
+---
+
+<h1
+  class:list={[
+    'text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6',
+    constrainWidth && 'max-w-4xl',
+  ]}
+>
+  {headline}
+</h1>
+
+{
+  subheadline && (
+    <p class:list={['text-xl md:text-2xl text-white/90 mb-8', constrainWidth && 'max-w-2xl']}>
+      {subheadline}
+    </p>
+  )
+}
+
+{
+  (primaryCTA || secondaryCTA) && (
+    <div class="flex flex-col sm:flex-row gap-4">
+      {primaryCTA && (
+        <Button href={primaryCTA.href} variant="primary" size="lg">
+          {primaryCTA.text}
+        </Button>
+      )}
+      {secondaryCTA && (
+        <Button href={secondaryCTA.href} variant="outline" size="lg">
+          {secondaryCTA.text}
+        </Button>
+      )}
+    </div>
+  )
+}

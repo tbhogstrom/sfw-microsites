@@ -15,4 +15,5 @@ tools/
 packages/ui/src/layouts/BaseLayout.astro
 packages/ui/src/components/forms/ContactForm.astro
 packages/ui/src/components/hero/HeroSection.astro
+packages/ui/src/components/hero/HeroForm.astro
 **/services/**/\[service\].astro

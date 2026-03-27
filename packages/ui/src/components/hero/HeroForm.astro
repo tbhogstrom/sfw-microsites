@@ -1,0 +1,148 @@
+---
+/**
+ * HeroForm.astro - HubSpot form embed with business hours messaging
+ * Includes inline script (required for define:vars) and global CSS for HubSpot styling.
+ */
+
+export interface Props {
+  portalId: string;
+  formId: string;
+  region?: string;
+}
+
+const { portalId, formId, region } = Astro.props;
+
+const targetId = `hubspot-form-${formId}`;
+const hubspotForm = { portalId, formId, region };
+---
+
+<div class="bg-white rounded-lg shadow-xl p-6 lg:p-8">
+  <div id="business-hours-message" class="text-center mb-4 font-semibold text-lg"></div>
+  <div id={targetId} class="hubspot-form-container"></div>
+</div>
+
+<script is:inline define:vars={{ targetId, hubspotForm }}>
+  // Business hours checker
+  const updateBusinessHoursMessage = () => {
+    const messageEl = document.getElementById('business-hours-message');
+    if (!messageEl) return;
+
+    const now = new Date();
+    const pstTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+    const currentHour = pstTime.getHours();
+
+    // Business hours: 7am-4pm PST
+    if (currentHour >= 7 && currentHour < 16) {
+      messageEl.textContent = '💬 We can chat now!';
+      messageEl.className = 'text-center mb-4 font-semibold text-lg text-green-600';
+    } else {
+      // Calculate hours until open
+      let hoursUntilOpen;
+      if (currentHour >= 16) {
+        // After 4pm, open tomorrow at 7am
+        hoursUntilOpen = (24 - currentHour) + 7;
+      } else {
+        // Before 7am, open today at 7am
+        hoursUntilOpen = 7 - currentHour;
+      }
+
+      messageEl.textContent = `⏰ Our office opens in ${hoursUntilOpen} hours`;
+      messageEl.className = 'text-center mb-4 font-semibold text-lg text-gray-600';
+    }
+  };
+
+  // Create the HubSpot form once hbspt is available
+  const createForm = () => {
+    window.hbspt.forms.create({
+      portalId: hubspotForm.portalId,
+      formId: hubspotForm.formId,
+      region: hubspotForm.region || 'na1',
+      target: `#${targetId}`,
+      submitButtonClass: 'hs-button primary large',
+      cssClass: 'hs-custom-form',
+      translations: {
+        en: { submitText: 'Contact me ASAP' }
+      }
+    });
+    updateBusinessHoursMessage();
+    setInterval(updateBusinessHoursMessage, 60000);
+  };
+
+  // Load HubSpot forms script once, then create form
+  const loadHubSpotForm = () => {
+    if (window.hbspt) {
+      createForm();
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://js.hsforms.net/forms/v2.js';
+      s.onload = createForm;
+      document.head.appendChild(s);
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadHubSpotForm);
+  } else {
+    loadHubSpotForm();
+  }
+</script>
+
+<style is:global>
+  /* Make all form inputs full width and stack vertically */
+  .hubspot-form-container .hs-form-field {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hubspot-form-container .hs-input {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .hubspot-form-container .hs-form-field > label {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hubspot-form-container .input {
+    width: 100% !important;
+  }
+
+  .hubspot-form-container .hs-submit {
+    width: 100% !important;
+  }
+
+  /* Style submit button to match primary CTA */
+  .hubspot-form-container .hs-button,
+  .hubspot-form-container input[type="submit"],
+  .hubspot-form-container .hs-submit input,
+  .hubspot-form-container .hs-submit .hs-button,
+  .hs-button.primary.large {
+    width: 100% !important;
+    background-color: #a1b770 !important;
+    background: #a1b770 !important;
+    color: white !important;
+    border: none !important;
+    border-color: #a1b770 !important;
+    padding: 1rem 2rem !important;
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    border-radius: 0.5rem !important;
+    cursor: pointer !important;
+    transition: opacity 0.2s !important;
+  }
+
+  .hubspot-form-container .hs-button:hover,
+  .hubspot-form-container input[type="submit"]:hover,
+  .hubspot-form-container .hs-submit input:hover {
+    opacity: 0.9 !important;
+    background-color: #a1b770 !important;
+    background: #a1b770 !important;
+  }
+
+  /* Remove inline styles that might conflict */
+  .hubspot-form-container fieldset {
+    max-width: 100% !important;
+  }
+</style>
