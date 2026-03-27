@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "set APPDATA=%CD%\\.appdata&& turbo lint",
+    "lint": "eslint . && set APPDATA=%CD%\\.appdata&& turbo lint",
     "clean": "turbo clean",
     "typecheck": "set APPDATA=%CD%\\.appdata&& turbo typecheck",
     "lint:eslint": "eslint .",
