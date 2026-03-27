@@ -47,47 +47,58 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     secondaryCTA={{ text: 'Learn More', href: '#overview' }}
     height="lg"
     hubspotForm={{
-      portalId: "8210108",
-      formId: "e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1",
-      region: "na1"
+      portalId: '8210108',
+      formId: 'e69a4d7a-ee7b-4081-9ed6-3fd729af6bd1',
+      region: 'na1',
     }}
   />
 
   <!-- Key Benefits Section -->
-  {serviceData.keyBenefits.length > 0 && (
-    <section class="py-12 bg-gray-light">
-      <div class="container mx-auto px-4">
-        <div class="max-w-6xl mx-auto">
-          <h2 class="text-3xl font-heading font-bold text-center mb-8">
-            Why Choose Our {serviceData.name}?
-          </h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {serviceData.keyBenefits.map((benefit) => (
-              <div class="bg-white p-6 rounded-lg shadow-sm">
-                <div class="flex items-start">
-                  <svg class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                  <p class="text-gray-700">{benefit}</p>
+  {
+    serviceData.keyBenefits.length > 0 && (
+      <section class="py-12 bg-gray-light">
+        <div class="container mx-auto px-4">
+          <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-heading font-bold text-center mb-8">
+              Why Choose Our {serviceData.name}?
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {serviceData.keyBenefits.map((benefit) => (
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <div class="flex items-start">
+                    <svg
+                      class="w-6 h-6 text-primary mr-3 mt-1 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <p class="text-gray-700">{benefit}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )
+  }
 
   <!-- Service Content -->
   <ServiceContent service={serviceData} />
 
   <!-- FAQ Section -->
-  {serviceData.faqs.length > 0 && (
-    <FAQAccordion
-      faqs={serviceData.faqs}
-      title={`${serviceData.name} FAQ`}
-    />
-  )}
+  {
+    serviceData.faqs.length > 0 && (
+      <FAQAccordion faqs={serviceData.faqs} title={`${serviceData.name} FAQ`} />
+    )
+  }
 
   <!-- CTA Section -->
   <CTASection

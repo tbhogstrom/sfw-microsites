@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import {
+  HeroSection,
+  StatsBar,
+  CTASection,
+  FAQAccordion,
+  BlogCarousel,
+  ServicesOffered,
+  ServicesGallery,
+} from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
@@ -10,26 +18,34 @@ const config = serviceConfigs['lead-paint'];
 const galleryServices: GalleryService[] = [
   {
     title: 'Lead Paint Testing & Inspection',
-    description: 'Professional XRF analyzer testing to accurately identify lead paint hazards throughout your home.',
-    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/down-net_http20260325-331-o6v4a6.jpg',
+    description:
+      'Professional XRF analyzer testing to accurately identify lead paint hazards throughout your home.',
+    image:
+      'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/down-net_http20260325-331-o6v4a6.jpg',
     href: '/services/portland/lead-paint-testing-inspection',
   },
   {
     title: 'Lead Paint Removal & Surface Preparation',
-    description: 'EPA-certified removal using HEPA filtration and proper containment for safe, compliant abatement.',
-    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/20241008_161603.jpg',
+    description:
+      'EPA-certified removal using HEPA filtration and proper containment for safe, compliant abatement.',
+    image:
+      'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/20241008_161603.jpg',
     href: '/services/portland/lead-paint-removal-surface-preparation',
   },
   {
     title: 'Lead Paint Stabilization & Encapsulation',
-    description: 'Cost-effective sealing of lead paint with specialized coatings that create durable protective barriers.',
-    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/imagejpeg_1%20%282%29.jpg',
+    description:
+      'Cost-effective sealing of lead paint with specialized coatings that create durable protective barriers.',
+    image:
+      'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/imagejpeg_1%20%282%29.jpg',
     href: '/services/portland/lead-paint-stabilization-encapsulation',
   },
   {
     title: 'Lead Paint Containment & Cleanup',
-    description: 'Thorough post-abatement containment removal, HEPA cleanup, and clearance testing to verify safety.',
-    image: 'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/IMG_8276%20%281%29.jpg',
+    description:
+      'Thorough post-abatement containment removal, HEPA cleanup, and clearance testing to verify safety.',
+    image:
+      'https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/IMG_8276%20%281%29.jpg',
     href: '/services/portland/lead-paint-containment-cleanup',
   },
 ];
@@ -37,70 +53,86 @@ const galleryServices: GalleryService[] = [
 const services: Service[] = [
   {
     title: 'EPA-Certified Lead Testing',
-    description: 'Professional XRF analyzer testing and lab analysis to accurately identify lead paint locations throughout your home.',
+    description:
+      'Professional XRF analyzer testing and lab analysis to accurately identify lead paint locations throughout your home.',
   },
   {
     title: 'Certified Lead Paint Removal',
-    description: 'Safe abatement by EPA and Oregon-certified professionals using HEPA filtration and proper containment systems.',
+    description:
+      'Safe abatement by EPA and Oregon-certified professionals using HEPA filtration and proper containment systems.',
   },
   {
     title: 'Lead Paint Encapsulation',
-    description: 'Cost-effective sealing of lead paint with specialized coatings that create durable protective barriers.',
+    description:
+      'Cost-effective sealing of lead paint with specialized coatings that create durable protective barriers.',
   },
   {
     title: 'Lead Paint Enclosure Systems',
-    description: 'Installation of new materials over lead-painted surfaces to permanently isolate lead hazards.',
+    description:
+      'Installation of new materials over lead-painted surfaces to permanently isolate lead hazards.',
   },
   {
     title: 'Pre-Renovation Testing and Compliance',
-    description: 'EPA RRP-compliant testing and safe work practices for renovation projects in pre-1978 homes.',
+    description:
+      'EPA RRP-compliant testing and safe work practices for renovation projects in pre-1978 homes.',
   },
   {
     title: 'Clearance Testing and Documentation',
-    description: 'Post-abatement testing to verify safety and comprehensive documentation for compliance and peace of mind.',
+    description:
+      'Post-abatement testing to verify safety and comprehensive documentation for compliance and peace of mind.',
   },
 ];
 
 const faqs: FAQ[] = [
   {
     question: 'How do I know if my home has lead paint?',
-    answer: 'Homes built before 1978 are likely to contain lead paint, as it was banned for residential use that year. Signs include paint that chips, cracks, or peels easily, chalky residue on surfaces, and deteriorating painted surfaces. However, lead paint cannot be identified visually alone. Professional testing using XRF analyzers or lab analysis of paint samples provides definitive results. In Portland, many older homes contain lead paint, making testing crucial before renovation or if you have young children.',
+    answer:
+      'Homes built before 1978 are likely to contain lead paint, as it was banned for residential use that year. Signs include paint that chips, cracks, or peels easily, chalky residue on surfaces, and deteriorating painted surfaces. However, lead paint cannot be identified visually alone. Professional testing using XRF analyzers or lab analysis of paint samples provides definitive results. In Portland, many older homes contain lead paint, making testing crucial before renovation or if you have young children.',
   },
   {
     question: 'How much does lead paint removal cost in Portland?',
-    answer: 'Lead paint removal costs vary significantly based on the extent and location of lead paint. Testing typically costs $300 to $700. Small abatement projects might cost $2,000 to $5,000, while whole-home abatement can range from $10,000 to $30,000+. Encapsulation is often less expensive at $4 to $7 per square foot. Portland requires certified professionals for abatement, which ensures safe, compliant work but affects pricing. The investment protects your family\'s health and home value.',
+    answer:
+      "Lead paint removal costs vary significantly based on the extent and location of lead paint. Testing typically costs $300 to $700. Small abatement projects might cost $2,000 to $5,000, while whole-home abatement can range from $10,000 to $30,000+. Encapsulation is often less expensive at $4 to $7 per square foot. Portland requires certified professionals for abatement, which ensures safe, compliant work but affects pricing. The investment protects your family's health and home value.",
   },
   {
     question: 'Can I remove lead paint myself?',
-    answer: 'No. Lead paint removal requires EPA and Oregon-certified professionals due to serious health risks. DIY removal creates dangerous lead dust that spreads throughout the home and yard, causing lead poisoning. Even sanding or scraping creates hazardous conditions. In Portland, regulations require certified lead abatement contractors who use proper containment, HEPA filtration, and disposal methods. Attempting DIY removal risks your health, your family\'s health, creates liability, and may violate state and federal regulations.',
+    answer:
+      "No. Lead paint removal requires EPA and Oregon-certified professionals due to serious health risks. DIY removal creates dangerous lead dust that spreads throughout the home and yard, causing lead poisoning. Even sanding or scraping creates hazardous conditions. In Portland, regulations require certified lead abatement contractors who use proper containment, HEPA filtration, and disposal methods. Attempting DIY removal risks your health, your family's health, creates liability, and may violate state and federal regulations.",
   },
   {
     question: 'What are the health risks of lead paint exposure?',
-    answer: 'Lead exposure causes serious health problems, especially in children under 6 and pregnant women. Effects include developmental delays, learning difficulties, lower IQ, behavioral problems, nervous system damage, kidney damage, hearing loss, and slowed growth. In adults, lead causes reproductive issues, high blood pressure, joint pain, and cognitive problems. Even low-level exposure is harmful. Portland has strong lead safety regulations because lead poisoning is preventable through proper abatement and safe work practices.',
+    answer:
+      'Lead exposure causes serious health problems, especially in children under 6 and pregnant women. Effects include developmental delays, learning difficulties, lower IQ, behavioral problems, nervous system damage, kidney damage, hearing loss, and slowed growth. In adults, lead causes reproductive issues, high blood pressure, joint pain, and cognitive problems. Even low-level exposure is harmful. Portland has strong lead safety regulations because lead poisoning is preventable through proper abatement and safe work practices.',
   },
   {
-    question: 'What\'s the difference between lead paint removal, encapsulation, and enclosure?',
-    answer: 'Removal completely eliminates lead paint but is the most expensive and disruptive option. Encapsulation covers lead paint with special sealants, creating a protective barrier; it\'s less expensive but requires monitoring and reapplication. Enclosure installs new materials like drywall over lead-painted surfaces. In Portland, certified professionals assess which method suits your situation based on paint condition, location, budget, and intended use. All methods must meet EPA and Oregon requirements.',
+    question: "What's the difference between lead paint removal, encapsulation, and enclosure?",
+    answer:
+      "Removal completely eliminates lead paint but is the most expensive and disruptive option. Encapsulation covers lead paint with special sealants, creating a protective barrier; it's less expensive but requires monitoring and reapplication. Enclosure installs new materials like drywall over lead-painted surfaces. In Portland, certified professionals assess which method suits your situation based on paint condition, location, budget, and intended use. All methods must meet EPA and Oregon requirements.",
   },
   {
     question: 'Do I need lead paint testing before renovation?',
-    answer: 'Yes. Federal EPA RRP (Renovation, Repair, and Painting) Rule and Oregon regulations require testing before disturbing painted surfaces in pre-1978 homes. This includes window replacement, siding removal, demolition, or any work that disturbs paint. Portland contractors must be EPA and Oregon Lead-Based Paint certified. Testing identifies lead hazards, allowing proper protective measures. Skipping testing risks health hazards, regulatory violations, fines up to $37,500 per violation, and potential lawsuits.',
+    answer:
+      'Yes. Federal EPA RRP (Renovation, Repair, and Painting) Rule and Oregon regulations require testing before disturbing painted surfaces in pre-1978 homes. This includes window replacement, siding removal, demolition, or any work that disturbs paint. Portland contractors must be EPA and Oregon Lead-Based Paint certified. Testing identifies lead hazards, allowing proper protective measures. Skipping testing risks health hazards, regulatory violations, fines up to $37,500 per violation, and potential lawsuits.',
   },
   {
     question: 'How long does lead paint abatement take?',
-    answer: 'Timeline depends on project scope. Testing takes a few days for results. Small projects like single-room abatement might take 2-5 days, whole-home abatement 1-3 weeks, and large or complex projects longer. Work includes setup, containment, removal or encapsulation, cleanup, clearance testing, and final inspection. In Portland, certified professionals ensure thorough work meeting all regulations. Rushing compromises safety. Proper abatement protects your family for decades, making the time investment worthwhile.',
+    answer:
+      'Timeline depends on project scope. Testing takes a few days for results. Small projects like single-room abatement might take 2-5 days, whole-home abatement 1-3 weeks, and large or complex projects longer. Work includes setup, containment, removal or encapsulation, cleanup, clearance testing, and final inspection. In Portland, certified professionals ensure thorough work meeting all regulations. Rushing compromises safety. Proper abatement protects your family for decades, making the time investment worthwhile.',
   },
   {
     question: 'What happens during professional lead paint abatement?',
-    answer: 'Professional abatement includes comprehensive testing, developing an abatement plan, containing work areas with plastic sheeting, using HEPA filtration and ventilation, wearing protective equipment, carefully removing or encapsulating lead paint using approved methods, cleaning with HEPA vacuums and wet methods, disposing of waste at approved facilities, conducting clearance testing to verify safety, and providing documentation. Portland certified contractors follow EPA and Oregon requirements, ensuring your home is safe for occupancy.',
+    answer:
+      'Professional abatement includes comprehensive testing, developing an abatement plan, containing work areas with plastic sheeting, using HEPA filtration and ventilation, wearing protective equipment, carefully removing or encapsulating lead paint using approved methods, cleaning with HEPA vacuums and wet methods, disposing of waste at approved facilities, conducting clearance testing to verify safety, and providing documentation. Portland certified contractors follow EPA and Oregon requirements, ensuring your home is safe for occupancy.',
   },
   {
     question: 'What should I do if I think my child was exposed to lead paint?',
-    answer: 'Contact your pediatrician immediately to arrange blood lead level testing. Remove children from the contaminated area. Don\'t disturb the lead source further. Hire a certified lead inspector to assess your home. Clean surfaces with damp cloths (dry sweeping spreads lead dust). Have professional abatement performed. In Portland, Multnomah County Health Department offers resources and testing. Early intervention is crucial as lead poisoning treatment is most effective when caught early.',
+    answer:
+      "Contact your pediatrician immediately to arrange blood lead level testing. Remove children from the contaminated area. Don't disturb the lead source further. Hire a certified lead inspector to assess your home. Clean surfaces with damp cloths (dry sweeping spreads lead dust). Have professional abatement performed. In Portland, Multnomah County Health Department offers resources and testing. Early intervention is crucial as lead poisoning treatment is most effective when caught early.",
   },
   {
     question: 'Are there regulations about lead paint disclosure when selling a home?',
-    answer: 'Yes. Federal law requires sellers and landlords of pre-1978 homes to disclose known lead paint hazards, provide EPA\'s lead hazard information pamphlet, and allow buyers a 10-day testing period. Oregon has additional requirements. Non-disclosure risks lawsuits, fines, and transaction cancellation. In Portland, proactive testing and abatement before listing can be a selling point, demonstrating the home is safe and potentially increasing value. Proper documentation protects all parties.',
+    answer:
+      "Yes. Federal law requires sellers and landlords of pre-1978 homes to disclose known lead paint hazards, provide EPA's lead hazard information pamphlet, and allow buyers a 10-day testing period. Oregon has additional requirements. Non-disclosure risks lawsuits, fines, and transaction cancellation. In Portland, proactive testing and abatement before listing can be a selling point, demonstrating the home is safe and potentially increasing value. Proper documentation protects all parties.",
   },
 ];
 ---
@@ -116,12 +148,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     backgroundImage="https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/hero/A_historic_portland_or_seattle_craftsman_home_exte_delpmaspu.png"
-    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    primaryCTA={{ text: 'Talk to a Human', href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
       portalId: config.hubspotPortalId,
       formId: config.hubspotFormId,
-      region: "na1"
+      region: 'na1',
     }}
   />
 
@@ -138,12 +170,7 @@ const faqs: FAQ[] = [
   <!-- Services Offered Section -->
   <ServicesOffered
     mainHeading="Lead Paint Testing and Removal in Portland — And So Much More"
-    bulletPoints={[
-      'Local specialists',
-      'Clear Pricing',
-      'Fast response',
-      'Repairs built to last',
-    ]}
+    bulletPoints={['Local specialists', 'Clear Pricing', 'Fast response', 'Repairs built to last']}
     mainDescription="Lead Paint Experts provides comprehensive lead paint testing, removal, and abatement services for Portland-area homes. From EPA-certified testing to safe removal, encapsulation, and clearance testing, our certified team protects your family's health with compliant, lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
     ctaText="Get Free Pricing"
     ctaHref="#contact"
@@ -155,10 +182,7 @@ const faqs: FAQ[] = [
   />
 
   <!-- FAQ Section -->
-  <FAQAccordion
-    faqs={faqs}
-    title="Lead Paint Testing and Removal FAQ"
-  />
+  <FAQAccordion faqs={faqs} title="Lead Paint Testing and Removal FAQ" />
 
   <!-- Blog Carousel -->
   <BlogCarousel
@@ -176,4 +200,3 @@ const faqs: FAQ[] = [
     variant="dark"
   />
 </BaseLayout>
-

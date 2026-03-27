@@ -7,11 +7,11 @@ export const companyInfo: CompanyInfo = {
     street: '2552 NW Vaughn St.',
     city: 'Portland',
     state: 'OR',
-    zip: '97210'
+    zip: '97210',
   },
   phone: '(503) 885-0236',
   email: 'info@sfwconstruction.com',
-  ccbNumber: '244912'
+  ccbNumber: '244912',
 };
 
 export const serviceAreas: ServiceArea[] = [
@@ -33,18 +33,21 @@ export const serviceAreas: ServiceArea[] = [
 
 export const baseTestimonials: Testimonial[] = [
   {
-    quote: 'The team was professional, communicative, and did excellent work. They identified the source of the problem and fixed it properly the first time.',
+    quote:
+      'The team was professional, communicative, and did excellent work. They identified the source of the problem and fixed it properly the first time.',
     author: 'Homeowner',
-    location: 'Portland, OR'
+    location: 'Portland, OR',
   },
   {
-    quote: 'Our project wasn\'t large, but they treated it with the same care and attention as a major renovation. Very impressed with the quality and transparency.',
+    quote:
+      "Our project wasn't large, but they treated it with the same care and attention as a major renovation. Very impressed with the quality and transparency.",
     author: 'Homeowner',
-    location: 'Beaverton, OR'
+    location: 'Beaverton, OR',
   },
   {
-    quote: 'This was a substantial project and the crew was professional throughout. Communication was excellent and our home looks stunning.',
+    quote:
+      'This was a substantial project and the crew was professional throughout. Communication was excellent and our home looks stunning.',
     author: 'Homeowner',
-    location: 'Portland, OR'
-  }
+    location: 'Portland, OR',
+  },
 ];

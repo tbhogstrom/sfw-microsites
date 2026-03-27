@@ -67,7 +67,7 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
 ---
 
 <section class={classes} {...rest}>
-  <!-- Background Image -->
+  {/* Background Image */}
   {backgroundImage && (
     <div class="absolute inset-0 z-0">
       <img
@@ -83,11 +83,11 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
     </div>
   )}
 
-  <!-- Content -->
+  {/* Content */}
   <div class={hubspotForm ? 'relative z-10 container mx-auto px-4 py-12 lg:py-0' : contentClasses}>
     {hubspotForm ? (
       <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch">
-        <!-- Content - Left Two Thirds -->
+        {/* Content - Left Two Thirds */}
         <div class="w-full lg:w-2/3 flex flex-col justify-center text-left order-2 lg:order-1">
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6">
             {headline}
@@ -117,10 +117,10 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
           <slot />
         </div>
 
-        <!-- HubSpot Form - Right Third -->
+        {/* HubSpot Form - Right Third */}
         <div class="w-full lg:w-1/3 order-1 lg:order-2">
           <div class="bg-white rounded-lg shadow-xl p-6 lg:p-8">
-            <!-- Business Hours Message -->
+            {/* Business Hours Message */}
             <div id="business-hours-message" class="text-center mb-4 font-semibold text-lg"></div>
 
             <div id={formId} class="hubspot-form-container"></div>
@@ -228,7 +228,7 @@ const formId = hubspotForm ? `hubspot-form-${hubspotForm.formId}` : '';
       }
     </script>
 
-    <!-- Custom HubSpot Form Styling -->
+    {/* Custom HubSpot Form Styling */}
     <style is:global>
       /* Make all form inputs full width and stack vertically */
       .hubspot-form-container .hs-form-field {

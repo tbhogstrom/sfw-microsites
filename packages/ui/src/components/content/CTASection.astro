@@ -32,16 +32,11 @@ const variantClasses = {
   dark: 'bg-dark text-white',
 };
 
-const classes = [
-  'py-16 md:py-24',
-  variantClasses[variant],
-  className,
-].filter(Boolean).join(' ');
+const classes = ['py-16 md:py-24', variantClasses[variant], className].filter(Boolean).join(' ');
 
-const contentClasses = [
-  'container mx-auto px-4',
-  centered && 'text-center',
-].filter(Boolean).join(' ');
+const contentClasses = ['container mx-auto px-4', centered && 'text-center']
+  .filter(Boolean)
+  .join(' ');
 ---
 
 <section class={classes} {...rest}>
@@ -50,34 +45,32 @@ const contentClasses = [
       {headline}
     </h2>
 
-    {description && (
-      <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-        {description}
-      </p>
-    )}
+    {
+      description && (
+        <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">{description}</p>
+      )
+    }
 
-    {(primaryCTA || secondaryCTA) && (
-      <div class={`flex flex-col sm:flex-row gap-4 ${centered ? 'justify-center' : ''}`}>
-        {primaryCTA && (
-          <Button
-            href={primaryCTA.href}
-            variant={variant === 'primary' ? 'secondary' : 'primary'}
-            size="lg"
-          >
-            {primaryCTA.text}
-          </Button>
-        )}
-        {secondaryCTA && (
-          <Button
-            href={secondaryCTA.href}
-            variant="outline"
-            size="lg"
-          >
-            {secondaryCTA.text}
-          </Button>
-        )}
-      </div>
-    )}
+    {
+      (primaryCTA || secondaryCTA) && (
+        <div class={`flex flex-col sm:flex-row gap-4 ${centered ? 'justify-center' : ''}`}>
+          {primaryCTA && (
+            <Button
+              href={primaryCTA.href}
+              variant={variant === 'primary' ? 'secondary' : 'primary'}
+              size="lg"
+            >
+              {primaryCTA.text}
+            </Button>
+          )}
+          {secondaryCTA && (
+            <Button href={secondaryCTA.href} variant="outline" size="lg">
+              {secondaryCTA.text}
+            </Button>
+          )}
+        </div>
+      )
+    }
 
     <!-- Optional slot for additional content -->
     <slot />

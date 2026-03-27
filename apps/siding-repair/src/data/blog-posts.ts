@@ -15,9 +15,10 @@ export interface BlogPostData {
 
 export const blogPosts: BlogPostData[] = [
   {
-    title: 'When to Repair vs Replace Your Home\'s Siding',
+    title: "When to Repair vs Replace Your Home's Siding",
     slug: 'when-to-repair-vs-replace-your-homes-siding',
-    excerpt: 'Your home\'s siding is one of its most important protective barriers. Learn when to repair and when to replace for optimal protection.',
+    excerpt:
+      "Your home's siding is one of its most important protective barriers. Learn when to repair and when to replace for optimal protection.",
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -125,7 +126,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Siding Repair Cost Guide for Portland Homeowners',
     slug: 'siding-repair-cost-guide-for-portland-homeowners',
-    excerpt: 'When it comes to maintaining your home’s exterior, the significance of high-quality siding cannot be overstated.',
+    excerpt:
+      'When it comes to maintaining your home’s exterior, the significance of high-quality siding cannot be overstated.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -207,7 +209,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Preventing Siding Damage: Maintenance Best Practices',
     slug: 'preventing-siding-damage-maintenance-best-practices',
-    excerpt: 'Siding is your home\'s first line of defense against the elements, especially in the unpredictable weather conditions of Portland, Oregon.',
+    excerpt:
+      "Siding is your home's first line of defense against the elements, especially in the unpredictable weather conditions of Portland, Oregon.",
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -254,5 +257,5 @@ export const blogPosts: BlogPostData[] = [
 <p>Maintaining your siding is crucial for protecting your home against the elements and enhancing its visual appeal. By implementing regular inspections, cleaning, painting, and timely repairs, you can extend the lifespan of your exterior siding. Whether you are considering siding replacement or simply looking to preserve your current siding, prioritize quality materials and professional installation to ensure your home remains safe, dry, and beautiful for years to come. </p>
 <p>For homeowners in Portland, adhering to these best practices will not only safeguard your investment but also contribute to a warm and welcoming environment for you and your family. Take action now to prevent siding damage and enjoy the peace of mind that comes with a well-maintained home!</p>
     `,
-  }
+  },
 ];

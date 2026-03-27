@@ -1,37 +1,52 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery, GoogleMapEmbed } from '@sfw/ui';
+import {
+  HeroSection,
+  StatsBar,
+  CTASection,
+  FAQAccordion,
+  BlogCarousel,
+  ServicesOffered,
+  ServicesGallery,
+  GoogleMapEmbed,
+} from '@sfw/ui';
 import type { GalleryService } from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
 
 const config = serviceConfigs['dry-rot'];
-const googleMapEmbedSrc = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d716251.5385569318!2d-122.71848044999999!3d45.47267295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xad5e3ad74c43a045%3A0xf875049f0c21743b!2sRot%20Repair%20Experts!5e0!3m2!1sen!2sus!4v1773330252687!5m2!1sen!2sus';
+const googleMapEmbedSrc =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d716251.5385569318!2d-122.71848044999999!3d45.47267295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xad5e3ad74c43a045%3A0xf875049f0c21743b!2sRot%20Repair%20Experts!5e0!3m2!1sen!2sus!4v1773330252687!5m2!1sen!2sus';
 
 const galleryServices: GalleryService[] = [
   {
     title: 'Crawlspace Structural Rot Repair',
     description: 'Expert inspection and repair of rot damage in crawlspaces and subfloor areas.',
-    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-382-f93e9y-1773682527997.webp',
+    image:
+      'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-382-f93e9y-1773682527997.webp',
     href: '/services/portland/crawlspace-structural-rot-dry-rot-repair',
   },
   {
     title: 'Wood Replacement & Structural Repair',
     description: 'Full replacement of compromised beams, joists, and framing with treated lumber.',
-    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260311-233-ubm3wg-1773263594732.webp',
+    image:
+      'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260311-233-ubm3wg-1773263594732.webp',
     href: '/services/portland/wood-replacement-structural-framing',
   },
   {
     title: 'Moisture Control & Prevention',
     description: 'Vapor barriers, ventilation, and drainage solutions to stop rot from returning.',
-    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-157-7m87mc-1773682474148.webp',
+    image:
+      'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-157-7m87mc-1773682474148.webp',
     href: '/services/portland/moisture-control-prevention-systems',
   },
   {
     title: 'Subfloor & Foundation Repair',
-    description: 'Professional repair of water-damaged subfloors and foundational wood replacement.',
-    image: 'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-369-wkqifm-1773682217695.webp',
+    description:
+      'Professional repair of water-damaged subfloors and foundational wood replacement.',
+    image:
+      'https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/down-net_http20260316-369-wkqifm-1773682217695.webp',
     href: '/services/portland/subfloor-sagging-floor-repair',
   },
 ];
@@ -39,70 +54,86 @@ const galleryServices: GalleryService[] = [
 const services: Service[] = [
   {
     title: 'Comprehensive Dry Rot Inspection',
-    description: 'Thorough assessment using moisture meters and probing to identify all affected areas, including hidden damage.',
+    description:
+      'Thorough assessment using moisture meters and probing to identify all affected areas, including hidden damage.',
   },
   {
     title: 'Fungal Treatment and Remediation',
-    description: 'Professional application of fungicidal treatments to eliminate active dry rot and prevent recurrence.',
+    description:
+      'Professional application of fungicidal treatments to eliminate active dry rot and prevent recurrence.',
   },
   {
     title: 'Structural Member Replacement',
-    description: 'Expert replacement of compromised beams, joists, and framing with treated or rot-resistant lumber.',
+    description:
+      'Expert replacement of compromised beams, joists, and framing with treated or rot-resistant lumber.',
   },
   {
     title: 'Moisture Source Elimination',
-    description: 'Identification and correction of underlying moisture problems that allow dry rot to develop and spread.',
+    description:
+      'Identification and correction of underlying moisture problems that allow dry rot to develop and spread.',
   },
   {
     title: 'Crawlspace Moisture Management',
-    description: 'Installation of vapor barriers, ventilation improvements, and drainage solutions to prevent future rot.',
+    description:
+      'Installation of vapor barriers, ventilation improvements, and drainage solutions to prevent future rot.',
   },
   {
     title: 'Preventive Protection Systems',
-    description: 'Application of protective coatings and moisture barriers to safeguard vulnerable areas from future damage.',
+    description:
+      'Application of protective coatings and moisture barriers to safeguard vulnerable areas from future damage.',
   },
 ];
 
 const faqs: FAQ[] = [
   {
     question: 'What is dry rot and how does it differ from wet rot?',
-    answer: 'Dry rot is a fungal decay caused by Serpula lacrymans that breaks down wood cellulose, making it brittle and crumbly. Despite its name, it requires moisture to start (20-30% wood moisture content). Wet rot requires higher moisture levels (50%+) and is less aggressive. Dry rot is more serious because it spreads through masonry, can travel far from moisture sources, and causes more extensive structural damage. In Portland, both types occur, but dry rot is particularly destructive due to its spreading capability.',
+    answer:
+      'Dry rot is a fungal decay caused by Serpula lacrymans that breaks down wood cellulose, making it brittle and crumbly. Despite its name, it requires moisture to start (20-30% wood moisture content). Wet rot requires higher moisture levels (50%+) and is less aggressive. Dry rot is more serious because it spreads through masonry, can travel far from moisture sources, and causes more extensive structural damage. In Portland, both types occur, but dry rot is particularly destructive due to its spreading capability.',
   },
   {
     question: 'What are the signs of dry rot in my home?',
-    answer: 'Signs include wood that crumbles when pressed, distinctive musty mushroom odor, cracking in cube-shaped patterns, darkening or discoloration of wood, cotton-wool-like fungal growth (mycelium), rust-colored spore dust, warped or distorted wood members, and brittle, dry-feeling affected wood. Advanced cases show visible fruiting bodies (mushroom-like structures). In Portland, check areas with moisture issues: window frames, door frames, under sinks, basements, crawlspaces, and areas with roof leaks or plumbing issues.',
+    answer:
+      'Signs include wood that crumbles when pressed, distinctive musty mushroom odor, cracking in cube-shaped patterns, darkening or discoloration of wood, cotton-wool-like fungal growth (mycelium), rust-colored spore dust, warped or distorted wood members, and brittle, dry-feeling affected wood. Advanced cases show visible fruiting bodies (mushroom-like structures). In Portland, check areas with moisture issues: window frames, door frames, under sinks, basements, crawlspaces, and areas with roof leaks or plumbing issues.',
   },
   {
     question: 'How much does dry rot repair cost in Portland?',
-    answer: 'Dry rot repair costs vary widely based on extent and location. Minor repairs might cost $500 to $2,000, moderate repairs involving framing or structural members $2,000 to $8,000, and extensive repairs affecting multiple areas or major structural components $10,000 to $30,000+. Costs include fungal treatment, removing affected wood, replacing structural members, addressing moisture sources, and preventive treatments. Portland labor rates run $75 to $125 per hour. Early intervention significantly reduces costs.',
+    answer:
+      'Dry rot repair costs vary widely based on extent and location. Minor repairs might cost $500 to $2,000, moderate repairs involving framing or structural members $2,000 to $8,000, and extensive repairs affecting multiple areas or major structural components $10,000 to $30,000+. Costs include fungal treatment, removing affected wood, replacing structural members, addressing moisture sources, and preventive treatments. Portland labor rates run $75 to $125 per hour. Early intervention significantly reduces costs.',
   },
   {
     question: 'Can I repair dry rot myself or should I hire a professional?',
-    answer: 'Small, non-structural dry rot can be tackled by skilled DIYers, but most dry rot requires professional attention. Professionals properly assess extent (often hidden), identify all affected areas, address underlying moisture problems, perform structural repairs meeting building codes, apply proper fungicidal treatments, and prevent recurrence. In Portland, professionals understand local moisture conditions and effective prevention strategies. Improper DIY repairs often miss hidden damage, leading to recurring problems and potentially unsafe structural conditions.',
+    answer:
+      'Small, non-structural dry rot can be tackled by skilled DIYers, but most dry rot requires professional attention. Professionals properly assess extent (often hidden), identify all affected areas, address underlying moisture problems, perform structural repairs meeting building codes, apply proper fungicidal treatments, and prevent recurrence. In Portland, professionals understand local moisture conditions and effective prevention strategies. Improper DIY repairs often miss hidden damage, leading to recurring problems and potentially unsafe structural conditions.',
   },
   {
     question: 'What causes dry rot in Portland homes?',
-    answer: 'Dry rot requires four conditions: moisture (20-30% wood moisture), oxygen, suitable temperature (50-90°F), and wood as food. In Portland, causes include roof leaks, failed flashing, plumbing leaks, poor ventilation in crawlspaces and attics, condensation problems, clogged gutters, inadequate drainage, wood-to-soil contact, and moisture intrusion through foundations or siding. Portland\'s wet climate creates ideal conditions. Addressing moisture sources is essential for prevention and preventing recurrence after repairs.',
+    answer:
+      "Dry rot requires four conditions: moisture (20-30% wood moisture), oxygen, suitable temperature (50-90°F), and wood as food. In Portland, causes include roof leaks, failed flashing, plumbing leaks, poor ventilation in crawlspaces and attics, condensation problems, clogged gutters, inadequate drainage, wood-to-soil contact, and moisture intrusion through foundations or siding. Portland's wet climate creates ideal conditions. Addressing moisture sources is essential for prevention and preventing recurrence after repairs.",
   },
   {
     question: 'How long does dry rot repair take?',
-    answer: 'Timeline depends on extent. Small repairs might take 1-3 days, moderate repairs involving structural work 1-2 weeks, and extensive repairs requiring significant structural replacement several weeks to months. Process includes assessment, removing damaged material, treating affected areas, addressing moisture sources, replacing structural members, and finishing work. In Portland, weather can affect outdoor work schedules. Proper repairs can\'t be rushed; thorough treatment ensures the problem doesn\'t recur.',
+    answer:
+      "Timeline depends on extent. Small repairs might take 1-3 days, moderate repairs involving structural work 1-2 weeks, and extensive repairs requiring significant structural replacement several weeks to months. Process includes assessment, removing damaged material, treating affected areas, addressing moisture sources, replacing structural members, and finishing work. In Portland, weather can affect outdoor work schedules. Proper repairs can't be rushed; thorough treatment ensures the problem doesn't recur.",
   },
   {
     question: 'How can I prevent dry rot in my home?',
-    answer: 'Prevent dry rot by controlling moisture: maintain gutters and downspouts, repair leaks promptly, ensure proper ventilation in crawlspaces and attics, fix plumbing leaks immediately, maintain proper grading away from foundations, use vapor barriers in crawlspaces, ensure adequate clearance between soil and wood, paint and seal exterior wood, inspect regularly for early signs, and address condensation issues. In Portland, pre-winter inspections are crucial. Keeping wood dry is the most effective prevention.',
+    answer:
+      'Prevent dry rot by controlling moisture: maintain gutters and downspouts, repair leaks promptly, ensure proper ventilation in crawlspaces and attics, fix plumbing leaks immediately, maintain proper grading away from foundations, use vapor barriers in crawlspaces, ensure adequate clearance between soil and wood, paint and seal exterior wood, inspect regularly for early signs, and address condensation issues. In Portland, pre-winter inspections are crucial. Keeping wood dry is the most effective prevention.',
   },
   {
     question: 'Is dry rot dangerous to my health?',
-    answer: 'Dry rot fungus itself isn\'t typically toxic to humans, but it indicates serious moisture problems that promote mold growth, which can cause respiratory issues, allergies, and other health problems. The primary danger is structural: compromised beams, joists, and framing create collapse risks and safety hazards. Airborne spores can aggravate respiratory conditions. In Portland, the moisture conditions supporting dry rot often harbor other harmful mold species. Addressing dry rot protects both structural integrity and health.',
+    answer:
+      "Dry rot fungus itself isn't typically toxic to humans, but it indicates serious moisture problems that promote mold growth, which can cause respiratory issues, allergies, and other health problems. The primary danger is structural: compromised beams, joists, and framing create collapse risks and safety hazards. Airborne spores can aggravate respiratory conditions. In Portland, the moisture conditions supporting dry rot often harbor other harmful mold species. Addressing dry rot protects both structural integrity and health.",
   },
   {
     question: 'Can dry rot spread to other areas of my home?',
-    answer: 'Yes. Unlike wet rot, dry rot fungus (Serpula lacrymans) can spread through walls, under floors, and even through masonry searching for wood. It transports its own moisture, allowing spread to initially dry areas. Mycelial strands can travel several feet from the moisture source. This makes dry rot particularly destructive and why professional treatment of all affected areas, not just visible damage, is essential. In Portland homes, untreated dry rot can spread from one area to affect the entire structure.',
+    answer:
+      'Yes. Unlike wet rot, dry rot fungus (Serpula lacrymans) can spread through walls, under floors, and even through masonry searching for wood. It transports its own moisture, allowing spread to initially dry areas. Mycelial strands can travel several feet from the moisture source. This makes dry rot particularly destructive and why professional treatment of all affected areas, not just visible damage, is essential. In Portland homes, untreated dry rot can spread from one area to affect the entire structure.',
   },
   {
     question: 'What treatments are used for dry rot?',
-    answer: 'Effective dry rot treatment involves removing all affected wood (cutting back to sound wood with margin of safety), treating surrounding areas with fungicidal solutions (borate-based treatments are common), addressing moisture sources, ensuring proper ventilation and drainage, replacing removed wood with treated or naturally rot-resistant lumber, and applying protective coatings. In Portland, professionals often recommend additional moisture management solutions like improved drainage or ventilation. Simply treating visible rot without addressing moisture and hidden damage ensures recurrence.',
+    answer:
+      'Effective dry rot treatment involves removing all affected wood (cutting back to sound wood with margin of safety), treating surrounding areas with fungicidal solutions (borate-based treatments are common), addressing moisture sources, ensuring proper ventilation and drainage, replacing removed wood with treated or naturally rot-resistant lumber, and applying protective coatings. In Portland, professionals often recommend additional moisture management solutions like improved drainage or ventilation. Simply treating visible rot without addressing moisture and hidden damage ensures recurrence.',
   },
 ];
 ---
@@ -119,12 +150,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     backgroundImage="https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/hero/Rot_repair_experts_portland__rotrepairportlandcoma_delpmaspu.png"
-    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    primaryCTA={{ text: 'Talk to a Human', href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
       portalId: config.hubspotPortalId,
       formId: config.hubspotFormId,
-      region: "na1"
+      region: 'na1',
     }}
   />
 
@@ -132,21 +163,12 @@ const faqs: FAQ[] = [
   <StatsBar stats={companyStats} variant="primary" />
 
   <!-- Services Gallery -->
-  <ServicesGallery
-    heading="Our Rot Repair Services"
-    services={galleryServices}
-    variant="light"
-  />
+  <ServicesGallery heading="Our Rot Repair Services" services={galleryServices} variant="light" />
 
   <!-- Services Offered Section -->
   <ServicesOffered
     mainHeading="Dry Rot Repair and Remediation in Portland — And So Much More"
-    bulletPoints={[
-      'Local specialists',
-      'Clear Pricing',
-      'Fast response',
-      'Repairs built to last',
-    ]}
+    bulletPoints={['Local specialists', 'Clear Pricing', 'Fast response', 'Repairs built to last']}
     mainDescription="Dry Rot Experts provides comprehensive fungal decay remediation and structural restoration services for Portland-area homes. From identifying hidden moisture damage to replacing affected framing, treating fungal growth, and implementing moisture prevention systems, our team restores your home's structural integrity with lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
     ctaText="Get Free Pricing"
     ctaHref="#contact"
@@ -158,10 +180,7 @@ const faqs: FAQ[] = [
   />
 
   <!-- FAQ Section -->
-  <FAQAccordion
-    faqs={faqs}
-    title="Dry Rot Identification and Repair FAQ"
-  />
+  <FAQAccordion faqs={faqs} title="Dry Rot Identification and Repair FAQ" />
 
   <!-- Blog Carousel -->
   <BlogCarousel
@@ -173,9 +192,7 @@ const faqs: FAQ[] = [
   <!-- Maps Section -->
   <section class="py-16 bg-gray-light">
     <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-heading font-bold text-center mb-12">
-        Find Us on Google Maps
-      </h2>
+      <h2 class="text-4xl font-heading font-bold text-center mb-12">Find Us on Google Maps</h2>
       <div class="max-w-2xl mx-auto">
         <h3 class="text-xl font-heading font-bold mb-3">Portland, OR</h3>
         <GoogleMapEmbed
@@ -196,4 +213,3 @@ const faqs: FAQ[] = [
     variant="dark"
   />
 </BaseLayout>
-

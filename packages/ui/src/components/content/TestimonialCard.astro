@@ -11,32 +11,28 @@ export interface Props extends BaseProps {
   showImage?: boolean;
 }
 
-const {
-  testimonial,
-  showImage = false,
-  class: className = '',
-  ...rest
-} = Astro.props;
+const { testimonial, showImage = false, class: className = '', ...rest } = Astro.props;
 
 const { name, location, text, rating, image } = testimonial;
 
-const classes = [
-  'bg-white rounded-lg shadow-md p-6 h-full flex flex-col',
-  className,
-].filter(Boolean).join(' ');
+const classes = ['bg-white rounded-lg shadow-md p-6 h-full flex flex-col', className]
+  .filter(Boolean)
+  .join(' ');
 ---
 
 <div class={classes} {...rest}>
   <!-- Star Rating -->
   <div class="flex items-center mb-4">
-    {Array.from({ length: 5 }, (_, i) => (
-      <Icon
-        name="star"
-        size={20}
-        class={i < (rating || 5) ? 'text-yellow-400 fill-current' : 'text-gray-300'}
-        ariaLabel={`${i + 1} star`}
-      />
-    ))}
+    {
+      Array.from({ length: 5 }, (_, i) => (
+        <Icon
+          name="star"
+          size={20}
+          class={i < (rating || 5) ? 'text-yellow-400 fill-current' : 'text-gray-300'}
+          ariaLabel={`${i + 1} star`}
+        />
+      ))
+    }
   </div>
 
   <!-- Testimonial Text -->
@@ -48,18 +44,14 @@ const classes = [
 
   <!-- Author -->
   <div class="flex items-center">
-    {showImage && image && (
-      <img
-        src={image}
-        alt={name}
-        class="w-12 h-12 rounded-full object-cover mr-4"
-      />
-    )}
+    {
+      showImage && image && (
+        <img src={image} alt={name} class="w-12 h-12 rounded-full object-cover mr-4" />
+      )
+    }
     <div>
       <div class="font-semibold text-dark">{name}</div>
-      {location && (
-        <div class="text-sm text-gray-500">{location}</div>
-      )}
+      {location && <div class="text-sm text-gray-500">{location}</div>}
     </div>
   </div>
 </div>

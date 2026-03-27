@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Understanding Beam Repair Techniques and Best Practices',
     slug: 'understanding-beam-repair-techniques-and-best-practices',
-    excerpt: 'When it comes to home renovation and improvement in Portland, Oregon, one of the most critical yet often overlooked aspects is the repair and maintenance of structural beams.',
+    excerpt:
+      'When it comes to home renovation and improvement in Portland, Oregon, one of the most critical yet often overlooked aspects is the repair and maintenance of structural beams.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -143,7 +144,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'When to Call a Professional: Signs Your Beam Needs Repair',
     slug: 'when-to-call-a-professional-signs-your-beam-needs-repair',
-    excerpt: 'Maintaining the structural integrity of your home is crucial for safety and longevity.',
+    excerpt:
+      'Maintaining the structural integrity of your home is crucial for safety and longevity.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -301,7 +303,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Structural Beam Damage: Causes and Solutions',
     slug: 'structural-beam-damage-causes-and-solutions',
-    excerpt: 'When it comes to home construction and renovation, structural beams play a vital role in ensuring the stability and safety of a building.',
+    excerpt:
+      'When it comes to home construction and renovation, structural beams play a vital role in ensuring the stability and safety of a building.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -389,7 +392,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Beam Sistering: A Complete Guide for Homeowners',
     slug: 'beam-sistering-a-complete-guide-for-homeowners',
-    excerpt: 'When it comes to home renovation and structural integrity, understanding how to properly repair and replace beams is crucial.',
+    excerpt:
+      'When it comes to home renovation and structural integrity, understanding how to properly repair and replace beams is crucial.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -468,5 +472,5 @@ export const blogPosts: BlogPostData[] = [
 <p>Beam sistering is an effective solution for reinforcing structural integrity in your home. With the right tools, materials, and knowledge, you can successfully tackle this project and enhance the longevity and safety of your home. For homeowners in Portland, understanding beam repair, replacement, and restoration not only helps maintain your property’s value but also ensures a safe living environment.</p>
 <p>For more information on structural repairs and home improvement, consider consulting authoritative construction resources or reaching out to local professionals. Remember, when in doubt, it’s always best to seek expert advice.</p>
     `,
-  }
+  },
 ];

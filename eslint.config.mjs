@@ -28,10 +28,13 @@ export default [
   {
     rules: {
       // Relax rules that conflict with Astro patterns
-      '@typescript-eslint/no-unused-vars': ['error', {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-      }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
       // Allow any in component props for flexibility during migration
       '@typescript-eslint/no-explicit-any': 'warn',
     },

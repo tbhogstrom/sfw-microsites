@@ -10,7 +10,7 @@ import { blogPosts } from '../../data/blog-posts';
 
 const config = serviceConfigs['dry-rot'];
 const sortedPosts = [...blogPosts].sort(
-  (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+  (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime(),
 );
 ---
 

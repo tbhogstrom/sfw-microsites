@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'What Every Homeowner Should Know About Structural Dry Rot',
     slug: 'what-every-homeowner-should-know-about-structural-dry-rot',
-    excerpt: 'Structural dry rot can be a homeowner\'s worst nightmare. Learn how to identify, manage, and prevent this insidious problem in Portland\'s damp climate.',
+    excerpt:
+      "Structural dry rot can be a homeowner's worst nightmare. Learn how to identify, manage, and prevent this insidious problem in Portland's damp climate.",
     publishDate: '2024-01-15',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -159,7 +160,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'The Ultimate Guide to Deck Repair: Tips for Homeowners',
     slug: 'the-ultimate-guide-to-deck-repair-tips-for-homeowners',
-    excerpt: 'Decks are a cherished feature of many homes, particularly in Portland, Oregon. Exposure to the Pacific Northwest\'s damp climate can lead to deteriorating wood and other issues. In this comprehensive guide, we\'ll explore essential tips and techniques for deck repair.',
+    excerpt:
+      "Decks are a cherished feature of many homes, particularly in Portland, Oregon. Exposure to the Pacific Northwest's damp climate can lead to deteriorating wood and other issues. In this comprehensive guide, we'll explore essential tips and techniques for deck repair.",
     publishDate: '2024-01-18',
     author: 'SFW Construction',
     category: 'Deck Repair',
@@ -275,7 +277,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Repair or Replace? A Decision Guide for Your Deck',
     slug: 'repair-or-replace-a-decision-guide-for-your-deck',
-    excerpt: 'If you\'re a homeowner in Portland, Oregon, there\'s nothing quite like the joy of a beautiful deck. However, with time and exposure to the elements, decks can deteriorate. This guide helps you decide whether to repair or replace your deck.',
+    excerpt:
+      "If you're a homeowner in Portland, Oregon, there's nothing quite like the joy of a beautiful deck. However, with time and exposure to the elements, decks can deteriorate. This guide helps you decide whether to repair or replace your deck.",
     publishDate: '2024-01-22',
     author: 'SFW Construction',
     category: 'Deck Maintenance',
@@ -378,7 +381,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Preventing Dry Rot: Essential Tips for Deck Maintenance',
     slug: 'preventing-dry-rot-essential-tips-for-deck-maintenance',
-    excerpt: 'Keeping your deck in pristine condition is not just about aesthetics; it\'s about preventing costly damages like dry rot. In Portland, Oregon, with its wet climate, understanding how to protect your deck from decay is crucial.',
+    excerpt:
+      "Keeping your deck in pristine condition is not just about aesthetics; it's about preventing costly damages like dry rot. In Portland, Oregon, with its wet climate, understanding how to protect your deck from decay is crucial.",
     publishDate: '2024-01-25',
     author: 'SFW Construction',
     category: 'Deck Maintenance',
@@ -495,7 +499,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'How to Choose the Best Deck Repair Contractor in Portland',
     slug: 'how-to-choose-the-best-deck-repair-contractor-in-portland',
-    excerpt: 'If your deck is starting to show signs of wear and tear, it may be time to hire a professional. Selecting the right contractor is crucial to ensure the longevity and safety of your outdoor space. This blog post walks you through the essential steps.',
+    excerpt:
+      'If your deck is starting to show signs of wear and tear, it may be time to hire a professional. Selecting the right contractor is crucial to ensure the longevity and safety of your outdoor space. This blog post walks you through the essential steps.',
     publishDate: '2024-01-29',
     author: 'SFW Construction',
     category: 'Contractor Tips',

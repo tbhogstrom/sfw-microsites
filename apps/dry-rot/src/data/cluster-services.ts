@@ -44,12 +44,15 @@ function isPlaceholderContent(text: string): boolean {
 }
 
 function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 function parseClusterSections(
   content: string,
-  subtopics: string[]
+  subtopics: string[],
 ): Array<{ heading: string; anchor: string; content: string }> {
   const sections: Array<{ heading: string; anchor: string; content: string }> = [];
 
@@ -72,15 +75,13 @@ function parseReferences(content: string): string {
 
 function parseSubtopicDescriptors(
   content: string,
-  subtopics: string[]
+  subtopics: string[],
 ): Array<{ heading: string; anchor: string; descriptor: string }> {
   return subtopics.map((topic) => {
     const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
     const body = match ? match[1].trim() : '';
-    const descriptor = body && !isPlaceholderContent(body)
-      ? extractFirstSentence(body)
-      : '';
+    const descriptor = body && !isPlaceholderContent(body) ? extractFirstSentence(body) : '';
     return { heading: topic, anchor: slugify(topic), descriptor };
   });
 }
@@ -98,9 +99,10 @@ function extractHeroSubheadline(content: string, name: string): string {
   // Extract only the Hero Section block (up to the next ## heading)
   const heroBlock = content.match(/## Hero Section\n([\s\S]*?)(?=\n## )/);
   if (heroBlock) {
-    const lines = heroBlock[1].split('\n')
-      .map(l => l.trim())
-      .filter(l => l && !l.startsWith('#'));
+    const lines = heroBlock[1]
+      .split('\n')
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith('#'));
     for (const line of lines) {
       if (!isPlaceholderContent(line)) return line;
     }
@@ -113,7 +115,7 @@ function loadClusterPages(): ServicePageData[] {
   let files: string[];
   try {
     files = readdirSync(contentDir).filter(
-      (file) => file.startsWith('service_page_cluster_') && file.endsWith('.md')
+      (file) => file.startsWith('service_page_cluster_') && file.endsWith('.md'),
     );
   } catch {
     return [];
@@ -170,7 +172,9 @@ function loadClusterPages(): ServicePageData[] {
 export const allClusterServices = loadClusterPages();
 
 export function getClusterService(location: string, slug: string): ServicePageData | undefined {
-  return allClusterServices.find((service) => service.location === location && service.slug === slug);
+  return allClusterServices.find(
+    (service) => service.location === location && service.slug === slug,
+  );
 }
 
 export function getClusterPaths() {

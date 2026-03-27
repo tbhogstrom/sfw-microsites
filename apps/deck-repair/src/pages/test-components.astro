@@ -9,12 +9,14 @@ import {
   Icon,
   Breadcrumbs,
   HeroSection,
-  ContactForm,  TestimonialCard,
+  ContactForm,
+  TestimonialCard,
   StatsBar,
   CTASection,
   ProcessSteps,
   FAQAccordion,
-  BlogCard,  LinkCard,
+  BlogCard,
+  LinkCard,
 } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 
@@ -150,7 +152,9 @@ const blogPost = {
     <!-- Service Cards Test -->
     <section class="container mx-auto px-4">
       <h2 class="text-3xl font-heading font-bold mb-6 text-center">Our Services</h2>
-      <p class="text-center text-gray-600 mb-8">Service cards work best with background images (removed for test page)</p>
+      <p class="text-center text-gray-600 mb-8">
+        Service cards work best with background images (removed for test page)
+      </p>
       <div class="grid md:grid-cols-3 gap-6">
         <div class="bg-gray-100 p-6 rounded-lg">
           <h3 class="text-xl font-bold mb-3">Deck Building</h3>
@@ -171,11 +175,7 @@ const blogPost = {
     </section>
 
     <!-- Process Steps Test -->
-    <ProcessSteps
-      title="Our Process"
-      steps={steps}
-      variant="vertical"
-    />
+    <ProcessSteps title="Our Process" steps={steps} variant="vertical" />
 
     <!-- Link Cards Test -->
     <section class="container mx-auto px-4">
@@ -214,13 +214,10 @@ const blogPost = {
     </section>
 
     <!-- FAQ Accordion Test -->
-    <FAQAccordion
-      title="Frequently Asked Questions"
-      faqs={faqs}
-    />
+    <FAQAccordion title="Frequently Asked Questions" faqs={faqs} />
 
     <!-- Service Areas Test -->
-        <!-- Contact Form Test -->
+    <!-- Contact Form Test -->
     <section class="container mx-auto px-4">
       <div class="max-w-2xl mx-auto">
         <ContactForm
@@ -249,4 +246,3 @@ const blogPost = {
     />
   </div>
 </BaseLayout>
-

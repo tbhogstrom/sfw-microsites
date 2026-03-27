@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import {
+  HeroSection,
+  StatsBar,
+  CTASection,
+  FAQAccordion,
+  BlogCarousel,
+  ServicesOffered,
+  ServicesGallery,
+} from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
@@ -10,26 +18,31 @@ const config = serviceConfigs['flashing-repair'];
 const galleryServices: GalleryService[] = [
   {
     title: 'Roof To Wall Penetration Flashing',
-    description: 'Professional flashing installation at roof-to-wall junctions to prevent water infiltration.',
+    description:
+      'Professional flashing installation at roof-to-wall junctions to prevent water infiltration.',
     image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/1767052254206.jpg',
     href: '/services/portland/roof-to-wall-penetration-flashing',
   },
   {
     title: 'Structural Damage Flashing Failure',
-    description: 'Expert repair of structural damage caused by failed or deteriorated flashing systems.',
+    description:
+      'Expert repair of structural damage caused by failed or deteriorated flashing systems.',
     image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/1764630555935.jpg',
     href: '/services/portland/structural-damage-flashing-failure',
   },
   {
     title: 'Chimney Flashing Repair',
-    description: 'Specialized chimney flashing replacement to stop leaks where your chimney meets the roof.',
+    description:
+      'Specialized chimney flashing replacement to stop leaks where your chimney meets the roof.',
     image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/IMG_3619.jpg',
     href: '/services/portland/chimney-flashing-repair',
   },
   {
     title: 'Deck Ledger Flashing Waterproofing',
-    description: 'Critical flashing installation at deck ledger boards to prevent water damage and rot.',
-    image: 'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/696e159b-81e0-4870-8ee5-f2834b68b33b.jpg',
+    description:
+      'Critical flashing installation at deck ledger boards to prevent water damage and rot.',
+    image:
+      'https://3bajldmep3aijhou.public.blob.vercel-storage.com/service-page/696e159b-81e0-4870-8ee5-f2834b68b33b.jpg',
     href: '/services/portland/deck-ledger-flashing-waterproofing',
   },
 ];
@@ -37,70 +50,86 @@ const galleryServices: GalleryService[] = [
 const services: Service[] = [
   {
     title: 'Chimney Flashing Installation',
-    description: 'Expert installation of base and counter-flashing systems designed to shed water and prevent chimney leaks.',
+    description:
+      'Expert installation of base and counter-flashing systems designed to shed water and prevent chimney leaks.',
   },
   {
     title: 'Valley and Step Flashing',
-    description: 'Professional installation of valley flashing and step flashing where roofs meet walls for complete protection.',
+    description:
+      'Professional installation of valley flashing and step flashing where roofs meet walls for complete protection.',
   },
   {
     title: 'Skylight Flashing Repair',
-    description: 'Specialized flashing systems for skylights that integrate seamlessly with your roofing materials.',
+    description:
+      'Specialized flashing systems for skylights that integrate seamlessly with your roofing materials.',
   },
   {
     title: 'Premium Material Selection',
-    description: 'Installation of copper, stainless steel, or aluminum flashing chosen for durability in Portland\'s climate.',
+    description:
+      "Installation of copper, stainless steel, or aluminum flashing chosen for durability in Portland's climate.",
   },
   {
     title: 'Leak Detection and Assessment',
-    description: 'Comprehensive evaluation of existing flashing to identify failures and water entry points before damage spreads.',
+    description:
+      'Comprehensive evaluation of existing flashing to identify failures and water entry points before damage spreads.',
   },
   {
     title: 'Preventive Maintenance Services',
-    description: 'Regular inspection and maintenance of flashing systems, including sealant renewal and corrosion prevention.',
+    description:
+      'Regular inspection and maintenance of flashing systems, including sealant renewal and corrosion prevention.',
   },
 ];
 
 const faqs: FAQ[] = [
   {
     question: 'What is flashing and why is it important?',
-    answer: 'Flashing is thin metal or composite material installed at roof intersections, valleys, chimneys, skylights, walls, and other vulnerable points to direct water away from seams and prevent leaks. It\'s one of the most critical components of your home\'s weather protection system. In Portland\'s rainy climate, properly installed and maintained flashing is essential for preventing water infiltration that causes rot, mold, and structural damage. Failed flashing is a leading cause of expensive water damage.',
+    answer:
+      "Flashing is thin metal or composite material installed at roof intersections, valleys, chimneys, skylights, walls, and other vulnerable points to direct water away from seams and prevent leaks. It's one of the most critical components of your home's weather protection system. In Portland's rainy climate, properly installed and maintained flashing is essential for preventing water infiltration that causes rot, mold, and structural damage. Failed flashing is a leading cause of expensive water damage.",
   },
   {
     question: 'What are the signs that my flashing needs repair?',
-    answer: 'Signs include water stains on interior ceilings or walls near roof edges, rust or corrosion on visible flashing, bent, warped, or separated flashing, missing sealant or caulking, gaps between flashing and adjacent surfaces, leaks during or after rainfall, deteriorating shingles near flashing, and visible daylight through gaps. In Portland, winter storms often reveal flashing problems. Attic inspections during rain can identify active leaks. Regular inspections catch issues before major damage occurs.',
+    answer:
+      'Signs include water stains on interior ceilings or walls near roof edges, rust or corrosion on visible flashing, bent, warped, or separated flashing, missing sealant or caulking, gaps between flashing and adjacent surfaces, leaks during or after rainfall, deteriorating shingles near flashing, and visible daylight through gaps. In Portland, winter storms often reveal flashing problems. Attic inspections during rain can identify active leaks. Regular inspections catch issues before major damage occurs.',
   },
   {
     question: 'How much does flashing repair cost in Portland?',
-    answer: 'Flashing repair costs vary by location and extent. Simple repairs like resealing might cost $200 to $500, while replacing valley flashing can range from $500 to $1,200, chimney flashing $1,000 to $2,500, and skylight flashing $500 to $1,500. Extensive repairs involving multiple locations or structural damage can exceed $5,000. Portland labor rates typically run $75 to $125 per hour. Addressing flashing issues promptly prevents far more expensive water damage repairs.',
+    answer:
+      'Flashing repair costs vary by location and extent. Simple repairs like resealing might cost $200 to $500, while replacing valley flashing can range from $500 to $1,200, chimney flashing $1,000 to $2,500, and skylight flashing $500 to $1,500. Extensive repairs involving multiple locations or structural damage can exceed $5,000. Portland labor rates typically run $75 to $125 per hour. Addressing flashing issues promptly prevents far more expensive water damage repairs.',
   },
   {
     question: 'Can I repair flashing myself or should I hire a professional?',
-    answer: 'While minor caulking touch-ups might be DIY-able, flashing repair generally requires professional expertise. Proper installation requires understanding water flow, correct fastening techniques, proper overlap and integration with roofing materials, and building code compliance. In Portland, professionals understand local conditions requiring specific flashing details. Improper DIY repairs often fail quickly or create new problems. Working on roofs also presents safety risks. Professional repairs come with warranties and ensure lasting protection.',
+    answer:
+      'While minor caulking touch-ups might be DIY-able, flashing repair generally requires professional expertise. Proper installation requires understanding water flow, correct fastening techniques, proper overlap and integration with roofing materials, and building code compliance. In Portland, professionals understand local conditions requiring specific flashing details. Improper DIY repairs often fail quickly or create new problems. Working on roofs also presents safety risks. Professional repairs come with warranties and ensure lasting protection.',
   },
   {
     question: 'What materials are used for flashing?',
-    answer: 'Common flashing materials include aluminum (affordable, lightweight, rust-resistant), galvanized steel (strong, economical, but can rust), copper (premium, long-lasting, develops attractive patina), stainless steel (durable, corrosion-resistant), and lead-coated copper. For Portland\'s wet climate, copper and stainless steel offer superior longevity. Material choice depends on budget, roof type, aesthetic preferences, and expected lifespan. Professionals can recommend the best material for your specific application.',
+    answer:
+      "Common flashing materials include aluminum (affordable, lightweight, rust-resistant), galvanized steel (strong, economical, but can rust), copper (premium, long-lasting, develops attractive patina), stainless steel (durable, corrosion-resistant), and lead-coated copper. For Portland's wet climate, copper and stainless steel offer superior longevity. Material choice depends on budget, roof type, aesthetic preferences, and expected lifespan. Professionals can recommend the best material for your specific application.",
   },
   {
     question: 'How long does flashing last?',
-    answer: 'Flashing longevity depends on material quality and installation. Aluminum lasts 20-30 years, galvanized steel 15-25 years (less in coastal areas), copper 50-100+ years, and stainless steel 30-50 years. However, sealants and caulking typically need renewal every 5-10 years. In Portland, quality installation and regular maintenance significantly extend lifespan. Copper flashing often outlasts the roof itself. Investing in quality materials and professional installation provides decades of reliable protection.',
+    answer:
+      'Flashing longevity depends on material quality and installation. Aluminum lasts 20-30 years, galvanized steel 15-25 years (less in coastal areas), copper 50-100+ years, and stainless steel 30-50 years. However, sealants and caulking typically need renewal every 5-10 years. In Portland, quality installation and regular maintenance significantly extend lifespan. Copper flashing often outlasts the roof itself. Investing in quality materials and professional installation provides decades of reliable protection.',
   },
   {
     question: 'What types of flashing does my home need?',
-    answer: 'Homes typically need several flashing types: step flashing (where roof meets walls), valley flashing (roof valleys where planes intersect), chimney flashing (base and counter-flashing around chimneys), drip edge (roof edges), skylight flashing, dormer flashing, vent pipe flashing, and window/door flashing. In Portland, proper flashing at all these locations is crucial. During roof replacement or significant repairs, professionals assess all flashing points and recommend updates to current standards.',
+    answer:
+      'Homes typically need several flashing types: step flashing (where roof meets walls), valley flashing (roof valleys where planes intersect), chimney flashing (base and counter-flashing around chimneys), drip edge (roof edges), skylight flashing, dormer flashing, vent pipe flashing, and window/door flashing. In Portland, proper flashing at all these locations is crucial. During roof replacement or significant repairs, professionals assess all flashing points and recommend updates to current standards.',
   },
   {
     question: 'When should I replace flashing versus repair it?',
-    answer: 'Replace flashing if it\'s severely corroded or rusted, improperly installed originally, damaged beyond simple repair, during roof replacement (standard practice), or if it\'s over 25-30 years old with signs of deterioration. Repair if damage is localized, material is still in good condition, and proper repair techniques can restore function. In Portland, professionals assess cost-effectiveness. Sometimes full replacement costs only slightly more than extensive repairs while providing better long-term protection.',
+    answer:
+      "Replace flashing if it's severely corroded or rusted, improperly installed originally, damaged beyond simple repair, during roof replacement (standard practice), or if it's over 25-30 years old with signs of deterioration. Repair if damage is localized, material is still in good condition, and proper repair techniques can restore function. In Portland, professionals assess cost-effectiveness. Sometimes full replacement costs only slightly more than extensive repairs while providing better long-term protection.",
   },
   {
     question: 'Why does flashing fail in Portland?',
-    answer: 'Flashing fails from several causes common in Portland: constant moisture exposure from rain, improper installation lacking adequate overlap or fastening, use of incompatible materials causing galvanic corrosion, sealant deterioration from UV and weather exposure, ice damming in winter, building settlement creating gaps, debris accumulation causing water backup, and age-related material fatigue. Portland\'s wet climate accelerates deterioration. Regular inspections and maintenance identify problems before failure occurs, preventing expensive water damage.',
+    answer:
+      "Flashing fails from several causes common in Portland: constant moisture exposure from rain, improper installation lacking adequate overlap or fastening, use of incompatible materials causing galvanic corrosion, sealant deterioration from UV and weather exposure, ice damming in winter, building settlement creating gaps, debris accumulation causing water backup, and age-related material fatigue. Portland's wet climate accelerates deterioration. Regular inspections and maintenance identify problems before failure occurs, preventing expensive water damage.",
   },
   {
     question: 'How can I maintain my flashing to prevent problems?',
-    answer: 'Maintain flashing by scheduling annual roof inspections (pre-winter is ideal in Portland), keeping gutters clean to prevent overflow, removing debris from valleys and roof edges, checking and renewing caulking every few years, looking for rust or corrosion, ensuring downspouts direct water away from foundations, trimming overhanging branches, and addressing any visible damage immediately. Professional inspections catch subtle issues. In Portland\'s climate, proactive maintenance prevents most flashing problems and expensive repairs.',
+    answer:
+      "Maintain flashing by scheduling annual roof inspections (pre-winter is ideal in Portland), keeping gutters clean to prevent overflow, removing debris from valleys and roof edges, checking and renewing caulking every few years, looking for rust or corrosion, ensuring downspouts direct water away from foundations, trimming overhanging branches, and addressing any visible damage immediately. Professional inspections catch subtle issues. In Portland's climate, proactive maintenance prevents most flashing problems and expensive repairs.",
   },
 ];
 ---
@@ -117,12 +146,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     backgroundImage="https://3bajldmep3aijhou.public.blob.vercel-storage.com/hero/Pristine_new_copper_step_flashing_running_along_a__delpmaspu.png"
-    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    primaryCTA={{ text: 'Talk to a Human', href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
       portalId: config.hubspotPortalId,
       formId: config.hubspotFormId,
-      region: "na1"
+      region: 'na1',
     }}
   />
 
@@ -139,12 +168,7 @@ const faqs: FAQ[] = [
   <!-- Services Offered Section -->
   <ServicesOffered
     mainHeading="Flashing Repair and Installation in Portland — And So Much More"
-    bulletPoints={[
-      'Local specialists',
-      'Clear Pricing',
-      'Fast response',
-      'Repairs built to last',
-    ]}
+    bulletPoints={['Local specialists', 'Clear Pricing', 'Fast response', 'Repairs built to last']}
     mainDescription="Flashing Repair Experts provides comprehensive roof flashing installation and repair services for Portland-area homes. From identifying leak sources to installing premium flashing systems at chimneys, valleys, skylights, and roof edges, our team restores your home's weather protection with lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
     ctaText="Get Free Pricing"
     ctaHref="#contact"
@@ -156,10 +180,7 @@ const faqs: FAQ[] = [
   />
 
   <!-- FAQ Section -->
-  <FAQAccordion
-    faqs={faqs}
-    title="Roof and Chimney Flashing Repair FAQ"
-  />
+  <FAQAccordion faqs={faqs} title="Roof and Chimney Flashing Repair FAQ" />
 
   <!-- Blog Carousel -->
   <BlogCarousel
@@ -177,4 +198,3 @@ const faqs: FAQ[] = [
     variant="dark"
   />
 </BaseLayout>
-

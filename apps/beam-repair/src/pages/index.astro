@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import {
+  HeroSection,
+  StatsBar,
+  CTASection,
+  FAQAccordion,
+  BlogCarousel,
+  ServicesOffered,
+  ServicesGallery,
+} from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
@@ -10,26 +18,34 @@ const config = serviceConfigs['beam-repair'];
 const galleryServices: GalleryService[] = [
   {
     title: 'Deck & Porch Exterior Beam Repair',
-    description: 'Professional repair and replacement of deteriorated deck and porch beams to restore structural safety.',
-    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-460-2gcj4v.jpg',
+    description:
+      'Professional repair and replacement of deteriorated deck and porch beams to restore structural safety.',
+    image:
+      'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-460-2gcj4v.jpg',
     href: '/services/portland/deck-porch-exterior-beam-repair',
   },
   {
     title: 'Structural Beam Repair & Replacement',
-    description: 'Complete beam replacement and sistering for compromised load-bearing members throughout your home.',
-    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-335-pnc35c.jpg',
+    description:
+      'Complete beam replacement and sistering for compromised load-bearing members throughout your home.',
+    image:
+      'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-335-pnc35c.jpg',
     href: '/services/portland/structural-beam-repair-replacement',
   },
   {
     title: 'Floor & Interior Structural Support Repair',
-    description: 'Expert repair of interior floor joists, support beams, and subfloor structures to eliminate sagging and bouncing.',
-    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-257-rwyup6.jpg',
+    description:
+      'Expert repair of interior floor joists, support beams, and subfloor structures to eliminate sagging and bouncing.',
+    image:
+      'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260318-257-rwyup6.jpg',
     href: '/services/portland/floor-interior-structural-support-repair',
   },
   {
     title: 'Beam-to-Post Connection Repairs',
-    description: 'Reinforcement and repair of critical beam-to-post connections to ensure safe load transfer.',
-    image: 'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260325-288-fjqb61.jpg',
+    description:
+      'Reinforcement and repair of critical beam-to-post connections to ensure safe load transfer.',
+    image:
+      'https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/down-net_http20260325-288-fjqb61.jpg',
     href: '/services/portland/beam-post-connection-repairs',
   },
 ];
@@ -37,70 +53,86 @@ const galleryServices: GalleryService[] = [
 const services: Service[] = [
   {
     title: 'Structural Engineering Assessment',
-    description: 'Professional structural evaluation with engineer-stamped reports to determine load requirements and repair methods.',
+    description:
+      'Professional structural evaluation with engineer-stamped reports to determine load requirements and repair methods.',
   },
   {
     title: 'Beam Sistering and Reinforcement',
-    description: 'Installation of additional support beams alongside damaged members to restore and enhance structural capacity.',
+    description:
+      'Installation of additional support beams alongside damaged members to restore and enhance structural capacity.',
   },
   {
     title: 'Complete Beam Replacement',
-    description: 'Safe removal and replacement of compromised structural beams using engineered lumber or steel solutions.',
+    description:
+      'Safe removal and replacement of compromised structural beams using engineered lumber or steel solutions.',
   },
   {
     title: 'Steel Plate Reinforcement',
-    description: 'Strategic installation of steel plates or flitch plates to strengthen existing beams and extend service life.',
+    description:
+      'Strategic installation of steel plates or flitch plates to strengthen existing beams and extend service life.',
   },
   {
     title: 'Post and Jack Support Systems',
-    description: 'Installation of permanent support posts and adjustable jacking systems to correct sagging and provide additional support.',
+    description:
+      'Installation of permanent support posts and adjustable jacking systems to correct sagging and provide additional support.',
   },
   {
     title: 'Moisture Damage Remediation',
-    description: 'Elimination of moisture sources causing beam rot, including crawlspace waterproofing and drainage solutions.',
+    description:
+      'Elimination of moisture sources causing beam rot, including crawlspace waterproofing and drainage solutions.',
   },
 ];
 
 const faqs: FAQ[] = [
   {
     question: 'What are the signs that a structural beam needs repair?',
-    answer: 'Signs include sagging or bouncy floors, visible cracks or splits in beams, beams pulling away from supports, doors and windows that stick or won\'t close properly, cracks in walls or ceilings above or near beams, visible rot or decay in wood beams, soft or spongy wood when pressed, insect damage or sawdust near beams, and unusual creaking or settling sounds. In Portland homes, moisture-related beam damage is common. If you notice any of these signs, have a professional structural inspection immediately as beam failure poses serious safety risks.',
+    answer:
+      "Signs include sagging or bouncy floors, visible cracks or splits in beams, beams pulling away from supports, doors and windows that stick or won't close properly, cracks in walls or ceilings above or near beams, visible rot or decay in wood beams, soft or spongy wood when pressed, insect damage or sawdust near beams, and unusual creaking or settling sounds. In Portland homes, moisture-related beam damage is common. If you notice any of these signs, have a professional structural inspection immediately as beam failure poses serious safety risks.",
   },
   {
     question: 'How much does structural beam repair cost in Portland?',
-    answer: 'Beam repair costs vary widely based on extent, location, and access. Minor repairs like sistering beams might cost $2,000 to $5,000, while replacing main support beams can range from $5,000 to $15,000+. Complex repairs requiring temporary support systems, difficult access (crawlspace work), or extensive structural work can exceed $20,000. Engineering assessments typically cost $500 to $2,000. Portland professionals typically charge $100 to $150 per hour for structural carpentry. Addressing beam issues promptly prevents more extensive and expensive repairs.',
+    answer:
+      'Beam repair costs vary widely based on extent, location, and access. Minor repairs like sistering beams might cost $2,000 to $5,000, while replacing main support beams can range from $5,000 to $15,000+. Complex repairs requiring temporary support systems, difficult access (crawlspace work), or extensive structural work can exceed $20,000. Engineering assessments typically cost $500 to $2,000. Portland professionals typically charge $100 to $150 per hour for structural carpentry. Addressing beam issues promptly prevents more extensive and expensive repairs.',
   },
   {
     question: 'Can I repair structural beams myself or should I hire a professional?',
-    answer: 'Structural beam repair absolutely requires professional expertise. It involves calculating load requirements, designing appropriate repairs meeting building codes, safely supporting loads during work, using proper materials and fastening techniques, and ensuring long-term structural integrity. In Portland, work must meet seismic codes. Improper beam repairs can cause catastrophic failure, serious injury, and property damage. Licensed contractors and often structural engineers must design and execute beam repairs. This is not a DIY project under any circumstances.',
+    answer:
+      'Structural beam repair absolutely requires professional expertise. It involves calculating load requirements, designing appropriate repairs meeting building codes, safely supporting loads during work, using proper materials and fastening techniques, and ensuring long-term structural integrity. In Portland, work must meet seismic codes. Improper beam repairs can cause catastrophic failure, serious injury, and property damage. Licensed contractors and often structural engineers must design and execute beam repairs. This is not a DIY project under any circumstances.',
   },
   {
     question: 'What causes beams to fail in Portland homes?',
-    answer: 'Beam failure results from several causes common in Portland: wood rot from moisture infiltration (leaking roofs, plumbing leaks, crawlspace moisture), insect damage (carpenter ants, powder post beetles), overloading from structural modifications or additions, settling foundations causing stress, poor original design or undersized beams, removal of supporting walls during remodeling, fire or impact damage, and age-related deterioration. Portland\'s wet climate accelerates moisture-related damage. Regular inspections and addressing moisture problems prevent many beam failures.',
+    answer:
+      "Beam failure results from several causes common in Portland: wood rot from moisture infiltration (leaking roofs, plumbing leaks, crawlspace moisture), insect damage (carpenter ants, powder post beetles), overloading from structural modifications or additions, settling foundations causing stress, poor original design or undersized beams, removal of supporting walls during remodeling, fire or impact damage, and age-related deterioration. Portland's wet climate accelerates moisture-related damage. Regular inspections and addressing moisture problems prevent many beam failures.",
   },
   {
     question: 'What beam repair methods are available?',
-    answer: 'Common methods include sistering (attaching new beam alongside damaged one), scarf repairs (splicing in new section), steel plate or flitch plate reinforcement (adding steel for additional strength), complete beam replacement, post and jack installation for additional support, epoxy consolidation for localized decay, and engineered solutions like steel beams or LVL (laminated veneer lumber). In Portland, professionals select methods based on damage extent, load requirements, access, and building codes. Structural engineers often design repairs for major issues.',
+    answer:
+      'Common methods include sistering (attaching new beam alongside damaged one), scarf repairs (splicing in new section), steel plate or flitch plate reinforcement (adding steel for additional strength), complete beam replacement, post and jack installation for additional support, epoxy consolidation for localized decay, and engineered solutions like steel beams or LVL (laminated veneer lumber). In Portland, professionals select methods based on damage extent, load requirements, access, and building codes. Structural engineers often design repairs for major issues.',
   },
   {
     question: 'How long does beam repair take?',
-    answer: 'Timeline depends on complexity and access. Simple sistering repairs might take 2-4 days, while complete beam replacement requiring temporary support systems can take 1-2 weeks. Complex repairs involving multiple beams, difficult access, or requiring engineering and permits may take several weeks. Process includes assessment, obtaining permits, setting up temporary supports, performing repairs, inspections, and restoration. In Portland, weather can affect crawlspace work schedules. Proper repairs can\'t be rushed; structural safety requires thorough, careful work.',
+    answer:
+      "Timeline depends on complexity and access. Simple sistering repairs might take 2-4 days, while complete beam replacement requiring temporary support systems can take 1-2 weeks. Complex repairs involving multiple beams, difficult access, or requiring engineering and permits may take several weeks. Process includes assessment, obtaining permits, setting up temporary supports, performing repairs, inspections, and restoration. In Portland, weather can affect crawlspace work schedules. Proper repairs can't be rushed; structural safety requires thorough, careful work.",
   },
   {
     question: 'Do I need permits for beam repair in Portland?',
-    answer: 'Yes. Structural beam repairs always require building permits in Portland. Work must be designed by licensed professionals (often requiring structural engineer stamped plans), inspected at various stages, and meet current building and seismic codes. Permits ensure work is done safely and correctly, protecting you and future owners. Unpermitted structural work creates liability, affects insurance coverage, causes problems when selling, and may require expensive corrections. Reputable contractors handle the permitting process as part of the project.',
+    answer:
+      'Yes. Structural beam repairs always require building permits in Portland. Work must be designed by licensed professionals (often requiring structural engineer stamped plans), inspected at various stages, and meet current building and seismic codes. Permits ensure work is done safely and correctly, protecting you and future owners. Unpermitted structural work creates liability, affects insurance coverage, causes problems when selling, and may require expensive corrections. Reputable contractors handle the permitting process as part of the project.',
   },
   {
     question: 'Can damaged beams be repaired or must they be replaced?',
-    answer: 'It depends on damage extent. Minor damage, localized rot, or small cracks can often be repaired through sistering, reinforcement, or epoxy treatment. Replace beams when more than 30% of cross-section is compromised, damage is extensive or affects critical sections, structural capacity is inadequate for loads, or repairs would cost nearly as much as replacement. In Portland, moisture-damaged beams often have hidden deterioration. Structural engineers assess and recommend appropriate solutions balancing cost, structural integrity, and long-term durability.',
+    answer:
+      'It depends on damage extent. Minor damage, localized rot, or small cracks can often be repaired through sistering, reinforcement, or epoxy treatment. Replace beams when more than 30% of cross-section is compromised, damage is extensive or affects critical sections, structural capacity is inadequate for loads, or repairs would cost nearly as much as replacement. In Portland, moisture-damaged beams often have hidden deterioration. Structural engineers assess and recommend appropriate solutions balancing cost, structural integrity, and long-term durability.',
   },
   {
     question: 'How can I prevent beam damage in my home?',
-    answer: 'Prevent beam damage by controlling moisture: fix leaks immediately, ensure proper crawlspace ventilation and vapor barriers, maintain gutters and drainage, address plumbing leaks promptly, and monitor crawlspace conditions regularly. Prevent insect damage through annual inspections and prompt treatment. Avoid structural modifications without engineering review. Ensure adequate support for loads. In Portland, crawlspace moisture management is critical. Annual inspections catch problems early. Maintaining the building envelope prevents most moisture-related beam damage.',
+    answer:
+      'Prevent beam damage by controlling moisture: fix leaks immediately, ensure proper crawlspace ventilation and vapor barriers, maintain gutters and drainage, address plumbing leaks promptly, and monitor crawlspace conditions regularly. Prevent insect damage through annual inspections and prompt treatment. Avoid structural modifications without engineering review. Ensure adequate support for loads. In Portland, crawlspace moisture management is critical. Annual inspections catch problems early. Maintaining the building envelope prevents most moisture-related beam damage.',
   },
   {
     question: 'What happens if I ignore damaged beams?',
-    answer: 'Ignoring damaged beams leads to progressive structural failure: increasing floor sag, spreading cracks in walls and ceilings, doors and windows becoming inoperable, potential floor or roof collapse, damage to utilities and finishes, unsafe living conditions, dramatically increased repair costs, decreased property value, difficulty selling, and potential liability if someone is injured. In Portland, moisture damage spreads to adjacent structural members. Small problems become catastrophic. Early intervention is always less expensive and safer than deferred maintenance.',
+    answer:
+      'Ignoring damaged beams leads to progressive structural failure: increasing floor sag, spreading cracks in walls and ceilings, doors and windows becoming inoperable, potential floor or roof collapse, damage to utilities and finishes, unsafe living conditions, dramatically increased repair costs, decreased property value, difficulty selling, and potential liability if someone is injured. In Portland, moisture damage spreads to adjacent structural members. Small problems become catastrophic. Early intervention is always less expensive and safer than deferred maintenance.',
   },
 ];
 ---
@@ -116,12 +148,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     backgroundImage="https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/hero/A_massive_restored_douglas_fir_porch_beam_on_a_pac_delpmaspu.png"
-    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    primaryCTA={{ text: 'Talk to a Human', href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
       portalId: config.hubspotPortalId,
       formId: config.hubspotFormId,
-      region: "na1"
+      region: 'na1',
     }}
   />
 
@@ -138,12 +170,7 @@ const faqs: FAQ[] = [
   <!-- Services Offered Section -->
   <ServicesOffered
     mainHeading="Structural Beam Repair and Replacement in Portland — And So Much More"
-    bulletPoints={[
-      'Local specialists',
-      'Clear Pricing',
-      'Fast response',
-      'Repairs built to last',
-    ]}
+    bulletPoints={['Local specialists', 'Clear Pricing', 'Fast response', 'Repairs built to last']}
     mainDescription="Beam Repair Experts provides comprehensive structural beam repair and replacement services for Portland-area homes. From structural engineering assessments to sistering, reinforcement, and complete beam replacement, our team restores your home's structural integrity with code-compliant, lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
     ctaText="Get Free Pricing"
     ctaHref="#contact"
@@ -155,10 +182,7 @@ const faqs: FAQ[] = [
   />
 
   <!-- FAQ Section -->
-  <FAQAccordion
-    faqs={faqs}
-    title="Structural Beam Repair and Replacement FAQ"
-  />
+  <FAQAccordion faqs={faqs} title="Structural Beam Repair and Replacement FAQ" />
 
   <!-- Blog Carousel -->
   <BlogCarousel
@@ -176,4 +200,3 @@ const faqs: FAQ[] = [
     variant="dark"
   />
 </BaseLayout>
-

@@ -24,27 +24,19 @@ const {
   ...rest
 } = Astro.props;
 
-const classes = [
-  'relative min-h-[700px] flex items-center',
-  className,
-].filter(Boolean).join(' ');
+const classes = ['relative min-h-[700px] flex items-center', className].filter(Boolean).join(' ');
 ---
 
 <section class={classes} {...rest}>
   <!-- Background Image -->
-  {backgroundImage && (
-    <div class="absolute inset-0 z-0">
-      <Image
-        src={backgroundImage}
-        alt=""
-        class="w-full h-full object-cover"
-        loading="eager"
-      />
-      {overlay && (
-        <div class="absolute inset-0 bg-dark/70"></div>
-      )}
-    </div>
-  )}
+  {
+    backgroundImage && (
+      <div class="absolute inset-0 z-0">
+        <Image src={backgroundImage} alt="" class="w-full h-full object-cover" loading="eager" />
+        {overlay && <div class="absolute inset-0 bg-dark/70" />}
+      </div>
+    )
+  }
 
   <!-- Content -->
   <div class="relative z-10 container mx-auto px-4">
@@ -55,11 +47,7 @@ const classes = [
           {headline}
         </h1>
 
-        {subheadline && (
-          <p class="text-xl md:text-2xl text-white/90 mb-6">
-            {subheadline}
-          </p>
-        )}
+        {subheadline && <p class="text-xl md:text-2xl text-white/90 mb-6">{subheadline}</p>}
 
         <!-- Optional slot for additional content -->
         <slot name="content" />
@@ -69,9 +57,7 @@ const classes = [
       <div class="bg-white rounded-lg shadow-2xl p-6 md:p-8">
         <slot name="form">
           <!-- ContactForm will be inserted here after Phase 4 -->
-          <div class="text-center text-gray-500">
-            Form component will be added in Phase 4
-          </div>
+          <div class="text-center text-gray-500">Form component will be added in Phase 4</div>
         </slot>
       </div>
     </div>

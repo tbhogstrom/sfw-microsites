@@ -28,8 +28,8 @@ function parseSubtopics(content: string): string[] {
   if (!match) return [];
   return match[1]
     .split('\n')
-    .filter(l => l.trim().startsWith('- '))
-    .map(l => l.replace(/^\s*-\s*/, '').trim());
+    .filter((l) => l.trim().startsWith('- '))
+    .map((l) => l.replace(/^\s*-\s*/, '').trim());
 }
 
 function extractFirstSentence(text: string): string {
@@ -40,12 +40,15 @@ function extractFirstSentence(text: string): string {
 }
 
 function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 function parseClusterSections(
   content: string,
-  subtopics: string[]
+  subtopics: string[],
 ): Array<{ heading: string; anchor: string; content: string }> {
   const sections: Array<{ heading: string; anchor: string; content: string }> = [];
   for (const topic of subtopics) {
@@ -71,7 +74,10 @@ function parseFAQs(content: string): Array<{ question: string; answer: string }>
     if (!trimmed) continue;
     const newlineIdx = trimmed.indexOf('\n');
     if (newlineIdx === -1) continue;
-    const question = trimmed.slice(0, newlineIdx).replace(/^#+\s*/, '').trim();
+    const question = trimmed
+      .slice(0, newlineIdx)
+      .replace(/^#+\s*/, '')
+      .trim();
     const answer = trimmed.slice(newlineIdx + 1).trim();
     if (question && answer) faqs.push({ question, answer });
   }
@@ -85,15 +91,14 @@ function parseReferences(content: string): string {
 
 function parseSubtopicDescriptors(
   content: string,
-  subtopics: string[]
+  subtopics: string[],
 ): Array<{ heading: string; anchor: string; descriptor: string }> {
   return subtopics.map((topic) => {
     const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
     const body = match ? match[1].trim() : '';
-    const descriptor = body && body !== '*Content to be generated.*'
-      ? extractFirstSentence(body)
-      : '';
+    const descriptor =
+      body && body !== '*Content to be generated.*' ? extractFirstSentence(body) : '';
     return { heading: topic, anchor: slugify(topic), descriptor };
   });
 }
@@ -118,9 +123,10 @@ function extractHeroSubheadline(content: string, name: string, _locationFull: st
   // Extract only the Hero Section block (up to the next ## heading)
   const heroBlock = content.match(/## Hero Section\n([\s\S]*?)(?=\n## )/);
   if (heroBlock) {
-    const lines = heroBlock[1].split('\n')
-      .map(l => l.trim())
-      .filter(l => l && !l.startsWith('#'));
+    const lines = heroBlock[1]
+      .split('\n')
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith('#'));
     for (const line of lines) {
       if (!isPlaceholderContent(line)) return line;
     }
@@ -133,7 +139,7 @@ function loadClusterPages(): ServicePageData[] {
   let files: string[];
   try {
     files = readdirSync(contentDir).filter(
-      f => f.startsWith('service_page_cluster_') && f.endsWith('.md')
+      (f) => f.startsWith('service_page_cluster_') && f.endsWith('.md'),
     );
   } catch {
     return [];
@@ -172,9 +178,7 @@ function loadClusterPages(): ServicePageData[] {
         ? `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`
         : extractHeroSubheadline(content, name, locationFull),
       keyBenefits: subtopics.slice(0, 4),
-      sections: bodyContent
-        ? { overview: { title: name, content: bodyContent } }
-        : {},
+      sections: bodyContent ? { overview: { title: name, content: bodyContent } } : {},
       faqs: parseFAQs(content),
       metaTitle: `${name} in ${locationFull} | Siding Repair Experts`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
@@ -193,11 +197,11 @@ function loadClusterPages(): ServicePageData[] {
 export const allClusterServices = loadClusterPages();
 
 export function getClusterService(location: string, slug: string): ServicePageData | undefined {
-  return allClusterServices.find(s => s.location === location && s.slug === slug);
+  return allClusterServices.find((s) => s.location === location && s.slug === slug);
 }
 
 export function getClusterPaths() {
-  return allClusterServices.map(s => ({
+  return allClusterServices.map((s) => ({
     params: { location: s.location, service: s.slug },
   }));
 }

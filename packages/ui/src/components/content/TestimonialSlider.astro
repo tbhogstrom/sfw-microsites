@@ -28,21 +28,23 @@ const sliderId = `testimonial-slider-${Math.random().toString(36).substr(2, 9)}`
 
 <section class={classes} {...rest}>
   <div class="container mx-auto px-4">
-    {title && (
-      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-        {title}
-      </h2>
-    )}
+    {
+      title && (
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">{title}</h2>
+      )
+    }
 
     <!-- Swiper Container -->
     <div class="relative">
       <div class={`swiper ${sliderId}`}>
         <div class="swiper-wrapper">
-          {testimonials.map((testimonial) => (
-            <div class="swiper-slide">
-              <TestimonialCard testimonial={testimonial} />
-            </div>
-          ))}
+          {
+            testimonials.map((testimonial) => (
+              <div class="swiper-slide">
+                <TestimonialCard testimonial={testimonial} />
+              </div>
+            ))
+          }
         </div>
 
         <!-- Navigation Buttons -->
@@ -67,10 +69,12 @@ const sliderId = `testimonial-slider-${Math.random().toString(36).substr(2, 9)}`
             slidesPerView: 1,
             spaceBetween: 30,
             loop: true,
-            autoplay: autoplay ? {
-              delay: autoplayDelay,
-              disableOnInteraction: false,
-            } : false,
+            autoplay: autoplay
+              ? {
+                  delay: autoplayDelay,
+                  disableOnInteraction: false,
+                }
+              : false,
             navigation: {
               nextEl: `.swiper-button-next-${sliderId}`,
               prevEl: `.swiper-button-prev-${sliderId}`,

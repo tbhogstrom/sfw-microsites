@@ -44,12 +44,14 @@ const schema = {
     postalCode: config.zip,
     streetAddress: config.address,
   },
-  geo: config.geo ? {
-    '@type': 'GeoCoordinates',
-    latitude: config.geo.lat,
-    longitude: config.geo.lng,
-  } : undefined,
-  areaServed: config.serviceAreas?.map(area => ({
+  geo: config.geo
+    ? {
+        '@type': 'GeoCoordinates',
+        latitude: config.geo.lat,
+        longitude: config.geo.lng,
+      }
+    : undefined,
+  areaServed: config.serviceAreas?.map((area) => ({
     '@type': 'City',
     name: area.name,
   })),

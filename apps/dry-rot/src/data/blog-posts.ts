@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'What Every Homeowner Should Know About Structural Dry Rot',
     slug: 'what-every-homeowner-should-know-about-structural-dry-rot',
-    excerpt: 'When it comes to maintaining your home in Portland, Oregon, one of the most insidious threats to its integrity is dry rot.',
+    excerpt:
+      'When it comes to maintaining your home in Portland, Oregon, one of the most insidious threats to its integrity is dry rot.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -109,7 +110,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Preventing Dry Rot in Your Home: Key Strategies',
     slug: 'preventing-dry-rot-in-your-home-key-strategies',
-    excerpt: 'Dry rot is a significant concern for homeowners, particularly in places like Portland, Oregon, where the climate can be damp and humid.',
+    excerpt:
+      'Dry rot is a significant concern for homeowners, particularly in places like Portland, Oregon, where the climate can be damp and humid.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -185,7 +187,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Dry Rot vs Wet Rot: Understanding the Difference',
     slug: 'dry-rot-vs-wet-rot-understanding-the-difference',
-    excerpt: 'Wood is a fundamental material in construction and home improvement, but its longevity can be compromised by rot.',
+    excerpt:
+      'Wood is a fundamental material in construction and home improvement, but its longevity can be compromised by rot.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -282,7 +285,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'The Cost of Dry Rot Repair: A Comprehensive Breakdown',
     slug: 'the-cost-of-dry-rot-repair-a-comprehensive-breakdown',
-    excerpt: 'Dry rot is a serious issue that can compromise the integrity of your home, especially in a city like Portland, Oregon, where the climate can create a favorable environment for fungal decay.',
+    excerpt:
+      'Dry rot is a serious issue that can compromise the integrity of your home, especially in a city like Portland, Oregon, where the climate can create a favorable environment for fungal decay.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -352,7 +356,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Identifying Dry Rot Early: Warning Signs to Watch For',
     slug: 'identifying-dry-rot-early-warning-signs-to-watch-for',
-    excerpt: 'Dry rot, also known as wood rot or fungal decay, is a common issue that many homeowners face, particularly in regions like Portland, Oregon, where moisture levels can fluctuate significantly.',
+    excerpt:
+      'Dry rot, also known as wood rot or fungal decay, is a common issue that many homeowners face, particularly in regions like Portland, Oregon, where moisture levels can fluctuate significantly.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -428,5 +433,5 @@ export const blogPosts: BlogPostData[] = [
 <h2 id="conclusion">Conclusion</h2>
 <p>Identifying and addressing dry rot early is crucial for maintaining the integrity of your home, especially in Portland's unique climate. By being vigilant and proactive, you can protect your investment and ensure a safe living environment. Regular inspections, combined with prompt repairs, will go a long way in preventing the damaging effects of dry rot. Don’t wait until it’s too late—take action today to safeguard your home against fungal decay!</p>
     `,
-  }
+  },
 ];

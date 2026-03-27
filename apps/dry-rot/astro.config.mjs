@@ -15,7 +15,7 @@ export default defineConfig({
         const path = new URL(page).pathname.replace(/\/$/, '');
         return !redirectSources.has(path);
       },
-    })
+    }),
   ],
   output: 'static',
   redirects,

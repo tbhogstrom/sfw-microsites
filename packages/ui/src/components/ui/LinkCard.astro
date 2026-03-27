@@ -36,7 +36,9 @@ const classes = [
   'block p-6 rounded-lg transition-all duration-200 group',
   variantClasses[variant],
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
 <a
@@ -48,24 +50,24 @@ const classes = [
 >
   <div class="flex items-start justify-between">
     <div class="flex-1">
-      <h3 class="text-xl font-heading font-bold text-dark mb-2 group-hover:text-primary transition-colors">
+      <h3
+        class="text-xl font-heading font-bold text-dark mb-2 group-hover:text-primary transition-colors"
+      >
         {title}
       </h3>
 
-      {description && (
-        <p class="text-gray-600">
-          {description}
-        </p>
-      )}
+      {description && <p class="text-gray-600">{description}</p>}
     </div>
 
-    {icon && (
-      <Icon
-        name={icon}
-        size={24}
-        class="ml-4 text-primary group-hover:translate-x-1 transition-transform flex-shrink-0"
-      />
-    )}
+    {
+      icon && (
+        <Icon
+          name={icon}
+          size={24}
+          class="ml-4 text-primary group-hover:translate-x-1 transition-transform flex-shrink-0"
+        />
+      )
+    }
   </div>
 
   <slot />

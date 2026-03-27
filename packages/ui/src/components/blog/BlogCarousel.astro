@@ -11,29 +11,22 @@ export interface Props extends BaseProps {
   title?: string;
 }
 
-const {
-  posts,
-  title,
-  class: className = '',
-  ...rest
-} = Astro.props;
+const { posts, title, class: className = '', ...rest } = Astro.props;
 
 const classes = ['py-16', className].filter(Boolean).join(' ');
 ---
 
 <section class={classes} {...rest}>
   <div class="container mx-auto px-4">
-    {title && (
-      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-        {title}
-      </h2>
-    )}
+    {
+      title && (
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">{title}</h2>
+      )
+    }
 
     <!-- Blog Posts Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {posts.map((post) => (
-        <BlogCard post={post} />
-      ))}
+      {posts.map((post) => <BlogCard post={post} />)}
     </div>
   </div>
 </section>

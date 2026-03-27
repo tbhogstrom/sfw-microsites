@@ -36,15 +36,17 @@ const relatedPosts = blogPosts
 >
   <BlogPost post={post} />
 
-  {relatedPosts.length > 0 && (
-    <BlogGrid
-      posts={relatedPosts}
-      title="Related Articles"
-      subtitle="Continue reading practical guidance from our team."
-      showExcerpt={false}
-      class="bg-gray-50"
-    />
-  )}
+  {
+    relatedPosts.length > 0 && (
+      <BlogGrid
+        posts={relatedPosts}
+        title="Related Articles"
+        subtitle="Continue reading practical guidance from our team."
+        showExcerpt={false}
+        class="bg-gray-50"
+      />
+    )
+  }
 
   <CTASection
     headline={`Need Expert ${config.primaryService}?`}

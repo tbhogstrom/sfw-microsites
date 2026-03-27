@@ -82,13 +82,13 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     />
   )}
 
-  <!-- Trust + Form (cluster pages only) -->
+  {/* Trust + Form (cluster pages only) */}
   {serviceData.clusterSections && (
     <section id="form" class="py-16 bg-gray-light">
       <div class="container mx-auto px-4">
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
 
-          <!-- Trust block -->
+          {/* Trust block */}
           <div>
             <h2 class="text-3xl font-heading font-bold text-dark mb-8">
               Why homeowners choose {config.dbaName}
@@ -114,7 +114,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
             </ul>
           </div>
 
-          <!-- HubSpot Form -->
+          {/* HubSpot Form */}
           <div class="bg-white rounded-xl shadow-sm p-8">
             <h3 class="text-2xl font-heading font-bold text-dark mb-2">Get your free consultation</h3>
             <p class="text-gray-600 mb-6">We'll get back to you within one business day.</p>
@@ -159,7 +159,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     />
   )}
 
-  <!-- Key Benefits (non-cluster pages only — cluster pages use the hero nav) -->
+  {/* Key Benefits (non-cluster pages only — cluster pages use the hero nav) */}
   {!serviceData.clusterSections && serviceData.keyBenefits.length > 0 && (
     <section class="py-12 bg-gray-light">
       <div class="container mx-auto px-4">
@@ -184,10 +184,10 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     </section>
   )}
 
-  <!-- Service Content -->
+  {/* Service Content */}
   <ServiceContent service={serviceData} />
 
-  <!-- FAQ Section -->
+  {/* FAQ Section */}
   {serviceData.faqs.length > 0 && (
     <FAQAccordion
       faqs={serviceData.faqs}
@@ -195,7 +195,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     />
   )}
 
-  <!-- CTA Section -->
+  {/* CTA Section */}
   <CTASection
     headline={`Ready for Professional ${serviceData.name}?`}
     description={`Get a free consultation and quote today. We're here to help with all your siding needs in ${serviceData.locationFull}.`}

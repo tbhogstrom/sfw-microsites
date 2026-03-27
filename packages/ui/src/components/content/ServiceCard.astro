@@ -25,10 +25,9 @@ const {
   ...rest
 } = Astro.props;
 
-const classes = [
-  'relative overflow-hidden rounded-lg group h-full',
-  className,
-].filter(Boolean).join(' ');
+const classes = ['relative overflow-hidden rounded-lg group h-full', className]
+  .filter(Boolean)
+  .join(' ');
 ---
 
 <div class={classes} {...rest}>
@@ -53,11 +52,7 @@ const classes = [
     </p>
 
     <div>
-      <Button
-        href={href}
-        variant="primary"
-        icon="arrow-right"
-      >
+      <Button href={href} variant="primary" icon="arrow-right">
         {ctaText}
       </Button>
     </div>

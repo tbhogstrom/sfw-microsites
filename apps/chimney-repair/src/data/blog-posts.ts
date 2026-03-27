@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Common Chimney Problems and How to Fix Them',
     slug: 'common-chimney-problems-and-how-to-fix-them',
-    excerpt: 'Chimneys play a crucial role in home safety and efficiency, yet they are often overlooked until issues arise.',
+    excerpt:
+      'Chimneys play a crucial role in home safety and efficiency, yet they are often overlooked until issues arise.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -94,7 +95,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Chimney Crown Repair: What You Need to Know',
     slug: 'chimney-crown-repair-what-you-need-to-know',
-    excerpt: 'Chimney crowns are a crucial component of your chimney system, protecting it from water damage and structural deterioration.',
+    excerpt:
+      'Chimney crowns are a crucial component of your chimney system, protecting it from water damage and structural deterioration.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -199,7 +201,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Signs Your Chimney Needs Professional Attention',
     slug: 'signs-your-chimney-needs-professional-attention',
-    excerpt: 'Owning a home in Portland, Oregon, comes with its own set of unique challenges, especially when it comes to maintaining the structural integrity and safety of your dwelling.',
+    excerpt:
+      'Owning a home in Portland, Oregon, comes with its own set of unique challenges, especially when it comes to maintaining the structural integrity and safety of your dwelling.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -265,7 +268,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Chimney Flashing Repair: Preventing Water Damage',
     slug: 'chimney-flashing-repair-preventing-water-damage',
-    excerpt: 'Maintaining the integrity of your chimney is crucial for preventing water damage in your home. In Portland, Oregon, where rainfall can be significant, proper chimney flashing is essential.',
+    excerpt:
+      'Maintaining the integrity of your chimney is crucial for preventing water damage in your home. In Portland, Oregon, where rainfall can be significant, proper chimney flashing is essential.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -353,7 +357,8 @@ Litchfield, M. (2013). <em>Renovation</em>. Taunton Press.  </p>
   {
     title: 'The Complete Guide to Chimney Maintenance',
     slug: 'the-complete-guide-to-chimney-maintenance',
-    excerpt: 'Chimneys are an integral part of many homes in Portland, Oregon, providing ventilation for fireplaces, wood stoves, and other heating appliances.',
+    excerpt:
+      'Chimneys are an integral part of many homes in Portland, Oregon, providing ventilation for fireplaces, wood stoves, and other heating appliances.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -444,5 +449,5 @@ Litchfield, M. (2013). <em>Renovation</em>. Taunton Press.  </p>
 <p>Chimney maintenance is not only essential for the safety of your home but also for the efficiency of your heating system. Regular inspections, cleaning, and timely repairs can prevent costly damage and hazardous situations. If you’re in Portland, consider hiring local professionals for complex repairs or inspections to ensure your chimney remains in top condition.</p>
 <p>For further information on chimney maintenance and repair, consult authoritative texts like Michael Litchfield's <em>Renovation</em> or Charlie Wing's <em>Visual Handbook of Building and Remodeling</em>. Stay safe and enjoy your fireside gatherings!</p>
     `,
-  }
+  },
 ];

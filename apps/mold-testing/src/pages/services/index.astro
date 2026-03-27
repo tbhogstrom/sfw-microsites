@@ -37,34 +37,42 @@ const config = serviceConfigs['mold-testing'];
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-heading font-bold mb-4">
-            Portland, Oregon Services
-          </h2>
+          <h2 class="text-4xl font-heading font-bold mb-4">Portland, Oregon Services</h2>
           <p class="text-xl text-gray-600">
             Comprehensive mold testing services for homeowners in the Portland metro area
           </p>
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesByLocation.portland.map((service) => (
-            <a
-              href={`/services/${service.location}/${service.slug}`}
-              class="group bg-gray-light p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
-            >
-              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
-                {service.name}
-              </h3>
-              <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
-              </p>
-              <div class="flex items-center text-primary font-semibold">
-                Learn More
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </a>
-          ))}
+          {
+            servicesByLocation.portland.map((service) => (
+              <a
+                href={`/services/${service.location}/${service.slug}`}
+                class="group bg-gray-light p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+              >
+                <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                  {service.name}
+                </h3>
+                <p class="text-gray-600 mb-4 line-clamp-3">{service.heroSubheadline}</p>
+                <div class="flex items-center text-primary font-semibold">
+                  Learn More
+                  <svg
+                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </a>
+            ))
+          }
         </div>
 
         <div class="text-center mt-12">
@@ -74,7 +82,12 @@ const config = serviceConfigs['mold-testing'];
           >
             View Portland Location
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
             </svg>
           </a>
         </div>
@@ -87,34 +100,42 @@ const config = serviceConfigs['mold-testing'];
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-heading font-bold mb-4">
-            Seattle, Washington Services
-          </h2>
+          <h2 class="text-4xl font-heading font-bold mb-4">Seattle, Washington Services</h2>
           <p class="text-xl text-gray-600">
             Comprehensive mold testing services for homeowners in the Seattle metro area
           </p>
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesByLocation.seattle.map((service) => (
-            <a
-              href={`/services/${service.location}/${service.slug}`}
-              class="group bg-white p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
-            >
-              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
-                {service.name}
-              </h3>
-              <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
-              </p>
-              <div class="flex items-center text-primary font-semibold">
-                Learn More
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </a>
-          ))}
+          {
+            servicesByLocation.seattle.map((service) => (
+              <a
+                href={`/services/${service.location}/${service.slug}`}
+                class="group bg-white p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+              >
+                <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                  {service.name}
+                </h3>
+                <p class="text-gray-600 mb-4 line-clamp-3">{service.heroSubheadline}</p>
+                <div class="flex items-center text-primary font-semibold">
+                  Learn More
+                  <svg
+                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </a>
+            ))
+          }
         </div>
 
         <div class="text-center mt-12">
@@ -124,7 +145,12 @@ const config = serviceConfigs['mold-testing'];
           >
             View Seattle Location
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
             </svg>
           </a>
         </div>
@@ -136,9 +162,7 @@ const config = serviceConfigs['mold-testing'];
   <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-4xl font-heading font-bold text-center mb-4">
-          Clear, Transparent Pricing
-        </h2>
+        <h2 class="text-4xl font-heading font-bold text-center mb-4">Clear, Transparent Pricing</h2>
         <p class="text-xl text-center text-gray-600 mb-12">
           No hidden fees—know what you're paying before we start
         </p>
@@ -181,26 +205,62 @@ const config = serviceConfigs['mold-testing'];
           <h3 class="text-xl font-heading font-bold mb-2">What's Included</h3>
           <ul class="space-y-2 text-gray-700">
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              <svg
+                class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"></path>
               </svg>
               Written findings report with all testing services
             </li>
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              <svg
+                class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"></path>
               </svg>
               Photos and detailed documentation
             </li>
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              <svg
+                class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"></path>
               </svg>
               Remediation recommendations
             </li>
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              <svg
+                class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"></path>
               </svg>
               Multiple samples may be recommended based on property size
             </li>
@@ -214,15 +274,19 @@ const config = serviceConfigs['mold-testing'];
   <section class="py-16 bg-gray-light">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-heading font-bold mb-8">
-          Why Choose Our Services?
-        </h2>
+        <h2 class="text-4xl font-heading font-bold mb-8">Why Choose Our Services?</h2>
 
         <div class="grid md:grid-cols-3 gap-8 mt-12">
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Certified Inspectors</h3>
@@ -232,27 +296,37 @@ const config = serviceConfigs['mold-testing'];
           </div>
 
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
               </svg>
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Transparent Pricing</h3>
-            <p class="text-gray-600">
-              Free estimates with no hidden fees or surprise charges
-            </p>
+            <p class="text-gray-600">Free estimates with no hidden fees or surprise charges</p>
           </div>
 
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                ></path>
               </svg>
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Lab-Certified Results</h3>
-            <p class="text-gray-600">
-              Accurate testing with certified laboratory analysis
-            </p>
+            <p class="text-gray-600">Accurate testing with certified laboratory analysis</p>
           </div>
         </div>
       </div>

@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'The Hidden Dangers of Crawlspace Damage',
     slug: 'the-hidden-dangers-of-crawlspace-damage',
-    excerpt: 'Crawlspaces are often overlooked areas in homes, but they play a crucial role in the overall health and stability of your property.',
+    excerpt:
+      'Crawlspaces are often overlooked areas in homes, but they play a crucial role in the overall health and stability of your property.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -91,7 +92,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Crawlspace Ventilation: Best Practices for Portland Homes',
     slug: 'crawlspace-ventilation-best-practices-for-portland-homes',
-    excerpt: 'Crawl spaces are often overlooked in home maintenance, yet they play a crucial role in the overall health of your home.',
+    excerpt:
+      'Crawl spaces are often overlooked in home maintenance, yet they play a crucial role in the overall health of your home.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -269,5 +271,5 @@ export const blogPosts: BlogPostData[] = [
 <hr />
 <p>By following this guide, you’ll be well-equipped to tackle foundation rot and preserve the health of your home. Whether it requires minor repairs or major interventions, understanding your options is the first step to safeguarding your property's foundation.</p>
     `,
-  }
+  },
 ];

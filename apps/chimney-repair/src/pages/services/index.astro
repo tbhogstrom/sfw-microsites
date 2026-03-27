@@ -8,8 +8,8 @@ import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { allClusterServices } from '../../data/cluster-services';
 const servicesByLocation = {
-  portland: allClusterServices.filter(s => s.location === 'portland'),
-  seattle: allClusterServices.filter(s => s.location === 'seattle'),
+  portland: allClusterServices.filter((s) => s.location === 'portland'),
+  seattle: allClusterServices.filter((s) => s.location === 'seattle'),
 };
 
 const config = serviceConfigs['chimney-repair'];
@@ -41,34 +41,42 @@ const config = serviceConfigs['chimney-repair'];
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-heading font-bold mb-4">
-            Portland, Oregon Services
-          </h2>
+          <h2 class="text-4xl font-heading font-bold mb-4">Portland, Oregon Services</h2>
           <p class="text-xl text-gray-600">
             Comprehensive chimney repair services for homeowners in the Portland metro area
           </p>
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesByLocation.portland.map((service) => (
-            <a
-              href={`/services/${service.location}/${service.slug}`}
-              class="group bg-gray-light p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
-            >
-              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
-                {service.name}
-              </h3>
-              <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
-              </p>
-              <div class="flex items-center text-primary font-semibold">
-                Learn More
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </a>
-          ))}
+          {
+            servicesByLocation.portland.map((service) => (
+              <a
+                href={`/services/${service.location}/${service.slug}`}
+                class="group bg-gray-light p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+              >
+                <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                  {service.name}
+                </h3>
+                <p class="text-gray-600 mb-4 line-clamp-3">{service.heroSubheadline}</p>
+                <div class="flex items-center text-primary font-semibold">
+                  Learn More
+                  <svg
+                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </a>
+            ))
+          }
         </div>
 
         <div class="text-center mt-12">
@@ -78,7 +86,12 @@ const config = serviceConfigs['chimney-repair'];
           >
             View Portland Location
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
             </svg>
           </a>
         </div>
@@ -91,34 +104,42 @@ const config = serviceConfigs['chimney-repair'];
     <div class="container mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
-          <h2 class="text-4xl font-heading font-bold mb-4">
-            Seattle, Washington Services
-          </h2>
+          <h2 class="text-4xl font-heading font-bold mb-4">Seattle, Washington Services</h2>
           <p class="text-xl text-gray-600">
             Professional chimney repair services throughout the Seattle metro area
           </p>
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesByLocation.seattle.map((service) => (
-            <a
-              href={`/services/${service.location}/${service.slug}`}
-              class="group bg-white p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
-            >
-              <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
-                {service.name}
-              </h3>
-              <p class="text-gray-600 mb-4 line-clamp-3">
-                {service.heroSubheadline}
-              </p>
-              <div class="flex items-center text-primary font-semibold">
-                Learn More
-                <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </a>
-          ))}
+          {
+            servicesByLocation.seattle.map((service) => (
+              <a
+                href={`/services/${service.location}/${service.slug}`}
+                class="group bg-white p-6 rounded-lg hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary"
+              >
+                <h3 class="text-xl font-heading font-bold mb-3 text-dark group-hover:text-primary transition-colors">
+                  {service.name}
+                </h3>
+                <p class="text-gray-600 mb-4 line-clamp-3">{service.heroSubheadline}</p>
+                <div class="flex items-center text-primary font-semibold">
+                  Learn More
+                  <svg
+                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              </a>
+            ))
+          }
         </div>
 
         <div class="text-center mt-12">
@@ -128,7 +149,12 @@ const config = serviceConfigs['chimney-repair'];
           >
             View Seattle Location
             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              ></path>
             </svg>
           </a>
         </div>
@@ -146,9 +172,15 @@ const config = serviceConfigs['chimney-repair'];
 
         <div class="grid md:grid-cols-3 gap-8 mt-12">
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Expert Craftsmanship</h3>
@@ -158,27 +190,37 @@ const config = serviceConfigs['chimney-repair'];
           </div>
 
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
               </svg>
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Transparent Pricing</h3>
-            <p class="text-gray-600">
-              Free estimates with no hidden fees or surprise charges
-            </p>
+            <p class="text-gray-600">Free estimates with no hidden fees or surprise charges</p>
           </div>
 
           <div class="text-center">
-            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
               <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                ></path>
               </svg>
             </div>
             <h3 class="text-xl font-heading font-bold mb-2">Quality Guarantee</h3>
-            <p class="text-gray-600">
-              5-year warranty on workmanship and premium materials
-            </p>
+            <p class="text-gray-600">5-year warranty on workmanship and premium materials</p>
           </div>
         </div>
       </div>

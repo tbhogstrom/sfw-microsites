@@ -37,7 +37,9 @@ const textareaClasses = [
   error ? 'border-red-500' : 'border-gray-300',
   disabled && 'bg-gray-100 cursor-not-allowed',
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
 <div class="mb-4">
@@ -56,18 +58,22 @@ const textareaClasses = [
     class={textareaClasses}
     aria-describedby={error ? `${name}-error` : helpText ? `${name}-help` : undefined}
     aria-invalid={error ? 'true' : 'false'}
-    {...rest}
-  >{value}</textarea>
+    {...rest}>{value}</textarea
+  >
 
-  {error && (
-    <p id={`${name}-error`} class="mt-1 text-sm text-red-600">
-      {error}
-    </p>
-  )}
+  {
+    error && (
+      <p id={`${name}-error`} class="mt-1 text-sm text-red-600">
+        {error}
+      </p>
+    )
+  }
 
-  {helpText && !error && (
-    <p id={`${name}-help`} class="mt-1 text-sm text-gray-500">
-      {helpText}
-    </p>
-  )}
+  {
+    helpText && !error && (
+      <p id={`${name}-help`} class="mt-1 text-sm text-gray-500">
+        {helpText}
+      </p>
+    )
+  }
 </div>

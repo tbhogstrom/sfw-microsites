@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Roof Flashing Repair: Protecting Your Home from Water Damage',
     slug: 'roof-flashing-repair-protecting-your-home-from-water-damage',
-    excerpt: 'Water damage is one of the most insidious threats to homes, particularly in the rainy climate of Portland, Oregon.',
+    excerpt:
+      'Water damage is one of the most insidious threats to homes, particularly in the rainy climate of Portland, Oregon.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -112,7 +113,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Common Flashing Problems and Their Solutions',
     slug: 'common-flashing-problems-and-their-solutions',
-    excerpt: 'Flashing is a critical component in the roofing and siding systems of your home, acting as a shield against water infiltration.',
+    excerpt:
+      'Flashing is a critical component in the roofing and siding systems of your home, acting as a shield against water infiltration.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -178,7 +180,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'When to Replace vs Repair Roof Flashing',
     slug: 'when-to-replace-vs-repair-roof-flashing',
-    excerpt: 'Roof flashing plays a critical role in ensuring the longevity and integrity of your home.',
+    excerpt:
+      'Roof flashing plays a critical role in ensuring the longevity and integrity of your home.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -247,7 +250,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Understanding Different Types of Roof Flashing',
     slug: 'understanding-different-types-of-roof-flashing',
-    excerpt: 'When it comes to maintaining the integrity of your roof, understanding the importance of flashing cannot be overstated.',
+    excerpt:
+      'When it comes to maintaining the integrity of your roof, understanding the importance of flashing cannot be overstated.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -314,7 +318,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Chimney Flashing: Installation and Maintenance Guide',
     slug: 'chimney-flashing-installation-and-maintenance-guide',
-    excerpt: 'Chimneys are a crucial component of any home, providing ventilation for smoke and gases produced by your fireplace or heating system.',
+    excerpt:
+      'Chimneys are a crucial component of any home, providing ventilation for smoke and gases produced by your fireplace or heating system.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -375,5 +380,5 @@ export const blogPosts: BlogPostData[] = [
 <h2 id="conclusion">Conclusion</h2>
 <p>Proper chimney flashing is vital to maintaining a dry and safe home. By understanding the types of flashing, the installation process, and maintenance tips, you can ensure your chimney remains watertight and functional for years to come. If you’re in Portland, Oregon, and need help with flashing repairs or installations, don’t hesitate to contact local roofing professionals who specialize in this essential home improvement task. Keeping your chimney in excellent shape will not only enhance your home’s value but also protect it from water damage and costly repairs.</p>
     `,
-  }
+  },
 ];

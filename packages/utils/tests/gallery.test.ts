@@ -49,33 +49,21 @@ describe('selectServicePhotos', () => {
   ];
 
   it('returns 4 shuffled photos when service has 4+', () => {
-    const result = selectServicePhotos(
-      portlandPhotos,
-      portlandPhotos.slice(0, 5),
-      'portland'
-    );
+    const result = selectServicePhotos(portlandPhotos, portlandPhotos.slice(0, 5), 'portland');
     expect(result.length).toBe(4);
     expect(result.every((p) => portlandPhotos.slice(0, 5).includes(p))).toBe(true);
   });
 
   it('returns all photos + padding when service has 1-3', () => {
     const currentPhotos = portlandPhotos.slice(0, 2);
-    const result = selectServicePhotos(
-      portlandPhotos,
-      currentPhotos,
-      'portland'
-    );
+    const result = selectServicePhotos(portlandPhotos, currentPhotos, 'portland');
     expect(result.length).toBe(4);
     expect(result.slice(0, 2)).toEqual(currentPhotos);
   });
 
   it('returns 4 from random service when current has 0', () => {
     const currentPhotos: GalleryService[] = [];
-    const result = selectServicePhotos(
-      portlandPhotos,
-      currentPhotos,
-      'portland'
-    );
+    const result = selectServicePhotos(portlandPhotos, currentPhotos, 'portland');
     expect(result.length).toBe(4);
     expect(result.every((p) => portlandPhotos.includes(p))).toBe(true);
     expect(result.every((p) => !currentPhotos.includes(p))).toBe(true);
@@ -83,43 +71,27 @@ describe('selectServicePhotos', () => {
 
   it('returns all available when no fallback exists', () => {
     const singleServicePhotos = portlandPhotos.slice(0, 2);
-    const result = selectServicePhotos(
-      singleServicePhotos,
-      singleServicePhotos,
-      'portland'
-    );
+    const result = selectServicePhotos(singleServicePhotos, singleServicePhotos, 'portland');
     expect(result.length).toBe(2);
     expect(result).toEqual(singleServicePhotos);
   });
 
   it('returns 4 photos when service has exactly 4', () => {
-    const result = selectServicePhotos(
-      portlandPhotos,
-      portlandPhotos.slice(0, 4),
-      'portland'
-    );
+    const result = selectServicePhotos(portlandPhotos, portlandPhotos.slice(0, 4), 'portland');
     expect(result.length).toBe(4);
     expect(result.every((p) => portlandPhotos.slice(0, 4).includes(p))).toBe(true);
   });
 
   it('returns all photos when service has exactly 1', () => {
     const currentPhotos = portlandPhotos.slice(0, 1);
-    const result = selectServicePhotos(
-      portlandPhotos,
-      currentPhotos,
-      'portland'
-    );
+    const result = selectServicePhotos(portlandPhotos, currentPhotos, 'portland');
     expect(result.length).toBe(4);
     expect(result.slice(0, 1)).toEqual(currentPhotos);
   });
 
   it('returns all photos when service has exactly 3', () => {
     const currentPhotos = portlandPhotos.slice(0, 3);
-    const result = selectServicePhotos(
-      portlandPhotos,
-      currentPhotos,
-      'portland'
-    );
+    const result = selectServicePhotos(portlandPhotos, currentPhotos, 'portland');
     expect(result.length).toBe(4);
     expect(result.slice(0, 3)).toEqual(currentPhotos);
   });

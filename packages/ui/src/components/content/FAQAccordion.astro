@@ -11,12 +11,7 @@ export interface Props extends BaseProps {
   title?: string;
 }
 
-const {
-  faqs,
-  title,
-  class: className = '',
-  ...rest
-} = Astro.props;
+const { faqs, title, class: className = '', ...rest } = Astro.props;
 
 const classes = ['py-12', className].filter(Boolean).join(' ');
 
@@ -36,33 +31,31 @@ const faqSchema = JSON.stringify({
 
 <section class={classes} {...rest}>
   <div class="container mx-auto px-4">
-    {title && (
-      <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">
-        {title}
-      </h2>
-    )}
+    {
+      title && (
+        <h2 class="text-3xl md:text-4xl font-heading font-bold text-center mb-12">{title}</h2>
+      )
+    }
 
     <div class="max-w-3xl mx-auto space-y-4">
-      {faqs.map((faq) => (
-        <details class="group bg-white rounded-lg shadow-md overflow-hidden">
-          <summary class="flex items-center justify-between p-6 cursor-pointer list-none hover:bg-gray-50 transition-colors">
-            <h3 class="text-lg font-heading font-bold text-dark pr-4">
-              {faq.question}
-            </h3>
-            <Icon
-              name="chevron-down"
-              size={24}
-              class="text-primary transition-transform group-open:rotate-180 flex-shrink-0"
-            />
-          </summary>
+      {
+        faqs.map((faq) => (
+          <details class="group bg-white rounded-lg shadow-md overflow-hidden">
+            <summary class="flex items-center justify-between p-6 cursor-pointer list-none hover:bg-gray-50 transition-colors">
+              <h3 class="text-lg font-heading font-bold text-dark pr-4">{faq.question}</h3>
+              <Icon
+                name="chevron-down"
+                size={24}
+                class="text-primary transition-transform group-open:rotate-180 flex-shrink-0"
+              />
+            </summary>
 
-          <div class="px-6 pb-6 pt-2">
-            <p class="text-gray-600">
-              {faq.answer}
-            </p>
-          </div>
-        </details>
-      ))}
+            <div class="px-6 pb-6 pt-2">
+              <p class="text-gray-600">{faq.answer}</p>
+            </div>
+          </details>
+        ))
+      }
     </div>
   </div>
 </section>

@@ -28,8 +28,8 @@ function parseSubtopics(content: string): string[] {
   if (!match) return [];
   return match[1]
     .split('\n')
-    .filter(l => l.trim().startsWith('- '))
-    .map(l => l.replace(/^\s*-\s*/, '').trim());
+    .filter((l) => l.trim().startsWith('- '))
+    .map((l) => l.replace(/^\s*-\s*/, '').trim());
 }
 
 function extractFirstSentence(text: string): string {
@@ -44,12 +44,15 @@ function isPlaceholderContent(text: string): boolean {
 }
 
 function slugify(text: string): string {
-  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 function parseClusterSections(
   content: string,
-  subtopics: string[]
+  subtopics: string[],
 ): Array<{ heading: string; anchor: string; content: string }> {
   const sections: Array<{ heading: string; anchor: string; content: string }> = [];
   for (const topic of subtopics) {
@@ -70,15 +73,13 @@ function parseReferences(content: string): string {
 
 function parseSubtopicDescriptors(
   content: string,
-  subtopics: string[]
+  subtopics: string[],
 ): Array<{ heading: string; anchor: string; descriptor: string }> {
   return subtopics.map((topic) => {
     const escaped = topic.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const match = content.match(new RegExp(`## ${escaped}\n([\\s\\S]*?)(?=\n## |$)`));
     const body = match ? match[1].trim() : '';
-    const descriptor = body && !isPlaceholderContent(body)
-      ? extractFirstSentence(body)
-      : '';
+    const descriptor = body && !isPlaceholderContent(body) ? extractFirstSentence(body) : '';
     return { heading: topic, anchor: slugify(topic), descriptor };
   });
 }
@@ -97,9 +98,10 @@ function extractHeroSubheadline(content: string, name: string): string {
   // Extract only the Hero Section block (up to the next ## heading)
   const heroBlock = content.match(/## Hero Section\n([\s\S]*?)(?=\n## )/);
   if (heroBlock) {
-    const lines = heroBlock[1].split('\n')
-      .map(l => l.trim())
-      .filter(l => l && !l.startsWith('#'));
+    const lines = heroBlock[1]
+      .split('\n')
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith('#'));
     for (const line of lines) {
       if (!isPlaceholderContent(line)) return line;
     }
@@ -112,7 +114,7 @@ function loadClusterPages(): ServicePageData[] {
   let files: string[];
   try {
     files = readdirSync(contentDir).filter(
-      f => f.startsWith('service_page_cluster_') && f.endsWith('.md')
+      (f) => f.startsWith('service_page_cluster_') && f.endsWith('.md'),
     );
   } catch {
     return [];
@@ -150,9 +152,7 @@ function loadClusterPages(): ServicePageData[] {
         ? `Professional ${name.toLowerCase()} services in ${locationFull}. Content coming soon.`
         : extractHeroSubheadline(content, name),
       keyBenefits: subtopics.slice(0, 4),
-      sections: bodyContent
-        ? { overview: { title: name, content: bodyContent } }
-        : {},
+      sections: bodyContent ? { overview: { title: name, content: bodyContent } } : {},
       faqs: [],
       metaTitle: `${name} in ${locationFull} | Deck Repair Experts`,
       metaDescription: `Professional ${name.toLowerCase()} services in ${locationFull}. Expert craftsmanship and quality materials.`,
@@ -171,11 +171,11 @@ function loadClusterPages(): ServicePageData[] {
 export const allClusterServices = loadClusterPages();
 
 export function getClusterService(location: string, slug: string): ServicePageData | undefined {
-  return allClusterServices.find(s => s.location === location && s.slug === slug);
+  return allClusterServices.find((s) => s.location === location && s.slug === slug);
 }
 
 export function getClusterPaths() {
-  return allClusterServices.map(s => ({
+  return allClusterServices.map((s) => ({
     params: { location: s.location, service: s.slug },
   }));
 }

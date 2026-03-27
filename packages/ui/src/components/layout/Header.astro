@@ -27,7 +27,9 @@ const classes = [
   'sticky top-0 z-50 transition-all duration-300',
   transparent ? 'bg-transparent' : 'bg-white shadow-md',
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(' ');
 ---
 
 <header class={classes} {...rest}>
@@ -35,23 +37,27 @@ const classes = [
     <div class="flex items-center justify-between h-20">
       <!-- Logo -->
       <a href="/" class="flex items-center space-x-2">
-        {logo ? (
-          <img src={logo} alt={config.name} class="h-12 w-auto" />
-        ) : (
-          <span class="text-2xl font-heading font-bold text-dark">{config.name}</span>
-        )}
+        {
+          logo ? (
+            <img src={logo} alt={config.name} class="h-12 w-auto" />
+          ) : (
+            <span class="text-2xl font-heading font-bold text-dark">{config.name}</span>
+          )
+        }
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center space-x-8" aria-label="Main navigation">
-        {navigation.map((item) => (
-          <a
-            href={item.url}
-            class="text-base font-medium text-dark hover:text-primary transition-colors"
-          >
-            {item.label}
-          </a>
-        ))}
+        {
+          navigation.map((item) => (
+            <a
+              href={item.url}
+              class="text-base font-medium text-dark hover:text-primary transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
+        }
       </nav>
 
       <!-- CTA Buttons -->

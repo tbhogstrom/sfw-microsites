@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Trim Replacement: Materials and Best Practices',
     slug: 'trim-replacement-materials-and-best-practices',
-    excerpt: 'When it comes to maintaining the beauty and integrity of your home, trim plays a crucial role.',
+    excerpt:
+      'When it comes to maintaining the beauty and integrity of your home, trim plays a crucial role.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -104,7 +105,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Preserving Historic Trim in Older Homes',
     slug: 'preserving-historic-trim-in-older-homes',
-    excerpt: 'Older homes possess a unique charm that often lies in their intricate architectural details, particularly the decorative trim.',
+    excerpt:
+      'Older homes possess a unique charm that often lies in their intricate architectural details, particularly the decorative trim.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -174,7 +176,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'The Importance of Proper Trim Maintenance',
     slug: 'the-importance-of-proper-trim-maintenance',
-    excerpt: 'When it comes to home improvement, one of the most overlooked aspects is trim maintenance.',
+    excerpt:
+      'When it comes to home improvement, one of the most overlooked aspects is trim maintenance.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -251,5 +254,5 @@ export const blogPosts: BlogPostData[] = [
 <p>Whether you're dealing with minor repairs or considering a full trim replacement, prioritizing this oft-overlooked aspect of home improvement will not only protect your investment but also elevate the character of your living space. </p>
 <p>For more expert advice and DIY tips, stay tuned to our blog. Your home deserves the best care, and with proper trim maintenance, you can provide it just that.</p>
     `,
-  }
+  },
 ];

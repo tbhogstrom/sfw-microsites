@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Mold Testing Cost Guide for Portland Homeowners',
     slug: 'mold-testing-cost-guide-portland',
-    excerpt: 'Understanding mold testing costs helps you budget for professional inspection. Learn about pricing for visual inspections, air quality testing, and laboratory analysis.',
+    excerpt:
+      'Understanding mold testing costs helps you budget for professional inspection. Learn about pricing for visual inspections, air quality testing, and laboratory analysis.',
     publishDate: '2026-02-27',
     author: 'SFW Construction',
     category: 'Pricing & Services',
@@ -186,7 +187,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Understanding Mold: What Every Homeowner Should Know',
     slug: 'understanding-mold-what-every-homeowner-should-know',
-    excerpt: 'Mold can pose serious health risks and structural damage to your Portland home. Learn how to identify, test, and prevent mold growth.',
+    excerpt:
+      'Mold can pose serious health risks and structural damage to your Portland home. Learn how to identify, test, and prevent mold growth.',
     publishDate: '2026-02-27',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -251,7 +253,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'When to Get Professional Mold Testing for Your Home',
     slug: 'when-to-get-professional-mold-testing-for-your-home',
-    excerpt: 'Mold can be a hidden menace in many homes, especially in moist environments like Portland, Oregon. It thrives in damp conditions, often going unnoticed until it has caused considerable damage.',
+    excerpt:
+      'Mold can be a hidden menace in many homes, especially in moist environments like Portland, Oregon. It thrives in damp conditions, often going unnoticed until it has caused considerable damage.',
     publishDate: '2026-02-27',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -332,7 +335,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Understanding Different Types of Mold Testing Methods',
     slug: 'understanding-different-types-of-mold-testing-methods',
-    excerpt: 'Mold can be a hidden menace lurking within the walls of our homes, often growing unnoticed until it begins to impact health and home integrity.',
+    excerpt:
+      'Mold can be a hidden menace lurking within the walls of our homes, often growing unnoticed until it begins to impact health and home integrity.',
     publishDate: '2026-02-27',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -431,7 +435,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Black Mold: Identification, Testing, and Health Risks',
     slug: 'black-mold-identification-testing-and-health-risks',
-    excerpt: 'Mold is a common concern for homeowners, particularly in moist climates like Portland, Oregon.',
+    excerpt:
+      'Mold is a common concern for homeowners, particularly in moist climates like Portland, Oregon.',
     publishDate: '2026-02-27',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -534,5 +539,5 @@ export const blogPosts: BlogPostData[] = [
 <hr />
 <p>For more home improvement tips and advice, subscribe to our blog for updates and expert insights!</p>
     `,
-  }
+  },
 ];

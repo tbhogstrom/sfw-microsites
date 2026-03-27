@@ -17,7 +17,7 @@ import type { GalleryService } from '@sfw/ui';
 export function selectServicePhotos(
   allPhotos: GalleryService[],
   currentServicePhotos: GalleryService[],
-  currentLocation: string
+  currentLocation: string,
 ): GalleryService[] {
   // Deduplicate by title, keeping first occurrence
   const deduplicateByTitle = (photos: GalleryService[]): GalleryService[] => {
@@ -44,7 +44,7 @@ export function selectServicePhotos(
     (photo) =>
       !currentServicePhotos.includes(photo) &&
       photo.href.includes(`/services/${currentLocation}/`) &&
-      !currentTitles.has(photo.title)
+      !currentTitles.has(photo.title),
   );
 
   // How many photos do we need to fill the gallery?

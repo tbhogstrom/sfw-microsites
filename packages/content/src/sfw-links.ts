@@ -49,7 +49,7 @@ export const sfwLinks: SFWLink[] = [
     url: 'https://sfwconstruction.com/repair-services/window-installation-portland/',
     currentAnchor: 'Window Installation in Portland',
     broadMatchAnchor: 'Portland Window Installation Contractor',
-    naturalOption1: 'upgrade your home\'s windows',
+    naturalOption1: "upgrade your home's windows",
     naturalOption2: 'install new energy-efficient windows',
     relevantTopics: ['windows', 'leaks', 'portland', 'installation'],
   },
@@ -179,27 +179,28 @@ export const sfwLinks: SFWLink[] = [
  * Get relevant SFW links based on content topics
  */
 export function getRelevantSFWLinks(topics: string[], maxLinks: number = 2): SFWLink[] {
-  const scoredLinks = sfwLinks.map(link => {
-    const score = link.relevantTopics.filter(topic =>
-      topics.some(t => t.toLowerCase().includes(topic.toLowerCase()) || topic.toLowerCase().includes(t.toLowerCase()))
+  const scoredLinks = sfwLinks.map((link) => {
+    const score = link.relevantTopics.filter((topic) =>
+      topics.some(
+        (t) =>
+          t.toLowerCase().includes(topic.toLowerCase()) ||
+          topic.toLowerCase().includes(t.toLowerCase()),
+      ),
     ).length;
     return { link, score };
   });
 
   return scoredLinks
-    .filter(item => item.score > 0)
+    .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, maxLinks)
-    .map(item => item.link);
+    .map((item) => item.link);
 }
 
 /**
  * Get a random natural anchor text for a link
  */
 export function getRandomAnchor(link: SFWLink): string {
-  const options = [
-    link.naturalOption1,
-    link.naturalOption2,
-  ];
+  const options = [link.naturalOption1, link.naturalOption2];
   return options[Math.floor(Math.random() * options.length)];
 }

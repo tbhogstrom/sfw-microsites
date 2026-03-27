@@ -69,7 +69,7 @@ function parseServiceMarkdown(filePath: string, fileName: string): ServicePageDa
     // Title case the service name
     const serviceName = serviceNameRaw
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
 
     // Create URL-friendly slug
@@ -114,14 +114,16 @@ function parseServiceMarkdown(filePath: string, fileName: string): ServicePageDa
         if (benefitsMatch) {
           keyBenefits = benefitsMatch[1]
             .split('\n')
-            .filter(line => line.trim().startsWith('-'))
-            .map(line => line.replace(/^-\s+\*\*([^:]+):\*\*\s*/, '').trim());
+            .filter((line) => line.trim().startsWith('-'))
+            .map((line) => line.replace(/^-\s+\*\*([^:]+):\*\*\s*/, '').trim());
         }
       }
 
       // Extract FAQ section
       if (sectionTitle.toLowerCase().includes('faq')) {
-        const faqMatches = sectionContent.matchAll(/###?\s+\d*\.?\s*(.+?)\n(.+?)(?=\n###?\s+\d*\.?\s+|$)/gs);
+        const faqMatches = sectionContent.matchAll(
+          /###?\s+\d*\.?\s*(.+?)\n(.+?)(?=\n###?\s+\d*\.?\s+|$)/gs,
+        );
         for (const match of faqMatches) {
           faqs.push({
             question: match[1].trim(),
@@ -158,13 +160,14 @@ function parseServiceMarkdown(filePath: string, fileName: string): ServicePageDa
 
     // Create meta title and description
     const metaTitle = `${serviceName} in ${locationFull} | Expert Siding Services`;
-    const metaDescription = heroSubheadline.substring(0, 155) ||
+    const metaDescription =
+      heroSubheadline.substring(0, 155) ||
       `Professional ${serviceName.toLowerCase()} in ${locationFull}. Expert craftsmanship, quality materials, and exceptional customer service.`;
 
     // Extract keywords from metadata at bottom of file
     const keywordsMatch = content.match(/\*\*Target Keywords:\*\*\s+(.+)/);
     const keywords = keywordsMatch
-      ? keywordsMatch[1].split(',').map(k => k.trim())
+      ? keywordsMatch[1].split(',').map((k) => k.trim())
       : [serviceName.toLowerCase(), location, 'siding repair', 'siding services'];
 
     return {
@@ -200,7 +203,12 @@ function loadServicePages(): ServicePageData[] {
 
   for (const file of files) {
     // Skip non-service-page files and checkpoint files
-    if (!file.startsWith('service_page_') || file.startsWith('service_page_cluster_') || !file.endsWith('.md') || file.includes('.ipynb_checkpoints')) {
+    if (
+      !file.startsWith('service_page_') ||
+      file.startsWith('service_page_cluster_') ||
+      !file.endsWith('.md') ||
+      file.includes('.ipynb_checkpoints')
+    ) {
       continue;
     }
 
@@ -228,18 +236,18 @@ export const allServices = loadServicePages();
 
 // Export services by location
 export const servicesByLocation = {
-  portland: allServices.filter(s => s.location === 'portland'),
-  seattle: allServices.filter(s => s.location === 'seattle'),
+  portland: allServices.filter((s) => s.location === 'portland'),
+  seattle: allServices.filter((s) => s.location === 'seattle'),
 };
 
 // Helper function to get service by slug and location
 export function getService(location: string, slug: string): ServicePageData | undefined {
-  return allServices.find(s => s.location === location && s.slug === slug);
+  return allServices.find((s) => s.location === location && s.slug === slug);
 }
 
 // Helper function to get all service paths for static generation
 export function getServicePaths() {
-  return allServices.map(service => ({
+  return allServices.map((service) => ({
     params: {
       location: service.location,
       service: service.slug,

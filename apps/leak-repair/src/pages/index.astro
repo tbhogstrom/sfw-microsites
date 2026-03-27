@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import {
+  HeroSection,
+  StatsBar,
+  CTASection,
+  FAQAccordion,
+  BlogCarousel,
+  ServicesOffered,
+  ServicesGallery,
+} from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
@@ -10,26 +18,33 @@ const config = serviceConfigs['leak-repair'];
 const galleryServices: GalleryService[] = [
   {
     title: 'Bay Window Specialty Window Repairs',
-    description: 'Expert repair and weatherproofing for bay and specialty windows to stop leaks and restore function.',
+    description:
+      'Expert repair and weatherproofing for bay and specialty windows to stop leaks and restore function.',
     image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_0528.jpg',
     href: '/services/portland/bay-window-specialty-window-repairs',
   },
   {
     title: 'Window Leak Repair Waterproofing',
-    description: 'Comprehensive waterproofing solutions to seal window leaks and prevent future water intrusion.',
-    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/PXL_20260217_181529866.jpg',
+    description:
+      'Comprehensive waterproofing solutions to seal window leaks and prevent future water intrusion.',
+    image:
+      'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/PXL_20260217_181529866.jpg',
     href: '/services/portland/window-leak-repair-waterproofing',
   },
   {
     title: 'Door Frame Leak Rot Repair',
-    description: 'Professional repair of water-damaged door frames including rot remediation and weatherproofing.',
-    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220428_192949728.jpg',
+    description:
+      'Professional repair of water-damaged door frames including rot remediation and weatherproofing.',
+    image:
+      'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/IMG_20220428_192949728.jpg',
     href: '/services/portland/door-frame-leak-rot-repair',
   },
   {
     title: 'Window Flashing Repair',
-    description: 'Precision flashing installation and repair to protect windows from water penetration.',
-    image: 'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/mobile-photo%20%287%29.jpg',
+    description:
+      'Precision flashing installation and repair to protect windows from water penetration.',
+    image:
+      'https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/service-page/mobile-photo%20%287%29.jpg',
     href: '/services/portland/window-flashing-repair',
   },
 ];
@@ -37,70 +52,86 @@ const galleryServices: GalleryService[] = [
 const services: Service[] = [
   {
     title: 'Window and Door Leak Diagnosis',
-    description: 'Expert detection of leak sources using moisture meters and thermal imaging to pinpoint water entry points.',
+    description:
+      'Expert detection of leak sources using moisture meters and thermal imaging to pinpoint water entry points.',
   },
   {
     title: 'Flashing Repair and Installation',
-    description: 'Professional installation of step flashing, counter-flashing, and complete waterproofing systems around vulnerable areas.',
+    description:
+      'Professional installation of step flashing, counter-flashing, and complete waterproofing systems around vulnerable areas.',
   },
   {
     title: 'Sealant and Caulking Services',
-    description: 'Application of high-quality exterior-grade sealants designed for Portland\'s wet climate and temperature fluctuations.',
+    description:
+      "Application of high-quality exterior-grade sealants designed for Portland's wet climate and temperature fluctuations.",
   },
   {
     title: 'Wood Rot Repair and Replacement',
-    description: 'Comprehensive repair of moisture-damaged framing, sills, and trim with rot-resistant materials.',
+    description:
+      'Comprehensive repair of moisture-damaged framing, sills, and trim with rot-resistant materials.',
   },
   {
     title: 'Moisture Barrier Installation',
-    description: 'Strategic installation of drainage systems and moisture barriers to prevent future water intrusion.',
+    description:
+      'Strategic installation of drainage systems and moisture barriers to prevent future water intrusion.',
   },
   {
     title: 'Preventive Maintenance Programs',
-    description: 'Annual inspection and maintenance services to catch potential leak problems before they cause damage.',
+    description:
+      'Annual inspection and maintenance services to catch potential leak problems before they cause damage.',
   },
 ];
 
 const faqs: FAQ[] = [
   {
     question: 'What are the common signs of window leaks?',
-    answer: 'Common signs include water stains on walls or windowsills, peeling paint or wallpaper near windows, visible moisture or condensation between window panes, musty odors, mold or mildew growth around window frames, warped or rotting wood trim, drafts or cold spots near windows, and increased energy bills. In Portland\'s rainy climate, these issues often result from failed seals, damaged flashing, or improper installation. Early detection prevents costly structural damage.',
+    answer:
+      "Common signs include water stains on walls or windowsills, peeling paint or wallpaper near windows, visible moisture or condensation between window panes, musty odors, mold or mildew growth around window frames, warped or rotting wood trim, drafts or cold spots near windows, and increased energy bills. In Portland's rainy climate, these issues often result from failed seals, damaged flashing, or improper installation. Early detection prevents costly structural damage.",
   },
   {
     question: 'How much does window leak repair cost in Portland?',
-    answer: 'Window leak repair costs vary based on the source and extent of damage. Simple caulking and sealing repairs might cost $200 to $500, while flashing replacement can range from $500 to $1,500 per window. Repairs involving rot damage to framing or sills can cost $1,000 to $3,000+ per window. Complete window replacement due to severe damage runs $500 to $1,500 per window. Portland professionals typically charge $75 to $100 per hour for leak diagnosis and repair.',
+    answer:
+      'Window leak repair costs vary based on the source and extent of damage. Simple caulking and sealing repairs might cost $200 to $500, while flashing replacement can range from $500 to $1,500 per window. Repairs involving rot damage to framing or sills can cost $1,000 to $3,000+ per window. Complete window replacement due to severe damage runs $500 to $1,500 per window. Portland professionals typically charge $75 to $100 per hour for leak diagnosis and repair.',
   },
   {
     question: 'Can I fix window leaks myself or should I hire a professional?',
-    answer: 'Minor exterior caulking and weatherstripping can be DIY projects for handy homeowners. However, leaks involving flashing repairs, structural wood damage, between-pane moisture, or difficult-to-locate sources should be handled by professionals. In Portland, professionals understand proper flashing installation, moisture barrier systems, and building envelope principles essential for preventing recurring leaks in our wet climate. Improper repairs often mask problems temporarily, leading to extensive hidden damage.',
+    answer:
+      'Minor exterior caulking and weatherstripping can be DIY projects for handy homeowners. However, leaks involving flashing repairs, structural wood damage, between-pane moisture, or difficult-to-locate sources should be handled by professionals. In Portland, professionals understand proper flashing installation, moisture barrier systems, and building envelope principles essential for preventing recurring leaks in our wet climate. Improper repairs often mask problems temporarily, leading to extensive hidden damage.',
   },
   {
     question: 'What causes windows to leak in Portland homes?',
-    answer: 'Window leaks in Portland are primarily caused by failed caulking and sealants, improperly installed or damaged flashing, deteriorated weatherstripping, cracked or broken window seals, improper window installation, settling or shifting foundations, wood rot around frames, and inadequate drainage. Portland\'s frequent rain and wind-driven moisture overwhelm compromised seals. Age, UV exposure, and temperature fluctuations also break down sealants over time. Proper installation and maintenance are crucial.',
+    answer:
+      "Window leaks in Portland are primarily caused by failed caulking and sealants, improperly installed or damaged flashing, deteriorated weatherstripping, cracked or broken window seals, improper window installation, settling or shifting foundations, wood rot around frames, and inadequate drainage. Portland's frequent rain and wind-driven moisture overwhelm compromised seals. Age, UV exposure, and temperature fluctuations also break down sealants over time. Proper installation and maintenance are crucial.",
   },
   {
     question: 'How long do window leak repairs last?',
-    answer: 'With quality materials and proper technique, window leak repairs should last 10-20 years. Caulking typically lasts 5-10 years, flashing repairs 15-25 years, and structural repairs 20+ years if moisture sources are eliminated. In Portland, longevity depends on regular maintenance, including annual caulking inspections and prompt repairs. Using high-quality exterior-grade materials appropriate for Portland\'s climate significantly extends repair lifespan. Proper drainage and overhang protection also help.',
+    answer:
+      "With quality materials and proper technique, window leak repairs should last 10-20 years. Caulking typically lasts 5-10 years, flashing repairs 15-25 years, and structural repairs 20+ years if moisture sources are eliminated. In Portland, longevity depends on regular maintenance, including annual caulking inspections and prompt repairs. Using high-quality exterior-grade materials appropriate for Portland's climate significantly extends repair lifespan. Proper drainage and overhang protection also help.",
   },
   {
     question: 'How can I prevent window leaks?',
-    answer: 'Prevent window leaks by inspecting and replacing deteriorated caulking annually, ensuring proper flashing installation and maintenance, cleaning weep holes to allow drainage, maintaining gutters and downspouts, trimming vegetation away from windows, checking and replacing weatherstripping, addressing any visible damage promptly, and ensuring proper drainage slopes away from the foundation. In Portland, pre-winter inspections are especially important. Proper installation of new windows with adequate flashing is essential.',
+    answer:
+      'Prevent window leaks by inspecting and replacing deteriorated caulking annually, ensuring proper flashing installation and maintenance, cleaning weep holes to allow drainage, maintaining gutters and downspouts, trimming vegetation away from windows, checking and replacing weatherstripping, addressing any visible damage promptly, and ensuring proper drainage slopes away from the foundation. In Portland, pre-winter inspections are especially important. Proper installation of new windows with adequate flashing is essential.',
   },
   {
-    question: 'What\'s the difference between condensation and window leaks?',
-    answer: 'Condensation forms on interior window surfaces due to humidity differences and typically appears uniformly, wiping off easily without damage. Window leaks show water infiltrating from outside, often appearing at specific points, accompanied by water damage, staining, and rot. Condensation between double-pane windows indicates failed seals but isn\'t necessarily a leak. In Portland, both issues are common. Professionals can diagnose the source and recommend appropriate solutions, whether improved ventilation, dehumidification, or leak repairs.',
+    question: "What's the difference between condensation and window leaks?",
+    answer:
+      "Condensation forms on interior window surfaces due to humidity differences and typically appears uniformly, wiping off easily without damage. Window leaks show water infiltrating from outside, often appearing at specific points, accompanied by water damage, staining, and rot. Condensation between double-pane windows indicates failed seals but isn't necessarily a leak. In Portland, both issues are common. Professionals can diagnose the source and recommend appropriate solutions, whether improved ventilation, dehumidification, or leak repairs.",
   },
   {
     question: 'Should I repair or replace leaking windows?',
-    answer: 'Repair if leaks are caused by failed caulking, damaged flashing, or minor wood rot with otherwise functioning windows. Replace if windows have failed seals causing between-pane condensation, extensive frame rot, single-pane inefficiency, recurring leak problems despite repairs, or windows over 20 years old with multiple issues. In Portland, energy-efficient replacement windows often provide long-term value through energy savings and eliminated maintenance. A professional assessment determines the most cost-effective approach.',
+    answer:
+      'Repair if leaks are caused by failed caulking, damaged flashing, or minor wood rot with otherwise functioning windows. Replace if windows have failed seals causing between-pane condensation, extensive frame rot, single-pane inefficiency, recurring leak problems despite repairs, or windows over 20 years old with multiple issues. In Portland, energy-efficient replacement windows often provide long-term value through energy savings and eliminated maintenance. A professional assessment determines the most cost-effective approach.',
   },
   {
     question: 'How do I find the source of a window leak?',
-    answer: 'Locate window leak sources by inspecting during rainfall, looking for active water entry points, checking caulking for gaps or cracks, examining flashing condition, looking for water stains indicating leak paths, testing with a hose spray (working from bottom up), and using moisture meters to detect hidden dampness. In Portland, professionals often use thermal imaging cameras to identify moisture intrusion and air leaks. Proper diagnosis is crucial since water often travels from the entry point before becoming visible.',
+    answer:
+      'Locate window leak sources by inspecting during rainfall, looking for active water entry points, checking caulking for gaps or cracks, examining flashing condition, looking for water stains indicating leak paths, testing with a hose spray (working from bottom up), and using moisture meters to detect hidden dampness. In Portland, professionals often use thermal imaging cameras to identify moisture intrusion and air leaks. Proper diagnosis is crucial since water often travels from the entry point before becoming visible.',
   },
   {
     question: 'What are the long-term consequences of ignoring window leaks?',
-    answer: 'Ignoring window leaks leads to extensive wood rot in framing and structural members, mold growth causing health issues and costly remediation, damage to interior finishes and furnishings, compromised insulation and increased energy costs, structural instability requiring major repairs, decreased property value, and potential pest infestations in damaged wood. In Portland\'s wet climate, small leaks quickly escalate to major problems. Early intervention saves thousands in repair costs and protects your home\'s structural integrity and value.',
+    answer:
+      "Ignoring window leaks leads to extensive wood rot in framing and structural members, mold growth causing health issues and costly remediation, damage to interior finishes and furnishings, compromised insulation and increased energy costs, structural instability requiring major repairs, decreased property value, and potential pest infestations in damaged wood. In Portland's wet climate, small leaks quickly escalate to major problems. Early intervention saves thousands in repair costs and protects your home's structural integrity and value.",
   },
 ];
 ---
@@ -117,12 +148,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     backgroundImage="https://wcpj4kljulxaoqwk.public.blob.vercel-storage.com/hero/Leak_repair_experts__leakingwindowcoma_beautifully_delpmaspu.png"
-    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    primaryCTA={{ text: 'Talk to a Human', href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
       portalId: config.hubspotPortalId,
       formId: config.hubspotFormId,
-      region: "na1"
+      region: 'na1',
     }}
   />
 
@@ -139,12 +170,7 @@ const faqs: FAQ[] = [
   <!-- Services Offered Section -->
   <ServicesOffered
     mainHeading="Window Leak Repair and Restoration in Portland — And So Much More"
-    bulletPoints={[
-      'Local specialists',
-      'Clear Pricing',
-      'Fast response',
-      'Repairs built to last',
-    ]}
+    bulletPoints={['Local specialists', 'Clear Pricing', 'Fast response', 'Repairs built to last']}
     mainDescription="Leak Repair Experts provides comprehensive window and door leak detection and remediation services for Portland-area homes. From identifying hidden moisture damage to replacing flashing, seals, and damaged framing, our team restores your home's weather protection with lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
     ctaText="Get Free Pricing"
     ctaHref="#contact"
@@ -156,10 +182,7 @@ const faqs: FAQ[] = [
   />
 
   <!-- FAQ Section -->
-  <FAQAccordion
-    faqs={faqs}
-    title="Window Leak Diagnosis and Repair FAQ"
-  />
+  <FAQAccordion faqs={faqs} title="Window Leak Diagnosis and Repair FAQ" />
 
   <!-- Blog Carousel -->
   <BlogCarousel
@@ -177,4 +200,3 @@ const faqs: FAQ[] = [
     variant="dark"
   />
 </BaseLayout>
-

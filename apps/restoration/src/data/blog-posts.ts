@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Balancing Modern Updates with Historic Preservation',
     slug: 'balancing-modern-updates-with-historic-preservation',
-    excerpt: 'In the heart of Portland, Oregon, where history meets the contemporary, home restoration and historic preservation have become pivotal aspects of urban living.',
+    excerpt:
+      'In the heart of Portland, Oregon, where history meets the contemporary, home restoration and historic preservation have become pivotal aspects of urban living.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -184,7 +185,8 @@ Home restoration in Portland, Oregon, is a fulfilling endeavor that can bring yo
   {
     title: 'Restoration vs Renovation: Understanding the Difference',
     slug: 'restoration-vs-renovation-understanding-the-difference',
-    excerpt: 'When it comes to home improvement, the terms "restoration" and "renovation" are often used interchangeably, but they have distinct meanings and implications.',
+    excerpt:
+      'When it comes to home improvement, the terms "restoration" and "renovation" are often used interchangeably, but they have distinct meanings and implications.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -322,5 +324,5 @@ Home restoration in Portland, Oregon, is a fulfilling endeavor that can bring yo
 <h2 id="conclusion">Conclusion</h2>
 <p>Understanding the distinctions between home restoration and renovation is crucial for homeowners in Portland, Oregon. Whether you're looking to preserve the historical charm of a Craftsman bungalow or modernize a mid-century home, these insights will empower you to make informed decisions about your projects. Remember to plan carefully, consider local regulations, and prioritize safety throughout the process. With the right approach, your home can become a comfortable and functional space that reflects your unique style and meets your needs for years to come.</p>
     `,
-  }
+  },
 ];

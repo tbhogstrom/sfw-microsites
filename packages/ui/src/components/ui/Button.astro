@@ -30,7 +30,8 @@ const {
   ...rest
 } = Astro.props;
 
-const baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+const baseClasses =
+  'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
 const variantClasses = {
   primary: 'bg-primary text-white hover:bg-primary/90',
@@ -51,18 +52,24 @@ const classes = [
   sizeClasses[size],
   fullWidth && 'w-full',
   className,
-].filter(Boolean).join(' ');
+]
+  .filter(Boolean)
+  .join(' ');
 
 const Tag = href ? 'a' : 'button';
 const tagProps = href ? { href } : { type, disabled };
 ---
 
 <Tag class={classes} {...tagProps} {...rest}>
-  {icon && iconPosition === 'left' && (
-    <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} class="mr-2" />
-  )}
+  {
+    icon && iconPosition === 'left' && (
+      <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} class="mr-2" />
+    )
+  }
   <slot />
-  {icon && iconPosition === 'right' && (
-    <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} class="ml-2" />
-  )}
+  {
+    icon && iconPosition === 'right' && (
+      <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} class="ml-2" />
+    )
+  }
 </Tag>

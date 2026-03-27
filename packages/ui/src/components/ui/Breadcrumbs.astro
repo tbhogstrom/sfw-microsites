@@ -16,16 +16,9 @@ export interface Props extends BaseProps {
   showHome?: boolean;
 }
 
-const {
-  items,
-  showHome = true,
-  class: className = '',
-  ...rest
-} = Astro.props;
+const { items, showHome = true, class: className = '', ...rest } = Astro.props;
 
-const allItems = showHome
-  ? [{ label: 'Home', url: '/' }, ...items]
-  : items;
+const allItems = showHome ? [{ label: 'Home', url: '/' }, ...items] : items;
 
 // BreadcrumbList JSON-LD Schema
 const schema = {
@@ -44,23 +37,22 @@ const classes = ['flex items-center space-x-2 text-sm', className].filter(Boolea
 
 <nav aria-label="Breadcrumb" class={classes} {...rest}>
   <ol class="flex items-center space-x-2">
-    {allItems.map((item, index) => (
-      <li class="flex items-center">
-        {index > 0 && (
-          <Icon name="chevron-right" size={16} class="mx-2 text-gray-400" ariaLabel="separator" />
-        )}
-        {item.url ? (
-          <a
-            href={item.url}
-            class="text-gray-600 hover:text-primary transition-colors"
-          >
-            {item.label}
-          </a>
-        ) : (
-          <span class="text-gray-900 font-medium">{item.label}</span>
-        )}
-      </li>
-    ))}
+    {
+      allItems.map((item, index) => (
+        <li class="flex items-center">
+          {index > 0 && (
+            <Icon name="chevron-right" size={16} class="mx-2 text-gray-400" ariaLabel="separator" />
+          )}
+          {item.url ? (
+            <a href={item.url} class="text-gray-600 hover:text-primary transition-colors">
+              {item.label}
+            </a>
+          ) : (
+            <span class="text-gray-900 font-medium">{item.label}</span>
+          )}
+        </li>
+      ))
+    }
   </ol>
 </nav>
 

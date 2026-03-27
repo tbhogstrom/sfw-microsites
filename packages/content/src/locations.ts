@@ -72,27 +72,32 @@ export const deckRepairLocations: Record<string, Location> = {
     fullName: 'Seattle, WA',
 
     metaTitle: 'Deck Repair Seattle | Expert Deck Services in Seattle, WA',
-    metaDescription: 'Professional deck repair and building services in Seattle, WA. Serving all Seattle neighborhoods with expert craftsmanship. Free estimates.',
+    metaDescription:
+      'Professional deck repair and building services in Seattle, WA. Serving all Seattle neighborhoods with expert craftsmanship. Free estimates.',
 
     phone: '(503) 905-9046',
     email: 'seattle@deckrepair.com',
 
-    heroHeadline: 'Seattle\'s Trusted Deck Repair Experts',
+    heroHeadline: "Seattle's Trusted Deck Repair Experts",
     heroSubheadline: 'Serving the Greater Seattle Area with Premium Deck Services Since 1999',
-    heroImage: 'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
+    heroImage:
+      'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
 
     services: [
       {
         name: 'Deck Repair & Restoration',
-        description: 'Expert repairs for Seattle\'s weather-worn decks. We handle rot, structural issues, and weather damage.',
+        description:
+          "Expert repairs for Seattle's weather-worn decks. We handle rot, structural issues, and weather damage.",
       },
       {
         name: 'Custom Deck Building',
-        description: 'Custom deck designs perfect for Seattle\'s unique hillside lots and water views.',
+        description:
+          "Custom deck designs perfect for Seattle's unique hillside lots and water views.",
       },
       {
         name: 'Deck Staining & Sealing',
-        description: 'Protect your deck from Seattle\'s rain with our premium staining and sealing services.',
+        description:
+          "Protect your deck from Seattle's rain with our premium staining and sealing services.",
       },
       {
         name: 'Deck Maintenance',
@@ -136,31 +141,36 @@ export const deckRepairLocations: Record<string, Location> = {
     fullName: 'Portland, OR',
 
     metaTitle: 'Deck Repair Portland | Expert Deck Services in Portland, OR',
-    metaDescription: 'Professional deck repair and building services in Portland, OR. Serving all Portland metro neighborhoods with expert craftsmanship. Free estimates.',
+    metaDescription:
+      'Professional deck repair and building services in Portland, OR. Serving all Portland metro neighborhoods with expert craftsmanship. Free estimates.',
 
     phone: '(503) 905-9046',
     email: 'portland@deckrepair.com',
 
-    heroHeadline: 'Portland\'s Premier Deck Builders',
+    heroHeadline: "Portland's Premier Deck Builders",
     heroSubheadline: 'Crafting Beautiful Outdoor Spaces Across the Portland Metro Area',
-    heroImage: 'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
+    heroImage:
+      'https://cdn-ileeamj.nitrocdn.com/WrsmSvzGThHeWebWzpPigJcevuotdycK/assets/images/optimized/rev-26df6f7/rotrepairseattle.com/wp-content/uploads/2025/10/rot-repair-seattle.webp',
 
     services: [
       {
         name: 'Deck Repair & Restoration',
-        description: 'Expert deck repairs for Portland\'s wet climate. Specializing in moisture damage and rot prevention.',
+        description:
+          "Expert deck repairs for Portland's wet climate. Specializing in moisture damage and rot prevention.",
       },
       {
         name: 'Custom Deck Building',
-        description: 'Eco-friendly deck designs using sustainable materials perfect for Portland homes.',
+        description:
+          'Eco-friendly deck designs using sustainable materials perfect for Portland homes.',
       },
       {
         name: 'Deck Staining & Sealing',
-        description: 'Premium weatherproofing to protect against Portland\'s rainy seasons.',
+        description: "Premium weatherproofing to protect against Portland's rainy seasons.",
       },
       {
         name: 'Cedar Deck Specialists',
-        description: 'Expert cedar deck construction and restoration, perfect for Pacific Northwest homes.',
+        description:
+          'Expert cedar deck construction and restoration, perfect for Pacific Northwest homes.',
       },
     ],
 
@@ -192,7 +202,8 @@ export const deckRepairLocations: Record<string, Location> = {
       lng: -122.6784,
     },
 
-    mapEmbedSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d716251.5385569318!2d-122.71848044999999!3d45.47267295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xad5e3ad74c43a045%3A0xf875049f0c21743b!2sRot%20Repair%20Experts!5e0!3m2!1sen!2sus!4v1773330252687!5m2!1sen!2sus',
+    mapEmbedSrc:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d716251.5385569318!2d-122.71848044999999!3d45.47267295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xad5e3ad74c43a045%3A0xf875049f0c21743b!2sRot%20Repair%20Experts!5e0!3m2!1sen!2sus!4v1773330252687!5m2!1sen!2sus',
   },
 };
 

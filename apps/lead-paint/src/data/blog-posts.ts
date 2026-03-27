@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Lead Paint Safety: What Portland Homeowners Need to Know',
     slug: 'lead-paint-safety-what-portland-homeowners-need-to-know',
-    excerpt: 'When it comes to home renovations, the presence of lead paint is a serious concern, especially for those living in older homes.',
+    excerpt:
+      'When it comes to home renovations, the presence of lead paint is a serious concern, especially for those living in older homes.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -94,7 +95,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Lead Paint Testing and Inspection Guide',
     slug: 'lead-paint-testing-and-inspection-guide',
-    excerpt: 'As Portland continues to grow and evolve, many homeowners find themselves drawn to the charm of older houses. However, with homes built before 1978 comes the potential hazard of lead paint.',
+    excerpt:
+      'As Portland continues to grow and evolve, many homeowners find themselves drawn to the charm of older houses. However, with homes built before 1978 comes the potential hazard of lead paint.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -184,7 +186,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Safe Lead Paint Removal Methods for Older Homes',
     slug: 'safe-lead-paint-removal-methods-for-older-homes',
-    excerpt: 'If you own a home built before 1978, there’s a good chance it contains lead-based paint. This is particularly relevant in Portland, Oregon, where many charming older homes still stand.',
+    excerpt:
+      'If you own a home built before 1978, there’s a good chance it contains lead-based paint. This is particularly relevant in Portland, Oregon, where many charming older homes still stand.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -255,7 +258,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Lead Paint Encapsulation vs Removal: Which is Right?',
     slug: 'lead-paint-encapsulation-vs-removal-which-is-right',
-    excerpt: 'Lead paint, a ubiquitous yet dangerous substance in homes built before 1978, poses health risks especially to children.',
+    excerpt:
+      'Lead paint, a ubiquitous yet dangerous substance in homes built before 1978, poses health risks especially to children.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -374,7 +378,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Understanding EPA Lead Paint Regulations',
     slug: 'understanding-epa-lead-paint-regulations',
-    excerpt: 'If you own a home in Portland, Oregon, built before 1978, understanding lead paint regulations is crucial for your safety and that of your family.',
+    excerpt:
+      'If you own a home in Portland, Oregon, built before 1978, understanding lead paint regulations is crucial for your safety and that of your family.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -460,5 +465,5 @@ export const blogPosts: BlogPostData[] = [
 </ul>
 <p>By adhering to these guidelines, you can confidently manage your home renovation while ensuring a lead-safe environment.</p>
     `,
-  }
+  },
 ];

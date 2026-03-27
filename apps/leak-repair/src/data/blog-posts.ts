@@ -17,7 +17,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'The True Cost of Ignoring Small Leaks',
     slug: 'the-true-cost-of-ignoring-small-leaks',
-    excerpt: 'Understanding the importance of addressing leaks in your home is crucial, especially in Portland, Oregon, where rain is a common occurrence.',
+    excerpt:
+      'Understanding the importance of addressing leaks in your home is crucial, especially in Portland, Oregon, where rain is a common occurrence.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -111,9 +112,10 @@ export const blogPosts: BlogPostData[] = [
     `,
   },
   {
-    title: 'Preventing Water Damage: A Homeowner\'s Guide',
+    title: "Preventing Water Damage: A Homeowner's Guide",
     slug: 'preventing-water-damage-a-homeowners-guide',
-    excerpt: 'Water damage is a significant concern for homeowners, especially in regions like Portland, Oregon, where rainfall can be abundant.',
+    excerpt:
+      'Water damage is a significant concern for homeowners, especially in regions like Portland, Oregon, where rainfall can be abundant.',
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -195,7 +197,8 @@ export const blogPosts: BlogPostData[] = [
   {
     title: 'Common Leak Sources and How to Address Them',
     slug: 'common-leak-sources-and-how-to-address-them',
-    excerpt: 'Leaks can become a homeowner\'s worst nightmare, leading to significant water damage, mold growth, and even structural issues if left unchecked.',
+    excerpt:
+      "Leaks can become a homeowner's worst nightmare, leading to significant water damage, mold growth, and even structural issues if left unchecked.",
     publishDate: '2026-02-23',
     author: 'SFW Construction',
     category: 'Home Maintenance',
@@ -285,5 +288,5 @@ export const blogPosts: BlogPostData[] = [
 <p>Addressing leaks promptly can save you time, money, and heartache down the road. By understanding the common sources of leaks and implementing the strategies outlined above, you can maintain a safe and energy-efficient home in Portland, Oregon. Regular inspections and preventative measures are key components of effective leak management. Remember, when in doubt, seeking professional assistance is always a wise decision.</p>
 <p>For more home improvement tips tailored to the Portland area, subscribe to our blog, and stay informed about the best practices for maintaining your home!</p>
     `,
-  }
+  },
 ];

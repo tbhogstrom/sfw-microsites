@@ -165,10 +165,10 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     </section>
   )}
 
-  <!-- Service Content -->
+  {/* Service Content */}
   <ServiceContent service={serviceData} />
 
-  <!-- FAQ Section -->
+  {/* FAQ Section */}
   {serviceData.faqs.length > 0 && (
     <FAQAccordion
       faqs={serviceData.faqs}
@@ -176,7 +176,7 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
     />
   )}
 
-  <!-- CTA Section -->
+  {/* CTA Section */}
   <CTASection
     headline={`Ready for Professional ${serviceData.name}?`}
     description={`Get a free consultation and quote today. We're here to help with all your deck needs in ${serviceData.locationFull}.`}

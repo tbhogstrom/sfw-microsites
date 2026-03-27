@@ -4,10 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://moldtestingexperts.com',
-  integrations: [
-    tailwind(),
-    sitemap()
-  ],
+  integrations: [tailwind(), sitemap()],
   output: 'static',
   vite: {
     ssr: {

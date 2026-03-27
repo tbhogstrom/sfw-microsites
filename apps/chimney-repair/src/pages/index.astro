@@ -1,6 +1,14 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { HeroSection, StatsBar, CTASection, FAQAccordion, BlogCarousel, ServicesOffered, ServicesGallery } from '@sfw/ui';
+import {
+  HeroSection,
+  StatsBar,
+  CTASection,
+  FAQAccordion,
+  BlogCarousel,
+  ServicesOffered,
+  ServicesGallery,
+} from '@sfw/ui';
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
@@ -11,25 +19,29 @@ const galleryServices: GalleryService[] = [
   {
     title: 'Chimney Chase Flashing & Leak Repair',
     description: 'Professional flashing repair to stop leaks where your chimney meets the roof.',
-    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/IMG_20250421_090230497_HDR_AE.jpg',
+    image:
+      'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/IMG_20250421_090230497_HDR_AE.jpg',
     href: '/services/portland/chimney-chase-flashing-leak-repair',
   },
   {
     title: 'Chimney Chase Siding & Exterior Repair',
     description: 'Expert siding replacement and exterior restoration for damaged chimney chases.',
-    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/down-net_http20260318-176-t64996.jpg',
+    image:
+      'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/down-net_http20260318-176-t64996.jpg',
     href: '/services/portland/chimney-chase-siding-exterior-repair',
   },
   {
     title: 'Chimney Chase Water Damage & Rot Repair',
     description: 'Complete remediation of water damage and wood rot in chimney chase structures.',
-    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/down-net_http20260318-305-vza78s.jpg',
+    image:
+      'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/down-net_http20260318-305-vza78s.jpg',
     href: '/services/portland/chimney-chase-water-damage-rot-repair',
   },
   {
     title: 'Chimney Chase Structural Repair & Rebuilding',
     description: 'Full structural rebuilds for severely compromised chimney chases.',
-    image: 'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/2f6d160e-9ca0-44f4-ade0-ffd8eead3b08.jpg',
+    image:
+      'https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/2f6d160e-9ca0-44f4-ade0-ffd8eead3b08.jpg',
     href: '/services/portland/chimney-chase-structural-repair-rebuilding',
   },
 ];
@@ -37,11 +49,13 @@ const galleryServices: GalleryService[] = [
 const services: Service[] = [
   {
     title: 'Structural and Framing Repair',
-    description: 'Skilled carpenters replace compromised beams, joists, and framing members to restore strength and stability.',
+    description:
+      'Skilled carpenters replace compromised beams, joists, and framing members to restore strength and stability.',
   },
   {
     title: 'Chimney Chase Repair and Rebuilding',
-    description: 'Expert reconstruction of damaged chimney chases with proper waterproofing and structural support.',
+    description:
+      'Expert reconstruction of damaged chimney chases with proper waterproofing and structural support.',
   },
   {
     title: 'Moisture Detection and Prevention',
@@ -49,58 +63,71 @@ const services: Service[] = [
   },
   {
     title: 'Flashing Repair and Waterproofing',
-    description: 'Professional installation of step flashing, counter-flashing, and complete waterproofing systems.',
+    description:
+      'Professional installation of step flashing, counter-flashing, and complete waterproofing systems.',
   },
   {
     title: 'Quality Materials and Craftsmanship',
-    description: 'We use trusted brands and proven building practices to deliver long-lasting repairs.',
+    description:
+      'We use trusted brands and proven building practices to deliver long-lasting repairs.',
   },
   {
     title: 'Transparent Estimates and Communication',
-    description: 'Detailed assessments and clear communication throughout the project ensure no surprises—just dependable results.',
+    description:
+      'Detailed assessments and clear communication throughout the project ensure no surprises—just dependable results.',
   },
 ];
 
 const faqs: FAQ[] = [
   {
     question: 'What are the common signs of wood chimney damage and rot?',
-    answer: 'Common signs include visible wood decay around the chimney structure, water stains on interior walls, a musty odor near the chimney, soft or spongy wood when pressed, and gaps in the chimney framing. You may also notice leaning or tilting of the chimney chase, crumbling mortar, or damaged flashing. In Portland\'s wet climate, these issues are often exacerbated by moisture infiltration, making regular inspections essential, especially after heavy rain seasons.',
+    answer:
+      "Common signs include visible wood decay around the chimney structure, water stains on interior walls, a musty odor near the chimney, soft or spongy wood when pressed, and gaps in the chimney framing. You may also notice leaning or tilting of the chimney chase, crumbling mortar, or damaged flashing. In Portland's wet climate, these issues are often exacerbated by moisture infiltration, making regular inspections essential, especially after heavy rain seasons.",
   },
   {
     question: 'How much does chimney repair typically cost in Portland?',
-    answer: 'Chimney repair costs vary based on the extent of damage and type of repair needed. Minor wood rot repairs or flashing replacement might range from $500 to $1,500, while more extensive structural repairs involving framing replacement can cost $2,000 to $5,000 or more. Complete chimney rebuilds can exceed $10,000. Labor costs in Portland typically range from $75 to $125 per hour for skilled chimney repair specialists. A professional inspection can provide an accurate estimate for your specific situation.',
+    answer:
+      'Chimney repair costs vary based on the extent of damage and type of repair needed. Minor wood rot repairs or flashing replacement might range from $500 to $1,500, while more extensive structural repairs involving framing replacement can cost $2,000 to $5,000 or more. Complete chimney rebuilds can exceed $10,000. Labor costs in Portland typically range from $75 to $125 per hour for skilled chimney repair specialists. A professional inspection can provide an accurate estimate for your specific situation.',
   },
   {
     question: 'Should I repair chimney damage myself or hire a professional?',
-    answer: 'Chimney repairs should generally be handled by professionals due to safety concerns and structural complexity. Working at heights, ensuring proper framing and support, and addressing moisture issues require specialized knowledge and equipment. In Portland, professionals understand local building codes and how to properly waterproof chimneys against our wet climate. Improper repairs can lead to dangerous structural failures or fire hazards, so it\'s best to consult a licensed chimney repair specialist.',
+    answer:
+      "Chimney repairs should generally be handled by professionals due to safety concerns and structural complexity. Working at heights, ensuring proper framing and support, and addressing moisture issues require specialized knowledge and equipment. In Portland, professionals understand local building codes and how to properly waterproof chimneys against our wet climate. Improper repairs can lead to dangerous structural failures or fire hazards, so it's best to consult a licensed chimney repair specialist.",
   },
   {
     question: 'What materials are best for wood chimney repairs in Portland?',
-    answer: 'For wood chimney repairs in Portland, use pressure-treated lumber rated for ground contact or naturally rot-resistant woods like cedar or redwood for structural framing. Exterior-grade plywood or OSB sheathing should be used for chimney chases. High-quality flashing materials like copper or aluminum are essential for waterproofing. All wood should have appropriate moisture content (under 19%) and be properly sealed. Using materials designed to withstand Portland\'s moisture-heavy climate is crucial for long-lasting repairs.',
+    answer:
+      "For wood chimney repairs in Portland, use pressure-treated lumber rated for ground contact or naturally rot-resistant woods like cedar or redwood for structural framing. Exterior-grade plywood or OSB sheathing should be used for chimney chases. High-quality flashing materials like copper or aluminum are essential for waterproofing. All wood should have appropriate moisture content (under 19%) and be properly sealed. Using materials designed to withstand Portland's moisture-heavy climate is crucial for long-lasting repairs.",
   },
   {
     question: 'How long do chimney repairs last?',
-    answer: 'With proper materials, techniques, and waterproofing, chimney repairs can last 15-30 years or more. The longevity depends heavily on the quality of moisture management, as water infiltration is the primary cause of wood chimney deterioration in Portland. Regular maintenance, including annual inspections, flashing checks, and resealing as needed, can significantly extend the life of repairs. Addressing the root cause of moisture problems during repairs is essential for durability.',
+    answer:
+      'With proper materials, techniques, and waterproofing, chimney repairs can last 15-30 years or more. The longevity depends heavily on the quality of moisture management, as water infiltration is the primary cause of wood chimney deterioration in Portland. Regular maintenance, including annual inspections, flashing checks, and resealing as needed, can significantly extend the life of repairs. Addressing the root cause of moisture problems during repairs is essential for durability.',
   },
   {
     question: 'What maintenance prevents wood chimney deterioration?',
-    answer: 'Prevent chimney deterioration by ensuring proper flashing and caulking are maintained to keep water out. Have your chimney inspected annually, especially before and after Portland\'s rainy season. Keep gutters and downspouts clear to prevent water overflow onto the chimney. Install a properly fitted chimney cap to prevent rain entry. Address any leaks immediately, and ensure adequate ventilation in the attic to prevent condensation. Regular cleaning of debris and checking for loose or damaged materials is essential.',
+    answer:
+      "Prevent chimney deterioration by ensuring proper flashing and caulking are maintained to keep water out. Have your chimney inspected annually, especially before and after Portland's rainy season. Keep gutters and downspouts clear to prevent water overflow onto the chimney. Install a properly fitted chimney cap to prevent rain entry. Address any leaks immediately, and ensure adequate ventilation in the attic to prevent condensation. Regular cleaning of debris and checking for loose or damaged materials is essential.",
   },
   {
     question: 'When should I consider rebuilding my chimney instead of repairing it?',
-    answer: 'Consider a complete chimney rebuild if more than 30% of the structure shows rot or damage, if the framing is structurally compromised, or if the chimney is leaning significantly. Older chimneys (over 30 years) with extensive damage may be more cost-effective to rebuild than repair. If you\'re experiencing recurring problems despite previous repairs, or if the chimney doesn\'t meet current building codes, rebuilding may be the better long-term investment, especially given Portland\'s demanding climate.',
+    answer:
+      "Consider a complete chimney rebuild if more than 30% of the structure shows rot or damage, if the framing is structurally compromised, or if the chimney is leaning significantly. Older chimneys (over 30 years) with extensive damage may be more cost-effective to rebuild than repair. If you're experiencing recurring problems despite previous repairs, or if the chimney doesn't meet current building codes, rebuilding may be the better long-term investment, especially given Portland's demanding climate.",
   },
   {
-    question: 'How can I tell if my chimney\'s structural framing is compromised?',
-    answer: 'Signs of compromised framing include visible leaning or tilting of the chimney, sagging roofline around the chimney, large cracks in the chimney chase, or soft spots in the wood structure. Inside, you may notice gaps where the chimney meets the ceiling, or stress cracks in drywall. If the chimney feels unstable or shows signs of movement, it\'s critical to have a professional inspection immediately. Structural issues can pose serious safety risks and should never be ignored.',
+    question: "How can I tell if my chimney's structural framing is compromised?",
+    answer:
+      "Signs of compromised framing include visible leaning or tilting of the chimney, sagging roofline around the chimney, large cracks in the chimney chase, or soft spots in the wood structure. Inside, you may notice gaps where the chimney meets the ceiling, or stress cracks in drywall. If the chimney feels unstable or shows signs of movement, it's critical to have a professional inspection immediately. Structural issues can pose serious safety risks and should never be ignored.",
   },
   {
     question: 'What causes wood chimneys to rot in Portland?',
-    answer: 'Wood chimney rot in Portland is primarily caused by moisture infiltration from our frequent rain. Common entry points include failed flashing where the chimney meets the roof, deteriorated caulking, missing or damaged chimney caps, and condensation from temperature differences. Poor ventilation in attic spaces can trap moisture against the wood. Additionally, ice damming in winter and persistent fog can contribute to moisture problems. Addressing these moisture sources is essential for preventing ongoing deterioration.',
+    answer:
+      'Wood chimney rot in Portland is primarily caused by moisture infiltration from our frequent rain. Common entry points include failed flashing where the chimney meets the roof, deteriorated caulking, missing or damaged chimney caps, and condensation from temperature differences. Poor ventilation in attic spaces can trap moisture against the wood. Additionally, ice damming in winter and persistent fog can contribute to moisture problems. Addressing these moisture sources is essential for preventing ongoing deterioration.',
   },
   {
     question: 'Do wood chimneys need special waterproofing in Portland?',
-    answer: 'Yes, wood chimneys in Portland require robust waterproofing due to our high rainfall. This includes properly installed step flashing and counter-flashing, high-quality chimney caps with overhangs, sealed seams and penetrations with appropriate caulking, and water-resistant sheathing materials. Some specialists also recommend applying water-repellent treatments to exposed wood surfaces. Given Portland\'s climate, investing in superior waterproofing during repairs or construction is essential for preventing costly future damage and ensuring the chimney\'s longevity.',
+    answer:
+      "Yes, wood chimneys in Portland require robust waterproofing due to our high rainfall. This includes properly installed step flashing and counter-flashing, high-quality chimney caps with overhangs, sealed seams and penetrations with appropriate caulking, and water-resistant sheathing materials. Some specialists also recommend applying water-repellent treatments to exposed wood surfaces. Given Portland's climate, investing in superior waterproofing during repairs or construction is essential for preventing costly future damage and ensuring the chimney's longevity.",
   },
 ];
 ---
@@ -117,12 +144,12 @@ const faqs: FAQ[] = [
     headline={config.name}
     subheadline={config.description}
     backgroundImage="https://u1tffeydjgpikbli.public.blob.vercel-storage.com/hero/Chimney_repair_experts__woodchimneyrepaircoma_full_delpmaspu.png"
-    primaryCTA={{ text: "Talk to a Human", href: `tel:${config.phone}` }}
+    primaryCTA={{ text: 'Talk to a Human', href: `tel:${config.phone}` }}
     height="lg"
     hubspotForm={{
       portalId: config.hubspotPortalId,
       formId: config.hubspotFormId,
-      region: "na1"
+      region: 'na1',
     }}
   />
 
@@ -139,12 +166,7 @@ const faqs: FAQ[] = [
   <!-- Services Offered Section -->
   <ServicesOffered
     mainHeading="Chimney Repair and Restoration in Portland — And So Much More"
-    bulletPoints={[
-      'Local specialists',
-      'Clear Pricing',
-      'Fast response',
-      'Repairs built to last',
-    ]}
+    bulletPoints={['Local specialists', 'Clear Pricing', 'Fast response', 'Repairs built to last']}
     mainDescription="Chimney Repair Experts provides comprehensive wood chimney remediation and structural restoration services for Portland-area homes. From identifying hidden moisture damage to replacing framing, sheathing, and siding, our team restores your chimney's integrity and appearance with lasting results. You get the convenience of a one-stop shop and the confidence that every detail is handled with precision and care."
     ctaText="Get Free Pricing"
     ctaHref="#contact"
@@ -156,10 +178,7 @@ const faqs: FAQ[] = [
   />
 
   <!-- FAQ Section -->
-  <FAQAccordion
-    faqs={faqs}
-    title="Wood Chimney Repair and Rot Prevention FAQ"
-  />
+  <FAQAccordion faqs={faqs} title="Wood Chimney Repair and Rot Prevention FAQ" />
 
   <!-- Blog Carousel -->
   <BlogCarousel
@@ -177,4 +196,3 @@ const faqs: FAQ[] = [
     variant="dark"
   />
 </BaseLayout>
-

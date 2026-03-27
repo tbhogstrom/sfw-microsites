@@ -28,8 +28,8 @@ function parseSubtopics(content: string): string[] {
   if (!match) return [];
   return match[1]
     .split('\n')
-    .filter(l => l.trim().startsWith('- '))
-    .map(l => l.replace(/^\s*-\s*/, '').trim());
+    .filter((l) => l.trim().startsWith('- '))
+    .map((l) => l.replace(/^\s*-\s*/, '').trim());
 }
 
 function loadClusterPages(): ServicePageData[] {
@@ -37,7 +37,7 @@ function loadClusterPages(): ServicePageData[] {
   let files: string[];
   try {
     files = readdirSync(contentDir).filter(
-      f => f.startsWith('service_page_cluster_') && f.endsWith('.md')
+      (f) => f.startsWith('service_page_cluster_') && f.endsWith('.md'),
     );
   } catch {
     return [];
@@ -85,11 +85,11 @@ function loadClusterPages(): ServicePageData[] {
 export const allClusterServices = loadClusterPages();
 
 export function getClusterService(location: string, slug: string): ServicePageData | undefined {
-  return allClusterServices.find(s => s.location === location && s.slug === slug);
+  return allClusterServices.find((s) => s.location === location && s.slug === slug);
 }
 
 export function getClusterPaths() {
-  return allClusterServices.map(s => ({
+  return allClusterServices.map((s) => ({
     params: { location: s.location, service: s.slug },
   }));
 }

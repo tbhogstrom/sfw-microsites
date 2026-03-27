@@ -11,12 +11,7 @@ export interface Props extends BaseProps {
   navigation?: NavigationItem[];
 }
 
-const {
-  config,
-  navigation = [],
-  class: className = '',
-  ...rest
-} = Astro.props;
+const { config, navigation = [], class: className = '', ...rest } = Astro.props;
 
 // Get all DBAs with domains (sorted alphabetically)
 const allDBAs = [...dbasWithDomains].sort((a, b) => a.name.localeCompare(b.name));
@@ -27,7 +22,6 @@ const classes = ['bg-dark text-white py-10', className].filter(Boolean).join(' '
 <footer class={classes} {...rest}>
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-
       <!-- Left Column: DBA Headline & Office Locations -->
       <div>
         <h1 class="text-2xl md:text-3xl font-heading font-bold text-white mb-3">
@@ -45,39 +39,40 @@ const classes = ['bg-dark text-white py-10', className].filter(Boolean).join(' '
       <div>
         <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Our Companies</h3>
         <ul class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-          {allDBAs.map((dba) => (
-            <li>
-              <a
-                href={dba.domain}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-gray-300 hover:text-primary transition-colors"
-              >
-                {dba.name}
-              </a>
-            </li>
-          ))}
+          {
+            allDBAs.map((dba) => (
+              <li>
+                <a
+                  href={dba.domain}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-gray-300 hover:text-primary transition-colors"
+                >
+                  {dba.name}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
       <!-- Right Column: Quick Links -->
-      {navigation.length > 0 && (
-        <div>
-          <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
-          <ul class="space-y-2 text-sm">
-            {navigation.map((item) => (
-              <li>
-                <a
-                  href={item.url}
-                  class="text-gray-300 hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {
+        navigation.length > 0 && (
+          <div>
+            <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
+            <ul class="space-y-2 text-sm">
+              {navigation.map((item) => (
+                <li>
+                  <a href={item.url} class="text-gray-300 hover:text-primary transition-colors">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
     </div>
   </div>
 </footer>
