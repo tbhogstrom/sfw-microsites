@@ -3,6 +3,9 @@ node_modules/
 .astro/
 .turbo/
 .vercel/
+.appdata/
+.claude/
+.superpowers/
 pnpm-lock.yaml
 package-lock.json
 tools/
