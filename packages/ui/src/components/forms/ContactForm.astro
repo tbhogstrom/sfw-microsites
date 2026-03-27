@@ -6,7 +6,7 @@
 import type { BaseProps, SiteConfig } from '@sfw/ui/types';
 import FormInput from './FormInput.astro';
 import FormTextarea from './FormTextarea.astro';
-import FormButton from './FormButton.astro';
+import Button from '../ui/Button.astro';
 
 export interface Props extends BaseProps {
   config: SiteConfig;
@@ -117,9 +117,9 @@ const useHubSpot = hubspotPortalId && hubspotFormId;
         rows={5}
       />
 
-      <FormButton type="submit">
+      <Button type="submit" size="lg" fullWidth>
         {submitText}
-      </FormButton>
+      </Button>
     </form>
   )}
 </div>
