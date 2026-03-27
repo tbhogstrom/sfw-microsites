@@ -1,0 +1,123 @@
+---
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface LightboxImage {
+  src: string;
+  alt: string;
+  thumbnail?: string;
+}
+
+export interface Props extends BaseProps {
+  images: LightboxImage[];
+  columns?: 2 | 3 | 4;
+}
+
+const { images, columns = 3, class: className = '', ...rest } = Astro.props;
+const lightboxId = `lightbox-${Math.random().toString(36).substr(2, 9)}`;
+
+const colClasses = {
+  2: 'grid-cols-2',
+  3: 'grid-cols-2 md:grid-cols-3',
+  4: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+};
+---
+
+<div class={cn('', className)} {...rest}>
+  <div class={cn('grid gap-4', colClasses[columns])}>
+    {
+      images.map((image, i) => (
+        <button
+          type="button"
+          class="overflow-hidden rounded-lg cursor-pointer group focus:outline-none focus:ring-2 focus:ring-accent"
+          data-lightbox-trigger={lightboxId}
+          data-index={i}
+        >
+          <img
+            src={image.thumbnail || image.src}
+            alt={image.alt}
+            class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+        </button>
+      ))
+    }
+  </div>
+
+  <dialog
+    id={lightboxId}
+    class="fixed inset-0 w-full h-full max-w-none max-h-none m-0 p-0 bg-black/90 backdrop:bg-transparent"
+  >
+    <div class="flex items-center justify-center w-full h-full relative">
+      <button
+        data-lightbox-close
+        class="absolute top-4 right-4 text-white text-3xl z-10 hover:text-neutral-300 focus:outline-none"
+        aria-label="Close">✕</button
+      >
+      <button
+        data-lightbox-prev
+        class="absolute left-4 text-white text-4xl z-10 hover:text-neutral-300 focus:outline-none"
+        aria-label="Previous">‹</button
+      >
+      <button
+        data-lightbox-next
+        class="absolute right-4 text-white text-4xl z-10 hover:text-neutral-300 focus:outline-none"
+        aria-label="Next">›</button
+      >
+      <img data-lightbox-img class="max-w-[90vw] max-h-[90vh] object-contain" src="" alt="" />
+    </div>
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll('[data-lightbox-trigger]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const dialogId = trigger.getAttribute('data-lightbox-trigger')!;
+      const index = parseInt(trigger.getAttribute('data-index') || '0', 10);
+      const dialog = document.getElementById(dialogId) as HTMLDialogElement;
+      if (!dialog) return;
+
+      const triggers = document.querySelectorAll(`[data-lightbox-trigger="${dialogId}"]`);
+      const images = Array.from(triggers).map((t) => {
+        const img = t.querySelector('img')!;
+        // For lightbox, use the full-size src (stored as the original src without thumbnail)
+        return { src: img.src, alt: img.alt };
+      });
+
+      let current = index;
+      const imgEl = dialog.querySelector('[data-lightbox-img]') as HTMLImageElement;
+
+      const show = (i: number) => {
+        current = i;
+        imgEl.src = images[i].src;
+        imgEl.alt = images[i].alt;
+      };
+
+      show(current);
+      dialog.showModal();
+
+      const closeBtn = dialog.querySelector('[data-lightbox-close]');
+      const prevBtn = dialog.querySelector('[data-lightbox-prev]');
+      const nextBtn = dialog.querySelector('[data-lightbox-next]');
+
+      const onClose = () => dialog.close();
+      const onPrev = () => show((current - 1 + images.length) % images.length);
+      const onNext = () => show((current + 1) % images.length);
+      const onKey = (e: Event) => {
+        const ke = e as KeyboardEvent;
+        if (ke.key === 'ArrowLeft') onPrev();
+        else if (ke.key === 'ArrowRight') onNext();
+        else if (ke.key === 'Escape') onClose();
+      };
+      const onBackdrop = (e: Event) => {
+        if (e.target === dialog) onClose();
+      };
+
+      closeBtn?.addEventListener('click', onClose);
+      prevBtn?.addEventListener('click', onPrev);
+      nextBtn?.addEventListener('click', onNext);
+      dialog.addEventListener('keydown', onKey);
+      dialog.addEventListener('click', onBackdrop);
+    });
+  });
+</script>

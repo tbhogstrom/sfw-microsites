@@ -41,3 +41,9 @@ export type { TabItem, Props as TabsProps } from './Tabs.astro';
 
 export { default as VideoEmbed } from './VideoEmbed.astro';
 export type { Props as VideoEmbedProps } from './VideoEmbed.astro';
+
+export { default as PricingCard } from './PricingCard.astro';
+export type { Props as PricingCardProps } from './PricingCard.astro';
+
+export { default as ImageLightbox } from './ImageLightbox.astro';
+export type { LightboxImage, Props as ImageLightboxProps } from './ImageLightbox.astro';
