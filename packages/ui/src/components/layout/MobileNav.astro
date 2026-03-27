@@ -69,26 +69,6 @@ const classes = ['fixed inset-0 z-40 bg-white hidden', className].filter(Boolean
 </div>
 
 <script>
-  // Mobile menu close
-  const closeButton = document.getElementById('mobile-menu-close');
-  const mobileNav = document.getElementById('mobile-nav');
-  const menuButton = document.getElementById('mobile-menu-button');
-
-  if (closeButton && mobileNav && menuButton) {
-    closeButton.addEventListener('click', () => {
-      mobileNav.classList.add('hidden');
-      menuButton.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('overflow-hidden');
-    });
-
-    // Close on link click
-    const navLinks = mobileNav.querySelectorAll('a');
-    navLinks.forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.add('hidden');
-        menuButton.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('overflow-hidden');
-      });
-    });
-  }
+  import { initMobileNav } from '../../scripts/mobile-nav';
+  initMobileNav();
 </script>

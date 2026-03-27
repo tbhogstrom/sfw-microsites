@@ -81,16 +81,6 @@ const classes = [
 </header>
 
 <script>
-  // Mobile menu toggle
-  const menuButton = document.getElementById('mobile-menu-button');
-  const mobileNav = document.getElementById('mobile-nav');
-
-  if (menuButton && mobileNav) {
-    menuButton.addEventListener('click', () => {
-      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-      menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
-      mobileNav.classList.toggle('hidden');
-      document.body.classList.toggle('overflow-hidden');
-    });
-  }
+  import { initMobileNav } from '../../scripts/mobile-nav';
+  initMobileNav();
 </script>

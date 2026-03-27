@@ -36,7 +36,12 @@ const sliderId = `testimonial-slider-${Math.random().toString(36).substr(2, 9)}`
 
     <!-- Swiper Container -->
     <div class="relative">
-      <div class={`swiper ${sliderId}`}>
+      <div
+        class={`swiper ${sliderId}`}
+        data-slider-id={sliderId}
+        data-autoplay={autoplay.toString()}
+        data-autoplay-delay={autoplayDelay.toString()}
+      >
         <div class="swiper-wrapper">
           {
             testimonials.map((testimonial) => (
@@ -58,46 +63,14 @@ const sliderId = `testimonial-slider-${Math.random().toString(36).substr(2, 9)}`
   </div>
 </section>
 
-<script define:vars={{ sliderId, autoplay, autoplayDelay }}>
-  // Dynamically import Swiper to avoid SSR issues
-  import('swiper/css').then(() => {
-    import('swiper/css/navigation').then(() => {
-      import('swiper/css/pagination').then(() => {
-        import('swiper').then(({ default: Swiper, Navigation, Pagination, Autoplay }) => {
-          new Swiper(`.${sliderId}`, {
-            modules: [Navigation, Pagination, Autoplay],
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            autoplay: autoplay
-              ? {
-                  delay: autoplayDelay,
-                  disableOnInteraction: false,
-                }
-              : false,
-            navigation: {
-              nextEl: `.swiper-button-next-${sliderId}`,
-              prevEl: `.swiper-button-prev-${sliderId}`,
-            },
-            pagination: {
-              el: `.swiper-pagination-${sliderId}`,
-              clickable: true,
-            },
-            breakpoints: {
-              640: {
-                slidesPerView: 1,
-              },
-              768: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
-            },
-          });
-        });
-      });
-    });
+<script>
+  import { initTestimonialSlider } from '../../scripts/testimonial-slider';
+
+  document.querySelectorAll('[data-slider-id]').forEach((el) => {
+    const sliderId = el.getAttribute('data-slider-id')!;
+    const autoplay = el.getAttribute('data-autoplay') === 'true';
+    const delay = parseInt(el.getAttribute('data-autoplay-delay') || '5000', 10);
+    initTestimonialSlider(sliderId, autoplay, delay);
   });
 </script>
 
