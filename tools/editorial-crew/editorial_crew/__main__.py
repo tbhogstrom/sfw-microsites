@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import glob
+import json as json_mod
 import os
 import sys
 from pathlib import Path
@@ -66,6 +67,31 @@ def _agent_display_name(name: str) -> str:
     if not name.lower().endswith("agent"):
         return f"{name} Agent"
     return name
+
+
+def format_json_result(
+    filepath: str,
+    status: str,
+    specialists: list[str] | None = None,
+    diff: str | None = None,
+    improved_document: str | None = None,
+    summary: str | None = None,
+    error: str | None = None,
+) -> str:
+    """Format a processing result as a JSON string."""
+    obj: dict = {"file": str(filepath), "status": status}
+
+    if status == "error":
+        obj["error"] = error or "Unknown error"
+    else:
+        if specialists is not None:
+            obj["specialists_consulted"] = specialists
+        if status == "improved":
+            obj["diff"] = diff or ""
+            obj["improved_document"] = improved_document or ""
+            obj["summary"] = summary or ""
+
+    return json_mod.dumps(obj, ensure_ascii=False)
 
 
 async def process_file(filepath: Path, args: argparse.Namespace) -> bool:
