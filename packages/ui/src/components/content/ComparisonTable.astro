@@ -1,0 +1,57 @@
+---
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface ComparisonRow {
+  label: string;
+  values: (string | boolean)[];
+}
+
+export interface Props extends BaseProps {
+  headers: string[];
+  rows: ComparisonRow[];
+  title?: string;
+}
+
+const { headers, rows, title, class: className = '', ...rest } = Astro.props;
+---
+
+<div class={cn('overflow-x-auto', className)} {...rest}>
+  {title && <h3 class="text-2xl font-heading font-bold mb-6">{title}</h3>}
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-neutral-100">
+        <th class="text-left p-4 font-semibold text-neutral-700 border-b border-neutral-200"></th>
+        {
+          headers.map((header) => (
+            <th class="text-center p-4 font-semibold text-neutral-700 border-b border-neutral-200">
+              {header}
+            </th>
+          ))
+        }
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr class="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
+            <td class="p-4 font-medium text-neutral-900">{row.label}</td>
+            {row.values.map((val) => (
+              <td class="text-center p-4">
+                {typeof val === 'boolean' ? (
+                  val ? (
+                    <span class="text-green-600 text-lg">✓</span>
+                  ) : (
+                    <span class="text-neutral-300 text-lg">—</span>
+                  )
+                ) : (
+                  <span class="text-neutral-700">{val}</span>
+                )}
+              </td>
+            ))}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,40 @@
+---
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+
+export interface Props extends BaseProps {
+  url: string;
+  title: string;
+}
+
+const { url, title, class: className = '', ...rest } = Astro.props;
+
+// Parse video ID from URL
+function getEmbedUrl(inputUrl: string): string {
+  // YouTube
+  const ytMatch = inputUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/);
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+
+  // Vimeo
+  const vimeoMatch = inputUrl.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+
+  return inputUrl;
+}
+
+const embedUrl = getEmbedUrl(url);
+---
+
+<div
+  class={cn('relative w-full overflow-hidden rounded-lg', className)}
+  style="padding-bottom: 56.25%;"
+  {...rest}
+>
+  <iframe
+    src={embedUrl}
+    title={title}
+    class="absolute top-0 left-0 w-full h-full"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>
+</div>

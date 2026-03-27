@@ -32,3 +32,12 @@ export type { TrustBadge, Props as TrustBadgesProps } from './TrustBadges.astro'
 
 export { default as BeforeAfter } from './BeforeAfter.astro';
 export type { Props as BeforeAfterProps } from './BeforeAfter.astro';
+
+export { default as ComparisonTable } from './ComparisonTable.astro';
+export type { ComparisonRow, Props as ComparisonTableProps } from './ComparisonTable.astro';
+
+export { default as Tabs } from './Tabs.astro';
+export type { TabItem, Props as TabsProps } from './Tabs.astro';
+
+export { default as VideoEmbed } from './VideoEmbed.astro';
+export type { Props as VideoEmbedProps } from './VideoEmbed.astro';
