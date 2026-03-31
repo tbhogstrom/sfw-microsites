@@ -14,6 +14,7 @@ import {
 } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ } from '@sfw/ui';
+import { beforeAfterPairs, lightboxGalleries } from '../data/images';
 
 const config = serviceConfigs['siding-repair'];
 
@@ -41,13 +42,7 @@ const badges = [
   },
 ];
 
-// Blob image URLs from the siding-repair gallery
-const img1 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp';
-const img2 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp';
-const img3 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp';
-const img4 = 'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp';
-const imgHero =
-  'https://fmw5przxnyrpekly.public.blob.vercel-storage.com/hero/Siding_repair_experts__sidingrepairexpertscoma_pac_delpmaspu.webp';
+const homepageGallery = lightboxGalleries.find((g) => g.id === 'homepage-gallery');
 
 // Comparison Table data
 const comparisonHeaders = ['Spot Repair', 'Section Replacement', 'Full Re-Side'];
@@ -118,16 +113,6 @@ const sidingTabs = [
   },
 ];
 
-// Lightbox images
-const lightboxImages = [
-  { src: img1, alt: 'Wall sheathing and weather barrier repair in progress' },
-  { src: img2, alt: 'Hardie board fiber cement siding installation' },
-  { src: img3, alt: 'Cedar lap siding repair with matched materials' },
-  { src: img4, alt: 'Siding flashing and water intrusion repair' },
-  { src: imgHero, alt: 'Completed siding repair project — full exterior view' },
-  { src: img1, alt: 'Close-up of moisture barrier installation behind siding' },
-];
-
 // FAQ data
 const faqs: FAQ[] = [
   {
@@ -168,13 +153,20 @@ const faqs: FAQ[] = [
       <section class="mb-16">
         <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Before / After Slider</h2>
         <div class="max-w-2xl">
-          <BeforeAfter
-            before={img1}
-            after={img2}
-            alt="Siding repair comparison"
-            beforeLabel="Damaged Siding"
-            afterLabel="After Repair"
-          />
+          {
+            beforeAfterPairs.map((pair) => (
+              <div class="mb-8">
+                <h3 class="text-lg font-semibold mb-3 text-neutral-700">{pair.name}</h3>
+                <BeforeAfter
+                  before={pair.before}
+                  after={pair.after}
+                  alt={pair.alt}
+                  beforeLabel={pair.beforeLabel}
+                  afterLabel={pair.afterLabel}
+                />
+              </div>
+            ))
+          }
         </div>
       </section>
 
@@ -255,7 +247,14 @@ const faqs: FAQ[] = [
       <!-- Section: Image Lightbox -->
       <section class="mb-16">
         <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Image Lightbox Gallery</h2>
-        <ImageLightbox images={lightboxImages} columns={3} />
+        {
+          homepageGallery && (
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold mb-3 text-neutral-700">{homepageGallery.name}</h3>
+              <ImageLightbox images={homepageGallery.images} columns={3} />
+            </div>
+          )
+        }
       </section>
 
       <!-- Section: Buttons -->
