@@ -1,0 +1,203 @@
+---
+/**
+ * HeroBeforeAfter.astro - Hero with before/after slider background
+ * Slider handle passes visually under the floating form card.
+ */
+import { cn } from '@sfw/utils';
+import type { BaseProps } from '@sfw/ui/types';
+import Button from '../ui/Button.astro';
+
+export interface Props extends BaseProps {
+  headline: string;
+  subheadline?: string;
+  before: string;
+  after: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+  alt?: string;
+  height?: 'md' | 'lg' | 'full';
+  overlayOpacity?: number;
+  primaryCTA?: { text: string; href: string };
+  secondaryCTA?: { text: string; href: string };
+}
+
+const heightClasses: Record<string, string> = {
+  md: 'min-h-[500px]',
+  lg: 'min-h-[600px]',
+  full: 'min-h-screen',
+};
+
+const {
+  headline,
+  subheadline,
+  before,
+  after,
+  beforeLabel = 'Before',
+  afterLabel = 'After',
+  alt = 'Before and after comparison',
+  height = 'lg',
+  overlayOpacity = 40,
+  primaryCTA,
+  secondaryCTA,
+  class: className = '',
+  ...rest
+} = Astro.props;
+---
+
+<section
+  class={cn('relative select-none overflow-hidden', heightClasses[height], className)}
+  data-hero-ba
+  {...rest}
+>
+  <!-- z-0: After image -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src={after}
+      alt={`${alt} - after`}
+      class="w-full h-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+
+  <!-- z-[1]: Before image (clipped) -->
+  <div
+    class="absolute inset-0 z-[1] overflow-hidden"
+    style="clip-path: inset(0 50% 0 0);"
+    data-hero-ba-clip
+  >
+    <img
+      src={before}
+      alt={`${alt} - before`}
+      class="w-full h-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+
+  <!-- z-[2]: Dark overlay -->
+  <div
+    class="absolute inset-0 z-[2] pointer-events-none"
+    style={`background: rgba(0,0,0,${overlayOpacity / 100})`}
+  >
+  </div>
+
+  <!-- z-10: Slider handle -->
+  <div
+    class="absolute top-0 bottom-0 w-0.5 bg-white/80 z-10 cursor-ew-resize"
+    style="left: 50%;"
+    data-hero-ba-handle
+  >
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 text-neutral-600"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M6.707 4.293a1 1 0 010 1.414L3.414 9H10a1 1 0 110 2H3.414l3.293 3.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0zm6.586 0a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L16.586 11H10a1 1 0 110-2h6.586l-3.293-3.293a1 1 0 010-1.414z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </div>
+  </div>
+
+  <!-- z-[5]: Labels -->
+  <span
+    class="absolute bottom-6 left-6 z-[5] bg-black/60 text-white text-sm font-medium px-3 py-1.5 rounded pointer-events-none"
+    >{beforeLabel}</span
+  >
+  <span
+    class="absolute bottom-6 z-[5] bg-black/60 text-white text-sm font-medium px-3 py-1.5 rounded pointer-events-none lg:left-[55%] right-6 lg:right-auto"
+    >{afterLabel}</span
+  >
+
+  <!-- z-20: Content grid -->
+  <div class="relative z-20 h-full flex items-center">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div class="text-white">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 drop-shadow-lg">
+            {headline}
+          </h1>
+          {
+            subheadline && (
+              <p class="text-xl md:text-2xl text-white/90 mb-8 drop-shadow-md max-w-lg">
+                {subheadline}
+              </p>
+            )
+          }
+          {
+            (primaryCTA || secondaryCTA) && (
+              <div class="flex flex-col sm:flex-row gap-4">
+                {primaryCTA && (
+                  <Button href={primaryCTA.href} variant="primary" size="lg">
+                    {primaryCTA.text}
+                  </Button>
+                )}
+                {secondaryCTA && (
+                  <Button href={secondaryCTA.href} variant="outline" size="lg">
+                    {secondaryCTA.text}
+                  </Button>
+                )}
+              </div>
+            )
+          }
+        </div>
+        <!-- z-30: Form (desktop only, floats above slider) -->
+        <div class="hidden lg:block relative z-30">
+          <slot name="form">
+            <div class="bg-white rounded-lg shadow-2xl p-8 text-center text-gray-400">
+              Form slot empty
+            </div>
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile: form below hero -->
+<div class="lg:hidden">
+  <slot name="form">
+    <div class="bg-white p-8 text-center text-gray-400">Form slot empty</div>
+  </slot>
+</div>
+
+<script>
+  document.querySelectorAll('[data-hero-ba]').forEach((container) => {
+    const clip = container.querySelector('[data-hero-ba-clip]') as HTMLElement;
+    const handle = container.querySelector('[data-hero-ba-handle]') as HTMLElement;
+    if (!clip || !handle) return;
+
+    let isDragging = false;
+
+    const updatePosition = (x: number) => {
+      const rect = (container as HTMLElement).getBoundingClientRect();
+      const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      clip.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      handle.style.left = `${percent}%`;
+    };
+
+    handle.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      e.preventDefault();
+    });
+    handle.addEventListener('touchstart', () => (isDragging = true), { passive: true });
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) updatePosition(e.clientX);
+    });
+    document.addEventListener(
+      'touchmove',
+      (e) => {
+        if (isDragging) updatePosition(e.touches[0].clientX);
+      },
+      { passive: true },
+    );
+    document.addEventListener('mouseup', () => (isDragging = false));
+    document.addEventListener('touchend', () => (isDragging = false));
+  });
+</script>
