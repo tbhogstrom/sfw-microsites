@@ -254,24 +254,6 @@
   ],
   "beforeAfterPairs": [
     {
-      "id": "siding-rot-repair-01",
-      "name": "Siding rot repair",
-      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp",
-      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp",
-      "alt": "Siding rot repair before and after",
-      "beforeLabel": "Rot Damage",
-      "afterLabel": "After Repair"
-    },
-    {
-      "id": "water-intrusion-fix",
-      "name": "Water intrusion fix",
-      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp",
-      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp",
-      "alt": "Water intrusion repair",
-      "beforeLabel": "Before",
-      "afterLabel": "After"
-    },
-    {
       "id": "leaking-window-and-siding-repair-in-portland-historic-home",
       "name": "Leaking window and siding repair in Portland Historic Home",
       "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/McBryde%20-%20before%20copy.webp",
@@ -279,6 +261,15 @@
       "alt": "Leaking window and siding repair in Portland Historic Home",
       "beforeLabel": "Leak identified and dry rot found",
       "afterLabel": "Siding integration and new windows placed"
+    },
+    {
+      "id": "t1-11-siding-repair-on-gable-wall",
+      "name": "T1-11 siding repair on gable wall",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/blakley%20-%20before.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/blakley%20-%20after.webp",
+      "alt": "T1-11 siding repair on gable wall",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
     }
   ],
   "lightboxGalleries": [
