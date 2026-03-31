@@ -14,3 +14,30 @@ export const servicePageImages: {
   image: string;
   href: string;
 }[] = (data as any).servicePageImages ?? [];
+
+export interface BeforeAfterPair {
+  id: string;
+  name: string;
+  before: string;
+  after: string;
+  alt: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+}
+
+export interface LightboxGallery {
+  id: string;
+  name: string;
+  images: { src: string; alt: string; thumbnail?: string }[];
+}
+
+export interface VideoEmbedEntry {
+  id: string;
+  name: string;
+  url: string;
+  title: string;
+}
+
+export const beforeAfterPairs: BeforeAfterPair[] = (data as any).beforeAfterPairs ?? [];
+export const lightboxGalleries: LightboxGallery[] = (data as any).lightboxGalleries ?? [];
+export const videoEmbeds: VideoEmbedEntry[] = (data as any).videoEmbeds ?? [];

@@ -69,12 +69,6 @@
       "title": "Water Damaged Siding Repair",
       "description": "",
       "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8333.webp",
-      "href": "/services/portland/siding-rot-repair-replacement"
-    },
-    {
-      "title": "Water Damaged Siding Repair",
-      "description": "",
-      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_8333.webp",
       "href": "/services/seattle/siding-rot-repair-replacement"
     },
     {
@@ -130,12 +124,6 @@
       "description": "",
       "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_1824.webp",
       "href": "/services/portland/siding-trim-corner-board-repair"
-    },
-    {
-      "title": "Corner Board Repair",
-      "description": "",
-      "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/IMG_1824.webp",
-      "href": "/services/seattle/siding-trim-corner-board-repair"
     },
     {
       "title": "Wood Siding Repair",
@@ -262,6 +250,67 @@
       "description": "",
       "image": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/service-page/down-net_http20260311-267-xsilbo-1773263179583.webp",
       "href": "/services/seattle/siding-rot-repair-replacement"
+    }
+  ],
+  "beforeAfterPairs": [
+    {
+      "id": "siding-rot-repair-01",
+      "name": "Siding rot repair",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp",
+      "alt": "Siding rot repair before and after",
+      "beforeLabel": "Rot Damage",
+      "afterLabel": "After Repair"
+    },
+    {
+      "id": "water-intrusion-fix",
+      "name": "Water intrusion fix",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp",
+      "alt": "Water intrusion repair",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
+    },
+    {
+      "id": "leaking-window-and-siding-repair-in-portland-historic-home",
+      "name": "Leaking window and siding repair in Portland Historic Home",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/McBryde%20-%20before%20copy.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/McBryde%20-%20after.webp",
+      "alt": "Leaking window and siding repair in Portland Historic Home",
+      "beforeLabel": "Leak identified and dry rot found",
+      "afterLabel": "Siding integration and new windows placed"
+    }
+  ],
+  "lightboxGalleries": [
+    {
+      "id": "homepage-gallery",
+      "name": "Homepage Gallery",
+      "images": [
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_1831.webp",
+          "alt": "Wall sheathing and weather barrier repair"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3073.webp",
+          "alt": "Hardie board fiber cement installation"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_3244.webp",
+          "alt": "Cedar lap siding repair"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/IMG_6122.webp",
+          "alt": "Flashing and water intrusion repair"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": [
+    {
+      "id": "repair-process-overview",
+      "name": "Repair process overview",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "title": "Our Siding Repair Process"
     }
   ]
 }
