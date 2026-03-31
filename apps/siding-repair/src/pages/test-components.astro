@@ -11,6 +11,7 @@ import {
   ImageLightbox,
   Button,
   FAQAccordion,
+  HeroBeforeAfter,
 } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import type { FAQ } from '@sfw/ui';
@@ -142,6 +143,67 @@ const faqs: FAQ[] = [
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-heading font-bold mb-2">V2 Component Showcase</h1>
       <p class="text-neutral-500 mb-12">All new design system components for siding-repair</p>
+
+      <!-- Section: Hero Before/After -->
+      <section class="mb-16 -mx-4">
+        <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2 px-4">
+          Hero Before/After Slider
+        </h2>
+        <HeroBeforeAfter
+          headline="Expert Siding Repair in Portland"
+          subheadline="See the difference 20 years of experience makes"
+          before={beforeAfterPairs.find(
+            (p) => p.id === 'leaking-window-and-siding-repair-in-portland-historic-home',
+          )?.before ??
+            beforeAfterPairs[0]?.before ??
+            ''}
+          after={beforeAfterPairs.find(
+            (p) => p.id === 'leaking-window-and-siding-repair-in-portland-historic-home',
+          )?.after ??
+            beforeAfterPairs[0]?.after ??
+            ''}
+          beforeLabel="Before Repair"
+          afterLabel="After Repair"
+          alt="Portland historic home siding repair"
+          primaryCTA={{ text: 'Get Free Estimate', href: '#contact' }}
+          secondaryCTA={{ text: 'View Our Work', href: '/services/' }}
+          height="lg"
+          overlayOpacity={35}
+        >
+          <div slot="form" class="bg-white rounded-lg shadow-2xl p-6 md:p-8">
+            <h3 class="text-xl font-heading font-bold text-neutral-900 mb-2">Free Estimate</h3>
+            <p class="text-neutral-500 text-sm mb-4">
+              Tell us about your project and we'll get back to you within 24 hours.
+            </p>
+            <form class="space-y-4">
+              <input
+                type="text"
+                placeholder="Your name"
+                class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"
+              />
+              <input
+                type="email"
+                placeholder="Email address"
+                class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"
+              />
+              <input
+                type="tel"
+                placeholder="Phone number"
+                class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"
+              />
+              <textarea
+                placeholder="Describe your project"
+                rows="3"
+                class="w-full border border-neutral-300 rounded-lg px-4 py-3 text-sm"></textarea>
+              <button
+                type="button"
+                class="w-full bg-accent text-white font-semibold py-3 rounded-lg hover:opacity-90 transition"
+                >Contact Me ASAP</button
+              >
+            </form>
+          </div>
+        </HeroBeforeAfter>
+      </section>
 
       <!-- Section: Trust Badges -->
       <section class="mb-16">
