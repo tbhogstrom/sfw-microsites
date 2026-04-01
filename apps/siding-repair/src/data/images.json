@@ -324,6 +324,36 @@
           "alt": "Exterior view of house with cedar shingle siding and white-framed windows"
         }
       ]
+    },
+    {
+      "id": "foundation-rot-siding",
+      "name": "Foundation Rot & Siding Replacement",
+      "images": [
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/foundation-rot-siding-28cdacf5.webp",
+          "alt": "Exterior view of weathered wooden siding with peeling paint and a window"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/foundation-rot-siding-94603a42.webp",
+          "alt": "Worker using hydraulic jack to lift and repair sagging foundation beam under house"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/foundation-rot-siding-c26b072c.webp",
+          "alt": "Two workers installing new wood siding on exterior wall"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/foundation-rot-siding-c8b30e15.webp",
+          "alt": "Two workers installing or removing house siding on exterior wall"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/foundation-rot-siding-a30945cf.webp",
+          "alt": "Worker installing white siding below window with precision"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/foundation-rot-siding-9b84900c.webp",
+          "alt": "Exterior view of house with new siding installation and window"
+        }
+      ]
     }
   ],
   "videoEmbeds": [
