@@ -114,34 +114,40 @@ const faqs = [
   <!-- Stats Bar -->
   <StatsBar stats={stats} variant="primary" />
 
-  <!-- Before/After Slider (Seattle) -->
+  <!-- Before/After Slider -->
   {
-    slug === 'seattle' &&
-      (() => {
-        const pair = beforeAfterPairs.find(
-          (p) => p.id === 'leaking-window-and-siding-repair-in-portland-historic-home',
-        );
-        return (
-          pair && (
-            <section class="py-12 bg-white">
-              <div class="container mx-auto px-4">
-                <div class="max-w-2xl mx-auto">
-                  <h3 class="text-2xl font-heading font-bold mb-4 text-center">
-                    Leaking Window and Siding Repair in Historic Craftsman Home
-                  </h3>
-                  <BeforeAfter
-                    before={pair.before}
-                    after={pair.after}
-                    alt="Leaking window and siding repair in Historic Craftsman Home"
-                    beforeLabel={pair.beforeLabel}
-                    afterLabel={pair.afterLabel}
-                  />
-                </div>
+    (() => {
+      const sliderConfig = {
+        seattle: {
+          id: 'leaking-window-and-siding-repair-in-portland-historic-home',
+          title: 'Leaking Window and Siding Repair in Historic Craftsman Home',
+        },
+        portland: {
+          id: 'siding-and-facade-facelift-on-se-portland-home',
+          title: 'Siding and Facade Facelift on SE Portland Home',
+        },
+      } as const;
+      const cfg = sliderConfig[slug as keyof typeof sliderConfig];
+      const pair = cfg && beforeAfterPairs.find((p) => p.id === cfg.id);
+      return (
+        pair && (
+          <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+              <div class="max-w-2xl mx-auto">
+                <h3 class="text-2xl font-heading font-bold mb-4 text-center">{cfg.title}</h3>
+                <BeforeAfter
+                  before={pair.before}
+                  after={pair.after}
+                  alt={cfg.title}
+                  beforeLabel={pair.beforeLabel}
+                  afterLabel={pair.afterLabel}
+                />
               </div>
-            </section>
-          )
-        );
-      })()
+            </div>
+          </section>
+        )
+      );
+    })()
   }
 
   <!-- Services Section -->
@@ -244,9 +250,9 @@ const faqs = [
   <!-- Process Steps -->
   <ProcessSteps title="How We Work" steps={steps} variant="vertical" />
 
-  <!-- Project Galleries (Seattle) -->
+  <!-- Project Galleries -->
   {
-    slug === 'seattle' &&
+    ['seattle', 'portland'].includes(slug as string) &&
       (() => {
         const galleryIds = ['structural-rot-cedar-shake', 'foundation-rot-siding'];
         const galleries = lightboxGalleries.filter((g) => galleryIds.includes(g.id));
