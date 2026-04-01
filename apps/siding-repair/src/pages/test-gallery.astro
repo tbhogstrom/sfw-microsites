@@ -1,0 +1,491 @@
+---
+import BaseLayout from '@sfw/ui';
+import { ImageLightbox } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { lightboxGalleries } from '../data/images';
+
+const config = serviceConfigs['siding-repair'];
+
+// Use the 6-image gallery for all demos
+const gallery =
+  lightboxGalleries.find((g) => g.id === 'structural-rot-cedar-shake') ?? lightboxGalleries[0];
+const images = gallery.images;
+---
+
+<BaseLayout
+  config={config}
+  title="Gallery Component Proposals"
+  description="Five gallery layout options for project photo galleries"
+>
+  <div class="py-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-heading font-bold mb-2">Gallery Component Proposals</h1>
+      <p class="text-neutral-500 mb-4">
+        Five layout options for 6-8 photo before/during/after project galleries. Using: <strong
+          >{gallery.name}</strong
+        > ({images.length} photos)
+      </p>
+      <p class="text-sm text-neutral-400 mb-12">
+        All components are self-contained on this page for comparison. Click through each to
+        evaluate.
+      </p>
+
+      <!-- ============================================ -->
+      <!-- 1. CAROUSEL -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">1. Carousel</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Single large image with arrow navigation and dot indicators. Clean, focused view of each
+            photo.
+          </p>
+        </div>
+
+        <div class="max-w-3xl" id="carousel-1" data-carousel>
+          <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
+            <!-- Main image -->
+            <div class="aspect-[3/2] relative">
+              {
+                images.map((img, i) => (
+                  <div
+                    class:list={[
+                      'absolute inset-0 transition-opacity duration-500',
+                      i === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none',
+                    ]}
+                    data-carousel-slide={i}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      class="w-full h-full object-cover"
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                    />
+                  </div>
+                ))
+              }
+            </div>
+
+            <!-- Arrows -->
+            <button
+              data-carousel-prev
+              class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+              aria-label="Previous"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"></path></svg
+              >
+            </button>
+            <button
+              data-carousel-next
+              class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+              aria-label="Next"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"></path></svg
+              >
+            </button>
+
+            <!-- Counter badge -->
+            <div
+              class="absolute top-3 right-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full"
+            >
+              <span data-carousel-counter>1</span> / {images.length}
+            </div>
+          </div>
+
+          <!-- Caption -->
+          <p data-carousel-caption class="text-sm text-neutral-600 mt-3 min-h-[2.5rem]">
+            {images[0].alt}
+          </p>
+
+          <!-- Dot indicators -->
+          <div class="flex justify-center gap-2 mt-3">
+            {
+              images.map((_, i) => (
+                <button
+                  data-carousel-dot={i}
+                  class:list={[
+                    'w-2.5 h-2.5 rounded-full transition-colors',
+                    i === 0 ? 'bg-neutral-800' : 'bg-neutral-300',
+                  ]}
+                  aria-label={`Go to image ${i + 1}`}
+                />
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 2. FEATURED + THUMBNAILS -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">2. Featured + Side Thumbnails</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Large hero image with a vertical thumbnail strip. Click any thumbnail to swap the main
+            view.
+          </p>
+        </div>
+
+        <div class="max-w-4xl" id="featured-gallery" data-featured>
+          <div class="flex gap-3">
+            <!-- Thumbnail strip -->
+            <div class="flex flex-col gap-2 w-20 md:w-24 shrink-0 overflow-y-auto max-h-[500px]">
+              {
+                images.map((img, i) => (
+                  <button
+                    data-featured-thumb={i}
+                    class:list={[
+                      'rounded-md overflow-hidden border-2 transition-all shrink-0',
+                      i === 0
+                        ? 'border-accent ring-1 ring-accent/30'
+                        : 'border-transparent opacity-60 hover:opacity-100',
+                    ]}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      class="w-full aspect-square object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                ))
+              }
+            </div>
+
+            <!-- Main image -->
+            <div class="flex-1 min-w-0">
+              <div class="bg-neutral-100 rounded-xl overflow-hidden">
+                <div class="aspect-[4/3] relative">
+                  <img
+                    data-featured-main
+                    src={images[0].src}
+                    alt={images[0].alt}
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              <p data-featured-caption class="text-sm text-neutral-600 mt-3">{images[0].alt}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 3. GRID LIGHTBOX (current component) -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">3. Grid Lightbox (Current)</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Thumbnail grid that opens a full-screen lightbox. The existing component with recent
+            improvements.
+          </p>
+        </div>
+
+        <div class="max-w-3xl">
+          <ImageLightbox images={images} columns={3} />
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 4. PROCESS TIMELINE -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">4. Process Timeline</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Horizontal filmstrip with step labels showing work progression. Photos flow
+            left-to-right from damage discovery through completed repair.
+          </p>
+        </div>
+
+        <div class="max-w-5xl" id="timeline-gallery">
+          <!-- Step labels -->
+          <div class="flex items-center mb-4">
+            <div
+              class="flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wide"
+            >
+              <span>Before</span>
+              <svg
+                class="w-4 h-4 text-neutral-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"></path></svg
+              >
+              <span>During</span>
+              <svg
+                class="w-4 h-4 text-neutral-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"></path></svg
+              >
+              <span>After</span>
+            </div>
+          </div>
+
+          <!-- Progress track -->
+          <div class="relative mb-2">
+            <div class="absolute top-4 left-0 right-0 h-0.5 bg-neutral-200"></div>
+            <div class="flex justify-between relative">
+              {
+                images.map((_, i) => {
+                  const phase = i === 0 ? 'before' : i === images.length - 1 ? 'after' : 'during';
+                  const colors = {
+                    before: 'bg-red-400 ring-red-100',
+                    during: 'bg-amber-400 ring-amber-100',
+                    after: 'bg-green-500 ring-green-100',
+                  };
+                  return (
+                    <div class="flex flex-col items-center">
+                      <div class={`w-3 h-3 rounded-full ${colors[phase]} ring-4 relative z-10`} />
+                      <span class="text-[10px] text-neutral-400 mt-1">{i + 1}</span>
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </div>
+
+          <!-- Scrollable filmstrip -->
+          <div
+            class="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4"
+            id="timeline-strip"
+          >
+            {
+              images.map((img, i) => {
+                const phase = i === 0 ? 'Before' : i === images.length - 1 ? 'After' : `Step ${i}`;
+                const badgeColor =
+                  i === 0
+                    ? 'bg-red-500'
+                    : i === images.length - 1
+                      ? 'bg-green-600'
+                      : 'bg-amber-500';
+                return (
+                  <div class="snap-start shrink-0 w-64 md:w-72">
+                    <div class="bg-neutral-100 rounded-lg overflow-hidden relative group">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src={img.src}
+                          alt={img.alt}
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      <span
+                        class={`absolute top-2 left-2 ${badgeColor} text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded`}
+                      >
+                        {phase}
+                      </span>
+                    </div>
+                    <p class="text-xs text-neutral-500 mt-2 leading-snug line-clamp-2">{img.alt}</p>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 5. STACKED REVEAL (Before → Process → After) -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">5. Stacked Reveal</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            First and last photos shown large as before/after bookends. Middle "process" photos are
+            collapsed between them and expand on click to show the full story.
+          </p>
+        </div>
+
+        <div class="max-w-3xl" id="stacked-reveal" data-stacked>
+          {/* Before - large */}
+          <div class="mb-1">
+            <div class="relative bg-neutral-100 rounded-t-xl overflow-hidden">
+              <div class="aspect-[3/2]">
+                <img src={images[0].src} alt={images[0].alt} class="w-full h-full object-cover" />
+              </div>
+              <span
+                class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded"
+                >Before</span
+              >
+            </div>
+            <p class="text-xs text-neutral-500 mt-1 mb-3 px-1">{images[0].alt}</p>
+          </div>
+
+          {/* Process photos - collapsible */}
+          {
+            images.length > 2 && (
+              <div class="mb-1">
+                <button
+                  data-stacked-toggle
+                  class="w-full flex items-center justify-between bg-neutral-100 hover:bg-neutral-200 transition-colors px-4 py-3 rounded-lg text-sm font-medium text-neutral-700"
+                >
+                  <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    View {images.length - 2} process photos
+                  </span>
+                  <svg
+                    data-stacked-chevron
+                    class="w-5 h-5 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                <div data-stacked-process class="grid grid-cols-2 gap-2 mt-2 hidden">
+                  {images.slice(1, -1).map((img, i) => (
+                    <div class="relative bg-neutral-100 rounded-lg overflow-hidden">
+                      <div class="aspect-[4/3]">
+                        <img
+                          src={img.src}
+                          alt={img.alt}
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                        Step {i + 1}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          {/* After - large */}
+          <div class="mt-3">
+            <div class="relative bg-neutral-100 rounded-b-xl overflow-hidden">
+              <div class="aspect-[3/2]">
+                <img
+                  src={images[images.length - 1].src}
+                  alt={images[images.length - 1].alt}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <span
+                class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded"
+                >After</span
+              >
+            </div>
+            <p class="text-xs text-neutral-500 mt-1 px-1">{images[images.length - 1].alt}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // === 1. Carousel ===
+  document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+    const slides = carousel.querySelectorAll('[data-carousel-slide]');
+    const dots = carousel.querySelectorAll('[data-carousel-dot]');
+    const counter = carousel.querySelector('[data-carousel-counter]');
+    const caption = carousel.querySelector('[data-carousel-caption]');
+    let current = 0;
+
+    const show = (i: number) => {
+      slides.forEach((s, idx) => {
+        (s as HTMLElement).classList.toggle('opacity-100', idx === i);
+        (s as HTMLElement).classList.toggle('opacity-0', idx !== i);
+        (s as HTMLElement).classList.toggle('pointer-events-none', idx !== i);
+      });
+      dots.forEach((d, idx) => {
+        (d as HTMLElement).classList.toggle('bg-neutral-800', idx === i);
+        (d as HTMLElement).classList.toggle('bg-neutral-300', idx !== i);
+      });
+      if (counter) counter.textContent = String(i + 1);
+      if (caption) {
+        const img = slides[i]?.querySelector('img');
+        if (img) caption.textContent = img.alt;
+      }
+      current = i;
+    };
+
+    carousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => {
+      show((current - 1 + slides.length) % slides.length);
+    });
+    carousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => {
+      show((current + 1) % slides.length);
+    });
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        show(parseInt(dot.getAttribute('data-carousel-dot') || '0', 10));
+      });
+    });
+  });
+
+  // === 2. Featured + Thumbnails ===
+  document.querySelectorAll('[data-featured]').forEach((gallery) => {
+    const thumbs = gallery.querySelectorAll('[data-featured-thumb]');
+    const mainImg = gallery.querySelector('[data-featured-main]') as HTMLImageElement;
+    const caption = gallery.querySelector('[data-featured-caption]');
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const img = thumb.querySelector('img')!;
+        mainImg.src = img.src;
+        mainImg.alt = img.alt;
+        if (caption) caption.textContent = img.alt;
+
+        thumbs.forEach((t) => {
+          (t as HTMLElement).classList.remove('border-accent', 'ring-1', 'ring-accent/30');
+          (t as HTMLElement).classList.add('border-transparent', 'opacity-60');
+        });
+        (thumb as HTMLElement).classList.add('border-accent', 'ring-1', 'ring-accent/30');
+        (thumb as HTMLElement).classList.remove('border-transparent', 'opacity-60');
+      });
+    });
+  });
+
+  // === 5. Stacked Reveal ===
+  document.querySelectorAll('[data-stacked]').forEach((container) => {
+    const toggle = container.querySelector('[data-stacked-toggle]');
+    const process = container.querySelector('[data-stacked-process]');
+    const chevron = container.querySelector('[data-stacked-chevron]');
+    let open = false;
+
+    toggle?.addEventListener('click', () => {
+      open = !open;
+      process?.classList.toggle('hidden', !open);
+      chevron?.classList.toggle('rotate-180', open);
+    });
+  });
+</script>
