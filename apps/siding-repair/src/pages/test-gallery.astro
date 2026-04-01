@@ -15,13 +15,13 @@ const images = gallery.images;
 <BaseLayout
   config={config}
   title="Gallery Component Proposals"
-  description="Five gallery layout options for project photo galleries"
+  description="Eight gallery layout options for project photo galleries"
 >
   <div class="py-12">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-heading font-bold mb-2">Gallery Component Proposals</h1>
       <p class="text-neutral-500 mb-4">
-        Five layout options for 6-8 photo before/during/after project galleries. Using: <strong
+        Eight layout options for 6-8 photo before/during/after project galleries. Using: <strong
           >{gallery.name}</strong
         > ({images.length} photos)
       </p>
@@ -44,7 +44,6 @@ const images = gallery.images;
 
         <div class="max-w-3xl" id="carousel-1" data-carousel>
           <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
-            <!-- Main image -->
             <div class="aspect-[3/2] relative">
               {
                 images.map((img, i) => (
@@ -65,8 +64,6 @@ const images = gallery.images;
                 ))
               }
             </div>
-
-            <!-- Arrows -->
             <button
               data-carousel-prev
               class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors"
@@ -93,21 +90,15 @@ const images = gallery.images;
                   d="M9 5l7 7-7 7"></path></svg
               >
             </button>
-
-            <!-- Counter badge -->
             <div
               class="absolute top-3 right-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full"
             >
               <span data-carousel-counter>1</span> / {images.length}
             </div>
           </div>
-
-          <!-- Caption -->
           <p data-carousel-caption class="text-sm text-neutral-600 mt-3 min-h-[2.5rem]">
             {images[0].alt}
           </p>
-
-          <!-- Dot indicators -->
           <div class="flex justify-center gap-2 mt-3">
             {
               images.map((_, i) => (
@@ -139,7 +130,6 @@ const images = gallery.images;
 
         <div class="max-w-4xl" id="featured-gallery" data-featured>
           <div class="flex gap-3">
-            <!-- Thumbnail strip -->
             <div class="flex flex-col gap-2 w-20 md:w-24 shrink-0 overflow-y-auto max-h-[500px]">
               {
                 images.map((img, i) => (
@@ -162,8 +152,6 @@ const images = gallery.images;
                 ))
               }
             </div>
-
-            <!-- Main image -->
             <div class="flex-1 min-w-0">
               <div class="bg-neutral-100 rounded-xl overflow-hidden">
                 <div class="aspect-[4/3] relative">
@@ -192,7 +180,6 @@ const images = gallery.images;
             improvements.
           </p>
         </div>
-
         <div class="max-w-3xl">
           <ImageLightbox images={images} columns={3} />
         </div>
@@ -211,7 +198,6 @@ const images = gallery.images;
         </div>
 
         <div class="max-w-5xl" id="timeline-gallery">
-          <!-- Step labels -->
           <div class="flex items-center mb-4">
             <div
               class="flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wide"
@@ -244,7 +230,6 @@ const images = gallery.images;
             </div>
           </div>
 
-          <!-- Progress track -->
           <div class="relative mb-2">
             <div class="absolute top-4 left-0 right-0 h-0.5 bg-neutral-200"></div>
             <div class="flex justify-between relative">
@@ -255,7 +240,7 @@ const images = gallery.images;
                     before: 'bg-red-400 ring-red-100',
                     during: 'bg-amber-400 ring-amber-100',
                     after: 'bg-green-500 ring-green-100',
-                  };
+                  } as const;
                   return (
                     <div class="flex flex-col items-center">
                       <div class={`w-3 h-3 rounded-full ${colors[phase]} ring-4 relative z-10`} />
@@ -267,7 +252,6 @@ const images = gallery.images;
             </div>
           </div>
 
-          <!-- Scrollable filmstrip -->
           <div
             class="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4"
             id="timeline-strip"
@@ -308,19 +292,18 @@ const images = gallery.images;
       </section>
 
       <!-- ============================================ -->
-      <!-- 5. STACKED REVEAL (Before → Process → After) -->
+      <!-- 5. STACKED REVEAL -->
       <!-- ============================================ -->
       <section class="mb-20">
         <div class="mb-6 border-b pb-2">
           <h2 class="text-2xl font-heading font-bold">5. Stacked Reveal</h2>
           <p class="text-neutral-500 text-sm mt-1">
-            First and last photos shown large as before/after bookends. Middle "process" photos are
-            collapsed between them and expand on click to show the full story.
+            First and last photos shown large as before/after bookends. Middle process photos
+            collapse between them and expand on click.
           </p>
         </div>
 
         <div class="max-w-3xl" id="stacked-reveal" data-stacked>
-          {/* Before - large */}
           <div class="mb-1">
             <div class="relative bg-neutral-100 rounded-t-xl overflow-hidden">
               <div class="aspect-[3/2]">
@@ -334,7 +317,6 @@ const images = gallery.images;
             <p class="text-xs text-neutral-500 mt-1 mb-3 px-1">{images[0].alt}</p>
           </div>
 
-          {/* Process photos - collapsible */}
           {
             images.length > 2 && (
               <div class="mb-1">
@@ -389,7 +371,6 @@ const images = gallery.images;
             )
           }
 
-          {/* After - large */}
           <div class="mt-3">
             <div class="relative bg-neutral-100 rounded-b-xl overflow-hidden">
               <div class="aspect-[3/2]">
@@ -404,7 +385,217 @@ const images = gallery.images;
                 >After</span
               >
             </div>
-            <p class="text-xs text-neutral-500 mt-1 px-1">{images[images.length - 1].alt}</p>
+            <p class="text-xs text-neutral-500 mt-1 px-1">
+              {images[images.length - 1].alt}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 6. HERO CASCADE (NEW) -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">6. Hero Cascade</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Large "after" photo as the hero (the money shot), with before + process photos in a
+            thumbnail row below. Leads with the finished result.
+          </p>
+        </div>
+
+        <div class="max-w-4xl" data-hero-cascade>
+          <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
+            <div class="aspect-[3/2]">
+              <img
+                data-hero-cascade-main
+                src={images[images.length - 1].src}
+                alt={images[images.length - 1].alt}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <span
+              data-hero-cascade-badge
+              class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded"
+              >After</span
+            >
+          </div>
+          <p data-hero-cascade-caption class="text-sm text-neutral-600 mt-3 mb-3">
+            {images[images.length - 1].alt}
+          </p>
+
+          <div class="flex gap-2 overflow-x-auto pb-2">
+            {
+              images.map((img, i) => {
+                const isFirst = i === 0;
+                const isLast = i === images.length - 1;
+                const badgeColor = isFirst
+                  ? 'bg-red-500'
+                  : isLast
+                    ? 'bg-green-600'
+                    : 'bg-amber-500';
+                const label = isFirst ? 'Before' : isLast ? 'After' : `Step ${i}`;
+                return (
+                  <button
+                    data-hero-cascade-thumb={i}
+                    data-phase-color={badgeColor}
+                    data-phase-label={label}
+                    class:list={[
+                      'relative shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border-2 transition-all',
+                      isLast
+                        ? 'border-accent ring-1 ring-accent/30'
+                        : 'border-transparent opacity-70 hover:opacity-100',
+                    ]}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <span
+                      class={`absolute bottom-0 inset-x-0 ${badgeColor} text-white text-[9px] font-bold uppercase tracking-wider text-center py-0.5`}
+                    >
+                      {label}
+                    </span>
+                  </button>
+                );
+              })
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 7. SPLIT JOURNEY (NEW) -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">7. Split Journey</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Side-by-side before/after comparison at top, then a horizontal strip of process photos
+            below. The hook and the proof.
+          </p>
+        </div>
+
+        <div class="max-w-4xl">
+          <!-- Before / After pair -->
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
+              <div class="aspect-[4/3]">
+                <img src={images[0].src} alt={images[0].alt} class="w-full h-full object-cover" />
+              </div>
+              <span
+                class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded"
+                >Before</span
+              >
+            </div>
+            <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
+              <div class="aspect-[4/3]">
+                <img
+                  src={images[images.length - 1].src}
+                  alt={images[images.length - 1].alt}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <span
+                class="absolute top-3 left-3 bg-green-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded"
+                >After</span
+              >
+            </div>
+          </div>
+
+          <!-- Process strip -->
+          {
+            images.length > 2 && (
+              <div>
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="h-px flex-1 bg-neutral-200" />
+                  <span class="text-xs font-semibold text-neutral-400 uppercase tracking-wider">
+                    The Process
+                  </span>
+                  <div class="h-px flex-1 bg-neutral-200" />
+                </div>
+                <div class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory">
+                  {images.slice(1, -1).map((img, i) => (
+                    <div class="snap-start shrink-0 w-48 md:w-56">
+                      <div class="relative bg-neutral-100 rounded-lg overflow-hidden">
+                        <div class="aspect-[4/3]">
+                          <img
+                            src={img.src}
+                            alt={img.alt}
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                          Step {i + 1}
+                        </span>
+                      </div>
+                      <p class="text-xs text-neutral-500 mt-2 leading-snug line-clamp-2">
+                        {img.alt}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 8. MASONRY NARRATIVE (NEW) -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">8. Masonry Narrative</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Pinterest-style grid where before/after photos span two columns and dominate visually.
+            Process photos fill in between at standard size. Size guides the eye through the story.
+          </p>
+        </div>
+
+        <div class="max-w-4xl">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {
+              images.map((img, i) => {
+                const isFirst = i === 0;
+                const isLast = i === images.length - 1;
+                const spanTwo = isFirst || isLast;
+                const badgeColor = isFirst
+                  ? 'bg-red-500'
+                  : isLast
+                    ? 'bg-green-600'
+                    : 'bg-amber-500';
+                const label = isFirst ? 'Before' : isLast ? 'After' : `Step ${i}`;
+                return (
+                  <div
+                    class:list={[
+                      'relative bg-neutral-100 rounded-lg overflow-hidden',
+                      spanTwo ? 'col-span-2' : '',
+                    ]}
+                  >
+                    <div class:list={[spanTwo ? 'aspect-[3/2]' : 'aspect-[4/3]']}>
+                      <img
+                        src={img.src}
+                        alt={img.alt}
+                        class="w-full h-full object-cover"
+                        loading={i < 2 ? 'eager' : 'lazy'}
+                      />
+                    </div>
+                    <span
+                      class={`absolute top-2 left-2 ${badgeColor} text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded`}
+                    >
+                      {label}
+                    </span>
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/50 to-transparent px-3 py-2">
+                      <p class="text-white text-xs leading-snug line-clamp-1">{img.alt}</p>
+                    </div>
+                  </div>
+                );
+              })
+            }
           </div>
         </div>
       </section>
@@ -486,6 +677,39 @@ const images = gallery.images;
       open = !open;
       process?.classList.toggle('hidden', !open);
       chevron?.classList.toggle('rotate-180', open);
+    });
+  });
+
+  // === 6. Hero Cascade ===
+  document.querySelectorAll('[data-hero-cascade]').forEach((gallery) => {
+    const thumbs = gallery.querySelectorAll('[data-hero-cascade-thumb]');
+    const mainImg = gallery.querySelector('[data-hero-cascade-main]') as HTMLImageElement;
+    const caption = gallery.querySelector('[data-hero-cascade-caption]') as HTMLElement;
+    const badge = gallery.querySelector('[data-hero-cascade-badge]') as HTMLElement;
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const img = thumb.querySelector('img')!;
+        mainImg.src = img.src;
+        mainImg.alt = img.alt;
+        if (caption) caption.textContent = img.alt;
+
+        // Update badge
+        const color = thumb.getAttribute('data-phase-color') || '';
+        const label = thumb.getAttribute('data-phase-label') || '';
+        if (badge) {
+          badge.className = `absolute top-3 left-3 ${color} text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded`;
+          badge.textContent = label;
+        }
+
+        // Update active state
+        thumbs.forEach((t) => {
+          (t as HTMLElement).classList.remove('border-accent', 'ring-1', 'ring-accent/30');
+          (t as HTMLElement).classList.add('border-transparent', 'opacity-70');
+        });
+        (thumb as HTMLElement).classList.add('border-accent', 'ring-1', 'ring-accent/30');
+        (thumb as HTMLElement).classList.remove('border-transparent', 'opacity-70');
+      });
     });
   });
 </script>
