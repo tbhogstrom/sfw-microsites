@@ -8,7 +8,6 @@ import {
   HeroSection,
   StatsBar,
   ProcessSteps,
-  TestimonialSlider,
   FAQAccordion,
   ContactForm,
   CTASection,
@@ -300,15 +299,6 @@ const faqs = [
         );
       })()
   }
-
-  <!-- Testimonials -->
-  <section class="py-16 bg-gray-light">
-    <TestimonialSlider
-      title={`What ${location.name} Customers Say`}
-      testimonials={location.testimonials}
-      autoplay={true}
-    />
-  </section>
 
   <!-- FAQ Section -->
   <FAQAccordion title="Frequently Asked Questions" faqs={faqs} />
