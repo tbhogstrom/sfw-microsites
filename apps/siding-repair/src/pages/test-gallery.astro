@@ -615,7 +615,9 @@ const images = gallery.images;
 
         <div class="max-w-2xl">
           <!-- Before/After Slider -->
-          <div class="max-h-[300px] overflow-hidden rounded-lg">
+          <div
+            class="h-[300px] rounded-lg [&_img]:!h-[300px] [&_img]:!w-full [&_img]:!object-cover [&_[data-before-after]]:!h-[300px]"
+          >
             <BeforeAfter
               before={images[0].src}
               after={images[images.length - 1].src}
