@@ -6,6 +6,7 @@ export interface LightboxImage {
   src: string;
   alt: string;
   thumbnail?: string;
+  caption?: string;
 }
 
 export interface Props extends BaseProps {
@@ -24,21 +25,32 @@ const colClasses = {
 ---
 
 <div class={cn('', className)} {...rest}>
-  <div class={cn('grid gap-4', colClasses[columns])}>
+  <div class={cn('grid gap-3', colClasses[columns])}>
     {
       images.map((image, i) => (
         <button
           type="button"
-          class="overflow-hidden rounded-lg cursor-pointer group focus:outline-none focus:ring-2 focus:ring-accent"
+          class="overflow-hidden rounded-lg cursor-pointer group focus:outline-none focus:ring-2 focus:ring-accent bg-neutral-100"
           data-lightbox-trigger={lightboxId}
           data-index={i}
+          data-caption={image.caption || image.alt}
+          data-full-src={image.src}
         >
-          <img
-            src={image.thumbnail || image.src}
-            alt={image.alt}
-            class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
+          <div class="aspect-[4/3] relative">
+            <img
+              src={image.thumbnail || image.src}
+              alt={image.alt}
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+          {(image.caption || image.alt) && (
+            <div class="px-2.5 py-2 text-left">
+              <p class="text-xs text-neutral-600 leading-snug line-clamp-2">
+                {image.caption || image.alt}
+              </p>
+            </div>
+          )}
         </button>
       ))
     }
@@ -46,25 +58,39 @@ const colClasses = {
 
   <dialog
     id={lightboxId}
-    class="fixed inset-0 w-full h-full max-w-none max-h-none m-0 p-0 bg-black/90 backdrop:bg-transparent"
+    class="fixed inset-0 w-full h-full max-w-none max-h-none m-0 p-0 bg-black/95 backdrop:bg-transparent"
   >
-    <div class="flex items-center justify-center w-full h-full relative">
-      <button
-        data-lightbox-close
-        class="absolute top-4 right-4 text-white text-3xl z-10 hover:text-neutral-300 focus:outline-none"
-        aria-label="Close">✕</button
-      >
-      <button
-        data-lightbox-prev
-        class="absolute left-4 text-white text-4xl z-10 hover:text-neutral-300 focus:outline-none"
-        aria-label="Previous">‹</button
-      >
-      <button
-        data-lightbox-next
-        class="absolute right-4 text-white text-4xl z-10 hover:text-neutral-300 focus:outline-none"
-        aria-label="Next">›</button
-      >
-      <img data-lightbox-img class="max-w-[90vw] max-h-[90vh] object-contain" src="" alt="" />
+    <div class="flex flex-col w-full h-full">
+      <!-- Top bar -->
+      <div class="flex items-center justify-between px-4 py-3 shrink-0">
+        <span data-lightbox-counter class="text-white/70 text-sm font-medium"></span>
+        <button
+          data-lightbox-close
+          class="text-white/70 hover:text-white text-2xl leading-none focus:outline-none p-1"
+          aria-label="Close">&#x2715;</button
+        >
+      </div>
+
+      <!-- Image area -->
+      <div class="flex-1 flex items-center justify-center relative min-h-0 px-12">
+        <button
+          data-lightbox-prev
+          class="absolute left-2 top-1/2 -translate-y-1/2 text-white/60 hover:text-white text-3xl z-10 focus:outline-none p-2"
+          aria-label="Previous">&#x2039;</button
+        >
+        <button
+          data-lightbox-next
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-white/60 hover:text-white text-3xl z-10 focus:outline-none p-2"
+          aria-label="Next">&#x203A;</button
+        >
+        <img data-lightbox-img class="max-w-full max-h-full object-contain" src="" alt="" />
+      </div>
+
+      <!-- Caption bar -->
+      <div class="shrink-0 px-6 py-3 text-center">
+        <p data-lightbox-caption class="text-white/80 text-sm leading-relaxed max-w-2xl mx-auto">
+        </p>
+      </div>
     </div>
   </dialog>
 </div>
@@ -77,20 +103,26 @@ const colClasses = {
       const dialog = document.getElementById(dialogId) as HTMLDialogElement;
       if (!dialog) return;
 
-      const triggers = document.querySelectorAll(`[data-lightbox-trigger="${dialogId}"]`);
-      const images = Array.from(triggers).map((t) => {
-        const img = t.querySelector('img')!;
-        // For lightbox, use the full-size src (stored as the original src without thumbnail)
-        return { src: img.src, alt: img.alt };
-      });
+      const triggers = Array.from(
+        document.querySelectorAll(`[data-lightbox-trigger="${dialogId}"]`),
+      );
+      const images = triggers.map((t) => ({
+        src: t.getAttribute('data-full-src') || t.querySelector('img')!.src,
+        alt: t.querySelector('img')!.alt,
+        caption: t.getAttribute('data-caption') || '',
+      }));
 
       let current = index;
       const imgEl = dialog.querySelector('[data-lightbox-img]') as HTMLImageElement;
+      const captionEl = dialog.querySelector('[data-lightbox-caption]') as HTMLElement;
+      const counterEl = dialog.querySelector('[data-lightbox-counter]') as HTMLElement;
 
       const show = (i: number) => {
         current = i;
         imgEl.src = images[i].src;
         imgEl.alt = images[i].alt;
+        captionEl.textContent = images[i].caption;
+        counterEl.textContent = `${i + 1} / ${images.length}`;
       };
 
       show(current);
