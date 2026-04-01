@@ -601,6 +601,95 @@ const images = gallery.images;
       </section>
 
       <!-- ============================================ -->
+      <!-- 10. PAIRED CAROUSEL -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">10. Paired Carousel</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Two images visible at a time, grid-lightbox sized. Arrow buttons shift one photo at a
+            time, giving a peek at what's next.
+          </p>
+        </div>
+
+        <div class="max-w-3xl" data-paired-carousel>
+          <div class="relative">
+            <div class="overflow-hidden rounded-xl">
+              <div class="flex transition-transform duration-500 ease-in-out" data-paired-track>
+                {
+                  images.map((img, i) => {
+                    const isFirst = i === 0;
+                    const isLast = i === images.length - 1;
+                    const badgeColor = isFirst
+                      ? 'bg-red-500'
+                      : isLast
+                        ? 'bg-green-600'
+                        : 'bg-amber-500';
+                    const label = isFirst ? 'Before' : isLast ? 'After' : `Step ${i}`;
+                    return (
+                      <div class="w-1/2 shrink-0 px-1">
+                        <div class="relative bg-neutral-100 rounded-lg overflow-hidden">
+                          <div class="aspect-[4/3]">
+                            <img
+                              src={img.src}
+                              alt={img.alt}
+                              class="w-full h-full object-cover"
+                              loading={i < 2 ? 'eager' : 'lazy'}
+                            />
+                          </div>
+                          <span
+                            class={`absolute top-2 left-2 ${badgeColor} text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded`}
+                          >
+                            {label}
+                          </span>
+                        </div>
+                        <p class="text-xs text-neutral-500 mt-2 leading-snug line-clamp-2 px-0.5">
+                          {img.alt}
+                        </p>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+            </div>
+
+            <!-- Arrows -->
+            <button
+              data-paired-prev
+              class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-md hover:shadow-lg text-neutral-700 rounded-full w-9 h-9 flex items-center justify-center transition-shadow z-10"
+              aria-label="Previous"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"></path></svg
+              >
+            </button>
+            <button
+              data-paired-next
+              class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 bg-white shadow-md hover:shadow-lg text-neutral-700 rounded-full w-9 h-9 flex items-center justify-center transition-shadow z-10"
+              aria-label="Next"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"></path></svg
+              >
+            </button>
+          </div>
+
+          <!-- Counter -->
+          <div class="flex justify-center mt-3 text-xs text-neutral-400">
+            <span data-paired-counter>1-2</span>&nbsp;of {images.length}
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
       <!-- 9. SLIDER JOURNEY (NEW — User Favorite) -->
       <!-- ============================================ -->
       <section class="mb-20">
@@ -743,6 +832,33 @@ const images = gallery.images;
       open = !open;
       process?.classList.toggle('hidden', !open);
       chevron?.classList.toggle('rotate-180', open);
+    });
+  });
+
+  // === 10. Paired Carousel ===
+  document.querySelectorAll('[data-paired-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('[data-paired-track]') as HTMLElement;
+    const counter = carousel.querySelector('[data-paired-counter]');
+    const items = track.children.length;
+    const maxOffset = Math.max(0, items - 2);
+    let offset = 0;
+
+    const update = () => {
+      track.style.transform = `translateX(-${offset * 50}%)`;
+      if (counter) {
+        const first = offset + 1;
+        const last = Math.min(offset + 2, items);
+        counter.textContent = `${first}-${last}`;
+      }
+    };
+
+    carousel.querySelector('[data-paired-prev]')?.addEventListener('click', () => {
+      offset = Math.max(0, offset - 1);
+      update();
+    });
+    carousel.querySelector('[data-paired-next]')?.addEventListener('click', () => {
+      offset = Math.min(maxOffset, offset + 1);
+      update();
     });
   });
 
