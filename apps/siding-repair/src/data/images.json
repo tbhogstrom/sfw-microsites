@@ -294,6 +294,36 @@
           "alt": "Flashing and water intrusion repair"
         }
       ]
+    },
+    {
+      "id": "structural-rot-cedar-shake",
+      "name": "Structural Rot & Cedar Shake Repair",
+      "images": [
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/structural-rot-cedar-shake-fbe0e516.webp",
+          "alt": "Weathered cedar shake siding exterior showing aging and potential dry rot damage above sliding door"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/structural-rot-cedar-shake-9c3944bf.webp",
+          "alt": "Worker examining dry rot damage on structural beams and cedar shingle siding"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/structural-rot-cedar-shake-109ce457.webp",
+          "alt": "Worker on ladder installing or repairing exterior siding on house wall"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/structural-rot-cedar-shake-1a56361d.webp",
+          "alt": "Worker on ladder installing or repairing cedar shake siding on two-story house exterior"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/structural-rot-cedar-shake-daa733cf.webp",
+          "alt": "Cedar shake siding installation on building exterior corner with downspout"
+        },
+        {
+          "src": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/gallery/structural-rot-cedar-shake-5d380487.webp",
+          "alt": "Exterior view of house with cedar shingle siding and white-framed windows"
+        }
+      ]
     }
   ],
   "videoEmbeds": [

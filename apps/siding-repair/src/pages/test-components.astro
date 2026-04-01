@@ -43,6 +43,7 @@ const badges = [
 ];
 
 const homepageGallery = lightboxGalleries.find((g) => g.id === 'homepage-gallery');
+const cedarShakeGallery = lightboxGalleries.find((g) => g.id === 'structural-rot-cedar-shake');
 
 // Comparison Table data
 const comparisonHeaders = ['Spot Repair', 'Section Replacement', 'Full Re-Side'];
@@ -252,6 +253,14 @@ const faqs: FAQ[] = [
             <div class="mb-8">
               <h3 class="text-lg font-semibold mb-3 text-neutral-700">{homepageGallery.name}</h3>
               <ImageLightbox images={homepageGallery.images} columns={3} />
+            </div>
+          )
+        }
+        {
+          cedarShakeGallery && (
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold mb-3 text-neutral-700">{cedarShakeGallery.name}</h3>
+              <ImageLightbox images={cedarShakeGallery.images} columns={3} />
             </div>
           )
         }
