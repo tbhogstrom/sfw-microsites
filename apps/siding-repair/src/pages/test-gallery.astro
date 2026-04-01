@@ -615,13 +615,15 @@ const images = gallery.images;
 
         <div class="max-w-2xl">
           <!-- Before/After Slider -->
-          <BeforeAfter
-            before={images[0].src}
-            after={images[images.length - 1].src}
-            alt={gallery.name}
-            beforeLabel="Before"
-            afterLabel="After"
-          />
+          <div class="max-h-[300px] overflow-hidden rounded-lg">
+            <BeforeAfter
+              before={images[0].src}
+              after={images[images.length - 1].src}
+              alt={gallery.name}
+              beforeLabel="Before"
+              afterLabel="After"
+            />
+          </div>
 
           <!-- Process strip -->
           {
