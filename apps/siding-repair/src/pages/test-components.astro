@@ -42,9 +42,6 @@ const badges = [
   },
 ];
 
-const homepageGallery = lightboxGalleries.find((g) => g.id === 'homepage-gallery');
-const cedarShakeGallery = lightboxGalleries.find((g) => g.id === 'structural-rot-cedar-shake');
-
 // Comparison Table data
 const comparisonHeaders = ['Spot Repair', 'Section Replacement', 'Full Re-Side'];
 const comparisonRows = [
@@ -249,20 +246,12 @@ const faqs: FAQ[] = [
       <section class="mb-16">
         <h2 class="text-2xl font-heading font-bold mb-6 border-b pb-2">Image Lightbox Gallery</h2>
         {
-          homepageGallery && (
+          lightboxGalleries.map((gallery) => (
             <div class="mb-8">
-              <h3 class="text-lg font-semibold mb-3 text-neutral-700">{homepageGallery.name}</h3>
-              <ImageLightbox images={homepageGallery.images} columns={3} />
+              <h3 class="text-lg font-semibold mb-3 text-neutral-700">{gallery.name}</h3>
+              <ImageLightbox images={gallery.images} columns={3} />
             </div>
-          )
-        }
-        {
-          cedarShakeGallery && (
-            <div class="mb-8">
-              <h3 class="text-lg font-semibold mb-3 text-neutral-700">{cedarShakeGallery.name}</h3>
-              <ImageLightbox images={cedarShakeGallery.images} columns={3} />
-            </div>
-          )
+          ))
         }
       </section>
 
