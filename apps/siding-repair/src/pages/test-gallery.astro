@@ -617,15 +617,15 @@ const images = gallery.images;
             <div class="overflow-hidden rounded-xl">
               <div class="flex transition-transform duration-500 ease-in-out" data-paired-track>
                 {
-                  images.map((img, i) => {
+                  [images[0], images[images.length - 1], ...images.slice(1, -1)].map((img, i) => {
                     const isFirst = i === 0;
-                    const isLast = i === images.length - 1;
+                    const isLast = i === 1;
                     const badgeColor = isFirst
                       ? 'bg-red-500'
                       : isLast
                         ? 'bg-green-600'
                         : 'bg-amber-500';
-                    const label = isFirst ? 'Before' : isLast ? 'After' : `Step ${i}`;
+                    const label = isFirst ? 'Before' : isLast ? 'After' : `Step ${i - 1}`;
                     return (
                       <div class="w-1/2 shrink-0 px-1">
                         <div class="relative bg-neutral-100 rounded-lg overflow-hidden">
