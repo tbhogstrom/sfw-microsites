@@ -279,6 +279,15 @@
       "alt": "Siding and facade facelift on SE Portland home",
       "beforeLabel": "Before",
       "afterLabel": "After"
+    },
+    {
+      "id": "window-and-siding-rot-repair-hardie-plank-upgrade",
+      "name": "Window and siding rot repair -- Hardie Plank upgrade!",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/Exterior%20view%20of%20weathered%20wooden%20siding%20with%20peeling%20paint%20and%20a%20window.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/Exterior%20view%20of%20house%20with%20new%20siding%20installation%20and%20window.webp",
+      "alt": "Window and siding rot repair -- Hardie Plank upgrade!",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
     }
   ],
   "lightboxGalleries": [
