@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@sfw/ui';
-import { ImageLightbox } from '@sfw/ui';
+import { ImageLightbox, BeforeAfter } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { lightboxGalleries } from '../data/images';
 
@@ -15,13 +15,13 @@ const images = gallery.images;
 <BaseLayout
   config={config}
   title="Gallery Component Proposals"
-  description="Eight gallery layout options for project photo galleries"
+  description="Nine gallery layout options for project photo galleries"
 >
   <div class="py-12">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-heading font-bold mb-2">Gallery Component Proposals</h1>
       <p class="text-neutral-500 mb-4">
-        Eight layout options for 6-8 photo before/during/after project galleries. Using: <strong
+        Nine layout options for 6-8 photo before/during/after project galleries. Using: <strong
           >{gallery.name}</strong
         > ({images.length} photos)
       </p>
@@ -128,7 +128,7 @@ const images = gallery.images;
           </p>
         </div>
 
-        <div class="max-w-4xl" id="featured-gallery" data-featured>
+        <div class="max-w-3xl" id="featured-gallery" data-featured>
           <div class="flex gap-3">
             <div class="flex flex-col gap-2 w-20 md:w-24 shrink-0 overflow-y-auto max-h-[500px]">
               {
@@ -197,7 +197,7 @@ const images = gallery.images;
           </p>
         </div>
 
-        <div class="max-w-5xl" id="timeline-gallery">
+        <div class="max-w-3xl" id="timeline-gallery">
           <div class="flex items-center mb-4">
             <div
               class="flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wide"
@@ -404,7 +404,7 @@ const images = gallery.images;
           </p>
         </div>
 
-        <div class="max-w-4xl" data-hero-cascade>
+        <div class="max-w-2xl" data-hero-cascade>
           <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
             <div class="aspect-[3/2]">
               <img
@@ -478,7 +478,7 @@ const images = gallery.images;
           </p>
         </div>
 
-        <div class="max-w-4xl">
+        <div class="max-w-2xl">
           <!-- Before / After pair -->
           <div class="grid grid-cols-2 gap-2 mb-4">
             <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
@@ -556,7 +556,7 @@ const images = gallery.images;
           </p>
         </div>
 
-        <div class="max-w-4xl">
+        <div class="max-w-3xl">
           <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
             {
               images.map((img, i) => {
@@ -597,6 +597,68 @@ const images = gallery.images;
               })
             }
           </div>
+        </div>
+      </section>
+
+      <!-- ============================================ -->
+      <!-- 9. SLIDER JOURNEY (NEW — User Favorite) -->
+      <!-- ============================================ -->
+      <section class="mb-20">
+        <div class="mb-6 border-b pb-2">
+          <h2 class="text-2xl font-heading font-bold">9. Slider Journey</h2>
+          <p class="text-neutral-500 text-sm mt-1">
+            Draggable before/after slider on top showing the transformation, with process photos in
+            a strip below. Combines the interactive impact of a comparison slider with the full
+            project story.
+          </p>
+        </div>
+
+        <div class="max-w-2xl">
+          <!-- Before/After Slider -->
+          <BeforeAfter
+            before={images[0].src}
+            after={images[images.length - 1].src}
+            alt={gallery.name}
+            beforeLabel="Before"
+            afterLabel="After"
+          />
+
+          <!-- Process strip -->
+          {
+            images.length > 2 && (
+              <div class="mt-4">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="h-px flex-1 bg-neutral-200" />
+                  <span class="text-xs font-semibold text-neutral-400 uppercase tracking-wider">
+                    The Process
+                  </span>
+                  <div class="h-px flex-1 bg-neutral-200" />
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-3 snap-x snap-mandatory">
+                  {images.slice(1, -1).map((img, i) => (
+                    <div class="snap-start shrink-0 w-36 md:w-44">
+                      <div class="relative bg-neutral-100 rounded-lg overflow-hidden">
+                        <div class="aspect-[4/3]">
+                          <img
+                            src={img.src}
+                            alt={img.alt}
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        <span class="absolute top-1.5 left-1.5 bg-amber-500 text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">
+                          Step {i + 1}
+                        </span>
+                      </div>
+                      <p class="text-[11px] text-neutral-500 mt-1.5 leading-snug line-clamp-2">
+                        {img.alt}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          }
         </div>
       </section>
     </div>
