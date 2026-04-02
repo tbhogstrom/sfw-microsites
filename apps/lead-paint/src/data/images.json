@@ -111,5 +111,163 @@
       "image": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/service-page/IMG_5178.jpg",
       "href": "/services/seattle/lead-paint-containment-cleanup"
     }
-  ]
+  ],
+  "beforeAfterPairs": [],
+  "lightboxGalleries": [
+    {
+      "id": "lead-paint-historic-rennovation",
+      "name": "Historic Home Lead Paint Projects",
+      "images": [
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-historic-rennovation-178e7743.webp",
+          "alt": "Historic brick building entrance restoration with protective sheeting"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-historic-rennovation-432d9d60.webp",
+          "alt": "Historic arched window with deteriorating painted shutters"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-historic-rennovation-437ee3d5.webp",
+          "alt": "Historic brick building facade with arched windows during restoration"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-historic-rennovation-0048a881.webp",
+          "alt": "Historic building renovation with exterior scaffolding"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-historic-rennovation-24b4102e.webp",
+          "alt": "Elegant brick building exterior with arched openings, French doors, and outdoor furniture on stone patio"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-historic-rennovation-8130f871.webp",
+          "alt": "Large historic brick mansion with multiple chimneys and well-maintained grounds"
+        }
+      ]
+    },
+    {
+      "id": "lead-paint-containment-safety",
+      "name": "Containment & Safety Setup",
+      "images": [
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-containment-safety-9b8c0c06.webp",
+          "alt": "Worker in protective suit painting interior walls with spray equipment"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-containment-safety-08c9f653.webp",
+          "alt": "Interior room with plastic sheeting containment and dust extraction equipment"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-containment-safety-bef31f03.webp",
+          "alt": "Worker in protective suit removing old siding from house exterior"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-containment-safety-b634baa4.webp",
+          "alt": "Worker in protective suit cleaning exterior siding near entrance"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-containment-safety-fc0b8092.webp",
+          "alt": "Workers in protective suits removing lead paint from house siding"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-containment-safety-bf98bca9.webp",
+          "alt": "Major renovation showing roof and siding removal with lead paint abatement"
+        }
+      ]
+    },
+    {
+      "id": "lead-paint-full-job",
+      "name": "Hand Scraping & Craftsman Restoration",
+      "images": [
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-full-job-53027d0d.webp",
+          "alt": "Before: corner of house with peeling paint and exposed wood damage"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-full-job-af24a9ea.webp",
+          "alt": "During: hand removing peeling white paint from wood siding"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-full-job-f3e4f98b.webp",
+          "alt": "During: worker on ladder removing old siding and prepping wall"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-full-job-9d6fa933.webp",
+          "alt": "Worker in protective suit removing old siding from house exterior with plastic sheeting covering area"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-full-job-1ff97754.webp",
+          "alt": "Exterior view of a two-story house with mixed siding materials and brick chimney"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-full-job-4639df50.webp",
+          "alt": "After: finished craftsman exterior with fresh paint"
+        }
+      ]
+    },
+    {
+      "id": "lead-paint-prep-siding-and-roof",
+      "name": "Portland Home Lead Paint & Roof Work",
+      "images": [
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-prep-siding-and-roof-8863754a.webp",
+          "alt": "Yellow two-story house with front porch and steps in residential neighborhood"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-prep-siding-and-roof-a221a762.webp",
+          "alt": "Damaged wood siding with peeling paint next to roofing shingles showing deterioration and potential dry rot"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-prep-siding-and-roof-47d4480a.webp",
+          "alt": "Worker performing roof repair on yellow two-story house with brick chimney"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-prep-siding-and-roof-d2317dcf.webp",
+          "alt": "Worker installing or repairing flashing and trim around window on house with yellow siding"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-prep-siding-and-roof-284f63ed.webp",
+          "alt": "Damaged roof section with water damage and deteriorating shingles near house siding"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/lead-paint-prep-siding-and-roof-85fd7e1b.webp",
+          "alt": "Exterior view of a green craftsman-style house with front porch and landscaping"
+        }
+      ]
+    },
+    {
+      "id": "david-craig-lead-paint-full-job",
+      "name": "Window & Siding Lead Paint Removal",
+      "images": [
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-88e51a18.webp",
+          "alt": "Damaged garage door with peeling paint and wood rot being prepared for repair"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-c46c07ae.webp",
+          "alt": "Before: weathered window with peeling paint and wood rot"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-fb7144a9.webp",
+          "alt": "During: worker in protective suit sanding paint from surface"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-85bc5630.webp",
+          "alt": "During: lead-safe exterior painting with plastic sheeting protection"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-c4c37449.webp",
+          "alt": "After: white colonial house with completed new siding and porch"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-ef9499b0.webp",
+          "alt": "After: new green door with decorative glass sidelights installed"
+        },
+        {
+          "src": "https://dh43g6bd0xmlw4pm.public.blob.vercel-storage.com/gallery/david-craig-lead-paint-full-job-56f0e1c6.webp",
+          "alt": "exterior view of white two-story home with covered porch and attached garage in autumn setting"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": []
 }
