@@ -6,8 +6,21 @@ import { servicePageImages } from '../data/images';
 import data from '../data/images.json';
 
 const config = serviceConfigs['lead-paint'];
-const lightboxGalleries = (data as Record<string, unknown>).lightboxGalleries ?? [];
-const beforeAfterPairs = (data as Record<string, unknown>).beforeAfterPairs ?? [];
+const jsonData = data as Record<string, unknown>;
+const lightboxGalleries = (jsonData.lightboxGalleries ?? []) as {
+  id: string;
+  name: string;
+  images: { src: string; alt: string }[];
+}[];
+const beforeAfterPairs = (jsonData.beforeAfterPairs ?? []) as {
+  id: string;
+  name: string;
+  before: string;
+  after: string;
+  alt: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+}[];
 ---
 
 <BaseLayout config={config} title="Our Work" description="Browse our completed lead paint projects">

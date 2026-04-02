@@ -12,8 +12,11 @@ import {
 import { serviceConfigs, companyStats, defaultNav } from '@sfw/content';
 import type { FAQ, Service, GalleryService } from '@sfw/ui';
 import { blogPosts } from '../data/blog-posts';
+import { getPageGallery } from '../data/gallery-map';
+import SplitJourneyGallery from '../components/SplitJourneyGallery.astro';
 
 const config = serviceConfigs['lead-paint'];
+const gallery = getPageGallery('homepage');
 
 const galleryServices: GalleryService[] = [
   {
@@ -166,6 +169,9 @@ const faqs: FAQ[] = [
     services={galleryServices}
     variant="light"
   />
+
+  <!-- Project Gallery -->
+  {gallery && <SplitJourneyGallery gallery={gallery} heading="See Our Work" />}
 
   <!-- Services Offered Section -->
   <ServicesOffered

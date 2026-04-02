@@ -7,12 +7,15 @@ import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs } from '@sfw/content';
 import { allClusterServices } from '../../data/cluster-services';
+import { getPageGallery } from '../../data/gallery-map';
+import SplitJourneyGallery from '../../components/SplitJourneyGallery.astro';
 const servicesByLocation = {
   portland: allClusterServices.filter((s) => s.location === 'portland'),
   seattle: allClusterServices.filter((s) => s.location === 'seattle'),
 };
 
 const config = serviceConfigs['lead-paint'];
+const gallery = getPageGallery('services-index');
 ---
 
 <BaseLayout
@@ -160,6 +163,9 @@ const config = serviceConfigs['lead-paint'];
       </div>
     </div>
   </section>
+
+  <!-- Project Gallery -->
+  {gallery && <SplitJourneyGallery gallery={gallery} heading="Recent Project" />}
 
   <!-- Why Choose Us Section -->
   <section class="py-16 bg-white">

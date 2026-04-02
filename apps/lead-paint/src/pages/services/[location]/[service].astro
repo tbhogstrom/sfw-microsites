@@ -9,6 +9,8 @@ import { serviceConfigs } from '@sfw/content';
 import { getServicePaths, getService } from '../../../data/services';
 import { getClusterPaths, getClusterService } from '../../../data/cluster-services';
 import ServiceContent from '../../../components/ServiceContent.astro';
+import { getPageGallery } from '../../../data/gallery-map';
+import SplitJourneyGallery from '../../../components/SplitJourneyGallery.astro';
 
 // Generate static paths for all services
 export async function getStaticPaths() {
@@ -25,6 +27,7 @@ if (!serviceData) {
 }
 
 const config = serviceConfigs['lead-paint'];
+const gallery = getPageGallery(`service:${service}`);
 
 // Get location-specific phone number
 const locationPhone = location === 'portland' ? config.phone : config.phone; // Can be customized per location
@@ -101,6 +104,9 @@ const locationPhone = location === 'portland' ? config.phone : config.phone; // 
       <FAQAccordion faqs={serviceData.faqs} title={`${serviceData.name} FAQ`} />
     )
   }
+
+  <!-- Project Gallery -->
+  {gallery && <SplitJourneyGallery gallery={gallery} heading="See Our Work" />}
 
   <!-- CTA Section -->
   <CTASection

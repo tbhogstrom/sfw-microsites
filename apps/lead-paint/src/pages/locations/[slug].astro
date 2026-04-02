@@ -14,6 +14,8 @@ import {
   CTASection,
 } from '@sfw/ui';
 import { serviceConfigs, getLocationPaths, getLocation } from '@sfw/content';
+import { getPageGallery } from '../../data/gallery-map';
+import SplitJourneyGallery from '../../components/SplitJourneyGallery.astro';
 
 // Generate static paths for all locations
 export async function getStaticPaths() {
@@ -28,6 +30,7 @@ if (!location) {
 }
 
 const config = serviceConfigs['lead-paint'];
+const gallery = getPageGallery(`location:${slug}`);
 
 // Create location-specific stats
 const stats = [
@@ -194,6 +197,13 @@ const faqs = [
       </div>
     </div>
   </section>
+
+  <!-- Project Gallery -->
+  {
+    gallery && (
+      <SplitJourneyGallery gallery={gallery} heading={`Recent Project in ${location.name}`} />
+    )
+  }
 
   <!-- Process Steps -->
   <ProcessSteps title="How We Work" steps={steps} variant="vertical" />

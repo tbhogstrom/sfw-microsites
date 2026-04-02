@@ -6,9 +6,12 @@
 import BaseLayout from '@sfw/ui';
 import { HeroSection, CTASection } from '@sfw/ui';
 import { serviceConfigs, getAllLocations } from '@sfw/content';
+import { getPageGallery } from '../../data/gallery-map';
+import SplitJourneyGallery from '../../components/SplitJourneyGallery.astro';
 
 const config = serviceConfigs['lead-paint'];
 const locations = getAllLocations();
+const gallery = getPageGallery('locations-index');
 ---
 
 <BaseLayout
@@ -121,6 +124,9 @@ const locations = getAllLocations();
       </div>
     </div>
   </section>
+
+  {/* Project Gallery */}
+  {gallery && <SplitJourneyGallery gallery={gallery} heading="Recent Project" />}
 
   {/* Why Choose Us */}
   <section class="py-16 bg-gray-light">
