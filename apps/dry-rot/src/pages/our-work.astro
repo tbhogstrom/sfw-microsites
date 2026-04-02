@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@sfw/ui';
+import { OurWorkPage } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { servicePageImages } from '../data/images';
+import data from '../data/images.json';
+
+const config = serviceConfigs['dry-rot'];
+const lightboxGalleries = (data as Record<string, unknown>).lightboxGalleries ?? [];
+const beforeAfterPairs = (data as Record<string, unknown>).beforeAfterPairs ?? [];
+---
+
+<BaseLayout config={config} title="Our Work" description="Browse our completed dry rot projects">
+  <OurWorkPage
+    title="Our Work"
+    subtitle="Browse our completed dry rot repair and wood restoration projects."
+    beforeAfterPairs={beforeAfterPairs}
+    lightboxGalleries={lightboxGalleries}
+    servicePageImages={servicePageImages}
+  />
+</BaseLayout>

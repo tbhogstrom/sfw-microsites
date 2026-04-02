@@ -47,3 +47,6 @@ export type { Props as PricingCardProps } from './PricingCard.astro';
 
 export { default as ImageLightbox } from './ImageLightbox.astro';
 export type { LightboxImage, Props as ImageLightboxProps } from './ImageLightbox.astro';
+
+export { default as OurWorkPage } from './OurWorkPage.astro';
+export type { Props as OurWorkPageProps } from './OurWorkPage.astro';

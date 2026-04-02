@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@sfw/ui';
+import { OurWorkPage } from '@sfw/ui';
+import { serviceConfigs } from '@sfw/content';
+import { servicePageImages, beforeAfterPairs, lightboxGalleries } from '../data/images';
+
+const config = serviceConfigs['siding-repair'];
+---
+
+<BaseLayout
+  config={config}
+  title="Our Work"
+  description="Browse our completed siding repair projects"
+>
+  <OurWorkPage
+    title="Our Work"
+    subtitle="Browse our completed siding repair, replacement, and restoration projects across Portland and Seattle."
+    beforeAfterPairs={beforeAfterPairs}
+    lightboxGalleries={lightboxGalleries}
+    servicePageImages={servicePageImages}
+  />
+</BaseLayout>
