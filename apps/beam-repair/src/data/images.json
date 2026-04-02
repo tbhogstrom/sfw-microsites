@@ -111,5 +111,73 @@
       "image": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/service-page/91d67549-094d-451c-9447-8bd1ce598e4d.jpg",
       "href": "/services/seattle/post-column-repair"
     }
-  ]
+  ],
+  "beforeAfterPairs": [],
+  "lightboxGalleries": [
+    {
+      "id": "beam-full-job",
+      "name": "Major Beam & Deck Structural Rebuild",
+      "images": [
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-363d7386.webp",
+          "alt": "Severely damaged and deteriorated wooden siding being removed/replaced during home restoration"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-74eae2ff.webp",
+          "alt": "Before: severely deteriorated wooden deck structure showing extensive dry rot"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-302dc67d.webp",
+          "alt": "During: worker using power tool to remove dry rot damage from wooden beam"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-c82fde86.webp",
+          "alt": "Multi-level wooden deck construction project showing exposed framing and support structure"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-bbace85d.webp",
+          "alt": "Home exterior renovation showing damaged siding removal and replacement in progress"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-83ba1a6b.webp",
+          "alt": "Deck reconstruction showing new framing joists being installed on existing structure"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-full-job-412a03ff.webp",
+          "alt": "After: interior room with wood paneling, tile flooring, and large windows"
+        }
+      ]
+    },
+    {
+      "id": "beam-foundation-structural",
+      "name": "Foundation & Structural Beam Work",
+      "images": [
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-foundation-structural-59a39884.webp",
+          "alt": "Severely deteriorated foundation sill plate and framing with dry rot damage"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-foundation-structural-66fc03d0.webp",
+          "alt": "Damaged foundation sill plate and siding showing significant dry rot"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-foundation-structural-e02e1cfe.webp",
+          "alt": "Construction worker installing siding on elevated platform with exposed insulation and house wrap visible"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-foundation-structural-e35d210d.webp",
+          "alt": "Close-up of severely deteriorated wooden beam or sill plate showing extensive damage"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-foundation-structural-921fb04a.webp",
+          "alt": "Severely damaged log cabin corner showing extensive rot and deterioration"
+        },
+        {
+          "src": "https://t3rymnpmskigdzuc.public.blob.vercel-storage.com/gallery/beam-foundation-structural-93cc2782.webp",
+          "alt": "Foundation repair work in progress with rotted beams and structural damage exposed"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": []
 }

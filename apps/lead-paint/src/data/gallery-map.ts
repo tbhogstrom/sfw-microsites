@@ -7,7 +7,7 @@
  *   lead-paint-containment-safety:      locations/seattle, testing-inspection, containment-cleanup (3)
  *   lead-paint-full-job:                homepage, removal-surface-preparation (2)
  *   lead-paint-prep-siding-and-roof:    locations/portland, lead-safe-exterior-renovation (2)
- *   david-craig-lead-paint-full-job:    locations/index, lead-safe-painting-exterior-services (2)
+ *   colonial-lead-paint-full-job:    locations/index, lead-safe-painting-exterior-services (2)
  */
 
 import data from './images.json';
@@ -34,7 +34,7 @@ const pageGalleryMap: Record<string, string> = {
   // Static pages
   homepage: 'lead-paint-full-job',
   'services-index': 'lead-paint-historic-rennovation',
-  'locations-index': 'david-craig-lead-paint-full-job',
+  'locations-index': 'colonial-lead-paint-full-job',
 
   // Location pages
   'location:portland': 'lead-paint-prep-siding-and-roof',
@@ -46,7 +46,7 @@ const pageGalleryMap: Record<string, string> = {
   'service:lead-paint-containment-cleanup': 'lead-paint-containment-safety',
   'service:lead-paint-stabilization-encapsulation': 'lead-paint-historic-rennovation',
   'service:lead-safe-exterior-renovation': 'lead-paint-prep-siding-and-roof',
-  'service:lead-safe-painting-exterior-services': 'david-craig-lead-paint-full-job',
+  'service:lead-safe-painting-exterior-services': 'colonial-lead-paint-full-job',
 };
 
 export function getPageGallery(pageKey: string): Gallery | undefined {

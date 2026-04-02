@@ -173,6 +173,128 @@
       "description": "General",
       "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/IMG_6193.jpg",
       "href": "/services/seattle/deck-board-repair-replacement"
+    },
+    {
+      "title": "Deck Ledger Flashing Water Protection",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/2b47167b-0213-43e2-9fa8-bf17fe309b67.jpg",
+      "href": "/services/portland/deck-ledger-flashing-water-protection"
+    },
+    {
+      "title": "Deck Ledger Flashing Water Protection",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/2b47167b-0213-43e2-9fa8-bf17fe309b67.jpg",
+      "href": "/services/seattle/deck-ledger-flashing-water-protection"
+    },
+    {
+      "title": "Deck Ledger Flashing Water Protection",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/1338af2e-7156-47fc-8d96-60c7698f8c7c.jpg",
+      "href": "/services/portland/deck-ledger-flashing-water-protection"
+    },
+    {
+      "title": "Deck Ledger Flashing Water Protection",
+      "description": "General",
+      "image": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/service-page/1338af2e-7156-47fc-8d96-60c7698f8c7c.jpg",
+      "href": "/services/seattle/deck-ledger-flashing-water-protection"
     }
-  ]
+  ],
+  "beforeAfterPairs": [],
+  "lightboxGalleries": [
+    {
+      "id": "museum-deck-repairs-historiacal",
+      "name": "Museum — Deck Repair & Restoration",
+      "images": [
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/museum-deck-repairs-historiacal-669dab15.webp",
+          "alt": "Before: Weathered wooden deck steps and porch showing significant deterioration and peeling paint"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/museum-deck-repairs-historiacal-68c68679.webp",
+          "alt": "Before: Covered walkway or porch with wooden beam supports and weathered concrete flooring"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/museum-deck-repairs-historiacal-c7e066a2.webp",
+          "alt": "During: Two workers constructing a wooden deck frame in a residential backyard"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/museum-deck-repairs-historiacal-4a6168cd.webp",
+          "alt": "During: Worker performing foundation or structural repair work under a deck using power tools"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/museum-deck-repairs-historiacal-5c426bf4.webp",
+          "alt": "After: New concrete deck/patio foundation with wooden post support system"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/museum-deck-repairs-historiacal-8ee50ca9.webp",
+          "alt": "After: Worker on newly constructed concrete deck/porch with metal roofing overhead"
+        }
+      ]
+    },
+    {
+      "id": "big-job-deck-and-structural",
+      "name": "Deck Repair & Structural Restoration",
+      "images": [
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/big-job-deck-and-structural-6a45b20d.webp",
+          "alt": "Mid-century modern home undergoing exterior restoration with visible siding replacement and structural work"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/big-job-deck-and-structural-2d48a5ce.webp",
+          "alt": "Before: Weathered wooden deck with peeling stain/paint showing aging and wear patterns"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/big-job-deck-and-structural-322d9d1b.webp",
+          "alt": "During: Worker in winter gear performing deck repairs or construction on wooden stairs and railings"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/big-job-deck-and-structural-c82fde86.webp",
+          "alt": "Multi-level wooden deck construction project showing exposed framing and support structure"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/big-job-deck-and-structural-83ba1a6b.webp",
+          "alt": "Deck reconstruction showing new framing joists being installed on existing structure"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/big-job-deck-and-structural-2b25ad86.webp",
+          "alt": "After: Flagstone patio walkway adjacent to wooden deck stairs and railing"
+        }
+      ]
+    },
+    {
+      "id": "deck-deck-repair-and-painting",
+      "name": "Deck — Deck Repair & Restoration",
+      "images": [
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-1e2acdfb.webp",
+          "alt": "Front porch stairs and railings during restoration work with tools present"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-01a05256.webp",
+          "alt": "Before: Weathered white wooden deck railing and stairs showing peeling paint and deterioration"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-8b60c6ae.webp",
+          "alt": "Before: Deteriorated wooden deck stairs with rotting boards and structural damage"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-a12d2f9d.webp",
+          "alt": "During: Worker removing deteriorated deck boards revealing significant dry rot damage to underlying structure"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-9e9463ff.webp",
+          "alt": "After: Newly completed wooden deck with outdoor furniture and railing"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-5ca58705.webp",
+          "alt": "Multi-level backyard deck with stairs and outdoor dining area surrounded by fencing"
+        },
+        {
+          "src": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/gallery/deck-deck-repair-and-painting-096af86c.webp",
+          "alt": "Freshly stained wooden front porch steps and landing leading to house entrance"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": []
 }

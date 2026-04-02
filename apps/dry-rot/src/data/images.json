@@ -195,5 +195,133 @@
       "image": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/service-page/IMG_0749.jpg",
       "href": "/services/seattle/roofline-overhang-rot-repair"
     }
-  ]
+  ],
+  "beforeAfterPairs": [],
+  "lightboxGalleries": [
+    {
+      "id": "deck-and-dry-rot-dry-rot",
+      "name": " Deck and Dry Rot — Dry Rot Repair & Restoration",
+      "images": [
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-791dab16.webp",
+          "alt": "Severely rotted wooden beam or post being cut with a saw during repair work"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-8a12f0be.webp",
+          "alt": "Before: Severe dry rot damage and deterioration at building corner with exposed structural elements"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-414e1683.webp",
+          "alt": "During: Hand holding severely damaged wood piece with dry rot next to what appears to be building trim or siding"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-a195fd88.webp",
+          "alt": "During: Hand holding severely dry-rotted wooden beam or post showing extensive fiber separation and decay"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-ef8e9a97.webp",
+          "alt": "After: Corner detail of wooden deck railing system showing vertical balusters and rail construction"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-0ebc94aa.webp",
+          "alt": "Newly constructed or refinished white deck railing with forested background"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/deck-and-dry-rot-dry-rot-99749e63.webp",
+          "alt": "Deck railing being painted or refinished with protective plastic sheeting on deck surface"
+        }
+      ]
+    },
+    {
+      "id": "dry-rot-full-service",
+      "name": "Dry Rot Repair & Restoration on Portland Craftsman Home",
+      "images": [
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/dry-rot-full-service-25328524.webp",
+          "alt": "Two-story house with weathered gray shingle siding and front porch showing signs of deterioration"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/dry-rot-full-service-f2bfbe4d.webp",
+          "alt": "After: Two-story craftsman-style home with covered front porch and dormer windows"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/dry-rot-full-service-53127852.webp",
+          "alt": "During: Roof-to-wall junction repair showing damaged trim, exposed wood, and deteriorated shingles"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/dry-rot-full-service-6538aa59.webp",
+          "alt": "During: Roof repair work in progress showing damaged shingles being removed and roof decking exposed"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/dry-rot-full-service-744da22c.webp",
+          "alt": "Front porch view of two-story home with green siding and white trim"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/dry-rot-full-service-81cb5b22.webp",
+          "alt": "After: Newly renovated two-story craftsman-style house with blue-green shingle siding and white trim"
+        }
+      ]
+    },
+    {
+      "id": "big-job-dry-rot-structural",
+      "name": "Big Job — Dry Rot Repair & Restoration",
+      "images": [
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/big-job-dry-rot-structural-c8c862bd.webp",
+          "alt": "Mid-construction restoration of rustic wooden cabin with exposed siding and structural repairs in progress"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/big-job-dry-rot-structural-363d7386.webp",
+          "alt": "During: Severely damaged and deteriorated wooden siding being removed/replaced during home restoration"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/big-job-dry-rot-structural-6b8db2de.webp",
+          "alt": "During: Exterior wooden building with severe dry rot damage during repair work"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/big-job-dry-rot-structural-83ba1a6b.webp",
+          "alt": "Deck reconstruction showing new framing joists being installed on existing structure"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/big-job-dry-rot-structural-2b25ad86.webp",
+          "alt": "Flagstone patio walkway adjacent to wooden deck stairs and railing"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/big-job-dry-rot-structural-412a03ff.webp",
+          "alt": "After: Interior room with wood paneling, tile flooring, large windows, and water dispenser"
+        }
+      ]
+    },
+    {
+      "id": "portland-siding-rot-restoration",
+      "name": "Portland Siding Rot Repair & Restoration",
+      "images": [
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/portland-siding-rot-restoration-1caf845f.webp",
+          "alt": "House exterior showing extensive siding damage and repair work in progress"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/portland-siding-rot-restoration-8d6f7e4f.webp",
+          "alt": "During: Severe dry rot damage to wooden deck/porch structure with deteriorated support beam"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/portland-siding-rot-restoration-f9036c4b.webp",
+          "alt": "During: Exposed deteriorated wood framing and mud/dirt buildup beneath window opening"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/portland-siding-rot-restoration-e5ed0fc8.webp",
+          "alt": "After: Newly installed composite decking on side of house with fresh siding work"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/portland-siding-rot-restoration-0e832f62.webp",
+          "alt": "Exterior view of house showing newly installed horizontal wood siding with white trim and metal wire fencing"
+        },
+        {
+          "src": "https://jybwgio0zt7azf1v.public.blob.vercel-storage.com/gallery/portland-siding-rot-restoration-cbe0e3c6.webp",
+          "alt": "Completed siding installation on residential home exterior with new horizontal wood-look siding and window"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": []
 }
