@@ -99,5 +99,95 @@
       "image": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/service-page/down-net_http20260317-408-rx01yo.jpg",
       "href": "/services/seattle/foundation-transition-ground-level-repairs"
     }
-  ]
+  ],
+  "beforeAfterPairs": [],
+  "lightboxGalleries": [
+    {
+      "id": "big-job-crawlspace",
+      "name": "Big Job — Crawlspace and Structural Repair Project",
+      "images": [
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-e070391d.webp",
+          "alt": "Before: Exposed foundation wall showing rotted wood siding, damaged trim, and structural deterioration beneath building"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-a1c41694.webp",
+          "alt": "Before: Interior view of damaged crawlspace or basement area showing deteriorated wooden support structures and debris-covered floor"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-66a77807.webp",
+          "alt": "During: Foundation repair or crawlspace renovation showing exposed floor joists, dirt floor, and stone foundation materials"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-bc27bded.webp",
+          "alt": "During: Foundation repair work showing new wooden support posts and framing underneath a house"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-536439c6.webp",
+          "alt": "Worker installing or repairing flashing along roof edge where deck meets house siding"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-c82fde86.webp",
+          "alt": "Multi-level wooden deck construction project showing exposed framing and support structure"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/big-job-crawlspace-83ba1a6b.webp",
+          "alt": "Deck reconstruction showing new framing joists being installed on existing structure"
+        }
+      ]
+    },
+    {
+      "id": "newell-museum-crawlspace-bda",
+      "name": "Newell Museum — Crawlspace Repair Project",
+      "images": [
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/newell-museum-crawlspace-bda-59a39884.webp",
+          "alt": "Severely deteriorated foundation sill plate and framing with dry rot damage"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/newell-museum-crawlspace-bda-53f97859.webp",
+          "alt": "Worker inspecting or repairing structural beams in crawlspace underneath building"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/newell-museum-crawlspace-bda-e22f7943.webp",
+          "alt": "Worker performing foundation repair and siding maintenance on deteriorated building exterior"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/newell-museum-crawlspace-bda-5c426bf4.webp",
+          "alt": "New concrete deck/patio foundation with wooden post support system"
+        }
+      ]
+    },
+    {
+      "id": "crawlspace-structural-damage",
+      "name": "Structural Damage & Foundation Issues",
+      "images": [
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/crawlspace-structural-damage-363d7386.webp",
+          "alt": "Severely damaged and deteriorated wooden siding being removed/replaced during home restoration"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/crawlspace-structural-damage-bc27bded.webp",
+          "alt": "Foundation repair work showing new wooden support posts and framing underneath a house"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/crawlspace-structural-damage-c82fde86.webp",
+          "alt": "Multi-level wooden deck construction project showing exposed framing and support structure"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/crawlspace-structural-damage-83ba1a6b.webp",
+          "alt": "Deck reconstruction showing new framing joists being installed on existing structure"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/crawlspace-structural-damage-536439c6.webp",
+          "alt": "Worker installing or repairing flashing along roof edge where deck meets house siding"
+        },
+        {
+          "src": "https://sy0eq9go2vrctytm.public.blob.vercel-storage.com/gallery/crawlspace-structural-damage-412a03ff.webp",
+          "alt": "Interior room with wood paneling, tile flooring, large windows, and water dispenser"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": []
 }

@@ -135,5 +135,65 @@
       "image": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/service-page/IMG_20250930_163621_168.jpg",
       "href": "/services/seattle/chimney-chase-waterproofing-sealing"
     }
-  ]
+  ],
+  "beforeAfterPairs": [],
+  "lightboxGalleries": [
+    {
+      "id": "chimney-flashing-and-integration",
+      "name": "Chimney Flashing and Repair Project",
+      "images": [
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-flashing-and-integration-49934495.webp",
+          "alt": "Upward angle view of Victorian-style house exterior showing siding, trim, and roofline"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-flashing-and-integration-ef67c165.webp",
+          "alt": "Before: Exterior house showing weathered siding with ladder positioned for repair work"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-flashing-and-integration-a221a762.webp",
+          "alt": "Damaged wood siding with peeling paint next to roofing shingles showing deterioration and potential dry rot"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-flashing-and-integration-e505b28a.webp",
+          "alt": "Worker applying sealant or caulk to roof flashing around chimney or vent penetration"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-flashing-and-integration-bda7da2e.webp",
+          "alt": "During: Worker performing roof repair on yellow craftsman-style house with protective sheeting on landscaping"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-flashing-and-integration-22564bee.webp",
+          "alt": "After: Yellow two-story house with green trim, white columns, and front porch under cloudy sky"
+        }
+      ]
+    },
+    {
+      "id": "chimney-repair-work",
+      "name": "Chimney Repair & Restoration Work",
+      "images": [
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-repair-work-d71bf11b.webp",
+          "alt": "Low-angle view of house exterior showing mixed siding materials and brick chimney"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-repair-work-4b0a1c13.webp",
+          "alt": "Metal roofing installation on historic wood-sided house with workers on ladder and lift equipment"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-repair-work-3997fd58.webp",
+          "alt": "Worker in yellow cherry picker lift performing siding repair/replacement on multi-story house exterior"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-repair-work-bf98bca9.webp",
+          "alt": "Major home renovation project showing roof and siding removal with lead paint abatement in progress"
+        },
+        {
+          "src": "https://u1tffeydjgpikbli.public.blob.vercel-storage.com/gallery/chimney-repair-work-f94468af.webp",
+          "alt": "Craftsman-style house exterior showing active roofing/siding work with ladder and equipment"
+        }
+      ]
+    }
+  ],
+  "videoEmbeds": []
 }
