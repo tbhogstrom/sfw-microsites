@@ -46,9 +46,14 @@ def parse_cluster_file(path: Path) -> ClusterMeta | None:
             key, value = stripped.split(":", 1)
             fields[key.strip()] = value.strip()
 
+    try:
+        cluster_id = int(fields.get("cluster_id", "0"))
+    except ValueError:
+        cluster_id = 0
+
     return ClusterMeta(
         service=fields.get("service", ""),
-        cluster_id=int(fields.get("cluster_id", "0")),
+        cluster_id=cluster_id,
         cluster_slug=fields.get("cluster_slug", ""),
         location=fields.get("location", ""),
         status=fields.get("status", "stub"),
@@ -67,7 +72,8 @@ def find_pending_subtopics(text: str, subtopics: list[str]) -> list[str]:
 
 def has_stub_hero(text: str) -> bool:
     """Check if the hero section is still a stub."""
-    return "[STUB]" in text
+    text = text.replace("\r\n", "\n")
+    return bool(re.search(r"## Hero Section\n[\s\S]*?\[STUB\]", text))
 
 
 def has_stub_faq(text: str) -> bool:
