@@ -17,11 +17,11 @@ import { serviceConfigs, getLocationPaths, getLocation } from '@sfw/content';
 
 // Generate static paths for all locations
 export async function getStaticPaths() {
-  return getLocationPaths();
+  return getLocationPaths('beam-repair');
 }
 
 const { slug } = Astro.params;
-const location = getLocation(slug as string);
+const location = getLocation(slug as string, 'beam-repair');
 
 if (!location) {
   return Astro.redirect('/404');

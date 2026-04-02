@@ -8,7 +8,7 @@ import { HeroSection, CTASection, GoogleMapEmbed } from '@sfw/ui';
 import { serviceConfigs, getAllLocations } from '@sfw/content';
 
 const config = serviceConfigs['dry-rot'];
-const locations = getAllLocations();
+const locations = getAllLocations('dry-rot');
 const locationsWithMaps = locations.filter((l) => l.mapEmbedSrc);
 ---
 

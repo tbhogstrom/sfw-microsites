@@ -18,11 +18,11 @@ import { serviceConfigs, getLocationPaths, getLocation } from '@sfw/content';
 
 // Generate static paths for all locations
 export async function getStaticPaths() {
-  return getLocationPaths();
+  return getLocationPaths('dry-rot');
 }
 
 const { slug } = Astro.params;
-const location = getLocation(slug as string);
+const location = getLocation(slug as string, 'dry-rot');
 
 if (!location) {
   return Astro.redirect('/404');

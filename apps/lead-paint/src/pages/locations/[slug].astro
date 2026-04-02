@@ -19,11 +19,11 @@ import SplitJourneyGallery from '../../components/SplitJourneyGallery.astro';
 
 // Generate static paths for all locations
 export async function getStaticPaths() {
-  return getLocationPaths();
+  return getLocationPaths('lead-paint');
 }
 
 const { slug } = Astro.params;
-const location = getLocation(slug as string);
+const location = getLocation(slug as string, 'lead-paint');
 
 if (!location) {
   return Astro.redirect('/404');
