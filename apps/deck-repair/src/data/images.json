@@ -199,7 +199,26 @@
       "href": "/services/seattle/deck-ledger-flashing-water-protection"
     }
   ],
-  "beforeAfterPairs": [],
+  "beforeAfterPairs": [
+    {
+      "id": "porch-stair-railing-renovation",
+      "name": "Porch Stair & Railing Renovation",
+      "before": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/before-after/rehan-iqbal-porch-before.webp",
+      "after": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/before-after/rehan-iqbal-porch-after.webp",
+      "alt": "Front porch stair and railing renovation — weathered stairs rebuilt with composite decking and new railings",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
+    },
+    {
+      "id": "exterior-deck-staircase-rebuild",
+      "name": "Exterior Deck Staircase Rebuild",
+      "before": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/before-after/rehan-iqbal-deck-before.webp",
+      "after": "https://xmxoqy1znmcszdw8.public.blob.vercel-storage.com/before-after/rehan-iqbal-deck-after.webp",
+      "alt": "Exterior deck staircase rebuild — rotting stairs replaced with new lumber and railings",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
+    }
+  ],
   "lightboxGalleries": [
     {
       "id": "museum-deck-repairs-historiacal",

@@ -99,5 +99,34 @@
       "image": "https://uvkzfgko70blt8w5.public.blob.vercel-storage.com/service-page/IMG_2848.jpg",
       "href": "/services/seattle/trim-by-material-cedar-pvc-fiber-cement"
     }
+  ],
+  "beforeAfterPairs": [
+    {
+      "id": "craftsman-exterior-restoration",
+      "name": "Craftsman Home Exterior Restoration",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/ela-martinez-moreno-before.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/ela-martinez-moreno-after.webp",
+      "alt": "Craftsman home exterior restoration — neglected siding and trim restored with fresh paint and new railings",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
+    },
+    {
+      "id": "craftsman-exterior-repaint",
+      "name": "Craftsman Home Exterior Painting & Renovation",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/mike-davis-before.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/mike-davis-after.webp",
+      "alt": "Craftsman home repainted from dark navy to fresh white siding with new trim",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
+    },
+    {
+      "id": "historic-farmhouse-restoration",
+      "name": "Historic Farmhouse Exterior Restoration",
+      "before": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/kurt-schrader-before.webp",
+      "after": "https://fmw5przxnyrpekly.public.blob.vercel-storage.com/before-after/kurt-schrader-after.webp",
+      "alt": "Historic farmhouse exterior restoration — faded white repainted to sage green with fresh trim",
+      "beforeLabel": "Before",
+      "afterLabel": "After"
+    }
   ]
 }
