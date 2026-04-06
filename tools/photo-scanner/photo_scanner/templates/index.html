@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Scanner</title>
+<style>
+  :root {
+    --bg: #0a0a0a; --surface: #141414; --surface2: #1c1c1c; --border: #2a2a2a;
+    --text: #e5e5e5; --text-muted: #777; --accent: #3b82f6; --green: #22c55e;
+    --yellow: #eab308; --red: #ef4444; --orange: #f97316; --purple: #a78bfa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+  /* Sidebar */
+  .sidebar { width: 260px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; height: 100%; overflow: hidden; }
+  .sidebar-header { padding: 16px; border-bottom: 1px solid var(--border); }
+  .sidebar-header h1 { font-size: 15px; font-weight: 600; }
+  .sidebar-scroll { flex: 1; overflow-y: auto; padding: 12px 16px; }
+  .sidebar h2 { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 14px 0 6px; font-weight: 600; }
+  .sidebar h2:first-child { margin-top: 0; }
+  .sidebar label { display: flex; align-items: center; gap: 6px; padding: 3px 0; font-size: 12px; cursor: pointer; }
+  .sidebar input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; }
+  .sidebar select, .sidebar input[type="range"] { width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; font-size: 12px; }
+  .filter-count { color: var(--text-muted); font-size: 10px; margin-left: auto; font-variant-numeric: tabular-nums; }
+
+  /* Tabs */
+  .tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .tab { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Main */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
+
+  /* Progress bar */
+  .progress-bar { height: 3px; background: var(--border); flex-shrink: 0; }
+  .progress-fill { height: 100%; background: var(--accent); transition: width 0.5s ease; }
+
+  /* Top bar */
+  .topbar { padding: 10px 20px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
+  .stat { text-align: center; min-width: 60px; }
+  .stat-value { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+  .progress-status { margin-left: auto; font-size: 12px; color: var(--accent); display: flex; align-items: center; gap: 6px; }
+  .progress-status .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .progress-status.done { color: var(--green); }
+
+  /* Content area */
+  .content { flex: 1; overflow-y: auto; padding: 16px 20px; }
+
+  /* Grid view (triage grids) */
+  .grids-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .grid-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .grid-card img { width: 100%; display: block; }
+  .grid-card-body { padding: 10px 12px; }
+  .grid-card-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+  .grid-picks { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pick-badge { font-size: 10px; padding: 2px 8px; border-radius: 3px; background: #22c55e22; color: var(--green); border: 1px solid #22c55e44; }
+  .pick-badge.skip { background: #ffffff08; color: var(--text-muted); border-color: var(--border); }
+  .pick-badge.document { background: #f9731622; color: var(--orange); border: 1px solid #f9731644; }
+
+  /* Photo grid */
+  .folder-group { margin-bottom: 20px; }
+  .folder-header { font-size: 13px; font-weight: 600; padding: 6px 0; border-bottom: 1px solid var(--border); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+  .folder-header .count { color: var(--text-muted); font-weight: 400; font-size: 12px; }
+  .folder-header .chevron { transition: transform 0.2s; font-size: 10px; }
+  .folder-header.collapsed .chevron { transform: rotate(-90deg); }
+  .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .photo-grid.hidden { display: none; }
+
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; }
+  .card:hover { border-color: var(--accent); }
+  .card .card-img { width: 100%; height: 150px; object-fit: cover; display: block; background: var(--surface2); }
+  .card-body { padding: 8px 10px; }
+  .card-scene { font-size: 11px; line-height: 1.4; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text); }
+  .card-filename { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tags { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 4px; }
+  .tag { font-size: 9px; padding: 1px 6px; border-radius: 3px; background: #3b82f618; color: var(--accent); border: 1px solid #3b82f633; }
+  .tag.phase { background: #a78bfa18; color: var(--purple); border-color: #a78bfa33; }
+  .tag.triage-hint { background: #22c55e18; color: var(--green); border-color: #22c55e33; }
+  .stars { color: var(--yellow); font-size: 12px; letter-spacing: 0.5px; }
+  .stars .empty { color: #333; }
+  .card.skipped { opacity: 0.35; }
+  .card.skipped .card-img { filter: grayscale(0.7); }
+  .card.document { opacity: 0.5; border-color: var(--orange); }
+  .card.document .card-img { filter: sepia(0.3); }
+  .card.document::after { content: 'DOC'; position: absolute; top: 6px; right: 6px; background: var(--orange); color: #000; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+  .card.document { position: relative; }
+  .card.pending { opacity: 0.5; border-style: dashed; }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 100; display: none; align-items: center; justify-content: center; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; max-width: 860px; width: 95%; max-height: 90vh; overflow-y: auto; }
+  .modal-img { width: 100%; max-height: 480px; object-fit: contain; background: #000; display: block; }
+  .modal-body { padding: 16px 20px; }
+  .modal-body h3 { margin-bottom: 10px; font-size: 14px; }
+  .detail-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+  .detail-label { color: var(--text-muted); min-width: 110px; flex-shrink: 0; font-size: 11px; }
+  .modal-close { position: absolute; top: 10px; right: 14px; font-size: 24px; color: var(--text-muted); cursor: pointer; background: none; border: none; z-index: 101; }
+  .modal-close:hover { color: var(--text); }
+
+  /* Empty state */
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+  .empty-state h3 { font-size: 16px; margin-bottom: 8px; color: var(--text); }
+  .empty-state p { font-size: 13px; }
+
+
+  /* Gallery builder */
+  .btn { padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); transition: all 0.15s; }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-green { background: var(--green); color: #000; border-color: var(--green); }
+  .btn-green:hover { opacity: 0.9; }
+  .btn-sm { padding: 3px 8px; font-size: 10px; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Gallery tab layout — three zones stacked */
+  .gb-presets { margin-bottom: 12px; }
+  .gb-presets.collapsed { display: none; }
+  .gb-presets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+  .gb-preset-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; cursor: pointer; transition: border-color 0.15s; }
+  .gb-preset-card:hover { border-color: var(--accent); }
+  .gb-preset-card .preset-thumbs { display: flex; gap: 2px; height: 60px; overflow: hidden; }
+  .gb-preset-card .preset-thumbs img { flex: 1; object-fit: cover; min-width: 0; }
+  .gb-preset-card .preset-body { padding: 6px 8px; }
+  .gb-preset-card .preset-name { font-size: 11px; font-weight: 600; }
+  .gb-preset-card .preset-meta { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Editor strip — the gallery being built */
+  .gb-editor { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px; min-height: 80px; }
+  .gb-editor-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .gb-editor-header select, .gb-editor-header input { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; font-size: 12px; }
+  .gb-editor-strip { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0; min-height: 120px; align-items: flex-start; }
+  .gb-editor-strip.drag-over { outline: 2px dashed var(--accent); outline-offset: -2px; border-radius: 6px; }
+  .gb-editor-empty { display: flex; align-items: center; justify-content: center; width: 100%; color: var(--text-muted); font-size: 12px; }
+
+  .gb-strip-card { width: 150px; flex-shrink: 0; background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; overflow: hidden; position: relative; cursor: grab; }
+  .gb-strip-card:active { cursor: grabbing; }
+  .gb-strip-card.dragging { opacity: 0.3; }
+  .gb-strip-card.drag-target { border-color: var(--accent); border-width: 2px; }
+  .gb-strip-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .gb-strip-card.uploading { opacity: 0.5; }
+  .gb-strip-card.uploaded { border-color: var(--green); }
+  .gb-strip-card.uploaded::before { content: ''; position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; background: var(--green); border-radius: 50%; z-index: 1; }
+  .gb-strip-card.error { border-color: var(--red); }
+  .gb-strip-card img { width: 100%; height: 90px; object-fit: cover; display: block; }
+  .gb-strip-card .strip-alt { width: calc(100% - 8px); margin: 4px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 3px; padding: 3px 5px; font-size: 9px; }
+  .gb-strip-card .strip-remove { position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.7); color: #fff; border: none; border-radius: 3px; width: 16px; height: 16px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .gb-strip-card .strip-remove:hover { background: var(--red); }
+
+  /* Preview area — large view of selected photo */
+  .gb-preview { text-align: center; margin: 10px 0; }
+  .gb-preview img { max-height: 300px; max-width: 100%; object-fit: contain; border-radius: 6px; }
+  .gb-preview .preview-alt { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+  /* Candidates — photos to drag from */
+  .gb-candidates { border-top: 1px solid var(--border); padding-top: 12px; }
+  .gb-candidates h3 { font-size: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .gb-cand-filters { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .gb-cand-filters select { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; font-size: 11px; }
+  .gb-cand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; max-height: 50vh; overflow-y: auto; }
+  .gb-cand-card { background: var(--surface); border: 1px solid var(--border); border-radius: 5px; overflow: hidden; cursor: grab; transition: border-color 0.15s; }
+  .gb-cand-card:hover { border-color: var(--accent); }
+  .gb-cand-card.in-gallery { opacity: 0.25; pointer-events: none; }
+  .gb-cand-card.dragging { opacity: 0.4; }
+  .gb-cand-card img { width: 100%; height: 80px; object-fit: cover; display: block; }
+  .gb-cand-card .cand-body { padding: 3px 5px; }
+  .gb-cand-card .cand-body .stars { font-size: 9px; }
+  .gb-cand-card .cand-scene { font-size: 8px; color: var(--text-muted); line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .upload-log { margin-top: 8px; max-height: 100px; overflow-y: auto; font-size: 11px; font-family: monospace; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 6px; display: none; }
+  .upload-log .log-ok { color: var(--green); }
+  .upload-log .log-err { color: var(--red); }
+
+/* Top-level navigation */
+.main-nav {
+    display: flex;
+    background: #0d1117;
+    border-bottom: 1px solid #333;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.main-nav .nav-tab {
+    padding: 10px 20px;
+    color: #888;
+    font-size: 13px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+}
+.main-nav .nav-tab:hover { color: #ccc; }
+.main-nav .nav-tab.active {
+    background: #161b22;
+    color: #0ff;
+    border-bottom-color: #0ff;
+    font-weight: 600;
+}
+.main-nav .nav-spacer { flex: 1; }
+.main-nav .nav-status {
+    padding: 10px 20px;
+    color: #555;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+/* Section containers */
+.main-section { display: none; height: calc(100vh - 41px); overflow-y: auto; }
+.main-section.active { display: flex; flex-direction: column; }
+
+/* Shared component styles */
+.stat-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 14px;
+}
+.stat-value { color: #0ff; font-size: 24px; font-weight: 700; }
+.stat-label { color: #888; font-size: 12px; margin-top: 4px; }
+.stat-sub { color: #555; font-size: 11px; margin-top: 4px; }
+.btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: #ccc;
+    font-size: 12px;
+    cursor: pointer;
+}
+.btn:hover { border-color: #0ff; color: #0ff; }
+.btn-primary { background: #0d419d; border-color: #58a6ff; color: #58a6ff; }
+.btn-success { background: #1a3a1a; border-color: #3fb950; color: #3fb950; }
+.btn-warning { background: #2d1b00; border-color: #d29922; color: #d29922; }
+
+.project-row {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    margin-bottom: 6px;
+}
+.project-row:hover { border-color: #0ff; }
+
+.badge { padding: 2px 8px; border-radius: 10px; font-size: 10px; display: inline-block; }
+.badge-green { background: #1a3a1a; color: #3fb950; }
+.badge-amber { background: #2d1b00; color: #d29922; }
+.badge-gray { background: #21262d; color: #888; }
+.badge-blue { background: #0d2847; color: #58a6ff; }
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+}
+.catalog-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+.catalog-card:hover { border-color: #0ff; }
+.catalog-card img { width: 100%; height: 140px; object-fit: cover; background: #0d1117; }
+.catalog-card .card-body { padding: 8px; }
+.catalog-card .card-scene { color: #ccc; font-size: 11px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.catalog-card .card-meta { color: #555; font-size: 10px; margin-top: 3px; }
+.catalog-card .card-tags { display: flex; gap: 3px; margin-top: 4px; flex-wrap: wrap; }
+.catalog-card .card-tags span { background: #0d2847; padding: 1px 5px; border-radius: 3px; color: #58a6ff; font-size: 9px; }
+
+.search-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.search-bar input, .search-bar select {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #ccc;
+    font-size: 13px;
+}
+.search-bar input { flex: 1; }
+.search-bar input:focus { outline: none; border-color: #0ff; }
+
+.filter-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.filter-row label { color: #888; font-size: 11px; display: flex; align-items: center; gap: 4px; }
+.filter-row select {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 3px 8px;
+    color: #888;
+    font-size: 11px;
+}
+
+/* Project detail view */
+.project-detail { padding: 16px; }
+.project-detail .back-btn { color: #0ff; cursor: pointer; font-size: 13px; margin-bottom: 12px; display: inline-block; }
+.project-detail .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+.project-detail .photo-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.project-detail .photo-card img { width: 100%; height: 120px; object-fit: cover; background: #0d1117; }
+.project-detail .photo-card .info { padding: 6px; font-size: 10px; color: #888; }
+</style>
+</head>
+<body>
+
+<div class="main-nav">
+    <div class="nav-tab" data-section="dashboard" onclick="switchSection('dashboard')">Dashboard</div>
+    <div class="nav-tab" data-section="projects" onclick="switchSection('projects')">Projects</div>
+    <div class="nav-tab" data-section="catalog" onclick="switchSection('catalog')">Catalog</div>
+    <div class="nav-tab active" data-section="scanner" onclick="switchSection('scanner')">Scanner</div>
+    <div class="nav-tab" data-section="map" onclick="switchSection('map')">Map</div>
+    <div class="nav-spacer"></div>
+    <div class="nav-status" id="sync-status"></div>
+</div>
+
+<div id="section-dashboard" class="main-section">
+    <div style="padding:16px;max-width:1200px;margin:0 auto;width:100%">
+        <div style="color:#ccc;font-size:13px;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px">This Week's Activity</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+            <div class="stat-card"><div class="stat-value" id="dash-photos-week">—</div><div class="stat-label">New photos this week</div><div class="stat-sub" id="dash-photos-compare"></div></div>
+            <div class="stat-card"><div class="stat-value" id="dash-projects-week">—</div><div class="stat-label">Projects with new photos</div></div>
+            <div class="stat-card"><div class="stat-value" id="dash-total-projects">—</div><div class="stat-label">Projects analyzed</div></div>
+        </div>
+        <div style="color:#ccc;font-size:13px;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px">Analysis Catalog</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+            <div class="stat-card"><div class="stat-value" id="dash-analyzed">—</div><div class="stat-label">Photos Analyzed</div></div>
+            <div class="stat-card"><div class="stat-value" id="dash-picks">—</div><div class="stat-label">Marketing Picks (4+)</div></div>
+            <div class="stat-card"><div class="stat-value" id="dash-ba">—</div><div class="stat-label">Before/After</div></div>
+            <div class="stat-card"><div class="stat-value" id="dash-services">—</div><div class="stat-label">Service Types</div></div>
+        </div>
+        <div id="dashboard-alert" style="display:none;background:#2d1b00;border:1px solid #d29922;border-radius:6px;padding:12px 14px;margin-bottom:16px;color:#e3b341;font-size:13px"></div>
+        <div style="display:flex;gap:8px">
+            <button class="btn" onclick="switchSection('projects')">Browse Projects →</button>
+            <button class="btn" onclick="switchSection('catalog')">Search Catalog →</button>
+            <button class="btn" onclick="switchSection('map')">View Map →</button>
+        </div>
+    </div>
+</div>
+
+<div id="section-projects" class="main-section">
+    <div style="padding:16px;max-width:1200px;margin:0 auto;width:100%">
+        <div class="search-bar">
+            <input type="text" id="projects-search" placeholder="Search projects by name or address..." onkeydown="if(event.key==='Enter')loadProjects()">
+            <select id="projects-status-filter" onchange="loadProjects()">
+                <option value="">All statuses</option>
+                <option value="analyzed">Analyzed</option>
+                <option value="synced">Synced</option>
+                <option value="unsynced">Not synced</option>
+            </select>
+            <button class="btn btn-primary" onclick="loadProjects()">Search</button>
+        </div>
+        <div id="projects-actions" style="display:none;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;margin-bottom:12px;display:flex;gap:8px;align-items:center">
+        </div>
+        <div id="projects-list"></div>
+        <div id="project-detail" style="display:none"></div>
+        <div id="projects-pagination" style="margin-top:12px;color:#555;font-size:12px"></div>
+    </div>
+</div>
+
+<div id="section-catalog" class="main-section">
+    <div style="padding:16px;max-width:1200px;margin:0 auto;width:100%">
+        <div class="search-bar">
+            <input type="text" id="catalog-search" placeholder="Search photos by description, service, or tags..." onkeydown="if(event.key==='Enter')loadCatalog()">
+            <button class="btn btn-primary" onclick="loadCatalog()">Search</button>
+        </div>
+        <div class="filter-row">
+            <span style="color:#888;font-size:11px;margin-right:4px">Filters:</span>
+            <select id="catalog-service" onchange="loadCatalog()">
+                <option value="">Any service</option>
+                <option value="siding">siding</option>
+                <option value="deck">deck</option>
+                <option value="dry-rot">dry-rot</option>
+                <option value="chimney">chimney</option>
+                <option value="crawlspace">crawlspace</option>
+                <option value="flashing">flashing</option>
+                <option value="trim">trim</option>
+                <option value="beam">beam</option>
+                <option value="leak">leak</option>
+                <option value="lead-paint">lead-paint</option>
+                <option value="mold">mold</option>
+                <option value="restoration">restoration</option>
+            </select>
+            <select id="catalog-phase" onchange="loadCatalog()">
+                <option value="">Any phase</option>
+                <option value="before">before</option>
+                <option value="during">during</option>
+                <option value="after">after</option>
+                <option value="overview">overview</option>
+                <option value="materials">materials</option>
+            </select>
+            <select id="catalog-score" onchange="loadCatalog()">
+                <option value="0">Any score</option>
+                <option value="5">★★★★★ (5)</option>
+                <option value="4">★★★★+ (4+)</option>
+                <option value="3">★★★+ (3+)</option>
+            </select>
+            <label><input type="checkbox" id="catalog-ba" onchange="loadCatalog()"> Before/after only</label>
+        </div>
+        <div id="catalog-count" style="color:#888;font-size:12px;margin-bottom:8px"></div>
+        <div id="catalog-grid" class="catalog-grid"></div>
+    </div>
+</div>
+
+<div id="section-map" class="main-section">
+    <div id="map-container" style="flex:1;min-height:500px"></div>
+</div>
+
+<div id="section-scanner" class="main-section active" style="flex-direction:row;overflow:hidden">
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h1>Photo Scanner</h1>
+  </div>
+  <div class="sidebar-scroll">
+    <h2>Microsites</h2>
+    <div id="microsite-filters"></div>
+
+    <h2>Min Score</h2>
+    <input type="range" id="min-score" min="0" max="5" value="0" step="1">
+    <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:2px;">
+      <span>All</span><span id="score-label">0</span><span>5</span>
+    </div>
+
+    <h2>Phase</h2>
+    <select id="phase-filter">
+      <option value="all">All phases</option>
+      <option value="before">Before</option>
+      <option value="during">During</option>
+      <option value="after">After</option>
+      <option value="overview">Overview</option>
+      <option value="materials">Materials</option>
+      <option value="other">Other</option>
+    </select>
+
+    <h2>Folder</h2>
+    <select id="folder-filter">
+      <option value="all">All folders</option>
+    </select>
+
+    <h2>Display</h2>
+    <label><input type="checkbox" id="show-analyzed-only" checked> Analyzed only</label>
+    <label><input type="checkbox" id="candidates-only"> Candidates (4+)</label>
+    <label><input type="checkbox" id="show-skipped"> Show skipped</label>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="tabs">
+    <div class="tab active" data-tab="photos">Photos</div>
+    <div class="tab" data-tab="grids">Triage Grids</div>
+    <div class="tab" data-tab="gallery">Gallery Builder</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="topbar" id="topbar"></div>
+  <div class="content" id="content"></div>
+</div>
+
+</div><!-- end section-scanner -->
+
+<div class="modal-overlay" id="modal">
+  <button class="modal-close" id="modal-close">&times;</button>
+  <div class="modal" id="modal-content"></div>
+</div>
+
+
+<script>
+const SERVICE_MAP = {{ service_to_microsite | tojson }};
+const MICROSITES = [...new Set(Object.values(SERVICE_MAP))].sort();
+
+let currentTab = 'photos';
+let allPhotos = [];
+let allGrids = [];
+let currentResults = {};
+let pollTimer = null;
+let filtersInitialized = false;
+
+// --- Data loading ---
+async function fetchResults() {
+  try {
+    const res = await fetch('/api/results');
+    if (!res.ok) return null;
+    return await res.json();
+  } catch { return null; }
+}
+
+async function fetchGrids() {
+  try {
+    const res = await fetch('/api/grids');
+    if (!res.ok) return null;
+    return await res.json();
+  } catch { return null; }
+}
+
+async function refresh() {
+  const [results, gridsData] = await Promise.all([fetchResults(), fetchGrids()]);
+  if (!results) return;
+
+  currentResults = results;
+  allGrids = gridsData?.grids || results.grids || [];
+
+  allPhotos = [];
+  for (const [folderName, folderData] of Object.entries(results.folders || {})) {
+    for (const photo of folderData.photos || []) {
+      allPhotos.push({ ...photo, folder: folderName });
+    }
+  }
+
+  if (!filtersInitialized && allPhotos.length > 0) {
+    initFilters();
+    filtersInitialized = true;
+  }
+  updateFolderOptions();
+  renderTopbar();
+  renderContent();
+
+  // Keep polling if scan is in progress
+  const progress = results.progress || {};
+  if (progress.phase && progress.phase !== 'complete') {
+    if (!pollTimer) pollTimer = setInterval(refresh, 3000);
+  } else {
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  }
+}
+
+// --- Filters ---
+function initFilters() {
+  const container = document.getElementById('microsite-filters');
+  container.innerHTML = '';
+  MICROSITES.forEach(ms => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" class="ms-filter" value="${ms}" checked> ${ms} <span class="filter-count" data-ms="${ms}">0</span>`;
+    container.appendChild(label);
+  });
+}
+
+function updateFolderOptions() {
+  const select = document.getElementById('folder-filter');
+  const current = select.value;
+  const folders = Object.keys(currentResults.folders || {}).sort();
+  const existing = new Set([...select.options].map(o => o.value));
+  folders.forEach(f => {
+    if (!existing.has(f)) {
+      const opt = document.createElement('option');
+      opt.value = f; opt.textContent = f;
+      select.appendChild(opt);
+    }
+  });
+  if (current) select.value = current;
+}
+
+function getFilters() {
+  const checked = [...document.querySelectorAll('.ms-filter:checked')].map(el => el.value);
+  return {
+    microsites: new Set(checked),
+    minScore: parseInt(document.getElementById('min-score').value),
+    phase: document.getElementById('phase-filter').value,
+    folder: document.getElementById('folder-filter').value,
+    analyzedOnly: document.getElementById('show-analyzed-only').checked,
+    candidatesOnly: document.getElementById('candidates-only').checked,
+    showSkipped: document.getElementById('show-skipped').checked,
+  };
+}
+
+function matchesFilters(photo, filters) {
+  if (!filters.showSkipped && photo.triage === 'skipped' && photo.prescreen === 'skip') return false;
+  if (filters.analyzedOnly && !photo.scene && !photo.triage_service_hint) return false;
+  if (filters.candidatesOnly && (photo.marketing_score || 0) < 4) return false;
+  if (filters.minScore > 0 && (photo.marketing_score || 0) < filters.minScore) return false;
+  if (filters.phase !== 'all' && photo.phase && photo.phase !== filters.phase) return false;
+  if (filters.folder !== 'all' && photo.folder !== filters.folder) return false;
+  if (filters.microsites.size > 0 && photo.service_types && photo.service_types.length > 0) {
+    const photoMs = photo.service_types.map(s => SERVICE_MAP[s] || s);
+    if (!photoMs.some(ms => filters.microsites.has(ms))) return false;
+  }
+  return true;
+}
+
+// --- Rendering ---
+function starsHtml(score) {
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += i <= score ? '★' : '<span class="empty">★</span>';
+  return s;
+}
+
+function renderTopbar() {
+  const stats = currentResults.stats || {};
+  const progress = currentResults.progress || {};
+  const bar = document.getElementById('topbar');
+
+  let statusHtml = '';
+  if (progress.phase === 'triage') {
+    const pct = Math.round((progress.grid / progress.total_grids) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    statusHtml = `<div class="progress-status"><div class="spinner"></div>Triage: grid ${progress.grid}/${progress.total_grids}</div>`;
+  } else if (progress.phase === 'deep') {
+    const triagePct = 50;
+    const deepPct = Math.round((progress.current / progress.total) * 50);
+    document.getElementById('progress-fill').style.width = (triagePct + deepPct) + '%';
+    statusHtml = `<div class="progress-status"><div class="spinner"></div>Deep: ${progress.current}/${progress.total}</div>`;
+  } else if (progress.phase === 'complete') {
+    document.getElementById('progress-fill').style.width = '100%';
+    statusHtml = `<div class="progress-status done">Complete</div>`;
+  } else if (progress.phase === 'prescreen') {
+    document.getElementById('progress-fill').style.width = '5%';
+    statusHtml = `<div class="progress-status"><div class="spinner"></div>Pre-screened, starting triage...</div>`;
+  }
+
+  // Count marketing candidates from current view
+  const candidates = allPhotos.filter(p => (p.marketing_score || 0) >= 4).length;
+
+  bar.innerHTML = `
+    <div class="stat"><div class="stat-value">${stats.total_images || 0}</div><div class="stat-label">Total</div></div>
+    <div class="stat"><div class="stat-value">${stats.prescreened_out || 0}</div><div class="stat-label">Filename Skip</div></div>
+    <div class="stat"><div class="stat-value">${stats.triage_documents || 0}</div><div class="stat-label">Documents</div></div>
+    <div class="stat"><div class="stat-value">${stats.triage_picked || 0}</div><div class="stat-label">Picked</div></div>
+    <div class="stat"><div class="stat-value">${stats.deep_analyzed || 0}</div><div class="stat-label">Analyzed</div></div>
+    <div class="stat"><div class="stat-value">${candidates}</div><div class="stat-label">Candidates</div></div>
+    ${statusHtml}
+  `;
+
+  // Update microsite counts
+  const msCounts = {};
+  allPhotos.forEach(p => (p.service_types || []).forEach(s => {
+    const ms = SERVICE_MAP[s] || s;
+    msCounts[ms] = (msCounts[ms] || 0) + 1;
+  }));
+  document.querySelectorAll('.filter-count[data-ms]').forEach(el => {
+    el.textContent = msCounts[el.dataset.ms] || 0;
+  });
+}
+
+function renderContent() {
+  const content = document.getElementById('content');
+  if (currentTab === 'grids') {
+    renderGridsView(content);
+  } else if (currentTab === 'gallery') {
+    renderGalleryView(content);
+  } else {
+    renderPhotosView(content);
+  }
+}
+
+function renderGridsView(container) {
+  if (allGrids.length === 0) {
+    container.innerHTML = '<div class="empty-state"><h3>No grids yet</h3><p>Triage grids will appear here as the scanner processes photos.</p></div>';
+    return;
+  }
+
+  let html = '<div class="grids-list">';
+  for (const grid of allGrids) {
+    const picksHtml = grid.cells.map(c => {
+      const status = c.status || (c.picked ? 'picked' : 'skipped');
+      const cls = status === 'picked' ? 'pick-badge' : status === 'document' ? 'pick-badge document' : 'pick-badge skip';
+      const label = status === 'picked' ? `#${c.cell} picked` : status === 'document' ? `#${c.cell} doc` : `#${c.cell}`;
+      return `<span class="${cls}">${label}</span>`;
+    }).join('');
+
+    const pickedCount = grid.picks.length;
+    const serviceHints = grid.picks.map(p => p.service).filter(Boolean);
+
+    html += `
+      <div class="grid-card">
+        <img src="/grids/${grid.grid_image.replace('.grids/', '')}" alt="Grid ${grid.grid_index}" loading="lazy">
+        <div class="grid-card-body">
+          <div class="grid-card-title">Grid ${grid.grid_index}/${grid.total_grids} — ${pickedCount}/${grid.cell_count} picked${serviceHints.length ? ' (' + [...new Set(serviceHints)].join(', ') + ')' : ''}</div>
+          <div class="grid-picks">${picksHtml}</div>
+        </div>
+      </div>
+    `;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderPhotosView(container) {
+  const filters = getFilters();
+  document.getElementById('score-label').textContent = filters.minScore;
+
+  const grouped = {};
+  let totalShown = 0;
+
+  allPhotos.forEach(photo => {
+    if (!matchesFilters(photo, filters)) return;
+    if (!grouped[photo.folder]) grouped[photo.folder] = [];
+    grouped[photo.folder].push(photo);
+    totalShown++;
+  });
+
+  if (totalShown === 0) {
+    container.innerHTML = '<div class="empty-state"><h3>No photos match</h3><p>Adjust filters or wait for the scan to produce results.</p></div>';
+    return;
+  }
+
+  let html = '';
+  for (const [folderName, photos] of Object.entries(grouped).sort()) {
+    html += `<div class="folder-group">`;
+    html += `<div class="folder-header" onclick="this.classList.toggle('collapsed'); this.nextElementSibling.classList.toggle('hidden')">`;
+    html += `<span class="chevron">▼</span> ${folderName} <span class="count">(${photos.length})</span></div>`;
+    html += `<div class="photo-grid">`;
+
+    for (const photo of photos) {
+      const isSkipped = photo.triage === 'skipped';
+      const isDocument = photo.triage === 'document';
+      const isPending = photo.triage === 'picked' && !photo.scene && !photo.error;
+      const cls = isDocument ? 'card document' : isSkipped ? 'card skipped' : isPending ? 'card pending' : 'card';
+
+      const thumbSrc = `/thumbs/${encodeURIComponent(photo.path).replace(/%2F/g, '/')}`;
+      const tags = (photo.service_types || []).map(s => `<span class="tag">${SERVICE_MAP[s] || s}</span>`).join('');
+      const phaseBadge = photo.phase ? `<span class="tag phase">${photo.phase}</span>` : '';
+      const triageHint = !photo.scene && photo.triage_service_hint ? `<span class="tag triage-hint">${photo.triage_service_hint}</span>` : '';
+      const sceneOrName = photo.scene || photo.filename;
+
+      html += `
+        <div class="${cls}" onclick='showModal(${JSON.stringify(photo).replace(/'/g, "&#39;")})'>
+          <img class="card-img" src="${thumbSrc}" alt="${photo.filename}" loading="lazy"
+               onerror="this.src='/photos/${encodeURIComponent(photo.path).replace(/%2F/g, '/')}'">
+          <div class="card-body">
+            ${photo.scene ? `<div class="card-scene">${sceneOrName}</div>` : `<div class="card-filename">${photo.filename}</div>`}
+            <div class="tags">${tags}${triageHint}${phaseBadge}</div>
+            ${photo.marketing_score ? `<div class="stars">${starsHtml(photo.marketing_score)}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+    html += '</div></div>';
+  }
+  container.innerHTML = html;
+}
+
+function showModal(photo) {
+  const overlay = document.getElementById('modal');
+  const content = document.getElementById('modal-content');
+  const imgSrc = `/photos/${encodeURIComponent(photo.path).replace(/%2F/g, '/')}`;
+  const entities = (photo.entities || []).map(e => `<span class="tag">${e}</span>`).join('') || '—';
+  const services = (photo.service_types || []).map(s => `<span class="tag">${SERVICE_MAP[s] || s}</span>`).join('') || '—';
+
+  // Build microsite options from the photo's detected service types
+  const detectedMs = (photo.service_types || []).map(s => SERVICE_MAP[s] || s).filter((v, i, a) => a.indexOf(v) === i);
+  const msOptions = detectedMs.length > 0
+    ? detectedMs.map(ms => `<option value="${ms}">${ms}</option>`).join('')
+    : MICROSITES.map(ms => `<option value="${ms}">${ms}</option>`).join('');
+
+  const photoPathEsc = (photo.path || '').replace(/'/g, "\\'");
+
+  content.innerHTML = `
+    <img class="modal-img" src="${imgSrc}" alt="${photo.filename}">
+    <div class="modal-body">
+      <h3>${photo.folder} / ${photo.filename}</h3>
+      <div class="detail-row"><span class="detail-label">Scene</span><span>${photo.scene || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Services</span><span>${services}</span></div>
+      <div class="detail-row"><span class="detail-label">Phase</span><span>${photo.phase ? `<span class="tag phase">${photo.phase}</span>` : '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Entities</span><span class="tags" style="display:inline-flex">${entities}</span></div>
+      <div class="detail-row"><span class="detail-label">Marketing</span><span class="stars">${starsHtml(photo.marketing_score || 0)}</span></div>
+      <div class="detail-row"><span class="detail-label">Notes</span><span>${photo.marketing_notes || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Before/After</span><span>${photo.before_after_potential ? '&#10003; Yes' : '&#10007; No'}</span></div>
+      <div class="detail-row"><span class="detail-label">Pre-screen</span><span>${photo.prescreen || '—'}</span></div>
+      <div class="detail-row"><span class="detail-label">Triage</span><span>${photo.triage || '—'}${photo.triage_service_hint ? ` (hint: ${photo.triage_service_hint})` : ''}</span></div>
+      ${photo.error ? `<div class="detail-row"><span class="detail-label" style="color:var(--red)">Error</span><span style="color:var(--red)">${photo.error}</span></div>` : ''}
+
+      <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);">
+        <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Upload to Gallery</div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <select id="modal-upload-ms" style="background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:4px; padding:5px 8px; font-size:12px;">
+            ${msOptions}
+          </select>
+          <input id="modal-upload-gallery" value="homepage-gallery" placeholder="gallery-id" style="background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:4px; padding:5px 8px; font-size:12px; width:150px;">
+          <input id="modal-upload-alt" value="${(photo.scene || '').replace(/"/g, '&quot;')}" placeholder="Alt text" style="background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:4px; padding:5px 8px; font-size:12px; flex:1; min-width:180px;">
+          <button id="modal-upload-btn" class="btn btn-green" onclick="uploadFromModal('${photoPathEsc}')">Upload</button>
+        </div>
+        <div id="modal-upload-status" style="font-size: 11px; margin-top: 6px; min-height: 16px;"></div>
+      </div>
+    </div>
+  `;
+  overlay.classList.add('active');
+}
+
+async function uploadFromModal(photoPath) {
+  const btn = document.getElementById('modal-upload-btn');
+  const status = document.getElementById('modal-upload-status');
+  const ms = document.getElementById('modal-upload-ms').value;
+  const gId = document.getElementById('modal-upload-gallery').value;
+  const alt = document.getElementById('modal-upload-alt').value;
+
+  btn.disabled = true;
+  btn.textContent = 'Uploading...';
+  status.innerHTML = '<span style="color:var(--accent)">Processing and uploading...</span>';
+
+  try {
+    const res = await fetch('/api/upload-to-gallery', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        photoPath,
+        microsite: ms,
+        galleryId: gId,
+        galleryName: gId.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+        alt,
+      }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      status.innerHTML = `<span style="color:var(--green)">Uploaded to ${ms} / ${gId} (${data.imageCount} images)</span>`;
+      btn.textContent = 'Uploaded';
+      btn.style.background = 'var(--green)';
+    } else {
+      status.innerHTML = `<span style="color:var(--red)">Error: ${data.error || data.detail}</span>`;
+      btn.disabled = false;
+      btn.textContent = 'Retry';
+    }
+  } catch (e) {
+    status.innerHTML = `<span style="color:var(--red)">Error: ${e.message}</span>`;
+    btn.disabled = false;
+    btn.textContent = 'Retry';
+  }
+}
+
+// --- Gallery Builder ---
+let galleryQueue = [];
+let galleryMicrosite = 'lead-paint';
+let galleryId = '';
+let galleryName = '';
+let selectedStripIdx = -1; // which photo in the strip is selected for preview
+let uploadBusy = false;
+let curatedGalleries = [];
+let presetsCollapsed = false;
+let candFolderFilter = 'all';
+let candMinScore = 3;
+let dragSrcIdx = null; // for reordering within strip
+
+async function loadCuratedGalleries() {
+  try {
+    const res = await fetch('/api/curated-galleries');
+    const data = await res.json();
+    curatedGalleries = data.galleries || [];
+  } catch {}
+}
+loadCuratedGalleries();
+
+function loadPreset(idx) {
+  const preset = curatedGalleries[idx];
+  if (!preset) return;
+  galleryMicrosite = preset.microsite;
+  galleryId = preset.id;
+  galleryName = preset.name;
+  selectedStripIdx = -1;
+  candFolderFilter = '__gallery__'; // auto-filter to this gallery's job folders
+  galleryQueue = preset.photos.map(p => ({
+    path: p.path,
+    alt: p.alt,
+    status: 'pending',
+  }));
+  presetsCollapsed = true;
+  renderContent();
+}
+
+function thumbUrl(path) {
+  return `/thumbs/${encodeURIComponent(path).replace(/%2F/g, '/')}`;
+}
+function photoUrl(path) {
+  return `/photos/${encodeURIComponent(path).replace(/%2F/g, '/')}`;
+}
+
+function renderGalleryView(container) {
+  let html = '';
+
+  // --- Presets section ---
+  if (!presetsCollapsed && curatedGalleries.length > 0) {
+    html += '<div class="gb-presets">';
+    html += '<h3 style="font-size:12px; margin-bottom:8px;">Select a Gallery to Edit</h3>';
+    html += '<div class="gb-presets-grid">';
+    curatedGalleries.forEach((g, idx) => {
+      html += `
+        <div class="gb-preset-card" onclick="loadPreset(${idx})">
+          <div class="preset-thumbs">${g.photos.slice(0,5).map(p => `<img src="${thumbUrl(p.path)}">`).join('')}</div>
+          <div class="preset-body">
+            <div class="preset-name">${g.name}</div>
+            <div class="preset-meta"><span class="tag" style="font-size:8px;">${g.microsite}</span> ${g.photos.length} photos</div>
+          </div>
+        </div>`;
+    });
+    html += '</div></div>';
+  }
+
+  // --- Editor section ---
+  if (galleryQueue.length > 0 || presetsCollapsed) {
+    const msOptions = MICROSITES.map(ms => `<option value="${ms}" ${ms === galleryMicrosite ? 'selected' : ''}>${ms}</option>`).join('');
+    html += `<div class="gb-editor">`;
+    html += `<div class="gb-editor-header">`;
+    if (presetsCollapsed) {
+      html += `<button class="btn btn-sm" onclick="presetsCollapsed=false; galleryQueue=[]; selectedStripIdx=-1; renderContent();">Back</button>`;
+    }
+    html += `
+      <select onchange="galleryMicrosite=this.value">${msOptions}</select>
+      <input value="${galleryId}" placeholder="gallery-id" onchange="galleryId=this.value" style="width:160px;">
+      <input value="${galleryName.replace(/"/g, '&quot;')}" placeholder="Gallery Name" onchange="galleryName=this.value" style="width:200px;">
+      <button class="btn btn-green" onclick="uploadAllQueued()" ${uploadBusy || galleryQueue.length === 0 ? 'disabled' : ''}>Upload ${galleryQueue.length} Photos</button>
+    `;
+    html += `</div>`;
+
+    // Strip
+    html += `<div class="gb-editor-strip" id="gb-strip" ondragover="stripDragOver(event)" ondrop="stripDrop(event)" ondragleave="stripDragLeave(event)">`;
+    if (galleryQueue.length === 0) {
+      html += `<div class="gb-editor-empty">Drag photos here from below</div>`;
+    } else {
+      galleryQueue.forEach((item, idx) => {
+        const sel = idx === selectedStripIdx ? 'selected' : '';
+        const statusCls = item.status !== 'pending' ? item.status : '';
+        html += `
+          <div class="gb-strip-card ${sel} ${statusCls}" draggable="true"
+               ondragstart="stripDragStart(event, ${idx})" ondragend="stripDragEnd(event)"
+               ondragover="stripCardDragOver(event, ${idx})" ondrop="stripCardDrop(event, ${idx})"
+               onclick="selectStripPhoto(${idx})">
+            <button class="strip-remove" onclick="event.stopPropagation(); removeFromStrip(${idx})">x</button>
+            <img src="${thumbUrl(item.path)}" draggable="false">
+            <input class="strip-alt" value="${(item.alt || '').replace(/"/g, '&quot;')}" placeholder="Alt text"
+                   onclick="event.stopPropagation()" onchange="galleryQueue[${idx}].alt=this.value">
+          </div>`;
+      });
+    }
+    html += `</div>`;
+
+    // Preview
+    if (selectedStripIdx >= 0 && selectedStripIdx < galleryQueue.length) {
+      const item = galleryQueue[selectedStripIdx];
+      html += `<div class="gb-preview"><img src="${photoUrl(item.path)}"><div class="preview-alt">${item.alt || ''}</div></div>`;
+    }
+
+    // Upload log
+    html += `<div class="upload-log" id="upload-log"></div>`;
+    html += `</div>`;
+  }
+
+  // --- Candidates section ---
+  // Auto-detect folders from the current gallery strip
+  const galleryFolders = new Set(galleryQueue.map(q => {
+    const parts = q.path.split('/');
+    parts.pop(); // remove filename
+    return parts.join('/');
+  }).filter(Boolean));
+
+  // If editing a gallery, default filter to those folders; otherwise show all
+  if (galleryQueue.length > 0 && candFolderFilter === 'all' && galleryFolders.size > 0) {
+    candFolderFilter = '__gallery__';
+  }
+
+  html += `<div class="gb-candidates">`;
+  const folderLabel = galleryFolders.size > 0
+    ? `Photos from this job <span style="color:var(--text-muted); font-weight:400;">(${[...galleryFolders].join(', ')})</span>`
+    : 'Add Photos';
+  html += `<h3>${folderLabel} <span style="color:var(--text-muted); font-weight:400;">— drag or double-click to add</span></h3>`;
+
+  // Filters
+  const folderSet = new Set(allPhotos.map(p => p.folder));
+  const folderOpts = [
+    galleryFolders.size > 0 ? `<option value="__gallery__" ${candFolderFilter === '__gallery__' ? 'selected' : ''}>Gallery job folders</option>` : '',
+    `<option value="all" ${candFolderFilter === 'all' ? 'selected' : ''}>All folders</option>`,
+    ...Array.from(folderSet).sort().map(f =>
+      `<option value="${f}" ${f === candFolderFilter ? 'selected' : ''}>${f}</option>`
+    ),
+  ].join('');
+  html += `<div class="gb-cand-filters">
+    <select onchange="candFolderFilter=this.value; renderContent();">${folderOpts}</select>
+    <select onchange="candMinScore=parseInt(this.value); renderContent();">
+      <option value="1" ${candMinScore===1?'selected':''}>All scores</option>
+      <option value="2" ${candMinScore===2?'selected':''}>Score 2+</option>
+      <option value="3" ${candMinScore===3?'selected':''}>Score 3+</option>
+      <option value="4" ${candMinScore===4?'selected':''}>Score 4+</option>
+    </select>
+  </div>`;
+
+  const inQueuePaths = new Set(galleryQueue.map(q => q.path));
+  const candidates = allPhotos.filter(p => {
+    if (!p.scene || (p.marketing_score || 0) < candMinScore) return false;
+    if (candFolderFilter === '__gallery__') {
+      // Match any folder that starts with one of the gallery folders
+      return [...galleryFolders].some(gf => p.folder === gf || p.folder.startsWith(gf + '/'));
+    }
+    if (candFolderFilter !== 'all' && p.folder !== candFolderFilter) return false;
+    return true;
+  }).sort((a, b) => (b.marketing_score || 0) - (a.marketing_score || 0));
+
+  html += `<div class="gb-cand-grid">`;
+  for (const p of candidates) {
+    const isIn = inQueuePaths.has(p.path);
+    const pathEsc = p.path.replace(/"/g, '&quot;');
+    html += `
+      <div class="gb-cand-card ${isIn ? 'in-gallery' : ''}" draggable="${isIn ? 'false' : 'true'}"
+           ondragstart="candDragStart(event, '${pathEsc}')"
+           ondblclick="${isIn ? '' : `addToStrip('${pathEsc}')`}">
+        <img src="${thumbUrl(p.path)}" draggable="false">
+        <div class="cand-body">
+          <div class="stars">${starsHtml(p.marketing_score || 0)} <span class="tag phase" style="font-size:8px;">${p.phase || ''}</span></div>
+          <div class="cand-scene">${p.scene || p.filename}</div>
+        </div>
+      </div>`;
+  }
+  if (candidates.length === 0) html += `<div style="padding:20px; color:var(--text-muted); font-size:12px;">No candidates match filters</div>`;
+  html += `</div></div>`;
+
+  container.innerHTML = html;
+}
+
+// --- Strip interactions ---
+function selectStripPhoto(idx) {
+  selectedStripIdx = (selectedStripIdx === idx) ? -1 : idx;
+  renderContent();
+}
+
+function removeFromStrip(idx) {
+  galleryQueue.splice(idx, 1);
+  if (selectedStripIdx >= galleryQueue.length) selectedStripIdx = galleryQueue.length - 1;
+  if (selectedStripIdx < 0) selectedStripIdx = -1;
+  renderContent();
+}
+
+function addToStrip(path) {
+  if (galleryQueue.some(q => q.path === path)) return;
+  const photo = allPhotos.find(p => p.path === path);
+  galleryQueue.push({ path, alt: photo ? photo.scene || '' : '', status: 'pending' });
+  renderContent();
+}
+
+// --- Drag from candidates to strip ---
+function candDragStart(e, path) {
+  e.dataTransfer.setData('text/plain', path);
+  e.dataTransfer.effectAllowed = 'copy';
+  e.target.classList.add('dragging');
+}
+
+function stripDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+  e.currentTarget.classList.add('drag-over');
+}
+
+function stripDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function stripDrop(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const path = e.dataTransfer.getData('text/plain');
+  if (path && !path.startsWith('reorder:')) {
+    addToStrip(path);
+  }
+}
+
+// --- Drag to reorder within strip ---
+function stripDragStart(e, idx) {
+  dragSrcIdx = idx;
+  e.dataTransfer.setData('text/plain', 'reorder:' + idx);
+  e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => e.target.classList.add('dragging'), 0);
+}
+
+function stripDragEnd(e) {
+  e.target.classList.remove('dragging');
+  dragSrcIdx = null;
+  document.querySelectorAll('.gb-strip-card.drag-target').forEach(el => el.classList.remove('drag-target'));
+}
+
+function stripCardDragOver(e, idx) {
+  e.preventDefault();
+  e.stopPropagation();
+  const data = e.dataTransfer.types.includes('text/plain');
+  if (dragSrcIdx !== null && dragSrcIdx !== idx) {
+    e.currentTarget.classList.add('drag-target');
+  }
+}
+
+function stripCardDrop(e, targetIdx) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('drag-target');
+  const data = e.dataTransfer.getData('text/plain');
+
+  if (data.startsWith('reorder:')) {
+    // Reorder within strip
+    const srcIdx = parseInt(data.split(':')[1]);
+    if (srcIdx !== targetIdx) {
+      const [item] = galleryQueue.splice(srcIdx, 1);
+      galleryQueue.splice(targetIdx, 0, item);
+      selectedStripIdx = targetIdx;
+      renderContent();
+    }
+  } else {
+    // Insert from candidates at this position
+    if (!galleryQueue.some(q => q.path === data)) {
+      const photo = allPhotos.find(p => p.path === data);
+      galleryQueue.splice(targetIdx + 1, 0, { path: data, alt: photo ? photo.scene || '' : '', status: 'pending' });
+      renderContent();
+    }
+  }
+}
+
+// --- Upload ---
+function appendLog(msg, isError) {
+  const log = document.getElementById('upload-log');
+  if (log) {
+    log.style.display = 'block';
+    log.innerHTML += `<div class="${isError ? 'log-err' : 'log-ok'}">${new Date().toLocaleTimeString()} ${msg}</div>`;
+    log.scrollTop = log.scrollHeight;
+  }
+}
+
+async function uploadAllQueued() {
+  if (uploadBusy || galleryQueue.length === 0) return;
+  uploadBusy = true;
+  renderContent();
+
+  for (let i = 0; i < galleryQueue.length; i++) {
+    const item = galleryQueue[i];
+    if (item.status === 'uploaded') continue;
+    item.status = 'uploading';
+    renderContent();
+
+    try {
+      const res = await fetch('/api/upload-to-gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          photoPath: item.path,
+          microsite: galleryMicrosite,
+          galleryId,
+          galleryName,
+          alt: item.alt || '',
+        }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        item.status = 'uploaded';
+        appendLog(`Uploaded → ${galleryId} (${data.imageCount} total)`);
+      } else {
+        item.status = 'error';
+        appendLog(`Failed: ${data.error || data.detail}`, true);
+      }
+    } catch (e) {
+      item.status = 'error';
+      appendLog(`Error: ${e.message}`, true);
+    }
+    renderContent();
+  }
+  uploadBusy = false;
+  renderContent();
+}
+
+// Modal close
+document.getElementById('modal-close').addEventListener('click', () => document.getElementById('modal').classList.remove('active'));
+document.getElementById('modal').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('active'); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('modal').classList.remove('active');
+  // Arrow keys navigate strip when gallery tab is active
+  if (currentTab === 'gallery' && galleryQueue.length > 0) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); selectedStripIdx = Math.min(selectedStripIdx + 1, galleryQueue.length - 1); renderContent(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); selectedStripIdx = Math.max(selectedStripIdx - 1, 0); renderContent(); }
+    if (e.key === 'Delete' && selectedStripIdx >= 0) { e.preventDefault(); removeFromStrip(selectedStripIdx); }
+  }
+});
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentTab = tab.dataset.tab;
+    renderContent();
+  });
+});
+
+// Filter events
+document.querySelector('.sidebar-scroll').addEventListener('change', () => renderContent());
+document.getElementById('min-score').addEventListener('input', () => renderContent());
+
+// Start polling immediately
+refresh();
+pollTimer = setInterval(() => {
+  if (document.getElementById('section-scanner').classList.contains('active')) {
+    refresh();
+  }
+}, 3000);
+
+// --- Section navigation ---
+function switchSection(section) {
+    document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.main-nav .nav-tab').forEach(t => t.classList.remove('active'));
+    const sectionEl = document.getElementById('section-' + section);
+    if (sectionEl) sectionEl.classList.add('active');
+    const tabEl = document.querySelector(`.nav-tab[data-section="${section}"]`);
+    if (tabEl) tabEl.classList.add('active');
+    if (section === 'dashboard') loadDashboard();
+    if (section === 'projects') loadProjects();
+    if (section === 'catalog') loadCatalog();
+    if (section === 'map') loadMap();
+}
+
+// --- Dashboard ---
+async function loadDashboard() {
+    try {
+        const stats = await fetch('/api/catalog/stats').then(r => r.json());
+        document.getElementById('dash-analyzed').textContent = stats.photos_analyzed || 0;
+        document.getElementById('dash-picks').textContent = stats.marketing_picks || 0;
+        document.getElementById('dash-ba').textContent = stats.before_after_count || 0;
+        document.getElementById('dash-services').textContent = Object.keys(stats.service_counts || {}).length;
+        document.getElementById('dash-total-projects').textContent = stats.projects_analyzed || 0;
+
+        if (stats.weekly) {
+            document.getElementById('dash-photos-week').textContent = stats.weekly.photos_this_week;
+            const last = stats.weekly.photos_last_week || 0;
+            const pct = last > 0 ? Math.round((stats.weekly.photos_this_week - last) / last * 100) : 0;
+            const arrow = pct >= 0 ? '▲' : '▼';
+            const color = pct >= 0 ? '#3fb950' : '#f85149';
+            document.getElementById('dash-photos-compare').innerHTML =
+                `<span style="color:${color}">${arrow} ${Math.abs(pct)}%</span> vs ${last} last week`;
+            document.getElementById('dash-projects-week').textContent = stats.weekly.projects_with_new_photos;
+        }
+    } catch (e) {
+        console.error('Dashboard load error:', e);
+    }
+}
+
+// --- Projects ---
+let projectsPage = 1;
+
+async function loadProjects() {
+    const q = document.getElementById('projects-search').value;
+    const params = new URLSearchParams({page: projectsPage, per_page: 25});
+    if (q) params.set('q', q);
+
+    const listEl = document.getElementById('projects-list');
+    const detailEl = document.getElementById('project-detail');
+    listEl.style.display = 'block';
+    detailEl.style.display = 'none';
+
+    try {
+        const data = await fetch('/api/companycam/projects?' + params).then(r => r.json());
+        if (data.error) {
+            listEl.innerHTML = `<div style="color:#f85149;padding:20px">${data.error}</div>`;
+            return;
+        }
+        listEl.innerHTML = (data.projects || []).map(p => {
+            const status = p.last_analyzed ? 'analyzed' : p.last_synced ? 'synced' : 'unsynced';
+            const badgeClass = status === 'analyzed' ? 'badge-green' : status === 'synced' ? 'badge-amber' : 'badge-gray';
+            const badgeText = status === 'analyzed' ? 'Analyzed' : status === 'synced' ? 'Synced' : 'Not synced';
+            return `
+                <div class="project-row" onclick="loadProjectDetail('${p.id}')">
+                    <div style="flex:1">
+                        <div style="color:#eee;font-size:13px;font-weight:500">${p.name}</div>
+                        <div style="color:#777;font-size:11px;margin-top:2px">${p.address || ''}</div>
+                    </div>
+                    <div style="text-align:right;min-width:70px">
+                        <div style="color:#ccc;font-size:13px">${p.photo_count} photos</div>
+                    </div>
+                    <span class="badge ${badgeClass}">${badgeText}</span>
+                    <div style="color:#555;font-size:16px">→</div>
+                </div>`;
+        }).join('');
+    } catch (e) {
+        listEl.innerHTML = `<div style="color:#f85149;padding:20px">Failed to load projects: ${e.message}</div>`;
+    }
+}
+
+async function loadProjectDetail(projectId) {
+    const listEl = document.getElementById('projects-list');
+    const detailEl = document.getElementById('project-detail');
+    listEl.style.display = 'none';
+    detailEl.style.display = 'block';
+
+    detailEl.innerHTML = '<div style="color:#888;padding:20px">Loading...</div>';
+
+    try {
+        const [project, photosData] = await Promise.all([
+            fetch(`/api/companycam/projects/${projectId}`).then(r => r.json()),
+            fetch(`/api/companycam/projects/${projectId}/photos?per_page=100`).then(r => r.json()),
+        ]);
+
+        const photos = photosData.photos || [];
+        const analyzed = photos.filter(p => p.scene).length;
+
+        detailEl.innerHTML = `
+            <div class="project-detail">
+                <div class="back-btn" onclick="loadProjects()">← Back to projects</div>
+                <h3 style="color:#eee;margin:0 0 4px">${project.name}</h3>
+                <div style="color:#777;font-size:12px;margin-bottom:12px">${project.address || ''}</div>
+                <div style="display:flex;gap:8px;margin-bottom:16px">
+                    <button class="btn btn-primary" onclick="syncProject('${projectId}')">Sync Photos</button>
+                    <button class="btn btn-success" onclick="analyzeProject('${projectId}')">Analyze</button>
+                    <span style="color:#888;font-size:12px;display:flex;align-items:center">${photos.length} photos · ${analyzed} analyzed</span>
+                </div>
+                <div id="project-progress" style="display:none;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:10px;margin-bottom:12px;color:#888;font-size:12px"></div>
+                <div class="photo-grid">
+                    ${photos.map(p => {
+                        const thumbSrc = p.thumb_uri || `/api/photo/${p.id}/thumb`;
+                        const score = p.marketing_score ? '★'.repeat(p.marketing_score) : '';
+                        const scoreColor = (p.marketing_score || 0) >= 4 ? '#f0c040' : '#666';
+                        return `
+                            <div class="photo-card">
+                                <img src="${thumbSrc}" loading="lazy" onerror="this.style.display='none'">
+                                <div class="info">
+                                    ${p.scene ? `<div style="color:#ccc;margin-bottom:2px">${p.scene}</div>` : ''}
+                                    ${score ? `<span style="color:${scoreColor}">${score}</span>` : ''}
+                                    ${p.phase ? `<span class="badge badge-blue" style="margin-left:4px">${p.phase}</span>` : ''}
+                                </div>
+                            </div>`;
+                    }).join('')}
+                </div>
+            </div>`;
+    } catch (e) {
+        detailEl.innerHTML = `<div style="color:#f85149;padding:20px">Error: ${e.message}</div>`;
+    }
+}
+
+async function syncProject(projectId) {
+    try {
+        const resp = await fetch(`/api/companycam/projects/${projectId}/sync`, {method: 'POST'});
+        const result = await resp.json();
+        if (result.ok) {
+            alert(`Synced ${result.photos_synced} photos`);
+            loadProjectDetail(projectId);
+        } else {
+            alert('Sync failed: ' + (result.error || 'Unknown error'));
+        }
+    } catch (e) {
+        alert('Sync error: ' + e.message);
+    }
+}
+
+async function analyzeProject(projectId) {
+    const progEl = document.getElementById('project-progress');
+    try {
+        const resp = await fetch(`/api/companycam/projects/${projectId}/analyze`, {method: 'POST'});
+        const result = await resp.json();
+        if (!result.ok) {
+            alert('Analyze failed: ' + (result.error || 'Unknown error'));
+            return;
+        }
+        progEl.style.display = 'block';
+        progEl.textContent = 'Analysis started...';
+
+        const poll = setInterval(async () => {
+            const state = await fetch('/api/companycam/task').then(r => r.json());
+            if (state.progress) {
+                const p = state.progress;
+                if (p.phase === 'triage') {
+                    progEl.textContent = `Triage: grid ${p.grid || 0}/${p.total_grids || '?'}`;
+                } else if (p.phase === 'deep') {
+                    progEl.textContent = `Deep analysis: ${p.current || 0}/${p.total_picked || '?'}`;
+                } else {
+                    progEl.textContent = p.message || state.status;
+                }
+            }
+            if (state.status !== 'running') {
+                clearInterval(poll);
+                progEl.textContent = state.status === 'complete' ? 'Analysis complete!' : 'Error: ' + (state.error || '');
+                setTimeout(() => loadProjectDetail(projectId), 1500);
+            }
+        }, 2000);
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
+}
+
+// --- Catalog ---
+async function loadCatalog() {
+    const params = new URLSearchParams();
+    const q = document.getElementById('catalog-search').value;
+    if (q) params.set('q', q);
+
+    const service = document.getElementById('catalog-service').value;
+    if (service) params.set('service', service);
+
+    const phase = document.getElementById('catalog-phase').value;
+    if (phase) params.set('phase', phase);
+
+    const score = document.getElementById('catalog-score').value;
+    if (score !== '0') params.set('min_score', score);
+
+    if (document.getElementById('catalog-ba').checked) params.set('before_after_only', 'true');
+
+    params.set('per_page', '60');
+
+    try {
+        const data = await fetch('/api/catalog/search?' + params).then(r => r.json());
+        const photos = data.photos || [];
+        document.getElementById('catalog-count').textContent = `${photos.length} results`;
+
+        document.getElementById('catalog-grid').innerHTML = photos.map(p => {
+            const score = p.marketing_score || 0;
+            const stars = '★'.repeat(score) + '☆'.repeat(5 - score);
+            const scoreColor = score >= 4 ? '#f0c040' : '#666';
+            const services = p.service_types ? JSON.parse(p.service_types) : [];
+            return `
+                <div class="catalog-card" onclick="window.open('/api/photo/${p.id}/full','_blank')">
+                    <img src="/api/photo/${p.id}/thumb" loading="lazy" onerror="this.style.display='none'">
+                    <div class="card-body">
+                        <div class="card-scene">${p.scene || ''}</div>
+                        <div class="card-meta">
+                            <span style="color:${scoreColor}">${stars}</span>
+                            ${p.phase ? `<span class="badge badge-blue" style="margin-left:4px">${p.phase}</span>` : ''}
+                        </div>
+                        <div class="card-meta">${p.project_name || ''} · ${p.taken_at ? p.taken_at.substring(0, 10) : ''}</div>
+                        <div class="card-tags">${services.map(s => `<span>${s}</span>`).join('')}</div>
+                    </div>
+                </div>`;
+        }).join('');
+    } catch (e) {
+        document.getElementById('catalog-grid').innerHTML = `<div style="color:#f85149">Error: ${e.message}</div>`;
+    }
+}
+
+// --- Map ---
+let mapInitialized = false;
+let leafletMap = null;
+
+async function loadMap() {
+    if (!mapInitialized) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9/dist/leaflet.css';
+        document.head.appendChild(link);
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/leaflet@1.9/dist/leaflet.js';
+        script.onload = () => {
+            leafletMap = L.map('map-container').setView([45.52, -122.68], 10);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(leafletMap);
+            refreshMapMarkers();
+        };
+        document.head.appendChild(script);
+        mapInitialized = true;
+    } else {
+        leafletMap.invalidateSize();
+        refreshMapMarkers();
+    }
+}
+
+async function refreshMapMarkers() {
+    try {
+        const data = await fetch('/api/companycam/projects?per_page=200').then(r => r.json());
+        (data.projects || []).forEach(p => {
+            if (p.lat && p.lng) {
+                const color = p.last_analyzed ? '#3fb950' : p.last_synced ? '#d29922' : '#888';
+                L.circleMarker([p.lat, p.lng], {radius: 8, fillColor: color, fillOpacity: 0.8, color: '#333', weight: 1})
+                    .addTo(leafletMap)
+                    .bindPopup(`<b>${p.name}</b><br>${p.address}<br>${p.photo_count} photos<br><a href="#" onclick="switchSection('projects');loadProjectDetail('${p.id}');return false">View →</a>`);
+            }
+        });
+    } catch (e) {
+        console.error('Map error:', e);
+    }
+}
+
+// Load dashboard on startup
+loadDashboard();
+</script>
+</body>
+</html>
