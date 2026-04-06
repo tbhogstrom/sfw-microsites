@@ -1390,6 +1390,9 @@ async function loadProjectDetail(projectId) {
         const photos = photosData.photos || [];
         const analyzed = photos.filter(p => p.scene).length;
 
+        const summary = project.project_summary;
+        const hasSummary = summary && summary.project_summary;
+
         detailEl.innerHTML = `
             <div class="project-detail">
                 <div class="back-btn" onclick="loadProjects()">← Back to projects</div>
@@ -1401,6 +1404,92 @@ async function loadProjectDetail(projectId) {
                     <span style="color:#888;font-size:12px;display:flex;align-items:center">${photos.length} photos · ${analyzed} analyzed</span>
                 </div>
                 <div id="project-progress" style="display:none;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:10px;margin-bottom:12px;color:#888;font-size:12px"></div>
+
+                ${hasSummary ? `
+                <!-- Project Summary -->
+                <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin-bottom:16px">
+                    <div style="color:#ccc;font-size:14px;font-weight:600;margin-bottom:8px">Project Summary</div>
+                    <div style="color:#aaa;font-size:13px;line-height:1.5;margin-bottom:12px">${summary.project_summary}</div>
+                    ${summary.scope_of_work && summary.scope_of_work.length > 0 ? `
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                        <span style="color:#888;font-size:11px;margin-right:2px">Scope:</span>
+                        ${summary.scope_of_work.map(s => `<span class="badge badge-blue">${s}</span>`).join('')}
+                    </div>` : ''}
+
+                    ${summary.coverage_assessment ? `
+                    <div style="display:flex;gap:12px;margin-bottom:4px">
+                        <span style="font-size:11px;color:${summary.coverage_assessment.has_before_photos ? '#3fb950' : '#f85149'}">
+                            ${summary.coverage_assessment.has_before_photos ? '✓' : '✗'} Before photos
+                        </span>
+                        <span style="font-size:11px;color:${summary.coverage_assessment.has_during_photos ? '#3fb950' : '#f85149'}">
+                            ${summary.coverage_assessment.has_during_photos ? '✓' : '✗'} During photos
+                        </span>
+                        <span style="font-size:11px;color:${summary.coverage_assessment.has_after_photos ? '#3fb950' : '#f85149'}">
+                            ${summary.coverage_assessment.has_after_photos ? '✓' : '✗'} After photos
+                        </span>
+                        <span style="font-size:11px;color:#888">
+                            Documentation: <span style="color:${
+                                summary.coverage_assessment.documentation_quality === 'excellent' ? '#3fb950' :
+                                summary.coverage_assessment.documentation_quality === 'good' ? '#3fb950' :
+                                summary.coverage_assessment.documentation_quality === 'fair' ? '#d29922' : '#f85149'
+                            }">${summary.coverage_assessment.documentation_quality || '?'}</span>
+                        </span>
+                    </div>
+                    ${summary.coverage_assessment.missing_documentation && summary.coverage_assessment.missing_documentation.length > 0 ? `
+                    <div style="color:#d29922;font-size:11px;margin-top:6px">
+                        Missing: ${summary.coverage_assessment.missing_documentation.join('; ')}
+                    </div>` : ''}
+                    ` : ''}
+                </div>
+
+                <!-- Issues Table -->
+                ${summary.issues && summary.issues.length > 0 ? `
+                <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:16px;margin-bottom:16px">
+                    <div style="color:#ccc;font-size:14px;font-weight:600;margin-bottom:12px">
+                        Construction Issues (${summary.issues.length})
+                    </div>
+                    <table style="width:100%;border-collapse:collapse;font-size:12px">
+                        <thead>
+                            <tr style="border-bottom:1px solid #30363d;text-align:left">
+                                <th style="padding:8px 6px;color:#888;font-weight:500">Issue</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500">Service</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500;text-align:center">Severity</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500;text-align:center">Before</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500;text-align:center">During</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500;text-align:center">After</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500">Status</th>
+                                <th style="padding:8px 6px;color:#888;font-weight:500">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${summary.issues.map(issue => {
+                                const sevColor = issue.severity === 'major' ? '#f85149' : issue.severity === 'moderate' ? '#d29922' : '#888';
+                                const statusColor = issue.resolution_status === 'resolved' ? '#3fb950' :
+                                    issue.resolution_status === 'in-progress' ? '#58a6ff' :
+                                    issue.resolution_status === 'documented-only' ? '#d29922' : '#888';
+                                const statusLabel = issue.resolution_status === 'resolved' ? 'Resolved' :
+                                    issue.resolution_status === 'in-progress' ? 'In Progress' :
+                                    issue.resolution_status === 'documented-only' ? 'Documented' : 'Unknown';
+                                return `
+                                <tr style="border-bottom:1px solid #21262d">
+                                    <td style="padding:8px 6px;color:#ccc">${issue.issue}</td>
+                                    <td style="padding:8px 6px"><span class="badge badge-blue">${issue.service_type || ''}</span></td>
+                                    <td style="padding:8px 6px;text-align:center"><span style="color:${sevColor};font-weight:500">${issue.severity || ''}</span></td>
+                                    <td style="padding:8px 6px;text-align:center;color:${issue.documented_before ? '#3fb950' : '#555'};font-size:14px">${issue.documented_before ? '✓' : '—'}</td>
+                                    <td style="padding:8px 6px;text-align:center;color:${issue.documented_during ? '#58a6ff' : '#555'};font-size:14px">${issue.documented_during ? '✓' : '—'}</td>
+                                    <td style="padding:8px 6px;text-align:center;color:${issue.documented_after ? '#3fb950' : '#555'};font-size:14px">${issue.documented_after ? '✓' : '—'}</td>
+                                    <td style="padding:8px 6px"><span style="color:${statusColor};font-weight:500">${statusLabel}</span></td>
+                                    <td style="padding:8px 6px;color:#888;max-width:200px">${issue.notes || ''}</td>
+                                </tr>`;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                ` : ''}
+                ` : ''}
+
+                <!-- Photo Grid -->
+                <div style="color:#ccc;font-size:14px;font-weight:600;margin-bottom:8px">Photos (${photos.length})</div>
                 <div class="photo-grid">
                     ${photos.map(p => {
                         const thumbSrc = p.thumb_uri || `/api/photo/${p.id}/thumb`;

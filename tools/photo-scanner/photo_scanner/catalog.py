@@ -28,7 +28,8 @@ class Catalog:
                 created_at TEXT DEFAULT '',
                 photo_count INTEGER DEFAULT 0,
                 last_synced TEXT,
-                last_analyzed TEXT
+                last_analyzed TEXT,
+                summary TEXT
             );
 
             CREATE TABLE IF NOT EXISTS photos (
@@ -87,6 +88,11 @@ class Catalog:
                 DELETE FROM photo_fts WHERE rowid = OLD.rowid;
             END;
         """)
+        # Migration: add summary column if missing (for existing databases)
+        try:
+            self.db.execute("SELECT summary FROM projects LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE projects ADD COLUMN summary TEXT")
 
     def close(self):
         self.db.close()
@@ -131,6 +137,17 @@ class Catalog:
         now = datetime.now(timezone.utc).isoformat()
         self.db.execute("UPDATE projects SET last_analyzed = ? WHERE id = ?", (now, project_id))
         self.db.commit()
+
+    def set_project_summary(self, project_id: str, summary: dict):
+        self.db.execute("UPDATE projects SET summary = ? WHERE id = ?",
+                        (json.dumps(summary), project_id))
+        self.db.commit()
+
+    def get_project_summary_data(self, project_id: str) -> dict | None:
+        row = self.db.execute("SELECT summary FROM projects WHERE id = ?", (project_id,)).fetchone()
+        if row and row[0]:
+            return json.loads(row[0])
+        return None
 
     # --- Photos ---
 

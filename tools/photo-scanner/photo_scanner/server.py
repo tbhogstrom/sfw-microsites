@@ -435,6 +435,8 @@ async def cc_get_project(project_id: str):
         proj["photos_synced"] = len(photos)
         proj["photos_analyzed"] = len(analyzed)
         proj["marketing_picks"] = sum(1 for p in analyzed if (p.get("marketing_score") or 0) >= 4)
+        # Project summary (generated after analysis)
+        proj["project_summary"] = catalog.get_project_summary_data(project_id)
     return proj
 
 

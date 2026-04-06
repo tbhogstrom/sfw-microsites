@@ -72,6 +72,40 @@ Analyze this construction/home repair photo. Respond in JSON only, no other text
 """
 
 
+PROJECT_SUMMARY_PROMPT = """\
+You are analyzing all the photos from a single construction/home repair project. Below is the structured analysis data from each photo.
+
+Your task: Summarize the project and create an issue tracker that inventories construction issues visible in "before" photos, and whether corresponding "after" or "during" photos show the resolution of each issue.
+
+Respond in JSON only:
+{
+  "project_summary": "2-3 sentence overview of what work was done at this job site",
+  "scope_of_work": ["list of major work categories performed"],
+  "issues": [
+    {
+      "issue": "short description of the construction issue or damage",
+      "service_type": "primary service type (siding, deck, dry-rot, etc.)",
+      "severity": "minor | moderate | major",
+      "documented_before": true/false,
+      "documented_during": true/false,
+      "documented_after": true/false,
+      "resolution_status": "resolved | in-progress | documented-only | unknown",
+      "before_photos": ["photo IDs showing this issue before repair"],
+      "after_photos": ["photo IDs showing this issue after repair"],
+      "notes": "brief note on what the photos show for this issue"
+    }
+  ],
+  "coverage_assessment": {
+    "has_before_photos": true/false,
+    "has_during_photos": true/false,
+    "has_after_photos": true/false,
+    "documentation_quality": "excellent | good | fair | poor",
+    "missing_documentation": ["what's missing — e.g. 'no after photos for deck repair', 'no wide shots of completed work'"]
+  }
+}
+"""
+
+
 def log(msg: str):
     print(msg, file=sys.stderr, flush=True)
 
@@ -821,9 +855,75 @@ async def analyze_project_from_catalog(catalog, project_id: str, cc_client,
     tasks = [analyze_one(photo) for photo in picked_photos]
     await asyncio.gather(*tasks)
 
+    # --- Project summary pass ---
+    _progress("Generating project summary...", phase="summary")
+    try:
+        await generate_project_summary(catalog, project_id, anthropic_client)
+    except Exception as e:
+        log(f"[Summary] Error generating summary: {e}")
+
     catalog.set_project_analyzed(project_id)
     _progress("Analysis complete", phase="complete")
     log(f"[Catalog] Project {project_id} analysis complete")
+
+
+async def generate_project_summary(catalog, project_id: str, anthropic_client):
+    """Generate a project-level summary from all analyzed photos.
+
+    Sends photo analysis data (not images) to Claude to identify construction
+    issues, track before/after coverage, and assess documentation quality.
+    """
+    all_photos = catalog.get_project_photos(project_id, per_page=10000)
+    analyzed = [p for p in all_photos if p.get("scene")]
+    if not analyzed:
+        return
+
+    # Build a text summary of all photo analyses for the prompt
+    photo_lines = []
+    for p in analyzed:
+        services = json.loads(p["service_types"]) if p.get("service_types") else []
+        entities = json.loads(p["entities"]) if p.get("entities") else []
+        photo_lines.append(
+            f"- Photo {p['id']}: phase={p.get('phase','?')}, "
+            f"scene=\"{p.get('scene','')}\", "
+            f"services={services}, "
+            f"entities={entities}, "
+            f"score={p.get('marketing_score','?')}, "
+            f"before_after={p.get('before_after_potential', False)}"
+        )
+
+    photo_data_text = "\n".join(photo_lines)
+    project = catalog.get_project(project_id)
+    project_name = project["name"] if project else project_id
+
+    prompt = (
+        f"Project: {project_name}\n"
+        f"Total photos analyzed: {len(analyzed)}\n\n"
+        f"Photo analysis data:\n{photo_data_text}\n\n"
+        f"{PROJECT_SUMMARY_PROMPT}"
+    )
+
+    log(f"[Summary] Generating summary for {project_name} ({len(analyzed)} photos)")
+
+    max_retries = 3
+    for attempt in range(max_retries + 1):
+        try:
+            response = await anthropic_client.messages.create(
+                model=ANTHROPIC_MODEL,
+                max_tokens=2048,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            summary = parse_json_response(response.content[0].text)
+            catalog.set_project_summary(project_id, summary)
+            log(f"[Summary] Saved summary: {len(summary.get('issues', []))} issues tracked")
+            return
+        except Exception as e:
+            if "429" in str(e) and attempt < max_retries:
+                wait = 15 * (attempt + 1)
+                log(f"[Summary] Rate limit, waiting {wait}s")
+                await asyncio.sleep(wait)
+            else:
+                raise
 
 
 if __name__ == "__main__":
