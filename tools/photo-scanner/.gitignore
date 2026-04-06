@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+catalog.db
+catalog.db-wal
+catalog.db-shm
+.thumbs/
+.grids/
+scan_results.json
+venv/
