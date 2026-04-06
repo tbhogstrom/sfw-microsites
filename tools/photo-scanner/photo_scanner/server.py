@@ -379,16 +379,28 @@ async def cc_list_projects(
         return JSONResponse({"error": "CompanyCam not configured (no COMPANYCAM_API_TOKEN)"}, status_code=503)
     raw_projects = await cc_client.list_projects(page=page, per_page=per_page, query=q)
     projects = [CompanyCamClient.normalize_project(p) for p in raw_projects]
-    # Merge sync/analysis status from catalog
+    # Merge sync/analysis status and summaries from catalog
     if catalog is not None:
         for proj in projects:
             local = catalog.get_project(proj["id"])
             if local:
                 proj["last_synced"] = local.get("last_synced")
                 proj["last_analyzed"] = local.get("last_analyzed")
+                summary = catalog.get_project_summary(proj["id"])
+                if summary:
+                    proj["summary"] = summary
             else:
                 proj["last_synced"] = None
                 proj["last_analyzed"] = None
+    # Pass through feature_image from CompanyCam
+    for proj, raw in zip(projects, raw_projects):
+        fi = raw.get("feature_image")
+        if isinstance(fi, list) and fi:
+            proj["feature_image"] = fi[0].get("url", "") if isinstance(fi[0], dict) else fi[0]
+        elif isinstance(fi, str):
+            proj["feature_image"] = fi
+        else:
+            proj["feature_image"] = None
     return {"projects": projects, "page": page, "per_page": per_page}
 
 

@@ -188,6 +188,63 @@ class Catalog:
         ).fetchall()
         return [dict(r) for r in rows]
 
+    def get_project_summary(self, project_id: str) -> dict | None:
+        """Get analysis summary stats for a single project."""
+        row = self.db.execute(
+            "SELECT COUNT(*) FROM photos WHERE project_id = ?", (project_id,)
+        ).fetchone()
+        total_synced = row[0] if row else 0
+        if total_synced == 0:
+            return None
+
+        analyzed = self.db.execute(
+            "SELECT COUNT(*) FROM photos WHERE project_id = ? AND scene IS NOT NULL", (project_id,)
+        ).fetchone()[0]
+        picks = self.db.execute(
+            "SELECT COUNT(*) FROM photos WHERE project_id = ? AND marketing_score >= 4", (project_id,)
+        ).fetchone()[0]
+        ba = self.db.execute(
+            "SELECT COUNT(*) FROM photos WHERE project_id = ? AND before_after_potential = 1", (project_id,)
+        ).fetchone()[0]
+
+        # Service types
+        rows = self.db.execute(
+            "SELECT service_types FROM photos WHERE project_id = ? AND service_types IS NOT NULL AND scene IS NOT NULL",
+            (project_id,),
+        ).fetchall()
+        services = set()
+        for r in rows:
+            for svc in json.loads(r[0]):
+                services.add(svc)
+
+        # Phase counts
+        phase_rows = self.db.execute(
+            "SELECT phase, COUNT(*) FROM photos WHERE project_id = ? AND phase IS NOT NULL GROUP BY phase",
+            (project_id,),
+        ).fetchall()
+        phases = {r[0]: r[1] for r in phase_rows}
+
+        # Average score
+        avg_row = self.db.execute(
+            "SELECT AVG(marketing_score) FROM photos WHERE project_id = ? AND marketing_score IS NOT NULL",
+            (project_id,),
+        ).fetchone()
+        avg_score = round(avg_row[0], 1) if avg_row[0] else 0
+
+        return {
+            "photos_synced": total_synced,
+            "photos_analyzed": analyzed,
+            "marketing_picks": picks,
+            "before_after_count": ba,
+            "services": sorted(services),
+            "phases": phases,
+            "avg_score": avg_score,
+        }
+
+    def get_project_summaries(self, project_ids: list[str]) -> dict[str, dict]:
+        """Get analysis summaries for multiple projects at once."""
+        return {pid: self.get_project_summary(pid) for pid in project_ids if self.get_project_summary(pid)}
+
     # --- Search ---
 
     def search_photos(self, q: str = None, service: str = None, phase: str = None,

@@ -1272,17 +1272,47 @@ async function loadProjects() {
             const status = p.last_analyzed ? 'analyzed' : p.last_synced ? 'synced' : 'unsynced';
             const badgeClass = status === 'analyzed' ? 'badge-green' : status === 'synced' ? 'badge-amber' : 'badge-gray';
             const badgeText = status === 'analyzed' ? 'Analyzed' : status === 'synced' ? 'Synced' : 'Not synced';
+            const s = p.summary || {};
+            const services = (s.services || []).slice(0, 4);
+            const phases = s.phases || {};
+            const hasAnalysis = s.photos_analyzed > 0;
+            const thumbStyle = p.feature_image
+                ? `background-image:url('${p.feature_image}');background-size:cover;background-position:center`
+                : 'background:#2a2a3a;display:flex;align-items:center;justify-content:center';
             return `
-                <div class="project-row" onclick="loadProjectDetail('${p.id}')">
-                    <div style="flex:1">
-                        <div style="color:#eee;font-size:13px;font-weight:500">${p.name}</div>
-                        <div style="color:#777;font-size:11px;margin-top:2px">${p.address || ''}</div>
+                <div class="project-row" onclick="loadProjectDetail('${p.id}')" style="padding:0;overflow:hidden">
+                    <div style="width:64px;height:64px;min-width:64px;${thumbStyle};border-radius:6px 0 0 6px">
+                        ${!p.feature_image ? '<span style="color:#555;font-size:22px">📷</span>' : ''}
                     </div>
-                    <div style="text-align:right;min-width:70px">
+                    <div style="flex:1;padding:10px 12px">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+                            <span style="color:#eee;font-size:13px;font-weight:500">${p.name}</span>
+                            <span class="badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div style="color:#777;font-size:11px">${p.address || ''}</div>
+                        ${hasAnalysis ? `
+                        <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap;align-items:center">
+                            ${services.map(svc => `<span class="badge badge-blue">${svc}</span>`).join('')}
+                            ${services.length < (s.services || []).length ? `<span style="color:#555;font-size:10px">+${(s.services || []).length - services.length}</span>` : ''}
+                        </div>` : ''}
+                    </div>
+                    <div style="padding:10px 8px;text-align:right;min-width:90px">
                         <div style="color:#ccc;font-size:13px">${p.photo_count} photos</div>
+                        ${hasAnalysis ? `
+                        <div style="color:#888;font-size:11px;margin-top:2px">${s.photos_analyzed} analyzed</div>
+                        <div style="display:flex;gap:4px;justify-content:flex-end;margin-top:3px">
+                            ${s.marketing_picks > 0 ? `<span style="color:#f0c040;font-size:10px">★${s.marketing_picks} picks</span>` : ''}
+                            ${s.before_after_count > 0 ? `<span style="color:#3fb950;font-size:10px">⇄${s.before_after_count} b/a</span>` : ''}
+                        </div>
+                        ${Object.keys(phases).length > 0 ? `
+                        <div style="display:flex;gap:2px;justify-content:flex-end;margin-top:3px">
+                            ${phases.before ? `<span style="background:#2d1b00;color:#d29922;padding:1px 4px;border-radius:3px;font-size:9px">${phases.before} before</span>` : ''}
+                            ${phases.during ? `<span style="background:#0d2847;color:#58a6ff;padding:1px 4px;border-radius:3px;font-size:9px">${phases.during} during</span>` : ''}
+                            ${phases.after ? `<span style="background:#1a3a1a;color:#3fb950;padding:1px 4px;border-radius:3px;font-size:9px">${phases.after} after</span>` : ''}
+                        </div>` : ''}
+                        ` : ''}
                     </div>
-                    <span class="badge ${badgeClass}">${badgeText}</span>
-                    <div style="color:#555;font-size:16px">→</div>
+                    <div style="color:#555;font-size:16px;padding-right:10px">→</div>
                 </div>`;
         }).join('');
     } catch (e) {
@@ -1417,19 +1447,31 @@ async function loadCatalog() {
         document.getElementById('catalog-grid').innerHTML = photos.map(p => {
             const score = p.marketing_score || 0;
             const stars = '★'.repeat(score) + '☆'.repeat(5 - score);
-            const scoreColor = score >= 4 ? '#f0c040' : '#666';
+            const scoreColor = score >= 4 ? '#f0c040' : score >= 3 ? '#d29922' : '#555';
             const services = p.service_types ? JSON.parse(p.service_types) : [];
+            const entities = p.entities ? JSON.parse(p.entities) : [];
+            const phaseBg = p.phase === 'before' ? '#2d1b00' : p.phase === 'after' ? '#1a3a1a' : p.phase === 'during' ? '#0d2847' : '#21262d';
+            const phaseColor = p.phase === 'before' ? '#d29922' : p.phase === 'after' ? '#3fb950' : p.phase === 'during' ? '#58a6ff' : '#888';
             return `
                 <div class="catalog-card" onclick="window.open('/api/photo/${p.id}/full','_blank')">
-                    <img src="/api/photo/${p.id}/thumb" loading="lazy" onerror="this.style.display='none'">
+                    <div style="position:relative">
+                        <img src="/api/photo/${p.id}/thumb" loading="lazy" onerror="this.style.display='none'">
+                        <div style="position:absolute;top:6px;right:6px;background:#000b;padding:2px 6px;border-radius:3px">
+                            <span style="color:${scoreColor};font-size:11px">${stars}</span>
+                        </div>
+                        ${p.phase ? `<div style="position:absolute;bottom:6px;left:6px;background:${phaseBg};padding:2px 6px;border-radius:3px;color:${phaseColor};font-size:10px;font-weight:500">${p.phase}</div>` : ''}
+                        ${p.before_after_potential ? `<div style="position:absolute;bottom:6px;right:6px;background:#1a3a1a;padding:2px 5px;border-radius:3px;color:#3fb950;font-size:9px">⇄ B/A</div>` : ''}
+                    </div>
                     <div class="card-body">
                         <div class="card-scene">${p.scene || ''}</div>
-                        <div class="card-meta">
-                            <span style="color:${scoreColor}">${stars}</span>
-                            ${p.phase ? `<span class="badge badge-blue" style="margin-left:4px">${p.phase}</span>` : ''}
+                        ${p.marketing_notes ? `<div style="color:#666;font-size:10px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden">${p.marketing_notes}</div>` : ''}
+                        <div class="card-meta" style="display:flex;justify-content:space-between;margin-top:4px">
+                            <span>${p.project_name || ''}</span>
+                            <span>${p.taken_at ? p.taken_at.substring(0, 10) : ''}</span>
                         </div>
-                        <div class="card-meta">${p.project_name || ''} · ${p.taken_at ? p.taken_at.substring(0, 10) : ''}</div>
+                        ${p.creator_name ? `<div style="color:#555;font-size:9px;margin-top:1px">by ${p.creator_name}</div>` : ''}
                         <div class="card-tags">${services.map(s => `<span>${s}</span>`).join('')}</div>
+                        ${entities.length > 0 ? `<div style="color:#555;font-size:9px;margin-top:3px">${entities.slice(0, 5).join(' · ')}${entities.length > 5 ? ' …' : ''}</div>` : ''}
                     </div>
                 </div>`;
         }).join('');
