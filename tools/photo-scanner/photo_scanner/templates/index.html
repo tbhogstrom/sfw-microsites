@@ -377,13 +377,10 @@
                 <option value="synced">Synced</option>
                 <option value="unsynced">Not synced</option>
             </select>
-            <select id="projects-cc-status" onchange="loadProjects()">
-                <option value="">All CC statuses</option>
-                <option value="active">Active</option>
-                <option value="completed">Completed</option>
-            </select>
             <select id="projects-stale-filter" onchange="loadProjects()">
                 <option value="">Any last photo</option>
+                <option value="3">No photos in 3+ days</option>
+                <option value="5">No photos in 5+ days</option>
                 <option value="7">No photos in 7+ days</option>
                 <option value="14">No photos in 14+ days</option>
                 <option value="30">No photos in 30+ days</option>
@@ -1265,7 +1262,7 @@ let projectsPage = 1;
 
 async function loadProjects() {
     const q = document.getElementById('projects-search').value;
-    const params = new URLSearchParams({page: projectsPage, per_page: 100});
+    const params = new URLSearchParams({page: projectsPage, per_page: 200});
     if (q) params.set('q', q);
 
     const listEl = document.getElementById('projects-list');
@@ -1274,7 +1271,6 @@ async function loadProjects() {
     detailEl.style.display = 'none';
 
     const statusFilter = document.getElementById('projects-status-filter').value;
-    const ccStatusFilter = document.getElementById('projects-cc-status').value;
     const staleFilter = parseInt(document.getElementById('projects-stale-filter').value) || 0;
 
     try {
@@ -1294,9 +1290,6 @@ async function loadProjects() {
                 return true;
             });
         }
-        if (ccStatusFilter) {
-            projects = projects.filter(p => p.status === ccStatusFilter);
-        }
         if (staleFilter > 0) {
             const cutoff = Math.floor(Date.now() / 1000) - (staleFilter * 86400);
             projects = projects.filter(p => {
@@ -1311,10 +1304,6 @@ async function loadProjects() {
             const status = p.last_analyzed ? 'analyzed' : p.last_synced ? 'synced' : 'unsynced';
             const badgeClass = status === 'analyzed' ? 'badge-green' : status === 'synced' ? 'badge-amber' : 'badge-gray';
             const badgeText = status === 'analyzed' ? 'Analyzed' : status === 'synced' ? 'Synced' : 'Not synced';
-            const ccStatus = p.status || 'active';
-            const ccBadge = ccStatus === 'completed'
-                ? '<span class="badge" style="background:#1a3a1a;color:#3fb950">Complete</span>'
-                : '<span class="badge" style="background:#161b22;color:#888">Active</span>';
             const s = p.summary || {};
             const services = (s.services || []).slice(0, 4);
             const phases = s.phases || {};
@@ -1345,7 +1334,6 @@ async function loadProjects() {
                     <div style="flex:1;padding:10px 12px">
                         <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
                             <span style="color:#eee;font-size:13px;font-weight:500">${p.name}</span>
-                            ${ccBadge}
                             <span class="badge ${badgeClass}">${badgeText}</span>
                         </div>
                         <div style="color:#777;font-size:11px">${p.address || ''}</div>

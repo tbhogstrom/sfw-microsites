@@ -377,7 +377,17 @@ async def cc_list_projects(
 ):
     if cc_client is None:
         return JSONResponse({"error": "CompanyCam not configured (no COMPANYCAM_API_TOKEN)"}, status_code=503)
-    raw_projects = await cc_client.list_projects(page=page, per_page=per_page, query=q)
+    # Fetch multiple pages to get more projects (CC API returns max 50 per page)
+    raw_projects = []
+    fetch_page = 1
+    while len(raw_projects) < per_page:
+        batch = await cc_client.list_projects(page=fetch_page, per_page=50, query=q)
+        if not batch:
+            break
+        raw_projects.extend(batch)
+        if len(batch) < 50:
+            break
+        fetch_page += 1
     projects = [CompanyCamClient.normalize_project(p) for p in raw_projects]
     # Merge sync/analysis status and summaries from catalog
     if catalog is not None:
