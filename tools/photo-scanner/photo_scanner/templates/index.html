@@ -377,6 +377,17 @@
                 <option value="synced">Synced</option>
                 <option value="unsynced">Not synced</option>
             </select>
+            <select id="projects-cc-status" onchange="loadProjects()">
+                <option value="">All CC statuses</option>
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+            </select>
+            <select id="projects-stale-filter" onchange="loadProjects()">
+                <option value="">Any last photo</option>
+                <option value="7">No photos in 7+ days</option>
+                <option value="14">No photos in 14+ days</option>
+                <option value="30">No photos in 30+ days</option>
+            </select>
             <button class="btn btn-primary" onclick="loadProjects()">Search</button>
         </div>
         <div id="projects-actions" style="display:none;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;margin-bottom:12px;display:flex;gap:8px;align-items:center">
@@ -1254,7 +1265,7 @@ let projectsPage = 1;
 
 async function loadProjects() {
     const q = document.getElementById('projects-search').value;
-    const params = new URLSearchParams({page: projectsPage, per_page: 25});
+    const params = new URLSearchParams({page: projectsPage, per_page: 100});
     if (q) params.set('q', q);
 
     const listEl = document.getElementById('projects-list');
@@ -1262,16 +1273,48 @@ async function loadProjects() {
     listEl.style.display = 'block';
     detailEl.style.display = 'none';
 
+    const statusFilter = document.getElementById('projects-status-filter').value;
+    const ccStatusFilter = document.getElementById('projects-cc-status').value;
+    const staleFilter = parseInt(document.getElementById('projects-stale-filter').value) || 0;
+
     try {
         const data = await fetch('/api/companycam/projects?' + params).then(r => r.json());
         if (data.error) {
             listEl.innerHTML = `<div style="color:#f85149;padding:20px">${data.error}</div>`;
             return;
         }
-        listEl.innerHTML = (data.projects || []).map(p => {
+        let projects = data.projects || [];
+
+        // Client-side filters
+        if (statusFilter) {
+            projects = projects.filter(p => {
+                if (statusFilter === 'analyzed') return p.last_analyzed;
+                if (statusFilter === 'synced') return p.last_synced && !p.last_analyzed;
+                if (statusFilter === 'unsynced') return !p.last_synced;
+                return true;
+            });
+        }
+        if (ccStatusFilter) {
+            projects = projects.filter(p => p.status === ccStatusFilter);
+        }
+        if (staleFilter > 0) {
+            const cutoff = Math.floor(Date.now() / 1000) - (staleFilter * 86400);
+            projects = projects.filter(p => {
+                const updatedAt = typeof p.updated_at === 'number' ? p.updated_at : parseInt(p.updated_at) || 0;
+                return updatedAt > 0 && updatedAt < cutoff;
+            });
+        }
+
+        document.getElementById('projects-pagination').textContent = `Showing ${projects.length} projects`;
+
+        listEl.innerHTML = projects.map(p => {
             const status = p.last_analyzed ? 'analyzed' : p.last_synced ? 'synced' : 'unsynced';
             const badgeClass = status === 'analyzed' ? 'badge-green' : status === 'synced' ? 'badge-amber' : 'badge-gray';
             const badgeText = status === 'analyzed' ? 'Analyzed' : status === 'synced' ? 'Synced' : 'Not synced';
+            const ccStatus = p.status || 'active';
+            const ccBadge = ccStatus === 'completed'
+                ? '<span class="badge" style="background:#1a3a1a;color:#3fb950">Complete</span>'
+                : '<span class="badge" style="background:#161b22;color:#888">Active</span>';
             const s = p.summary || {};
             const services = (s.services || []).slice(0, 4);
             const phases = s.phases || {};
@@ -1279,14 +1322,30 @@ async function loadProjects() {
             const thumbStyle = p.feature_image
                 ? `background-image:url('${p.feature_image}');background-size:cover;background-position:center`
                 : 'background:#2a2a3a;display:flex;align-items:center;justify-content:center';
+
+            // Last photo date from updated_at (Unix timestamp from CompanyCam)
+            let lastPhotoText = '';
+            let lastPhotoColor = '#555';
+            const updatedAt = typeof p.updated_at === 'number' ? p.updated_at : parseInt(p.updated_at) || 0;
+            if (updatedAt > 0) {
+                const lastDate = new Date(updatedAt * 1000);
+                const daysAgo = Math.floor((Date.now() - lastDate.getTime()) / 86400000);
+                const dateStr = lastDate.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+                if (daysAgo === 0) { lastPhotoText = 'Today'; lastPhotoColor = '#3fb950'; }
+                else if (daysAgo === 1) { lastPhotoText = 'Yesterday'; lastPhotoColor = '#3fb950'; }
+                else if (daysAgo <= 7) { lastPhotoText = `${daysAgo}d ago`; lastPhotoColor = '#d29922'; }
+                else { lastPhotoText = dateStr; lastPhotoColor = '#888'; }
+            }
+
             return `
                 <div class="project-row" onclick="loadProjectDetail('${p.id}')" style="padding:0;overflow:hidden">
                     <div style="width:64px;height:64px;min-width:64px;${thumbStyle};border-radius:6px 0 0 6px">
                         ${!p.feature_image ? '<span style="color:#555;font-size:22px">📷</span>' : ''}
                     </div>
                     <div style="flex:1;padding:10px 12px">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
                             <span style="color:#eee;font-size:13px;font-weight:500">${p.name}</span>
+                            ${ccBadge}
                             <span class="badge ${badgeClass}">${badgeText}</span>
                         </div>
                         <div style="color:#777;font-size:11px">${p.address || ''}</div>
@@ -1295,6 +1354,12 @@ async function loadProjects() {
                             ${services.map(svc => `<span class="badge badge-blue">${svc}</span>`).join('')}
                             ${services.length < (s.services || []).length ? `<span style="color:#555;font-size:10px">+${(s.services || []).length - services.length}</span>` : ''}
                         </div>` : ''}
+                    </div>
+                    <div style="padding:10px 8px;text-align:center;min-width:70px">
+                        ${lastPhotoText ? `
+                        <div style="color:${lastPhotoColor};font-size:11px;font-weight:500">Last photo</div>
+                        <div style="color:${lastPhotoColor};font-size:12px">${lastPhotoText}</div>
+                        ` : ''}
                     </div>
                     <div style="padding:10px 8px;text-align:right;min-width:90px">
                         <div style="color:#ccc;font-size:13px">${p.photo_count} photos</div>

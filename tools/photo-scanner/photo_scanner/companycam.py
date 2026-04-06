@@ -78,6 +78,8 @@ class CompanyCamClient:
             "lat": coords.get("lat", 0) or 0,
             "lng": coords.get("lon", 0) or 0,
             "created_at": raw.get("created_at", ""),
+            "updated_at": raw.get("updated_at", ""),
+            "status": raw.get("status", "active"),
             "photo_count": raw.get("photo_count", 0),
         }
 
