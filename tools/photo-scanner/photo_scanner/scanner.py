@@ -46,7 +46,7 @@ DOCUMENT — photos of paperwork: receipts, invoices, T&M sheets, timecards, mat
 SKIP — other non-marketing photos: blurry, very dark, extreme close-ups of nothing identifiable, duplicate angles.
 
 For each cell, classify it. For picks, identify the service type from:
-siding, deck, dry-rot, chimney, crawlspace, flashing, trim, beam, leak, lead-paint, mold, restoration
+siding, deck, dry-rot, chimney, crawlspace, flashing, trim, beam, leak, lead-paint, mold, restoration, windows, doors
 
 Look at each cell carefully. The counts will vary per grid.
 
@@ -60,11 +60,21 @@ If no photos are suitable: {"picks": [], "documents": [], "skips": [1,2,3,4,5,6,
 DEEP_PROMPT = """\
 Analyze this construction/home repair photo. Respond in JSON only, no other text.
 
+Pay special attention to:
+- WATER DAMAGE and DRY ROT: staining, discoloration, soft/crumbling wood, fungal growth, swelling, peeling paint from moisture, rot at joints/sill plates/window frames
+- WINDOWS and DOORS: condition of frames, sills, trim, flashing, caulking, glazing, weather stripping, signs of moisture intrusion around openings
+- NEW SIDING: type (cedar shake, lap, board-and-batten, fiber cement, vinyl), installation quality, trim details, flashing at transitions, paint/finish condition
+
 {
   "scene": "one-line description of what is shown",
-  "service_types": ["list from: siding, deck, dry-rot, chimney, crawlspace, flashing, trim, beam, leak, lead-paint, mold, restoration"],
+  "service_types": ["list from: siding, deck, dry-rot, chimney, crawlspace, flashing, trim, beam, leak, lead-paint, mold, restoration, windows, doors"],
   "phase": "one of: before, during, after, materials, overview, other",
   "entities": ["visible objects: tools, materials, building parts, damage types"],
+  "damage_details": {
+    "water_damage": "describe any water damage or dry rot visible — location, extent, severity. null if none",
+    "window_door_condition": "describe condition of any windows/doors visible — frame, sill, trim, flashing, moisture issues. null if none",
+    "siding_details": "describe siding type, condition, installation quality if visible. null if none"
+  },
   "marketing_score": 1-5,
   "marketing_notes": "why this score — composition, lighting, clarity, subject interest",
   "before_after_potential": true or false
@@ -76,6 +86,11 @@ PROJECT_SUMMARY_PROMPT = """\
 You are analyzing all the photos from a single construction/home repair project. Below is the structured analysis data from each photo.
 
 Your task: Summarize the project and create an issue tracker that inventories construction issues visible in "before" photos, and whether corresponding "after" or "during" photos show the resolution of each issue.
+
+Pay special attention to:
+- WATER DAMAGE and DRY ROT: any moisture intrusion, rot, fungal damage, staining — track each instance as a separate issue
+- WINDOWS and DOORS: frame condition, sill rot, flashing failures, moisture around openings
+- SIDING: type installed, areas replaced, quality of installation, transitions and flashing
 
 Respond in JSON only:
 {
@@ -844,6 +859,7 @@ async def analyze_project_from_catalog(catalog, project_id: str, cc_client,
                     "marketing_score": analysis.get("marketing_score", 1),
                     "marketing_notes": analysis.get("marketing_notes", ""),
                     "before_after_potential": analysis.get("before_after_potential", False),
+                    "damage_details": analysis.get("damage_details"),
                 })
             except Exception as e:
                 log(f"[Deep] Error on {photo['id']}: {e}")
@@ -883,7 +899,8 @@ async def generate_project_summary(catalog, project_id: str, anthropic_client):
     for p in analyzed:
         services = json.loads(p["service_types"]) if p.get("service_types") else []
         entities = json.loads(p["entities"]) if p.get("entities") else []
-        photo_lines.append(
+        damage = json.loads(p["damage_details"]) if p.get("damage_details") else None
+        line = (
             f"- Photo {p['id']}: phase={p.get('phase','?')}, "
             f"scene=\"{p.get('scene','')}\", "
             f"services={services}, "
@@ -891,6 +908,14 @@ async def generate_project_summary(catalog, project_id: str, anthropic_client):
             f"score={p.get('marketing_score','?')}, "
             f"before_after={p.get('before_after_potential', False)}"
         )
+        if damage:
+            if damage.get("water_damage"):
+                line += f", water_damage=\"{damage['water_damage']}\""
+            if damage.get("window_door_condition"):
+                line += f", windows_doors=\"{damage['window_door_condition']}\""
+            if damage.get("siding_details"):
+                line += f", siding=\"{damage['siding_details']}\""
+        photo_lines.append(line)
 
     photo_data_text = "\n".join(photo_lines)
     project = catalog.get_project(project_id)

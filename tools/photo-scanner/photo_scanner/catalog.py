@@ -46,7 +46,8 @@ class Catalog:
                 entities TEXT,
                 marketing_score INTEGER,
                 marketing_notes TEXT,
-                before_after_potential INTEGER DEFAULT 0
+                before_after_potential INTEGER DEFAULT 0,
+                damage_details TEXT
             );
 
             CREATE INDEX IF NOT EXISTS idx_photos_project ON photos(project_id);
@@ -88,11 +89,15 @@ class Catalog:
                 DELETE FROM photo_fts WHERE rowid = OLD.rowid;
             END;
         """)
-        # Migration: add summary column if missing (for existing databases)
+        # Migrations for existing databases
         try:
             self.db.execute("SELECT summary FROM projects LIMIT 0")
         except sqlite3.OperationalError:
             self.db.execute("ALTER TABLE projects ADD COLUMN summary TEXT")
+        try:
+            self.db.execute("SELECT damage_details FROM photos LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE photos ADD COLUMN damage_details TEXT")
 
     def close(self):
         self.db.close()
@@ -166,6 +171,7 @@ class Catalog:
         return dict(row) if row else None
 
     def update_photo_analysis(self, photo_id: str, analysis: dict):
+        damage = analysis.get("damage_details")
         self.db.execute("""
             UPDATE photos SET
                 triage_status = :triage_status,
@@ -175,7 +181,8 @@ class Catalog:
                 entities = :entities,
                 marketing_score = :marketing_score,
                 marketing_notes = :marketing_notes,
-                before_after_potential = :before_after_potential
+                before_after_potential = :before_after_potential,
+                damage_details = :damage_details
             WHERE id = :id
         """, {
             "id": photo_id,
@@ -187,6 +194,7 @@ class Catalog:
             "marketing_score": analysis.get("marketing_score"),
             "marketing_notes": analysis.get("marketing_notes", ""),
             "before_after_potential": 1 if analysis.get("before_after_potential") else 0,
+            "damage_details": json.dumps(damage) if damage else None,
         })
         self.db.commit()
 
