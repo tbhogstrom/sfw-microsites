@@ -298,11 +298,11 @@ class Catalog:
         if before_after_only:
             conditions.append("p.before_after_potential = 1")
         if date_from:
-            conditions.append("p.taken_at >= ?")
-            params.append(date_from)
+            conditions.append("CAST(p.taken_at AS INTEGER) >= ?")
+            params.append(int(datetime.fromisoformat(date_from).timestamp()) if not date_from.isdigit() else int(date_from))
         if date_to:
-            conditions.append("p.taken_at <= ?")
-            params.append(date_to)
+            conditions.append("CAST(p.taken_at AS INTEGER) <= ?")
+            params.append(int(datetime.fromisoformat(date_to).timestamp()) if not date_to.isdigit() else int(date_to))
 
         where = " AND ".join(conditions)
         offset = (page - 1) * per_page
@@ -359,20 +359,25 @@ class Catalog:
         }
 
     def get_weekly_activity(self) -> dict:
-        now = datetime.now(timezone.utc)
-        monday = now - timedelta(days=now.weekday())
-        this_week_start = monday.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
-        last_week_start = (monday - timedelta(days=7)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+        """Photo counts by week. taken_at is stored as Unix timestamps (strings)."""
+        import time
+        now = time.time()
+        # Monday 00:00 UTC of this week
+        dt_now = datetime.now(timezone.utc)
+        monday = dt_now - timedelta(days=dt_now.weekday())
+        this_week_ts = int(monday.replace(hour=0, minute=0, second=0, microsecond=0).timestamp())
+        last_week_ts = this_week_ts - 7 * 86400
 
+        # CAST taken_at to integer for numeric comparison (stored as Unix timestamp strings)
         this_week = self.db.execute(
-            "SELECT COUNT(*) FROM photos WHERE taken_at >= ?", (this_week_start,)
+            "SELECT COUNT(*) FROM photos WHERE CAST(taken_at AS INTEGER) >= ?", (this_week_ts,)
         ).fetchone()[0]
         last_week = self.db.execute(
-            "SELECT COUNT(*) FROM photos WHERE taken_at >= ? AND taken_at < ?",
-            (last_week_start, this_week_start),
+            "SELECT COUNT(*) FROM photos WHERE CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?",
+            (last_week_ts, this_week_ts),
         ).fetchone()[0]
         projects_this_week = self.db.execute(
-            "SELECT COUNT(DISTINCT project_id) FROM photos WHERE taken_at >= ?", (this_week_start,)
+            "SELECT COUNT(DISTINCT project_id) FROM photos WHERE CAST(taken_at AS INTEGER) >= ?", (this_week_ts,)
         ).fetchone()[0]
 
         return {
