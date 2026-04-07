@@ -103,3 +103,76 @@ def test_get_photos_for_date(seeded_catalog):
 def test_get_photos_for_date_empty(seeded_catalog):
     photos = seeded_catalog.get_photos_for_date("p1", 1776000000, 1776100000)
     assert len(photos) == 0
+
+
+from unittest.mock import AsyncMock, MagicMock
+from photo_scanner.reports import generate_daily_report, select_best_photos, load_report_config
+
+
+def test_load_report_config():
+    config = load_report_config()
+    assert "risk_value_matrix" in config
+    assert "dry-rot" in config["risk_value_matrix"]
+    assert "report_defaults" in config
+
+
+def test_select_best_photos():
+    photos = [
+        {"id": "a", "marketing_score": 5, "phase": "after", "scene": "After shot"},
+        {"id": "b", "marketing_score": 3, "phase": "before", "scene": "Before shot"},
+        {"id": "c", "marketing_score": 4, "phase": "during", "scene": "During shot"},
+        {"id": "d", "marketing_score": 2, "phase": "during", "scene": "Bad shot"},
+        {"id": "e", "marketing_score": 4, "phase": "before", "scene": "Good before"},
+    ]
+    selected = select_best_photos(photos, max_photos=4)
+    assert len(selected) == 4
+    ids = [p["id"] for p in selected]
+    assert "a" in ids
+    assert "d" not in ids
+
+
+def test_select_best_photos_few():
+    photos = [
+        {"id": "a", "marketing_score": 3, "phase": "before", "scene": "Shot"},
+        {"id": "b", "marketing_score": 4, "phase": "after", "scene": "Shot"},
+    ]
+    selected = select_best_photos(photos, max_photos=4)
+    assert len(selected) == 2
+
+
+@pytest.mark.asyncio
+async def test_generate_daily_report(seeded_catalog):
+    mock_report = json.dumps({
+        "headline": "Sealing Your Home Against Water Damage",
+        "risk_before": "Exposed gaps were allowing water into the wall cavity.",
+        "risk_after": "New flashing installed, wall cavity sealed.",
+        "what_we_did": "Installed flashing and began siding replacement.",
+        "value_statement": "Today's work stopped an active water intrusion path.",
+        "photo_captions": {
+            "d2-0": "New flashing being installed at the junction.",
+            "d2-1": "House wrap applied over repaired framing.",
+            "d2-2": "End of day — siding going up."
+        },
+        "issues_status": [
+            {"issue": "Sill plate dry rot", "status": "in-progress", "changed_today": True},
+            {"issue": "Siding replacement", "status": "in-progress", "changed_today": True}
+        ]
+    })
+
+    mock_anthropic = AsyncMock()
+    mock_anthropic.messages.create = AsyncMock(
+        return_value=MagicMock(content=[MagicMock(text=mock_report)])
+    )
+
+    report = await generate_daily_report(
+        catalog=seeded_catalog,
+        project_id="p1",
+        date_ts_start=1775490000,
+        date_ts_end=1775510000,
+        anthropic_client=mock_anthropic,
+    )
+
+    assert report["headline"] == "Sealing Your Home Against Water Damage"
+    assert report["risk_before"] is not None
+    assert len(report["photos"]) <= 4
+    assert report["photos"][0]["photo_id"].startswith("d2-")
