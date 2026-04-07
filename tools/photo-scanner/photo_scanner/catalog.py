@@ -99,6 +99,18 @@ class Catalog:
         except sqlite3.OperationalError:
             self.db.execute("ALTER TABLE photos ADD COLUMN damage_details TEXT")
 
+        # daily_reports table
+        self.db.execute("""
+            CREATE TABLE IF NOT EXISTS daily_reports (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                report_date TEXT NOT NULL,
+                report_data TEXT NOT NULL,
+                generated_at TEXT NOT NULL,
+                UNIQUE(project_id, report_date)
+            )
+        """)
+
     def close(self):
         self.db.close()
 
@@ -153,6 +165,38 @@ class Catalog:
         if row and row[0]:
             return json.loads(row[0])
         return None
+
+    # --- Daily Reports ---
+
+    def save_daily_report(self, project_id: str, report_date: str, report_data: dict):
+        now = datetime.now(timezone.utc).isoformat()
+        self.db.execute("""
+            INSERT INTO daily_reports (project_id, report_date, report_data, generated_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(project_id, report_date) DO UPDATE SET
+                report_data=excluded.report_data, generated_at=excluded.generated_at
+        """, (project_id, report_date, json.dumps(report_data), now))
+        self.db.commit()
+
+    def get_daily_reports(self, report_date: str) -> list[dict]:
+        rows = self.db.execute("""
+            SELECT dr.*, p.name as project_name, p.address as project_address
+            FROM daily_reports dr
+            JOIN projects p ON dr.project_id = p.id
+            WHERE dr.report_date = ?
+            ORDER BY p.name
+        """, (report_date,)).fetchall()
+        return [dict(r) for r in rows]
+
+    def get_photos_for_date(self, project_id: str, ts_start: int, ts_end: int) -> list[dict]:
+        """Get analyzed photos for a project within a Unix timestamp range."""
+        rows = self.db.execute("""
+            SELECT * FROM photos
+            WHERE project_id = ? AND scene IS NOT NULL
+              AND CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?
+            ORDER BY marketing_score DESC, taken_at
+        """, (project_id, ts_start, ts_end)).fetchall()
+        return [dict(r) for r in rows]
 
     # --- Photos ---
 
