@@ -1,0 +1,79 @@
+{
+  "risk_value_matrix": {
+    "dry-rot": {
+      "risk": "Dry rot compromises structural wood in your home, spreading silently and weakening load-bearing elements",
+      "value": "Removing and replacing rotted wood stops the spread and restores structural integrity",
+      "urgency": "high"
+    },
+    "leak": {
+      "risk": "Water intrusion can cause hidden mold growth, damage insulation, and rot structural framing inside your walls",
+      "value": "Sealing entry points protects your home's interior from moisture damage and health hazards",
+      "urgency": "high"
+    },
+    "siding": {
+      "risk": "Damaged or missing siding leaves your home exposed to weather, pests, and accelerating deterioration",
+      "value": "New siding is your home's first line of defense — it protects the structure and restores curb appeal",
+      "urgency": "medium"
+    },
+    "windows": {
+      "risk": "Failing window frames and flashing allow water behind your walls where you can't see the damage building",
+      "value": "Properly sealed windows stop hidden moisture intrusion and improve energy efficiency",
+      "urgency": "high"
+    },
+    "doors": {
+      "risk": "Deteriorated door frames and thresholds are common entry points for water and pest intrusion",
+      "value": "Restored door framing seals your home's envelope and prevents costly interior damage",
+      "urgency": "medium"
+    },
+    "trim": {
+      "risk": "Rotting trim allows water to wick into the wall structure behind it",
+      "value": "Fresh trim seals transitions and protects the underlying framing from moisture",
+      "urgency": "medium"
+    },
+    "deck": {
+      "risk": "A compromised deck is a safety hazard — rotted joists and boards can fail under load",
+      "value": "Rebuilt deck structure ensures safe use for your family and extends the life of the investment",
+      "urgency": "high"
+    },
+    "crawlspace": {
+      "risk": "Moisture and rot in the crawlspace can undermine your home's foundation and floor structure",
+      "value": "Crawlspace repairs protect the foundation and prevent floor sagging or structural failure",
+      "urgency": "high"
+    },
+    "chimney": {
+      "risk": "Deteriorated chimney flashing and masonry allows water into your roof and wall systems",
+      "value": "Chimney repairs seal a critical roof penetration and prevent interior water damage",
+      "urgency": "medium"
+    },
+    "flashing": {
+      "risk": "Failed flashing at roof-wall junctions is one of the most common causes of hidden water damage",
+      "value": "Proper flashing directs water away from vulnerable transitions in your home",
+      "urgency": "high"
+    },
+    "beam": {
+      "risk": "Compromised beams put your home's structural safety at risk",
+      "value": "New structural beams restore load-bearing capacity and long-term safety",
+      "urgency": "high"
+    },
+    "mold": {
+      "risk": "Mold growth indicates moisture problems and poses health risks to your household",
+      "value": "Mold remediation and moisture source correction protects your family's health",
+      "urgency": "high"
+    },
+    "lead-paint": {
+      "risk": "Lead paint disturbed during renovation creates toxic dust hazardous to your family",
+      "value": "Proper containment and abatement eliminates the exposure risk",
+      "urgency": "high"
+    },
+    "restoration": {
+      "risk": "Accumulated deterioration reduces your home's safety, efficiency, and value",
+      "value": "Comprehensive restoration brings your home back to solid, safe condition",
+      "urgency": "medium"
+    }
+  },
+  "report_defaults": {
+    "max_photos": 4,
+    "tone": "friendly",
+    "company_name": "SFW Construction"
+  }
+}
