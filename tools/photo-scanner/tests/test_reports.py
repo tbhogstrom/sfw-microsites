@@ -176,3 +176,61 @@ async def test_generate_daily_report(seeded_catalog):
     assert report["risk_before"] is not None
     assert len(report["photos"]) <= 4
     assert report["photos"][0]["photo_id"].startswith("d2-")
+
+
+def test_weekly_reports_table_exists(catalog):
+    tables = {r[0] for r in catalog.db.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'"
+    ).fetchall()}
+    assert "weekly_reports" in tables
+
+
+def test_save_and_get_weekly_report(catalog):
+    catalog.upsert_project({"id": "p1", "name": "Test", "address": "", "lat": 0, "lng": 0, "created_at": "", "photo_count": 0})
+    report_data = {"headline": "Weekly Summary", "weekly_narrative": "Good week"}
+    catalog.save_weekly_report("p1", "2026-03-31", report_data)
+    reports = catalog.get_weekly_reports("2026-03-31")
+    assert len(reports) == 1
+    assert reports[0]["project_id"] == "p1"
+    data = json.loads(reports[0]["report_data"])
+    assert data["headline"] == "Weekly Summary"
+
+
+def test_save_weekly_report_upserts(catalog):
+    catalog.upsert_project({"id": "p1", "name": "Test", "address": "", "lat": 0, "lng": 0, "created_at": "", "photo_count": 0})
+    catalog.save_weekly_report("p1", "2026-03-31", {"headline": "First"})
+    catalog.save_weekly_report("p1", "2026-03-31", {"headline": "Updated"})
+    reports = catalog.get_weekly_reports("2026-03-31")
+    assert len(reports) == 1
+    assert json.loads(reports[0]["report_data"])["headline"] == "Updated"
+
+
+def test_get_eligible_weekly_projects(seeded_catalog):
+    """Projects with 3+ distinct photo days in a week qualify."""
+    seeded_catalog.upsert_photo({
+        "id": "d3-0", "project_id": "p1",
+        "uri": "https://example.com/d3-0.jpg", "thumb_uri": "",
+        "taken_at": str(1775600000), "creator_name": "Charlie",
+    })
+    seeded_catalog.update_photo_analysis("d3-0", {
+        "triage_status": "picked", "scene": "Day 3 work",
+        "service_types": ["siding"], "phase": "after",
+        "entities": ["siding"], "marketing_score": 5,
+        "marketing_notes": "Great", "before_after_potential": True,
+    })
+    eligible = seeded_catalog.get_eligible_weekly_projects(1775350000, 1775650000, min_days=3)
+    assert len(eligible) == 1
+    assert eligible[0]["project_id"] == "p1"
+    assert eligible[0]["photo_days"] >= 3
+
+
+def test_get_eligible_weekly_projects_below_threshold(seeded_catalog):
+    """Projects with fewer than min_days don't qualify."""
+    eligible = seeded_catalog.get_eligible_weekly_projects(1775350000, 1775550000, min_days=3)
+    assert len(eligible) == 0
+
+
+def test_get_photos_for_week(seeded_catalog):
+    """Get all analyzed photos for a project in a week range."""
+    photos = seeded_catalog.get_photos_for_week("p1", 1775350000, 1775550000)
+    assert len(photos) == 7

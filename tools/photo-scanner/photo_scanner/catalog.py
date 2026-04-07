@@ -111,6 +111,18 @@ class Catalog:
             )
         """)
 
+        # weekly_reports table
+        self.db.execute("""
+            CREATE TABLE IF NOT EXISTS weekly_reports (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                week_start TEXT NOT NULL,
+                report_data TEXT NOT NULL,
+                generated_at TEXT NOT NULL,
+                UNIQUE(project_id, week_start)
+            )
+        """)
+
     def close(self):
         self.db.close()
 
@@ -195,6 +207,55 @@ class Catalog:
             WHERE project_id = ? AND scene IS NOT NULL
               AND CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?
             ORDER BY marketing_score DESC, taken_at
+        """, (project_id, ts_start, ts_end)).fetchall()
+        return [dict(r) for r in rows]
+
+    # --- Weekly Reports ---
+
+    def save_weekly_report(self, project_id: str, week_start: str, report_data: dict):
+        now = datetime.now(timezone.utc).isoformat()
+        self.db.execute("""
+            INSERT INTO weekly_reports (project_id, week_start, report_data, generated_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(project_id, week_start) DO UPDATE SET
+                report_data=excluded.report_data, generated_at=excluded.generated_at
+        """, (project_id, week_start, json.dumps(report_data), now))
+        self.db.commit()
+
+    def get_weekly_reports(self, week_start: str) -> list[dict]:
+        rows = self.db.execute("""
+            SELECT wr.*, p.name as project_name, p.address as project_address
+            FROM weekly_reports wr
+            JOIN projects p ON wr.project_id = p.id
+            WHERE wr.week_start = ?
+            ORDER BY p.name
+        """, (week_start,)).fetchall()
+        return [dict(r) for r in rows]
+
+    def get_eligible_weekly_projects(self, ts_start: int, ts_end: int, min_days: int = 3) -> list[dict]:
+        """Find projects with min_days+ distinct photo days in the given timestamp range."""
+        rows = self.db.execute("""
+            SELECT p.project_id, pr.name, pr.address,
+                   COUNT(DISTINCT date(CAST(p.taken_at AS INTEGER), 'unixepoch')) as photo_days,
+                   COUNT(*) as photo_count
+            FROM photos p
+            JOIN projects pr ON p.project_id = pr.id
+            WHERE p.scene IS NOT NULL
+              AND CAST(p.taken_at AS INTEGER) >= ?
+              AND CAST(p.taken_at AS INTEGER) < ?
+            GROUP BY p.project_id
+            HAVING photo_days >= ?
+            ORDER BY photo_days DESC, photo_count DESC
+        """, (ts_start, ts_end, min_days)).fetchall()
+        return [dict(r) for r in rows]
+
+    def get_photos_for_week(self, project_id: str, ts_start: int, ts_end: int) -> list[dict]:
+        """Get all analyzed photos for a project in a week range, ordered by date then score."""
+        rows = self.db.execute("""
+            SELECT * FROM photos
+            WHERE project_id = ? AND scene IS NOT NULL
+              AND CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?
+            ORDER BY CAST(taken_at AS INTEGER), marketing_score DESC
         """, (project_id, ts_start, ts_end)).fetchall()
         return [dict(r) for r in rows]
 
