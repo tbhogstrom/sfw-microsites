@@ -234,3 +234,77 @@ def test_get_photos_for_week(seeded_catalog):
     """Get all analyzed photos for a project in a week range."""
     photos = seeded_catalog.get_photos_for_week("p1", 1775350000, 1775550000)
     assert len(photos) == 7
+
+
+from photo_scanner.reports import generate_weekly_report, select_best_photos_weekly
+
+
+def test_select_best_photos_weekly():
+    """Select photos across a week preferring narrative arc."""
+    photos = [
+        {"id": "mon-1", "marketing_score": 4, "phase": "before", "taken_at": "1775100000"},
+        {"id": "mon-2", "marketing_score": 3, "phase": "before", "taken_at": "1775100100"},
+        {"id": "wed-1", "marketing_score": 5, "phase": "during", "taken_at": "1775270000"},
+        {"id": "wed-2", "marketing_score": 3, "phase": "during", "taken_at": "1775270100"},
+        {"id": "fri-1", "marketing_score": 5, "phase": "after", "taken_at": "1775440000"},
+        {"id": "fri-2", "marketing_score": 4, "phase": "after", "taken_at": "1775440100"},
+    ]
+    selected = select_best_photos_weekly(photos, max_photos=4)
+    assert len(selected) == 4
+    phases = [p["phase"] for p in selected]
+    assert "before" in phases
+    assert "after" in phases
+
+
+@pytest.mark.asyncio
+async def test_generate_weekly_report(seeded_catalog):
+    """Generate a weekly report using mocked Claude response."""
+    seeded_catalog.upsert_photo({
+        "id": "d3-0", "project_id": "p1",
+        "uri": "https://example.com/d3-0.jpg", "thumb_uri": "",
+        "taken_at": str(1775600000), "creator_name": "Charlie",
+    })
+    seeded_catalog.update_photo_analysis("d3-0", {
+        "triage_status": "picked", "scene": "Day 3 — siding complete",
+        "service_types": ["siding"], "phase": "after",
+        "entities": ["siding", "house"], "marketing_score": 5,
+        "marketing_notes": "Great completion shot", "before_after_potential": True,
+    })
+
+    mock_report = json.dumps({
+        "headline": "A Week of Structural Restoration",
+        "weekly_narrative": "This week the crew addressed critical dry rot and began siding replacement.",
+        "risk_before": "Exposed structural elements were vulnerable to weather.",
+        "risk_after": "Wall cavity sealed and new siding going up.",
+        "what_we_did": "Removed rot, installed flashing, started siding replacement.",
+        "value_statement": "Your home's weather envelope is being restored.",
+        "photo_captions": {"d1-1": "Rot exposed", "d2-0": "Flashing installed", "d2-2": "End of day", "d3-0": "Siding complete"},
+        "issues_status": [
+            {"issue": "Sill plate dry rot", "status": "resolved", "changed_this_week": True},
+            {"issue": "Siding replacement", "status": "in-progress", "changed_this_week": True}
+        ],
+        "daily_timeline": [
+            {"date": "2026-04-04", "summary": "Exposed and removed rotted sill plate.", "photo_ids": ["d1-0", "d1-1"]},
+            {"date": "2026-04-05", "summary": "Installed flashing and house wrap.", "photo_ids": ["d2-0", "d2-1"]},
+            {"date": "2026-04-06", "summary": "Began siding installation.", "photo_ids": ["d3-0"]}
+        ]
+    })
+
+    mock_anthropic = AsyncMock()
+    mock_anthropic.messages.create = AsyncMock(
+        return_value=MagicMock(content=[MagicMock(text=mock_report)])
+    )
+
+    report = await generate_weekly_report(
+        catalog=seeded_catalog,
+        project_id="p1",
+        week_ts_start=1775350000,
+        week_ts_end=1775650000,
+        anthropic_client=mock_anthropic,
+    )
+
+    assert report["headline"] == "A Week of Structural Restoration"
+    assert report["weekly_narrative"] is not None
+    assert len(report["photos"]) <= 4
+    assert report["daily_timeline"] is not None
+    assert len(report["daily_timeline"]) >= 1
