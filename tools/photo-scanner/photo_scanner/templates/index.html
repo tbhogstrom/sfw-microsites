@@ -329,6 +329,82 @@
 }
 .project-detail .photo-card img { width: 100%; height: 120px; object-fit: cover; background: #0d1117; }
 .project-detail .photo-card .info { padding: 6px; font-size: 10px; color: #888; }
+
+/* Report cards — light theme for homeowner-facing content */
+.report-card {
+    max-width: 680px;
+    margin: 24px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    font-family: Georgia, serif;
+    color: #333;
+}
+.report-card .report-header {
+    background: #1a3a2a;
+    padding: 20px 24px;
+    color: #fff;
+}
+.report-card .report-header .date-label {
+    font-size: 12px;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: -apple-system, sans-serif;
+}
+.report-card .report-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 4px 0 0;
+}
+.report-card .report-header .meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: 0.8;
+    font-family: -apple-system, sans-serif;
+}
+.report-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid #eee;
+}
+.report-section .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-family: -apple-system, sans-serif;
+}
+.report-section p { font-size: 14px; line-height: 1.6; margin: 0; }
+.risk-boxes { display: flex; gap: 16px; }
+.risk-box { flex: 1; border-radius: 8px; padding: 14px; }
+.risk-box.before { background: #fef3e2; }
+.risk-box.before .section-label { color: #b8860b; }
+.risk-box.before p { color: #5a4a2a; }
+.risk-box.after { background: #e8f5e9; }
+.risk-box.after .section-label { color: #2e7d32; }
+.risk-box.after p { color: #2a4a2a; }
+.risk-arrow { display: flex; align-items: center; font-size: 24px; color: #888; }
+.report-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.report-photos img { width: 100%; border-radius: 8px; height: 140px; object-fit: cover; background: #eee; }
+.report-photos .caption { font-size: 12px; color: #666; margin-top: 4px; font-family: -apple-system, sans-serif; }
+.issue-row {
+    display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0;
+    font-family: -apple-system, sans-serif;
+}
+.issue-dot { font-size: 16px; }
+.issue-dot.resolved { color: #2e7d32; }
+.issue-dot.in-progress { color: #1976d2; }
+.issue-dot.documented-only { color: #b8860b; }
+.issue-dot.unknown { color: #888; }
+.report-footer {
+    padding: 14px 24px; background: #f0f0ee; text-align: center;
+    font-size: 12px; color: #888; font-family: -apple-system, sans-serif;
+}
 </style>
 </head>
 <body>
@@ -339,6 +415,7 @@
     <div class="nav-tab" data-section="catalog" onclick="switchSection('catalog')">Catalog</div>
     <div class="nav-tab active" data-section="scanner" onclick="switchSection('scanner')">Scanner</div>
     <div class="nav-tab" data-section="map" onclick="switchSection('map')">Map</div>
+    <div class="nav-tab" data-section="reports" onclick="switchSection('reports')">Reports</div>
     <div class="nav-spacer"></div>
     <div class="nav-status" id="sync-status"></div>
 </div>
@@ -441,6 +518,18 @@
 
 <div id="section-map" class="main-section">
     <div id="map-container" style="flex:1;min-height:500px"></div>
+</div>
+
+<div id="section-reports" class="main-section">
+    <div style="padding:16px;max-width:720px;margin:0 auto;width:100%">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+            <input type="date" id="report-date" style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;color:#ccc;font-size:13px">
+            <button class="btn btn-primary" id="generate-reports-btn" onclick="generateReports()">Generate Reports</button>
+            <button class="btn" onclick="loadSavedReports()">Load Saved</button>
+            <span id="report-status" style="color:#888;font-size:12px"></span>
+        </div>
+        <div id="reports-container"></div>
+    </div>
 </div>
 
 <div id="section-scanner" class="main-section active" style="flex-direction:row;overflow:hidden">
@@ -1230,6 +1319,7 @@ function switchSection(section) {
     if (section === 'projects') loadProjects();
     if (section === 'catalog') loadCatalog();
     if (section === 'map') loadMap();
+    if (section === 'reports') initReportsTab();
 }
 
 // --- Dashboard ---
@@ -1663,6 +1753,157 @@ async function refreshMapMarkers() {
     } catch (e) {
         console.error('Map error:', e);
     }
+}
+
+// --- Reports ---
+function initReportsTab() {
+    const dateInput = document.getElementById('report-date');
+    if (!dateInput.value) {
+        const yesterday = new Date(Date.now() - 86400000);
+        dateInput.value = yesterday.toISOString().split('T')[0];
+    }
+    loadSavedReports();
+}
+
+async function generateReports() {
+    const date = document.getElementById('report-date').value;
+    if (!date) { alert('Pick a date'); return; }
+    const statusEl = document.getElementById('report-status');
+    const btn = document.getElementById('generate-reports-btn');
+    btn.disabled = true;
+    statusEl.textContent = 'Generating reports...';
+    try {
+        const resp = await fetch('/api/reports/generate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({date}),
+        });
+        const data = await resp.json();
+        if (data.error) {
+            statusEl.textContent = 'Error: ' + data.error;
+        } else {
+            statusEl.textContent = `Generated ${data.reports.length} reports`;
+            renderReports(data.reports, date);
+        }
+    } catch (e) {
+        statusEl.textContent = 'Error: ' + e.message;
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+async function loadSavedReports() {
+    const date = document.getElementById('report-date').value;
+    if (!date) return;
+    const statusEl = document.getElementById('report-status');
+    try {
+        const data = await fetch(`/api/reports/daily?date=${date}`).then(r => r.json());
+        if (data.reports && data.reports.length > 0) {
+            statusEl.textContent = `${data.reports.length} saved reports`;
+            renderReports(data.reports, date);
+        } else {
+            statusEl.textContent = 'No saved reports for this date';
+            document.getElementById('reports-container').innerHTML =
+                '<div style="text-align:center;color:#888;padding:40px">No reports yet. Click "Generate Reports" to create them.</div>';
+        }
+    } catch (e) {
+        statusEl.textContent = '';
+    }
+}
+
+function renderReports(reports, date) {
+    const container = document.getElementById('reports-container');
+    const dateFormatted = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    container.innerHTML = reports.map(r => {
+        if (r.error) {
+            return `<div class="report-card"><div class="report-header"><h2>Error</h2></div>
+                <div class="report-section"><p style="color:#f85149">${r.error}</p></div></div>`;
+        }
+        const rpt = r.report;
+        const photos = rpt.photos || [];
+        const issues = rpt.issues_status || [];
+
+        return `
+        <div class="report-card">
+            <div class="report-header">
+                <div class="date-label">Daily Project Update</div>
+                <h2>${rpt.headline || 'Daily Update'}</h2>
+                <div class="meta">
+                    <span>${r.project_name || ''}</span>
+                    <span>${dateFormatted}</span>
+                </div>
+                ${r.project_address ? `<div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">${r.project_address}</div>` : ''}
+            </div>
+
+            <div class="report-section">
+                <div class="risk-boxes">
+                    <div class="risk-box before">
+                        <div class="section-label">Risk Before Work</div>
+                        <p>${rpt.risk_before || ''}</p>
+                    </div>
+                    <div class="risk-arrow">&rarr;</div>
+                    <div class="risk-box after">
+                        <div class="section-label">After Today's Work</div>
+                        <p>${rpt.risk_after || ''}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <div class="section-label">What We Did Today</div>
+                <p>${rpt.what_we_did || ''}</p>
+            </div>
+
+            ${photos.length > 0 ? `
+            <div class="report-section">
+                <div class="section-label">Today's Photos</div>
+                <div class="report-photos">
+                    ${photos.map(p => `
+                        <div>
+                            <img src="/api/photo/${p.photo_id}/thumb" loading="lazy" onerror="this.style.background='#ddd'">
+                            <div class="caption">${p.caption || ''}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            ` : ''}
+
+            <div class="report-section">
+                <div class="section-label">The Value To Your Home</div>
+                <p>${rpt.value_statement || ''}</p>
+            </div>
+
+            ${issues.length > 0 ? `
+            <div class="report-section" style="background:#fafafa">
+                <div class="section-label">Project Issues — Status</div>
+                ${issues.map(iss => {
+                    const status = iss.status || 'unknown';
+                    const dotClass = status.replace(/ /g, '-');
+                    const label = status === 'resolved' ? 'Resolved' :
+                        status === 'in-progress' ? 'In progress' :
+                        status === 'documented-only' ? 'Documented' : 'Pending';
+                    const changed = iss.changed_today ? ' — updated today' : '';
+                    return `
+                        <div class="issue-row">
+                            <span class="issue-dot ${dotClass}">&bull;</span>
+                            <span style="flex:1">${iss.issue}</span>
+                            <span style="font-size:12px;font-weight:500;color:${
+                                status === 'resolved' ? '#2e7d32' :
+                                status === 'in-progress' ? '#1976d2' : '#b8860b'
+                            }">${label}${changed}</span>
+                        </div>`;
+                }).join('')}
+            </div>
+            ` : ''}
+
+            <div class="report-footer">
+                SFW Construction — Daily Project Report
+            </div>
+        </div>`;
+    }).join('');
 }
 
 // Load dashboard on startup
