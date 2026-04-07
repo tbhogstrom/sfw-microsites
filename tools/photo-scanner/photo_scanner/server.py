@@ -25,6 +25,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from photo_scanner.catalog import Catalog
 from photo_scanner.companycam import CompanyCamClient
+from photo_scanner.reports import generate_daily_report
 
 SERVICE_TO_MICROSITE = {
     "siding": "siding-repair",
@@ -815,6 +816,93 @@ def load_external_galleries(gallery_paths: list[Path]):
 @app.get("/api/curated-galleries")
 async def get_curated_galleries():
     return {"galleries": EXTERNAL_GALLERIES + CURATED_GALLERIES}
+
+
+# --- Daily Reports ---
+
+@app.post("/api/reports/generate")
+async def api_generate_reports(request: Request):
+    """Generate daily homeowner reports for a given date."""
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+
+    body = await request.json()
+    date_str = body.get("date")  # "2026-04-06"
+    project_id = body.get("project_id")  # optional
+
+    if not date_str:
+        return JSONResponse({"error": "date is required (YYYY-MM-DD)"}, status_code=400)
+
+    # Parse date to Unix timestamp range
+    from datetime import datetime as dt, timezone as tz
+    try:
+        day_start = dt.strptime(date_str, "%Y-%m-%d").replace(tzinfo=tz.utc)
+    except ValueError:
+        return JSONResponse({"error": "Invalid date format. Use YYYY-MM-DD"}, status_code=400)
+    ts_start = int(day_start.timestamp())
+    ts_end = ts_start + 86400
+
+    from photo_scanner.scanner import get_async_anthropic_client
+    anthropic_client = get_async_anthropic_client()
+    if not anthropic_client:
+        return JSONResponse({"error": "ANTHROPIC_API_KEY not configured"}, status_code=503)
+
+    # Find projects with analyzed photos on this date
+    if project_id:
+        project_ids = [project_id]
+    else:
+        rows = catalog.db.execute(
+            "SELECT DISTINCT project_id FROM photos WHERE scene IS NOT NULL AND CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?",
+            (ts_start, ts_end),
+        ).fetchall()
+        project_ids = [r[0] for r in rows]
+
+    if not project_ids:
+        return {"reports": [], "message": f"No analyzed photos found for {date_str}"}
+
+    reports = []
+    for pid in project_ids:
+        try:
+            report = await generate_daily_report(
+                catalog=catalog,
+                project_id=pid,
+                date_ts_start=ts_start,
+                date_ts_end=ts_end,
+                anthropic_client=anthropic_client,
+            )
+            if report:
+                catalog.save_daily_report(pid, date_str, report)
+                project = catalog.get_project(pid)
+                reports.append({
+                    "project_id": pid,
+                    "project_name": project["name"] if project else pid,
+                    "project_address": project["address"] if project else "",
+                    "date": date_str,
+                    "report": report,
+                })
+        except Exception as e:
+            reports.append({"project_id": pid, "error": str(e)})
+
+    return {"reports": reports, "date": date_str}
+
+
+@app.get("/api/reports/daily")
+async def api_get_daily_reports(date: str = Query(...)):
+    """Fetch saved reports for a date."""
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    rows = catalog.get_daily_reports(date)
+    reports = []
+    for r in rows:
+        reports.append({
+            "project_id": r["project_id"],
+            "project_name": r["project_name"],
+            "project_address": r["project_address"],
+            "date": r["report_date"],
+            "report": json.loads(r["report_data"]),
+            "generated_at": r["generated_at"],
+        })
+    return {"reports": reports, "date": date}
 
 
 # --- Photo-picker proxy endpoints ---
