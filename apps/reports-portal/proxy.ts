@@ -7,6 +7,7 @@ export function proxy(request: NextRequest) {
   // Skip auth for these paths
   if (
     pathname === '/login' ||
+    pathname.startsWith('/api/auth') ||
     pathname.startsWith('/api/ingest') ||
     pathname.startsWith('/_next/') ||
     pathname === '/favicon.ico'
