@@ -1,4 +1,4 @@
-import { list } from '@vercel/blob';
+import { list, get } from '@vercel/blob';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,9 +10,13 @@ export default async function DailyReportPage({ params }: { params: Promise<{ da
 
   const reports: string[] = [];
   for (const blob of htmlBlobs) {
-    const resp = await fetch(blob.url, { cache: 'no-store' });
-    if (resp.ok) {
-      reports.push(await resp.text());
+    try {
+      const result = await get(blob.pathname);
+      if (result) {
+        reports.push(await new Response(result.body).text());
+      }
+    } catch {
+      /* skip unreadable blobs */
     }
   }
 

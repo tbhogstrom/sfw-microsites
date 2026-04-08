@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   for (const report of reports) {
     const path = `${prefix}/${dateKey}/${report.project_id}.html`;
     await put(path, report.html, {
-      access: 'public',
+      access: 'private',
       contentType: 'text/html',
       addRandomSuffix: false,
     });
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     ),
   };
   await put(`${prefix}/${dateKey}/manifest.json`, JSON.stringify(manifest), {
-    access: 'public',
+    access: 'private',
     contentType: 'application/json',
     addRandomSuffix: false,
   });
