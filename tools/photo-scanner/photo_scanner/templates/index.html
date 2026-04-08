@@ -561,6 +561,7 @@
             <button class="btn btn-primary" id="generate-reports-btn" onclick="generateReports()">Generate Reports</button>
             <button class="btn" onclick="loadSavedReports()">Load Saved</button>
             <button class="btn btn-warning" onclick="exportAllReportsPDF()">Export All PDFs</button>
+            <button class="btn btn-success" onclick="publishReports('daily')">Publish to Web</button>
             <span id="report-status" style="color:#888;font-size:12px"></span>
         </div>
         <div id="reports-container"></div>
@@ -575,6 +576,7 @@
             <button class="btn btn-primary" id="generate-weekly-btn" onclick="generateWeeklyReports()">Generate Weekly Reports</button>
             <button class="btn" onclick="loadSavedWeeklyReports()">Load Saved</button>
             <button class="btn btn-warning" onclick="exportAllWeeklyReportsPDF()">Export All PDFs</button>
+            <button class="btn btn-success" onclick="publishReports('weekly')">Publish to Web</button>
             <span id="weekly-report-status" style="color:#888;font-size:12px"></span>
         </div>
         <div id="weekly-reports-container"></div>
@@ -2222,6 +2224,40 @@ async function exportAllWeeklyReportsPDF() {
     let html = '';
     cards.forEach(card => { html += card.outerHTML; });
     openPrintWindow(html);
+}
+
+// --- Publish to Web ---
+async function publishReports(type) {
+    var dateEl, statusEl;
+    if (type === 'weekly') {
+        dateEl = document.getElementById('weekly-report-date');
+        statusEl = document.getElementById('weekly-report-status');
+    } else {
+        dateEl = document.getElementById('report-date');
+        statusEl = document.getElementById('report-status');
+    }
+    var dateVal = dateEl ? dateEl.value : '';
+    if (!dateVal) { alert('Select a date first'); return; }
+
+    statusEl.textContent = 'Publishing to web...';
+    try {
+        var body = {type: type};
+        if (type === 'weekly') { body.week_start = dateVal; } else { body.date = dateVal; }
+
+        var resp = await fetch('/api/reports/publish', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body),
+        });
+        var data = await resp.json();
+        if (data.ok) {
+            statusEl.textContent = 'Published ' + data.published + ' reports to ' + data.portal_url;
+        } else {
+            statusEl.textContent = 'Publish error: ' + (data.error || 'Unknown');
+        }
+    } catch (e) {
+        statusEl.textContent = 'Publish error: ' + e.message;
+    }
 }
 
 // --- Data Explorer ---

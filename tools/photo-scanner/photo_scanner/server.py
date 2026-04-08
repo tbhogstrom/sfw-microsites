@@ -1106,6 +1106,242 @@ async def api_get_weekly_reports(week_start: str = Query(...)):
     return {"reports": reports, "week_start": week_start}
 
 
+# --- Report Publishing ---
+
+@app.post("/api/reports/publish")
+async def api_publish_reports(request: Request):
+    """Publish reports to the web portal. Renders self-contained HTML with base64 photos."""
+    if not catalog or not cc_client:
+        return JSONResponse({"error": "Catalog or CompanyCam not configured"}, status_code=503)
+
+    env_path = Path(__file__).parent.parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+    portal_url = os.environ.get("PORTAL_URL")
+    portal_key = os.environ.get("PORTAL_INGEST_KEY")
+    if not portal_url or not portal_key:
+        return JSONResponse({"error": "PORTAL_URL and PORTAL_INGEST_KEY must be set in .env"}, status_code=503)
+
+    body = await request.json()
+    report_type = body.get("type", "daily")  # "daily" or "weekly"
+    date_str = body.get("date") or body.get("week_start")
+
+    if not date_str:
+        return JSONResponse({"error": "date or week_start required"}, status_code=400)
+
+    # Fetch saved reports
+    if report_type == "weekly":
+        rows = catalog.get_weekly_reports(date_str)
+    else:
+        rows = catalog.get_daily_reports(date_str)
+
+    if not rows:
+        return JSONResponse({"error": f"No saved {report_type} reports for {date_str}"}, status_code=404)
+
+    # Load logo as base64
+    logo_path = Path(__file__).parent / "static" / "sfw-emblem.png"
+    logo_b64 = ""
+    if logo_path.exists():
+        import base64 as b64mod
+        logo_b64 = "data:image/png;base64," + b64mod.b64encode(logo_path.read_bytes()).decode()
+
+    # Render each report as self-contained HTML
+    publish_reports = []
+    for r in rows:
+        report_data = json.loads(r["report_data"]) if isinstance(r["report_data"], str) else r["report_data"]
+        photos = report_data.get("photos", [])
+
+        # Fetch photo thumbnails and convert to base64
+        photo_b64 = {}
+        for p in photos:
+            pid = p.get("photo_id")
+            if pid:
+                photo_record = catalog.get_photo(pid)
+                if photo_record:
+                    uri = photo_record.get("thumb_uri") or photo_record.get("uri")
+                    if uri:
+                        try:
+                            img_bytes = await cc_client.get_photo_bytes(uri)
+                            photo_b64[pid] = "data:image/jpeg;base64," + b64mod.b64encode(img_bytes).decode()
+                        except Exception:
+                            pass
+
+        # Render self-contained HTML
+        html = render_report_html(report_data, r.get("project_name", ""), r.get("project_address", ""),
+                                  date_str, report_type, logo_b64, photo_b64)
+
+        publish_reports.append({
+            "project_id": r["project_id"],
+            "project_name": r.get("project_name", ""),
+            "project_address": r.get("project_address", ""),
+            "html": html,
+        })
+
+    # POST to portal
+    import httpx
+    async with httpx.AsyncClient(timeout=60) as client:
+        ingest_body = {
+            "type": report_type,
+            "reports": publish_reports,
+        }
+        if report_type == "weekly":
+            ingest_body["week_start"] = date_str
+        else:
+            ingest_body["date"] = date_str
+
+        resp = await client.post(
+            f"{portal_url}/api/ingest",
+            json=ingest_body,
+            headers={"Authorization": f"Bearer {portal_key}"},
+        )
+        if resp.status_code != 200:
+            return JSONResponse({"error": f"Portal returned {resp.status_code}: {resp.text}"}, status_code=502)
+        result = resp.json()
+
+    return {"ok": True, "published": result.get("published", 0), "portal_url": portal_url}
+
+
+def render_report_html(report: dict, project_name: str, project_address: str,
+                       date_str: str, report_type: str, logo_b64: str, photo_b64: dict) -> str:
+    """Render a single report as self-contained HTML with embedded images."""
+    rpt = report
+    photos = rpt.get("photos", [])
+    issues = rpt.get("issues_status", [])
+    timeline = rpt.get("daily_timeline", [])
+
+    # Format date
+    if report_type == "weekly":
+        from datetime import datetime, timedelta
+        ws = datetime.strptime(date_str, "%Y-%m-%d")
+        we = ws + timedelta(days=4)
+        date_display = f"Week of {ws.strftime('%B %d')} – {we.strftime('%B %d, %Y')}"
+        header_bg = "#1a2a3a"
+        label = "Weekly Project Report"
+    else:
+        from datetime import datetime
+        d = datetime.strptime(date_str, "%Y-%m-%d")
+        date_display = d.strftime("%A, %B %d, %Y")
+        header_bg = "#1a3a2a"
+        label = "Daily Project Update"
+
+    css = """
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        body { background: #f8f7f4; }
+        .report-card { max-width: 680px; margin: 24px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; font-family: Georgia, serif; color: #333; }
+        .report-header { padding: 20px 24px; color: #fff; position: relative; padding-right: 90px; }
+        .report-logo { position: absolute; top: 50%; right: 20px; height: 50px; opacity: 0.85; transform: translateY(-50%); }
+        .date-label { font-size: 12px; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; font-family: -apple-system, sans-serif; }
+        .report-header h2 { font-size: 22px; font-weight: 600; margin: 4px 0 0; }
+        .report-section { padding: 20px 24px; border-bottom: 1px solid #eee; }
+        .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; font-weight: 600; margin-bottom: 8px; font-family: -apple-system, sans-serif; }
+        .report-section p { font-size: 14px; line-height: 1.6; }
+        .risk-boxes { display: flex; gap: 16px; }
+        .risk-box { flex: 1; border-radius: 8px; padding: 14px; }
+        .risk-box.before { background: #fef3e2; }
+        .risk-box.before .section-label { color: #b8860b; }
+        .risk-box.before p { color: #5a4a2a; }
+        .risk-box.after { background: #e8f5e9; }
+        .risk-box.after .section-label { color: #2e7d32; }
+        .risk-box.after p { color: #2a4a2a; }
+        .risk-arrow { display: flex; align-items: center; font-size: 24px; color: #888; }
+        .report-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .report-photos img { width: 100%; border-radius: 8px; height: 140px; object-fit: cover; background: #eee; }
+        .report-photos .caption { font-size: 12px; color: #666; margin-top: 4px; font-family: -apple-system, sans-serif; }
+        .issue-row { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; font-family: -apple-system, sans-serif; }
+        .report-footer { padding: 14px 24px; background: #f0f0ee; text-align: center; font-size: 12px; color: #888; font-family: -apple-system, sans-serif; }
+        .day-entry { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; font-family: -apple-system, sans-serif; }
+        .day-entry:last-child { border-bottom: none; }
+        .day-date { min-width: 90px; font-size: 13px; font-weight: 600; color: #555; }
+        .day-summary { flex: 1; font-size: 13px; color: #333; line-height: 1.5; }
+        .day-thumbs { display: flex; gap: 4px; }
+        .day-thumbs img { width: 60px; height: 45px; object-fit: cover; border-radius: 4px; }
+    </style>
+    """
+
+    logo_img = f'<img class="report-logo" src="{logo_b64}">' if logo_b64 else ''
+
+    # Photos HTML
+    photos_html = ""
+    if photos:
+        photo_items = []
+        for p in photos:
+            pid = p.get("photo_id", "")
+            src = photo_b64.get(pid, "")
+            caption = p.get("caption", "")
+            photo_items.append(f'<div><img src="{src}"><div class="caption">{caption}</div></div>')
+        photos_html = f'<div class="report-section"><div class="section-label">{"This Week\'s" if report_type == "weekly" else "Today\'s"} Photos</div><div class="report-photos">{"".join(photo_items)}</div></div>'
+
+    # Issues HTML
+    issues_html = ""
+    if issues:
+        issue_items = []
+        for iss in issues:
+            status = iss.get("status", "unknown")
+            color = "#2e7d32" if status == "resolved" else "#1976d2" if status == "in-progress" else "#b8860b"
+            status_label = "Resolved" if status == "resolved" else "In progress" if status == "in-progress" else "Documented" if status == "documented-only" else "Pending"
+            changed_key = "changed_this_week" if report_type == "weekly" else "changed_today"
+            changed = f" — {'this week' if report_type == 'weekly' else 'updated today'}" if iss.get(changed_key) else ""
+            issue_items.append(f'<div class="issue-row"><span style="color:{color};font-size:16px">●</span><span style="flex:1">{iss.get("issue","")}</span><span style="font-size:12px;font-weight:500;color:{color}">{status_label}{changed}</span></div>')
+        bg = "background:#fafafa"
+        issues_html = f'<div class="report-section" style="{bg}"><div class="section-label">Project Issues — Status</div>{"".join(issue_items)}</div>'
+
+    # Timeline HTML (weekly only)
+    timeline_html = ""
+    if timeline and report_type == "weekly":
+        from datetime import datetime
+        day_items = []
+        for day in timeline:
+            try:
+                dd = datetime.strptime(day["date"], "%Y-%m-%d")
+                day_label = dd.strftime("%a, %b %d")
+            except Exception:
+                day_label = day.get("date", "")
+            thumbs = ""
+            for tid in (day.get("photo_ids") or [])[:2]:
+                src = photo_b64.get(tid, "")
+                if src:
+                    thumbs += f'<img src="{src}">'
+            thumbs_html = f'<div class="day-thumbs">{thumbs}</div>' if thumbs else ""
+            day_items.append(f'<div class="day-entry"><div class="day-date">{day_label}</div><div class="day-summary">{day.get("summary","")}</div>{thumbs_html}</div>')
+        timeline_html = f'<div class="report-section"><div class="section-label">Day by Day</div>{"".join(day_items)}</div>'
+
+    # Weekly narrative
+    narrative_html = ""
+    if rpt.get("weekly_narrative") and report_type == "weekly":
+        narrative_html = f'<div class="report-section"><div class="section-label">This Week\'s Progress</div><p>{rpt["weekly_narrative"]}</p></div>'
+
+    what_label = "What We Accomplished" if report_type == "weekly" else "What We Did Today"
+
+    html = f"""{css}
+<div class="report-card">
+    <div class="report-header" style="background:{header_bg}">
+        {logo_img}
+        <div class="date-label">{label}</div>
+        <h2>{rpt.get('headline', 'Project Update')}</h2>
+        <div style="font-size:13px;opacity:0.8;font-family:-apple-system,sans-serif;margin-top:10px">{project_name}</div>
+        <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">{project_address}</div>
+        <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">{date_display}</div>
+    </div>
+    {narrative_html}
+    <div class="report-section">
+        <div class="risk-boxes">
+            <div class="risk-box before"><div class="section-label">{'Risk at Start of Week' if report_type == 'weekly' else 'Risk Before Work'}</div><p>{rpt.get('risk_before','')}</p></div>
+            <div class="risk-arrow">→</div>
+            <div class="risk-box after"><div class="section-label">{"After This Week's Work" if report_type == 'weekly' else "After Today's Work"}</div><p>{rpt.get('risk_after','')}</p></div>
+        </div>
+    </div>
+    <div class="report-section"><div class="section-label">{what_label}</div><p>{rpt.get('what_we_did','')}</p></div>
+    {photos_html}
+    <div class="report-section"><div class="section-label">The Value To Your Home</div><p>{rpt.get('value_statement','')}</p></div>
+    {timeline_html}
+    {issues_html}
+    <div class="report-footer">SFW Construction — {label}</div>
+</div>"""
+
+    return html
+
+
 # --- Data Explorer ---
 
 @app.get("/api/data/overview")
