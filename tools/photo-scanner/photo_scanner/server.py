@@ -1003,9 +1003,14 @@ async def data_overview():
             if projects:
                 raw_proj = projects[0]
                 result["companycam"]["project_fields"] = sorted(raw_proj.keys())
+                def safe_str(v):
+                    if isinstance(v, bytes):
+                        return v.decode('utf-8', errors='replace')[:200]
+                    if isinstance(v, (str, list, dict)):
+                        return str(v)[:200]
+                    return v
                 result["companycam"]["project_sample"] = {
-                    k: (str(v)[:200] if isinstance(v, (str, list, dict)) else v)
-                    for k, v in raw_proj.items()
+                    k: safe_str(v) for k, v in raw_proj.items()
                 }
                 # Notepad (scope of work)
                 import re
@@ -1025,8 +1030,7 @@ async def data_overview():
                 if photos:
                     result["companycam"]["photo_fields"] = sorted(photos[0].keys())
                     result["companycam"]["photo_sample"] = {
-                        k: (str(v)[:200] if isinstance(v, (str, list, dict)) else v)
-                        for k, v in photos[0].items() if k != "uris"
+                        k: safe_str(v) for k, v in photos[0].items() if k != "uris"
                     }
                     result["companycam"]["photo_uri_types"] = [u.get("type") for u in photos[0].get("uris", [])]
 
@@ -1060,7 +1064,10 @@ async def data_overview():
         for tname in tables:
             rows = catalog.db.execute(f"SELECT * FROM {tname} LIMIT 3").fetchall()
             if rows:
-                result["catalog"][f"{tname}_sample"] = [dict(r) for r in rows]
+                result["catalog"][f"{tname}_sample"] = [
+                    {k: (v.decode('utf-8', errors='replace') if isinstance(v, bytes) else v) for k, v in dict(r).items()}
+                    for r in rows
+                ]
 
     return result
 
