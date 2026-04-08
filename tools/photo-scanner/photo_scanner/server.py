@@ -989,6 +989,115 @@ async def api_get_weekly_reports(week_start: str = Query(...)):
     return {"reports": reports, "week_start": week_start}
 
 
+# --- Data Explorer ---
+
+@app.get("/api/data/overview")
+async def data_overview():
+    """Return a full data landscape: CC API fields, catalog tables, tag lists."""
+    result = {"companycam": {}, "catalog": {}, "tags": []}
+
+    # CompanyCam API shape — fetch a sample project and photo
+    if cc_client:
+        try:
+            projects = await cc_client.list_projects(per_page=1)
+            if projects:
+                raw_proj = projects[0]
+                result["companycam"]["project_fields"] = sorted(raw_proj.keys())
+                result["companycam"]["project_sample"] = {
+                    k: (str(v)[:200] if isinstance(v, (str, list, dict)) else v)
+                    for k, v in raw_proj.items()
+                }
+                # Notepad (scope of work)
+                import re
+                notepad = raw_proj.get("notepad", "")
+                result["companycam"]["notepad_sample"] = re.sub(r'<[^>]*>', '', notepad).strip()[:500] if notepad else None
+
+                # Project labels
+                try:
+                    resp = await cc_client._client.get(f"/projects/{raw_proj['id']}/labels")
+                    if resp.status_code == 200:
+                        result["companycam"]["project_labels"] = resp.json()
+                except Exception:
+                    pass
+
+                # Photos
+                photos = await cc_client.list_project_photos(str(raw_proj["id"]), per_page=1)
+                if photos:
+                    result["companycam"]["photo_fields"] = sorted(photos[0].keys())
+                    result["companycam"]["photo_sample"] = {
+                        k: (str(v)[:200] if isinstance(v, (str, list, dict)) else v)
+                        for k, v in photos[0].items() if k != "uris"
+                    }
+                    result["companycam"]["photo_uri_types"] = [u.get("type") for u in photos[0].get("uris", [])]
+
+            # Global tags
+            resp = await cc_client._client.get("/tags")
+            if resp.status_code == 200:
+                result["tags"] = resp.json()
+        except Exception as e:
+            result["companycam"]["error"] = str(e)
+
+    # Catalog tables
+    if catalog:
+        result["catalog"]["projects"] = catalog.db.execute("SELECT COUNT(*) FROM projects").fetchone()[0]
+        result["catalog"]["photos_total"] = catalog.db.execute("SELECT COUNT(*) FROM photos").fetchone()[0]
+        result["catalog"]["photos_analyzed"] = catalog.db.execute("SELECT COUNT(*) FROM photos WHERE scene IS NOT NULL").fetchone()[0]
+        result["catalog"]["daily_reports"] = catalog.db.execute("SELECT COUNT(*) FROM daily_reports").fetchone()[0]
+        try:
+            result["catalog"]["weekly_reports"] = catalog.db.execute("SELECT COUNT(*) FROM weekly_reports").fetchone()[0]
+        except Exception:
+            result["catalog"]["weekly_reports"] = 0
+
+        # Schema info
+        tables = {}
+        for row in catalog.db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").fetchall():
+            tname = row[0]
+            cols = catalog.db.execute(f"PRAGMA table_info({tname})").fetchall()
+            tables[tname] = [{"name": c[1], "type": c[2], "notnull": bool(c[3]), "pk": bool(c[5])} for c in cols]
+        result["catalog"]["schema"] = tables
+
+        # Sample data from each table
+        for tname in tables:
+            rows = catalog.db.execute(f"SELECT * FROM {tname} LIMIT 3").fetchall()
+            if rows:
+                result["catalog"][f"{tname}_sample"] = [dict(r) for r in rows]
+
+    return result
+
+
+@app.get("/api/data/projects-text")
+async def data_projects_text(page: int = Query(1), per_page: int = Query(50)):
+    """Return all projects with their notepad text from CompanyCam."""
+    if not cc_client:
+        return JSONResponse({"error": "CompanyCam not configured"}, status_code=503)
+    import re
+    raw_projects = []
+    fetch_page = 1
+    while len(raw_projects) < per_page:
+        batch = await cc_client.list_projects(page=fetch_page, per_page=50)
+        if not batch:
+            break
+        raw_projects.extend(batch)
+        if len(batch) < 50:
+            break
+        fetch_page += 1
+
+    results = []
+    for p in raw_projects[:per_page]:
+        notepad = p.get("notepad", "")
+        clean_notepad = re.sub(r'<[^>]*>', '', notepad).strip() if notepad else ""
+        results.append({
+            "id": str(p["id"]),
+            "name": p.get("name", ""),
+            "status": p.get("status", ""),
+            "photo_count": p.get("photo_count", 0),
+            "notepad": clean_notepad,
+            "created_at": p.get("created_at", ""),
+            "updated_at": p.get("updated_at", ""),
+        })
+    return {"projects": results}
+
+
 # --- Photo-picker proxy endpoints ---
 
 @app.get("/api/picker/config")
