@@ -559,6 +559,7 @@
             <input type="date" id="report-date" style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;color:#ccc;font-size:13px">
             <button class="btn btn-primary" id="generate-reports-btn" onclick="generateReports()">Generate Reports</button>
             <button class="btn" onclick="loadSavedReports()">Load Saved</button>
+            <button class="btn btn-warning" onclick="exportAllReportsPDF()">Export All PDFs</button>
             <span id="report-status" style="color:#888;font-size:12px"></span>
         </div>
         <div id="reports-container"></div>
@@ -1948,9 +1949,96 @@ function renderReports(reports, date) {
 
             <div class="report-footer">
                 SFW Construction — Daily Project Report
+                <div style="margin-top:6px">
+                    <button class="export-btn" onclick="exportReportPDF(this)" style="background:#1a3a2a;color:#fff;border:none;padding:5px 14px;border-radius:4px;font-size:11px;cursor:pointer;font-family:-apple-system,sans-serif">Export PDF</button>
+                </div>
             </div>
         </div>`;
     }).join('');
+}
+
+// --- PDF Export ---
+function getReportPrintCSS() {
+    return `
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #fff; }
+        .report-card { max-width: 680px; margin: 24px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; font-family: Georgia, serif; color: #333; page-break-after: always; }
+        .report-card:last-child { page-break-after: auto; }
+        .report-header { background: #1a3a2a; padding: 20px 24px; color: #fff; }
+        .report-header .date-label { font-size: 12px; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; font-family: -apple-system, sans-serif; }
+        .report-header h2 { font-size: 22px; font-weight: 600; margin: 4px 0 0; }
+        .report-header .meta { display: flex; justify-content: space-between; margin-top: 10px; font-size: 13px; opacity: 0.8; font-family: -apple-system, sans-serif; }
+        .report-section { padding: 20px 24px; border-bottom: 1px solid #eee; }
+        .report-section .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; font-weight: 600; margin-bottom: 8px; font-family: -apple-system, sans-serif; }
+        .report-section p { font-size: 14px; line-height: 1.6; margin: 0; }
+        .risk-boxes { display: flex; gap: 16px; }
+        .risk-box { flex: 1; border-radius: 8px; padding: 14px; }
+        .risk-box.before { background: #fef3e2; }
+        .risk-box.before .section-label { color: #b8860b; }
+        .risk-box.before p { color: #5a4a2a; }
+        .risk-box.after { background: #e8f5e9; }
+        .risk-box.after .section-label { color: #2e7d32; }
+        .risk-box.after p { color: #2a4a2a; }
+        .risk-arrow { display: flex; align-items: center; font-size: 24px; color: #888; }
+        .report-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .report-photos img { width: 100%; border-radius: 8px; height: 140px; object-fit: cover; background: #eee; }
+        .report-photos .caption { font-size: 12px; color: #666; margin-top: 4px; font-family: -apple-system, sans-serif; }
+        .issue-row { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; font-family: -apple-system, sans-serif; }
+        .issue-dot { font-size: 16px; }
+        .issue-dot.resolved { color: #2e7d32; }
+        .issue-dot.in-progress { color: #1976d2; }
+        .issue-dot.documented-only { color: #b8860b; }
+        .report-footer { padding: 14px 24px; background: #f0f0ee; text-align: center; font-size: 12px; color: #888; font-family: -apple-system, sans-serif; }
+        .export-btn { display: none !important; }
+        @media print { .report-card { box-shadow: none; margin: 0 auto; } }
+    `;
+}
+
+function exportReportPDF(btn) {
+    const card = btn.closest('.report-card');
+    if (!card) return;
+    const html = card.outerHTML;
+    const printWin = window.open('', '_blank');
+    printWin.document.write('<!DOCTYPE html><html><head><style>' + getReportPrintCSS() + '</style></head><body>' + html + '</body></html>');
+    printWin.document.close();
+    // Wait for images to load
+    const imgs = printWin.document.querySelectorAll('img');
+    let loaded = 0;
+    const total = imgs.length;
+    if (total === 0) {
+        setTimeout(() => printWin.print(), 200);
+        return;
+    }
+    imgs.forEach(img => {
+        img.onload = img.onerror = () => {
+            loaded++;
+            if (loaded >= total) setTimeout(() => printWin.print(), 200);
+        };
+    });
+}
+
+function exportAllReportsPDF() {
+    const container = document.getElementById('reports-container');
+    const cards = container.querySelectorAll('.report-card');
+    if (cards.length === 0) { alert('No reports to export'); return; }
+    let html = '';
+    cards.forEach(card => { html += card.outerHTML; });
+    const printWin = window.open('', '_blank');
+    printWin.document.write('<!DOCTYPE html><html><head><style>' + getReportPrintCSS() + '</style></head><body>' + html + '</body></html>');
+    printWin.document.close();
+    const imgs = printWin.document.querySelectorAll('img');
+    let loaded = 0;
+    const total = imgs.length;
+    if (total === 0) {
+        setTimeout(() => printWin.print(), 200);
+        return;
+    }
+    imgs.forEach(img => {
+        img.onload = img.onerror = () => {
+            loaded++;
+            if (loaded >= total) setTimeout(() => printWin.print(), 300);
+        };
+    });
 }
 
 // --- Weekly Reports ---
