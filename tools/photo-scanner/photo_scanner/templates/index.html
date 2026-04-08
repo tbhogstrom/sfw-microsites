@@ -1907,14 +1907,13 @@ function renderReports(reports, date) {
 
         return `
         <div class="report-card">
-            <div class="report-header">
+            <div class="report-header" style="position:relative">
+                <img class="report-logo" src="/static/sfw-emblem.png" style="position:absolute;top:16px;right:20px;height:50px;opacity:0.85">
                 <div class="date-label">Daily Project Update</div>
                 <h2>${rpt.headline || 'Daily Update'}</h2>
-                <div class="meta">
-                    <span>${r.project_name || ''}</span>
-                    <span>${dateFormatted}</span>
-                </div>
-                ${r.project_address ? `<div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">${r.project_address}</div>` : ''}
+                <div style="font-size:13px;opacity:0.8;font-family:-apple-system,sans-serif;margin-top:10px">${r.project_name || ''}</div>
+                <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">${r.project_address || ''}</div>
+                <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">${dateFormatted}</div>
             </div>
 
             <div class="report-section">
@@ -2021,41 +2020,31 @@ function getReportPrintCSS() {
         .issue-dot.documented-only { color: #b8860b; }
         .report-footer { padding: 14px 24px; background: #f0f0ee; text-align: center; font-size: 12px; color: #888; font-family: -apple-system, sans-serif; }
         .export-btn { display: none !important; }
+        .report-logo { position: absolute; top: 16px; right: 20px; height: 50px; opacity: 0.85; }
         @media print { .report-card { box-shadow: none; margin: 0 auto; } }
     `;
 }
 
-function exportReportPDF(btn) {
-    const card = btn.closest('.report-card');
-    if (!card) return;
-    const html = card.outerHTML;
-    const printWin = window.open('', '_blank');
-    printWin.document.write('<!DOCTYPE html><html><head><style>' + getReportPrintCSS() + '</style></head><body>' + html + '</body></html>');
-    printWin.document.close();
-    // Wait for images to load
-    const imgs = printWin.document.querySelectorAll('img');
-    let loaded = 0;
-    const total = imgs.length;
-    if (total === 0) {
-        setTimeout(() => printWin.print(), 200);
-        return;
-    }
-    imgs.forEach(img => {
-        img.onload = img.onerror = () => {
-            loaded++;
-            if (loaded >= total) setTimeout(() => printWin.print(), 200);
-        };
-    });
+// Cache the logo as base64 for print export
+let _logoB64 = null;
+async function getLogoB64() {
+    if (_logoB64) return _logoB64;
+    try {
+        const resp = await fetch('/static/sfw-emblem.png');
+        const blob = await resp.blob();
+        return new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onloadend = () => { _logoB64 = reader.result; resolve(_logoB64); };
+            reader.readAsDataURL(blob);
+        });
+    } catch (e) { return ''; }
 }
 
-function exportAllReportsPDF() {
-    const container = document.getElementById('reports-container');
-    const cards = container.querySelectorAll('.report-card');
-    if (cards.length === 0) { alert('No reports to export'); return; }
-    let html = '';
-    cards.forEach(card => { html += card.outerHTML; });
+function openPrintWindow(html) {
     const printWin = window.open('', '_blank');
-    printWin.document.write('<!DOCTYPE html><html><head><style>' + getReportPrintCSS() + '</style></head><body>' + html + '</body></html>');
+    // Replace logo src with base64 so it works in the detached window
+    const finalHtml = _logoB64 ? html.replace(/src="\/static\/sfw-emblem\.png"/g, 'src="' + _logoB64 + '"') : html;
+    printWin.document.write('<!DOCTYPE html><html><head><style>' + getReportPrintCSS() + '</style></head><body>' + finalHtml + '</body></html>');
     printWin.document.close();
     const imgs = printWin.document.querySelectorAll('img');
     let loaded = 0;
@@ -2070,6 +2059,23 @@ function exportAllReportsPDF() {
             if (loaded >= total) setTimeout(() => printWin.print(), 300);
         };
     });
+}
+
+async function exportReportPDF(btn) {
+    const card = btn.closest('.report-card');
+    if (!card) return;
+    await getLogoB64();
+    openPrintWindow(card.outerHTML);
+}
+
+async function exportAllReportsPDF() {
+    const container = document.getElementById('reports-container');
+    const cards = container.querySelectorAll('.report-card');
+    if (cards.length === 0) { alert('No reports to export'); return; }
+    await getLogoB64();
+    let html = '';
+    cards.forEach(card => { html += card.outerHTML; });
+    openPrintWindow(html);
 }
 
 // --- Weekly Reports ---

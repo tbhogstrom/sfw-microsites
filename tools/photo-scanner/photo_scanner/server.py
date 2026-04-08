@@ -70,6 +70,17 @@ def load_results() -> dict:
     return {}
 
 
+STATIC_DIR = Path(__file__).parent / "static"
+
+
+@app.get("/static/{path:path}")
+async def serve_static(path: str):
+    file_path = STATIC_DIR / path
+    if file_path.is_file():
+        return FileResponse(file_path)
+    return JSONResponse({"error": "not found"}, status_code=404)
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index():
     template = jinja_env.get_template("index.html")
