@@ -1834,7 +1834,7 @@ async function generateReports() {
     const statusEl = document.getElementById('report-status');
     const btn = document.getElementById('generate-reports-btn');
     btn.disabled = true;
-    statusEl.textContent = 'Generating reports...';
+    statusEl.textContent = 'Starting: sync → analyze → report...';
     try {
         const resp = await fetch('/api/reports/generate', {
             method: 'POST',
@@ -1844,13 +1844,29 @@ async function generateReports() {
         const data = await resp.json();
         if (data.error) {
             statusEl.textContent = 'Error: ' + data.error;
-        } else {
-            statusEl.textContent = `Generated ${data.reports.length} reports`;
-            renderReports(data.reports, date);
+            btn.disabled = false;
+            return;
         }
+        // Poll for progress
+        const poll = setInterval(async () => {
+            try {
+                const state = await fetch('/api/reports/task').then(r => r.json());
+                statusEl.textContent = state.step || state.status;
+                if (state.status !== 'running') {
+                    clearInterval(poll);
+                    btn.disabled = false;
+                    if (state.status === 'complete' && state.reports && state.reports.length > 0) {
+                        renderReports(state.reports, date);
+                    } else if (state.status === 'complete') {
+                        loadSavedReports();
+                    }
+                }
+            } catch (e) {
+                statusEl.textContent = 'Polling error: ' + e.message;
+            }
+        }, 2000);
     } catch (e) {
         statusEl.textContent = 'Error: ' + e.message;
-    } finally {
         btn.disabled = false;
     }
 }

@@ -820,20 +820,26 @@ async def get_curated_galleries():
 
 # --- Daily Reports ---
 
+# Report generation state (background task)
+_report_task_state: dict = {"status": "idle"}
+
+
 @app.post("/api/reports/generate")
 async def api_generate_reports(request: Request):
-    """Generate daily homeowner reports for a given date."""
+    """Generate daily homeowner reports: sync → analyze → report. Runs in background."""
+    global _report_task_state
     if not catalog:
         return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    if not cc_client:
+        return JSONResponse({"error": "CompanyCam not configured"}, status_code=503)
 
     body = await request.json()
-    date_str = body.get("date")  # "2026-04-06"
-    project_id = body.get("project_id")  # optional
+    date_str = body.get("date")
+    project_id = body.get("project_id")
 
     if not date_str:
         return JSONResponse({"error": "date is required (YYYY-MM-DD)"}, status_code=400)
 
-    # Parse date to Unix timestamp range
     from datetime import datetime as dt, timezone as tz
     try:
         day_start = dt.strptime(date_str, "%Y-%m-%d").replace(tzinfo=tz.utc)
@@ -842,48 +848,148 @@ async def api_generate_reports(request: Request):
     ts_start = int(day_start.timestamp())
     ts_end = ts_start + 86400
 
-    from photo_scanner.scanner import get_async_anthropic_client
+    from photo_scanner.scanner import get_async_anthropic_client, analyze_project_from_catalog
     anthropic_client = get_async_anthropic_client()
     if not anthropic_client:
         return JSONResponse({"error": "ANTHROPIC_API_KEY not configured"}, status_code=503)
 
-    # Find projects with analyzed photos on this date
-    if project_id:
-        project_ids = [project_id]
-    else:
-        rows = catalog.db.execute(
-            "SELECT DISTINCT project_id FROM photos WHERE scene IS NOT NULL AND CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?",
-            (ts_start, ts_end),
-        ).fetchall()
-        project_ids = [r[0] for r in rows]
+    if _report_task_state["status"] == "running":
+        return JSONResponse({"error": "Report generation already running"}, status_code=409)
 
-    if not project_ids:
-        return {"reports": [], "message": f"No analyzed photos found for {date_str}"}
+    _report_task_state = {"status": "running", "date": date_str, "step": "discovering", "reports": []}
 
-    reports = []
-    for pid in project_ids:
+    async def run():
+        global _report_task_state
         try:
-            report = await generate_daily_report(
-                catalog=catalog,
-                project_id=pid,
-                date_ts_start=ts_start,
-                date_ts_end=ts_end,
-                anthropic_client=anthropic_client,
-            )
-            if report:
-                catalog.save_daily_report(pid, date_str, report)
-                project = catalog.get_project(pid)
-                reports.append({
-                    "project_id": pid,
-                    "project_name": project["name"] if project else pid,
-                    "project_address": project["address"] if project else "",
-                    "date": date_str,
-                    "report": report,
-                })
-        except Exception as e:
-            reports.append({"project_id": pid, "error": str(e)})
+            # Step 1: Discover projects with photos on this date from CompanyCam
+            _report_task_state["step"] = "Discovering projects with photos on " + date_str
+            target_ts_start = ts_start
+            target_ts_end = ts_end
 
-    return {"reports": reports, "date": date_str}
+            # Fetch all active projects from CompanyCam
+            all_projects = []
+            page = 1
+            while len(all_projects) < 200:
+                batch = await cc_client.list_projects(page=page, per_page=50)
+                if not batch:
+                    break
+                all_projects.extend(batch)
+                if len(batch) < 50:
+                    break
+                page += 1
+
+            # Filter to projects updated around the target date (within 2 days buffer)
+            buffer = 2 * 86400
+            candidates = [p for p in all_projects
+                          if p.get("updated_at", 0) >= (target_ts_start - buffer)
+                          and p.get("photo_count", 0) > 0]
+
+            if project_id:
+                candidates = [p for p in candidates if str(p["id"]) == project_id]
+                if not candidates:
+                    # Force include the specified project
+                    try:
+                        raw = await cc_client.get_project(project_id)
+                        candidates = [raw]
+                    except Exception:
+                        pass
+
+            _report_task_state["step"] = f"Found {len(candidates)} candidate projects. Syncing..."
+
+            # Step 2: Sync each candidate and check for photos on the target date
+            projects_with_photos = []
+            for i, raw in enumerate(candidates):
+                proj = CompanyCamClient.normalize_project(raw)
+                pid = proj["id"]
+                _report_task_state["step"] = f"Syncing {proj['name']} ({i+1}/{len(candidates)})"
+
+                catalog.upsert_project(proj)
+                pg = 1
+                synced = 0
+                while True:
+                    photos = await cc_client.list_project_photos(pid, page=pg, per_page=100)
+                    if not photos:
+                        break
+                    for rp in photos:
+                        catalog.upsert_photo(CompanyCamClient.normalize_photo(rp, pid))
+                        synced += 1
+                    if len(photos) < 100:
+                        break
+                    pg += 1
+                catalog.set_project_synced(pid)
+
+                # Check if this project has photos on the target date
+                day_photos = catalog.db.execute(
+                    "SELECT COUNT(*) FROM photos WHERE project_id = ? AND CAST(taken_at AS INTEGER) >= ? AND CAST(taken_at AS INTEGER) < ?",
+                    (pid, target_ts_start, target_ts_end),
+                ).fetchone()[0]
+                if day_photos > 0:
+                    projects_with_photos.append(pid)
+
+            if not projects_with_photos:
+                _report_task_state["status"] = "complete"
+                _report_task_state["step"] = f"No projects had photos on {date_str}"
+                return
+
+            _report_task_state["step"] = f"{len(projects_with_photos)} projects had photos on {date_str}. Analyzing..."
+
+            # Step 3: Analyze unanalyzed photos for each project
+            for i, pid in enumerate(projects_with_photos):
+                proj = catalog.get_project(pid)
+                pname = proj["name"] if proj else pid
+                unanalyzed = catalog.get_unanalyzed_photos(pid)
+                if unanalyzed:
+                    _report_task_state["step"] = f"Analyzing {pname} ({len(unanalyzed)} new photos) ({i+1}/{len(projects_with_photos)})"
+                    try:
+                        await analyze_project_from_catalog(
+                            catalog=catalog, project_id=pid,
+                            cc_client=cc_client, anthropic_client=anthropic_client,
+                        )
+                    except Exception as e:
+                        _report_task_state["step"] = f"Analysis error on {pname}: {e}"
+
+            # Step 4: Generate reports
+            _report_task_state["step"] = "Generating reports..."
+            reports = []
+            for i, pid in enumerate(projects_with_photos):
+                proj = catalog.get_project(pid)
+                pname = proj["name"] if proj else pid
+                _report_task_state["step"] = f"Generating report for {pname} ({i+1}/{len(projects_with_photos)})"
+                try:
+                    report = await generate_daily_report(
+                        catalog=catalog, project_id=pid,
+                        date_ts_start=ts_start, date_ts_end=ts_end,
+                        anthropic_client=anthropic_client,
+                    )
+                    if report:
+                        catalog.save_daily_report(pid, date_str, report)
+                        reports.append({
+                            "project_id": pid,
+                            "project_name": proj["name"] if proj else pid,
+                            "project_address": proj["address"] if proj else "",
+                            "date": date_str,
+                            "report": report,
+                        })
+                except Exception as e:
+                    reports.append({"project_id": pid, "error": str(e)})
+
+            _report_task_state["reports"] = reports
+            _report_task_state["status"] = "complete"
+            _report_task_state["step"] = f"Done — {len(reports)} reports generated"
+
+        except Exception as e:
+            _report_task_state["status"] = "error"
+            _report_task_state["step"] = f"Error: {e}"
+
+    import asyncio
+    asyncio.create_task(run())
+    return {"ok": True, "message": "Report generation started (sync → analyze → report)"}
+
+
+@app.get("/api/reports/task")
+async def api_report_task_status():
+    """Poll report generation progress."""
+    return _report_task_state
 
 
 @app.get("/api/reports/daily")
