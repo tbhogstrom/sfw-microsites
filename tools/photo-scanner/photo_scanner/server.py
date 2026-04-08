@@ -25,7 +25,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from photo_scanner.catalog import Catalog
 from photo_scanner.companycam import CompanyCamClient
-from photo_scanner.reports import generate_daily_report
+from photo_scanner.reports import generate_daily_report, generate_weekly_report
 
 SERVICE_TO_MICROSITE = {
     "siding": "siding-repair",
@@ -903,6 +903,90 @@ async def api_get_daily_reports(date: str = Query(...)):
             "generated_at": r["generated_at"],
         })
     return {"reports": reports, "date": date}
+
+
+# --- Weekly Reports ---
+
+@app.post("/api/reports/generate-weekly")
+async def api_generate_weekly_reports(request: Request):
+    """Generate weekly homeowner reports for a given week."""
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+
+    body = await request.json()
+    week_start_str = body.get("week_start")  # "2026-03-31" (Monday)
+    project_id = body.get("project_id")  # optional
+
+    if not week_start_str:
+        return JSONResponse({"error": "week_start is required (YYYY-MM-DD, must be a Monday)"}, status_code=400)
+
+    from datetime import datetime as dt, timezone as tz
+    try:
+        week_start = dt.strptime(week_start_str, "%Y-%m-%d").replace(tzinfo=tz.utc)
+    except ValueError:
+        return JSONResponse({"error": "Invalid date format. Use YYYY-MM-DD"}, status_code=400)
+
+    ts_start = int(week_start.timestamp())
+    ts_end = ts_start + 5 * 86400  # Mon-Fri (5 business days)
+
+    from photo_scanner.scanner import get_async_anthropic_client
+    anthropic_client = get_async_anthropic_client()
+    if not anthropic_client:
+        return JSONResponse({"error": "ANTHROPIC_API_KEY not configured"}, status_code=503)
+
+    # Find eligible projects (3+ business days of photos)
+    if project_id:
+        project_ids = [project_id]
+    else:
+        eligible = catalog.get_eligible_weekly_projects(ts_start, ts_end, min_days=3)
+        project_ids = [e["project_id"] for e in eligible]
+
+    if not project_ids:
+        return {"reports": [], "message": f"No projects with 3+ days of photos for week of {week_start_str}"}
+
+    reports = []
+    for pid in project_ids:
+        try:
+            report = await generate_weekly_report(
+                catalog=catalog,
+                project_id=pid,
+                week_ts_start=ts_start,
+                week_ts_end=ts_end,
+                anthropic_client=anthropic_client,
+            )
+            if report:
+                catalog.save_weekly_report(pid, week_start_str, report)
+                project = catalog.get_project(pid)
+                reports.append({
+                    "project_id": pid,
+                    "project_name": project["name"] if project else pid,
+                    "project_address": project["address"] if project else "",
+                    "week_start": week_start_str,
+                    "report": report,
+                })
+        except Exception as e:
+            reports.append({"project_id": pid, "error": str(e)})
+
+    return {"reports": reports, "week_start": week_start_str}
+
+
+@app.get("/api/reports/weekly")
+async def api_get_weekly_reports(week_start: str = Query(...)):
+    """Fetch saved weekly reports for a week."""
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    rows = catalog.get_weekly_reports(week_start)
+    reports = []
+    for r in rows:
+        reports.append({
+            "project_id": r["project_id"],
+            "project_name": r["project_name"],
+            "project_address": r["project_address"],
+            "week_start": r["week_start"],
+            "report": json.loads(r["report_data"]),
+            "generated_at": r["generated_at"],
+        })
+    return {"reports": reports, "week_start": week_start}
 
 
 # --- Photo-picker proxy endpoints ---
