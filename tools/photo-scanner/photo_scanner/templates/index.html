@@ -574,6 +574,7 @@
             <input type="date" id="weekly-report-date" style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;color:#ccc;font-size:13px">
             <button class="btn btn-primary" id="generate-weekly-btn" onclick="generateWeeklyReports()">Generate Weekly Reports</button>
             <button class="btn" onclick="loadSavedWeeklyReports()">Load Saved</button>
+            <button class="btn btn-warning" onclick="exportAllWeeklyReportsPDF()">Export All PDFs</button>
             <span id="weekly-report-status" style="color:#888;font-size:12px"></span>
         </div>
         <div id="weekly-reports-container"></div>
@@ -2155,11 +2156,13 @@ function renderWeeklyReports(reports, weekStart) {
         const timeline = rpt.daily_timeline || [];
 
         return '<div class="report-card">' +
-            '<div class="report-header" style="background:#1a2a3a">' +
+            '<div class="report-header" style="background:#1a2a3a;position:relative;padding-right:90px">' +
+                '<img class="report-logo" src="/static/sfw-emblem.png" style="position:absolute;top:50%;right:20px;height:50px;opacity:0.85;transform:translateY(-50%)">' +
                 '<div class="date-label">Weekly Project Report</div>' +
                 '<h2>' + (rpt.headline || 'Weekly Update') + '</h2>' +
-                '<div class="meta"><span>' + (r.project_name || '') + '</span><span>Week of ' + weekRange + '</span></div>' +
-                (r.project_address ? '<div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">' + r.project_address + '</div>' : '') +
+                '<div style="font-size:13px;opacity:0.8;font-family:-apple-system,sans-serif;margin-top:10px">' + (r.project_name || '') + '</div>' +
+                '<div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">' + (r.project_address || '') + '</div>' +
+                '<div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">Week of ' + weekRange + '</div>' +
             '</div>' +
 
             (rpt.weekly_narrative ? '<div class="report-section"><div class="section-label">This Week\'s Progress</div><p>' + rpt.weekly_narrative + '</p></div>' : '') +
@@ -2206,9 +2209,19 @@ function renderWeeklyReports(reports, weekStart) {
                 }).join('') +
             '</div>' : '') +
 
-            '<div class="report-footer">SFW Construction \u2014 Weekly Project Report</div>' +
+            '<div class="report-footer">SFW Construction \u2014 Weekly Project Report<div style="margin-top:6px"><button class="export-btn" onclick="exportReportPDF(this)" style="background:#1a2a3a;color:#fff;border:none;padding:5px 14px;border-radius:4px;font-size:11px;cursor:pointer;font-family:-apple-system,sans-serif">Export PDF</button></div></div>' +
         '</div>';
     }).join('');
+}
+
+async function exportAllWeeklyReportsPDF() {
+    const container = document.getElementById('weekly-reports-container');
+    const cards = container.querySelectorAll('.report-card');
+    if (cards.length === 0) { alert('No weekly reports to export'); return; }
+    await getLogoB64();
+    let html = '';
+    cards.forEach(card => { html += card.outerHTML; });
+    openPrintWindow(html);
 }
 
 // --- Data Explorer ---
