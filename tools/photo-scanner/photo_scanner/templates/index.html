@@ -1907,10 +1907,10 @@ function renderReports(reports, date) {
 
         return `
         <div class="report-card">
-            <div class="report-header" style="position:relative">
-                <img class="report-logo" src="/static/sfw-emblem.png" style="position:absolute;top:16px;right:20px;height:50px;opacity:0.85">
+            <div class="report-header" style="position:relative;padding-right:90px">
+                <img class="report-logo" src="/static/sfw-emblem.png" style="position:absolute;top:50%;right:20px;height:50px;opacity:0.85;transform:translateY(-50%)">
                 <div class="date-label">Daily Project Update</div>
-                <h2>${rpt.headline || 'Daily Update'}</h2>
+                <h2 style="margin-right:0">${rpt.headline || 'Daily Update'}</h2>
                 <div style="font-size:13px;opacity:0.8;font-family:-apple-system,sans-serif;margin-top:10px">${r.project_name || ''}</div>
                 <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">${r.project_address || ''}</div>
                 <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">${dateFormatted}</div>
@@ -2020,7 +2020,8 @@ function getReportPrintCSS() {
         .issue-dot.documented-only { color: #b8860b; }
         .report-footer { padding: 14px 24px; background: #f0f0ee; text-align: center; font-size: 12px; color: #888; font-family: -apple-system, sans-serif; }
         .export-btn { display: none !important; }
-        .report-logo { position: absolute; top: 16px; right: 20px; height: 50px; opacity: 0.85; }
+        .report-logo { position: absolute; top: 50%; right: 20px; height: 50px; opacity: 0.85; transform: translateY(-50%); }
+        .report-header { padding-right: 90px !important; }
         @media print { .report-card { box-shadow: none; margin: 0 auto; } }
     `;
 }
