@@ -65,6 +65,8 @@ Pay special attention to:
 - WINDOWS and DOORS: condition of frames, sills, trim, flashing, caulking, glazing, weather stripping, signs of moisture intrusion around openings
 - NEW SIDING: type (cedar shake, lap, board-and-batten, fiber cement, vinyl), installation quality, trim details, flashing at transitions, paint/finish condition
 
+Describe damage factually. Do not use severity adjectives (major, severe, significant, extensive, critical). If the damage is structural, say "structural." Otherwise describe what you see — location, material, condition.
+
 {
   "scene": "one-line description of what is shown",
   "service_types": ["list from: siding, deck, dry-rot, chimney, crawlspace, flashing, trim, beam, leak, lead-paint, mold, restoration, windows, doors"],
@@ -80,6 +82,20 @@ Pay special attention to:
   "before_after_potential": true or false
 }
 """
+
+
+def build_deep_prompt(scope_text: str = "") -> str:
+    """Build the deep analysis prompt, optionally prepending project scope context."""
+    if not scope_text:
+        return DEEP_PROMPT
+    scope_preamble = (
+        f"Project scope of work (contracted repairs):\n{scope_text}\n\n"
+        "NOTE: This scope describes what was contracted. Scope can evolve during a project.\n"
+        "Photos may show conditions outside the scope — adjacent damage, staging, materials,\n"
+        "or unrelated areas. Use scope as context to inform your analysis, not as a filter.\n"
+        "If the photo shows something outside scope, analyze it normally.\n\n"
+    )
+    return scope_preamble + DEEP_PROMPT
 
 
 PROJECT_SUMMARY_PROMPT = """\
@@ -712,6 +728,13 @@ async def analyze_project_from_catalog(catalog, project_id: str, cc_client,
         if on_progress:
             on_progress({"message": msg, **kwargs})
 
+    # Fetch project scope context for deep analysis
+    from photo_scanner.companycam import CompanyCamClient
+    project = catalog.get_project(project_id)
+    project_context = CompanyCamClient.get_project_context(project) if project else {"scope_of_work": "", "pages": []}
+    scope_text = project_context["scope_of_work"]
+    deep_prompt = build_deep_prompt(scope_text)
+
     # --- Triage pass ---
     unanalyzed = catalog.get_unanalyzed_photos(project_id)
     total_photos = len(unanalyzed)
@@ -845,7 +868,7 @@ async def analyze_project_from_catalog(catalog, project_id: str, cc_client,
                         "content": [
                             {"type": "image", "source": {"type": "base64",
                                                           "media_type": media_type, "data": b64}},
-                            {"type": "text", "text": DEEP_PROMPT},
+                            {"type": "text", "text": deep_prompt},
                         ],
                     }],
                 )
