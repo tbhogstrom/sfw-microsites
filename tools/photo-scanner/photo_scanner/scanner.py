@@ -108,15 +108,17 @@ Pay special attention to:
 - WINDOWS and DOORS: frame condition, sill rot, flashing failures, moisture around openings
 - SIDING: type installed, areas replaced, quality of installation, transitions and flashing
 
+Use plain, factual language. No severity adjectives (major, severe, significant, extensive, critical). If an issue is structural, say "structural." Otherwise describe what you see.
+
 Respond in JSON only:
 {
   "project_summary": "2-3 sentence overview of what work was done at this job site",
-  "scope_of_work": ["list of major work categories performed"],
+  "scope_of_work": ["list of primary work categories performed"],
   "issues": [
     {
       "issue": "short description of the construction issue or damage",
       "service_type": "primary service type (siding, deck, dry-rot, etc.)",
-      "severity": "minor | moderate | major",
+      "severity": "cosmetic | functional | structural",
       "documented_before": true/false,
       "documented_during": true/false,
       "documented_after": true/false,
@@ -944,12 +946,22 @@ async def generate_project_summary(catalog, project_id: str, anthropic_client):
     project = catalog.get_project(project_id)
     project_name = project["name"] if project else project_id
 
-    prompt = (
-        f"Project: {project_name}\n"
-        f"Total photos analyzed: {len(analyzed)}\n\n"
-        f"Photo analysis data:\n{photo_data_text}\n\n"
-        f"{PROJECT_SUMMARY_PROMPT}"
-    )
+    from photo_scanner.companycam import CompanyCamClient
+    project_context = CompanyCamClient.get_project_context(project) if project else {"scope_of_work": "", "pages": []}
+    scope_text = project_context["scope_of_work"]
+
+    prompt_parts = [f"Project: {project_name}"]
+    if scope_text:
+        prompt_parts.append(
+            f"\nProject scope of work (what SFW Construction was contracted to do):\n{scope_text}\n\n"
+            "Use this scope to align your summary and issue tracking against the contracted work.\n"
+            "Note which issues fall within scope and which are adjacent findings."
+        )
+    prompt_parts.append(f"\nTotal photos analyzed: {len(analyzed)}\n")
+    prompt_parts.append(f"Photo analysis data:\n{photo_data_text}\n")
+    prompt_parts.append(PROJECT_SUMMARY_PROMPT)
+
+    prompt = "\n".join(prompt_parts)
 
     log(f"[Summary] Generating summary for {project_name} ({len(analyzed)} photos)")
 

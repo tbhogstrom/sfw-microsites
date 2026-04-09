@@ -2,6 +2,8 @@
 import json
 from pathlib import Path
 
+MIN_PHOTOS_FOR_COUNT = 10
+
 REPORT_PROMPT = """\
 Generate a daily project report for a homeowner. Be friendly and concise. Lead with risk and value.
 
@@ -10,8 +12,10 @@ Rules:
 - risk_before and risk_after: 1-2 sentences each
 - what_we_did: 2-3 sentences max
 - value_statement: 1-2 sentences
-- photo_captions: one short sentence per photo, homeowner-friendly (no jargon)
 - headline: punchy, risk-focused, under 10 words
+- Do NOT generate photo_captions — photos are shown without descriptions
+- Use plain, factual language. No severity adjectives (major, severe, significant, extensive, critical). If repair work is structural, say that. Otherwise describe what was done and where.
+- IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed", etc. This creates legal liability. Instead use hedged phrasing like "addressed the identified siding damage", "treated the areas of dry rot", "repaired the damaged sections". Describe what was worked on, not that everything is definitively complete.
 
 Respond in JSON only:
 {
@@ -20,7 +24,6 @@ Respond in JSON only:
   "risk_after": "current risk status after today's work",
   "what_we_did": "plain-language summary of today's work",
   "value_statement": "why this matters to the homeowner",
-  "photo_captions": {"photo_id": "caption", ...},
   "issues_status": [
     {"issue": "name", "status": "resolved|in-progress|documented-only", "changed_today": true/false}
   ]
@@ -131,17 +134,26 @@ async def generate_daily_report(
 
     selected_ids = [p["id"] for p in selected]
 
+    # Get project scope context
+    from photo_scanner.companycam import CompanyCamClient
+    project_context = CompanyCamClient.get_project_context(project) if project else {"scope_of_work": "", "pages": []}
+    scope_text = project_context["scope_of_work"]
+
     # Build the full prompt
     prompt_parts = [
         f"Project: {project['name'] if project else project_id}",
         f"Address: {project['address'] if project else ''}",
         f"Company: {defaults.get('company_name', 'SFW Construction')}",
+    ]
+    if scope_text:
+        prompt_parts.append(f"\nScope of work:\n{scope_text}")
+    prompt_parts.extend([
         "",
         f"Today's photos ({len(day_photos)} total):",
         "\n".join(photo_lines),
         "",
         f"Selected photos for report (generate captions for these): {selected_ids}",
-    ]
+    ])
 
     if project_summary:
         issues = project_summary.get("issues", [])
@@ -184,13 +196,12 @@ async def generate_daily_report(
     else:
         report = {"headline": "Daily Update", "what_we_did": text}
 
-    # Attach selected photos with their captions
-    captions = report.get("photo_captions", {})
+    # Attach selected photos (no captions for daily reports)
     report["photos"] = [
-        {"photo_id": p["id"], "caption": captions.get(p["id"], p.get("scene", "")),
-         "phase": p.get("phase", ""), "score": p.get("marketing_score", 0)}
+        {"photo_id": p["id"], "phase": p.get("phase", ""), "score": p.get("marketing_score", 0)}
         for p in selected
     ]
+    report["total_day_photos"] = len(day_photos) if len(day_photos) >= MIN_PHOTOS_FOR_COUNT else None
 
     return report
 
@@ -207,9 +218,10 @@ Rules:
 - what_we_did: 2-3 sentences summarizing the week's work
 - value_statement: 1-2 sentences
 - photo_captions: one short sentence per photo, homeowner-friendly (no jargon)
-- daily_timeline: one entry per day with photos, 1-sentence summary per day
+- daily_timeline: one entry per day with photos, 1-sentence summary per day. Include total_photos (total photo count for that day)
 - headline: punchy, risk-focused, under 10 words
 - Do NOT predict next week's work
+- IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed", etc. This creates legal liability. Instead use hedged phrasing like "addressed the identified siding damage", "treated the areas of dry rot", "repaired the damaged sections". Describe what was worked on, not that everything is definitively complete.
 
 Respond in JSON only:
 {
@@ -224,7 +236,7 @@ Respond in JSON only:
     {"issue": "name", "status": "resolved|in-progress|documented-only", "changed_this_week": true/false}
   ],
   "daily_timeline": [
-    {"date": "YYYY-MM-DD", "summary": "one sentence", "photo_ids": ["id1", "id2"]}
+    {"date": "YYYY-MM-DD", "summary": "one sentence", "photo_ids": ["id1", "id2"], "total_photos": 5}
   ]
 }
 """
