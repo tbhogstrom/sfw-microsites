@@ -1,5 +1,6 @@
 """Async client for the CompanyCam v2 API."""
 import os
+import re
 from pathlib import Path
 
 import httpx
@@ -81,6 +82,7 @@ class CompanyCamClient:
             "updated_at": raw.get("updated_at", ""),
             "status": raw.get("status", "active"),
             "photo_count": raw.get("photo_count", 0),
+            "notepad": raw.get("notepad", ""),
         }
 
     @staticmethod
@@ -109,4 +111,25 @@ class CompanyCamClient:
             "thumb_uri": thumb_uri,
             "taken_at": str(captured_at),
             "creator_name": creator.get("display_name", ""),
+        }
+
+    @staticmethod
+    def get_project_context(project: dict) -> dict:
+        """Assemble project context from available sources.
+
+        Today: notepad (Scope of Work) only.
+        Extensible for CompanyCam Pages when API access opens.
+
+        Args:
+            project: A project dict from the catalog (must have 'notepad' key).
+
+        Returns:
+            Dict with 'scope_of_work' (plain text) and 'pages' (list, empty for now).
+        """
+        notepad = project.get("notepad", "") or ""
+        scope_text = re.sub(r'<[^>]+>', '', notepad)
+        scope_text = scope_text.replace('&nbsp;', ' ').replace('&amp;', '&').strip()
+        return {
+            "scope_of_work": scope_text,
+            "pages": [],
         }
