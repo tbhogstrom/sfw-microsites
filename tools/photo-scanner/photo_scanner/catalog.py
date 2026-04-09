@@ -29,7 +29,8 @@ class Catalog:
                 photo_count INTEGER DEFAULT 0,
                 last_synced TEXT,
                 last_analyzed TEXT,
-                summary TEXT
+                summary TEXT,
+                notepad TEXT DEFAULT ''
             );
 
             CREATE TABLE IF NOT EXISTS photos (
@@ -98,6 +99,10 @@ class Catalog:
             self.db.execute("SELECT damage_details FROM photos LIMIT 0")
         except sqlite3.OperationalError:
             self.db.execute("ALTER TABLE photos ADD COLUMN damage_details TEXT")
+        try:
+            self.db.execute("SELECT notepad FROM projects LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE projects ADD COLUMN notepad TEXT DEFAULT ''")
 
         # daily_reports table
         self.db.execute("""
@@ -130,12 +135,13 @@ class Catalog:
 
     def upsert_project(self, project: dict):
         self.db.execute("""
-            INSERT INTO projects (id, name, address, lat, lng, created_at, photo_count)
-            VALUES (:id, :name, :address, :lat, :lng, :created_at, :photo_count)
+            INSERT INTO projects (id, name, address, lat, lng, created_at, photo_count, notepad)
+            VALUES (:id, :name, :address, :lat, :lng, :created_at, :photo_count, :notepad)
             ON CONFLICT(id) DO UPDATE SET
                 name=excluded.name, address=excluded.address,
                 lat=excluded.lat, lng=excluded.lng,
-                photo_count=excluded.photo_count
+                photo_count=excluded.photo_count,
+                notepad=excluded.notepad
         """, project)
         self.db.commit()
 
