@@ -3,66 +3,44 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
-async function getManifests(
+async function getDateEntries(
   prefix: string,
-): Promise<{ manifests: { date: string; reports?: { length: number }[] }[]; error?: string }> {
+): Promise<{ entries: { date: string; reportCount: number }[]; error?: string }> {
   try {
     const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) return { manifests: [], error: 'No BLOB_READ_WRITE_TOKEN in env' };
+    if (!token) return { entries: [], error: 'No BLOB_READ_WRITE_TOKEN in env' };
     const { blobs } = await list({ prefix, token });
     if (blobs.length === 0)
-      return { manifests: [], error: `list({prefix: "${prefix}"}) returned 0 blobs` };
-    const manifestBlobs = blobs.filter((b) => b.pathname.endsWith('manifest.json'));
-    if (manifestBlobs.length === 0)
-      return {
-        manifests: [],
-        error: `${blobs.length} blobs but 0 manifests. Paths: ${blobs.map((b) => b.pathname).join(', ')}`,
-      };
-    const manifests = [];
-    const fetchErrors = [];
-    for (const blob of manifestBlobs) {
-      try {
-        const resp = await fetch(blob.downloadUrl, {
-          cache: 'no-store',
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (resp.ok) {
-          manifests.push(await resp.json());
-        } else {
-          fetchErrors.push(`${blob.pathname}: ${resp.status}`);
-        }
-      } catch (fe) {
-        fetchErrors.push(`${blob.pathname}: ${fe instanceof Error ? fe.message : String(fe)}`);
+      return { entries: [], error: `list({prefix: "${prefix}"}) returned 0 blobs` };
+
+    // Count .html files per date folder (e.g. daily/2026-04-10/foo.html → 2026-04-10)
+    const counts = new Map<string, number>();
+    for (const blob of blobs) {
+      if (!blob.pathname.endsWith('.html')) continue;
+      const parts = blob.pathname.split('/');
+      // pathname is like "daily/2026-04-10/project.html"
+      if (parts.length >= 3) {
+        const date = parts[1];
+        counts.set(date, (counts.get(date) || 0) + 1);
       }
     }
-    if (manifests.length === 0 && fetchErrors.length > 0) {
-      return {
-        manifests: [],
-        error: `Found ${manifestBlobs.length} manifests but fetch failed: ${fetchErrors.join('; ')}`,
-      };
-    }
-    return {
-      manifests: manifests.sort((a: { date: string }, b: { date: string }) =>
-        b.date.localeCompare(a.date),
-      ),
-    };
+
+    const entries = Array.from(counts.entries())
+      .map(([date, reportCount]) => ({ date, reportCount }))
+      .sort((a, b) => b.date.localeCompare(a.date));
+
+    return { entries };
   } catch (e) {
-    return { manifests: [], error: `Exception: ${e instanceof Error ? e.message : String(e)}` };
+    return { entries: [], error: `Exception: ${e instanceof Error ? e.message : String(e)}` };
   }
 }
 
 export default async function HomePage() {
-  const daily = await getManifests('daily');
-  const weekly = await getManifests('weekly');
-  const dailyManifests = daily.manifests;
-  const weeklyManifests = weekly.manifests;
-  const debugInfo = [
-    daily.error,
-    weekly.error,
-    `daily:${daily.manifests.length} weekly:${weekly.manifests.length}`,
-  ]
-    .filter(Boolean)
-    .join('; ');
+  const daily = await getDateEntries('daily');
+  const weekly = await getDateEntries('weekly');
+  const dailyEntries = daily.entries;
+  const weeklyEntries = weekly.entries;
+  const debugInfo = [daily.error, weekly.error].filter(Boolean).join('; ');
 
   return (
     <div
@@ -89,13 +67,13 @@ export default async function HomePage() {
         <h2 style={{ fontSize: '16px', fontWeight: 600, color: '#333', marginBottom: '12px' }}>
           Daily Reports
         </h2>
-        {dailyManifests.length === 0 ? (
+        {dailyEntries.length === 0 ? (
           <p style={{ color: '#888', fontSize: '14px', marginBottom: '24px' }}>
             No daily reports published yet.
           </p>
         ) : (
           <div style={{ marginBottom: '32px' }}>
-            {dailyManifests.map((m: { date: string; reports?: { length: number }[] }) => (
+            {dailyEntries.map((m) => (
               <Link
                 key={m.date}
                 href={`/daily/${m.date}`}
@@ -123,7 +101,7 @@ export default async function HomePage() {
                       })}
                     </div>
                     <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>
-                      {m.reports?.length || 0} project{m.reports?.length !== 1 ? 's' : ''}
+                      {m.reportCount} project{m.reportCount !== 1 ? 's' : ''}
                     </div>
                   </div>
                   <span style={{ color: '#888', fontSize: '18px' }}>→</span>
@@ -136,11 +114,11 @@ export default async function HomePage() {
         <h2 style={{ fontSize: '16px', fontWeight: 600, color: '#333', marginBottom: '12px' }}>
           Weekly Reports
         </h2>
-        {weeklyManifests.length === 0 ? (
+        {weeklyEntries.length === 0 ? (
           <p style={{ color: '#888', fontSize: '14px' }}>No weekly reports published yet.</p>
         ) : (
           <div>
-            {weeklyManifests.map((m: { date: string; reports?: { length: number }[] }) => (
+            {weeklyEntries.map((m) => (
               <Link
                 key={m.date}
                 href={`/weekly/${m.date}`}
@@ -168,7 +146,7 @@ export default async function HomePage() {
                       })}
                     </div>
                     <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>
-                      {m.reports?.length || 0} project{m.reports?.length !== 1 ? 's' : ''}
+                      {m.reportCount} project{m.reportCount !== 1 ? 's' : ''}
                     </div>
                   </div>
                   <span style={{ color: '#888', fontSize: '18px' }}>→</span>
