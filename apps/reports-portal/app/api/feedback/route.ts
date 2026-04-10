@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { list, put } from '@vercel/blob';
 import Anthropic from '@anthropic-ai/sdk';
 
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   if (!token) {
@@ -47,7 +49,7 @@ export async function POST(request: Request) {
   let revisedHtml: string;
   try {
     const message = await anthropic.messages.create({
-      model: 'claude-opus-4-6',
+      model: 'claude-sonnet-4-6',
       max_tokens: 16000,
       messages: [
         {
