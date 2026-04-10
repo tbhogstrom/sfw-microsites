@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     let revisedHtml: string;
     try {
       const message = await anthropic.messages.create({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-sonnet-4-6',
         max_tokens: 8192,
         system:
           'You edit construction field reports. Apply the requested changes to the HTML. Only change what is asked. Preserve all HTML structure and styling. Return ONLY the revised HTML, nothing else.',
