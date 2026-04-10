@@ -21,38 +21,52 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'date or week_start required' }, { status: 400 });
   }
 
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!token) {
+    return NextResponse.json({ error: 'BLOB_READ_WRITE_TOKEN not configured' }, { status: 503 });
+  }
+
   const prefix = type === 'weekly' ? 'weekly' : 'daily';
   let published = 0;
 
-  // Upload each report HTML
-  for (const report of reports) {
-    const path = `${prefix}/${dateKey}/${report.project_id}.html`;
-    await put(path, report.html, {
-      access: 'private',
-      contentType: 'text/html',
-      addRandomSuffix: false,
-    });
-    published++;
-  }
+  try {
+    // Upload each report HTML
+    for (const report of reports) {
+      const path = `${prefix}/${dateKey}/${report.project_id}.html`;
+      await put(path, report.html ?? '', {
+        access: 'private',
+        contentType: 'text/html',
+        addRandomSuffix: false,
+        token,
+      });
+      published++;
+    }
 
-  // Update manifest
-  const manifest = {
-    type,
-    date: dateKey,
-    published_at: new Date().toISOString(),
-    reports: reports.map(
-      (r: { project_id: string; project_name: string; project_address: string }) => ({
-        project_id: r.project_id,
-        project_name: r.project_name,
-        project_address: r.project_address,
-      }),
-    ),
-  };
-  await put(`${prefix}/${dateKey}/manifest.json`, JSON.stringify(manifest), {
-    access: 'private',
-    contentType: 'application/json',
-    addRandomSuffix: false,
-  });
+    // Update manifest
+    const manifest = {
+      type,
+      date: dateKey,
+      published_at: new Date().toISOString(),
+      reports: reports.map(
+        (r: { project_id: string; project_name: string; project_address: string }) => ({
+          project_id: r.project_id,
+          project_name: r.project_name,
+          project_address: r.project_address,
+        }),
+      ),
+    };
+    await put(`${prefix}/${dateKey}/manifest.json`, JSON.stringify(manifest), {
+      access: 'private',
+      contentType: 'application/json',
+      addRandomSuffix: false,
+      token,
+    });
+  } catch (e) {
+    return NextResponse.json(
+      { error: `Blob upload failed: ${e instanceof Error ? e.message : String(e)}` },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({ ok: true, published });
 }
