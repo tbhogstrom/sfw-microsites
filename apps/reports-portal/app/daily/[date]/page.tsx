@@ -1,22 +1,23 @@
-import { list, get } from '@vercel/blob';
+import { list } from '@vercel/blob';
+import TeamNotes from './TeamNotes';
 
 export const dynamic = 'force-dynamic';
 
 export default async function DailyReportPage({ params }: { params: Promise<{ date: string }> }) {
   const { date } = await params;
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
 
-  const { blobs } = await list({ prefix: `daily/${date}/` });
+  const { blobs } = await list({ prefix: `daily/${date}/`, token });
   const htmlBlobs = blobs.filter((b) => b.pathname.endsWith('.html'));
 
   const reports: string[] = [];
   for (const blob of htmlBlobs) {
-    try {
-      const result = await get(blob.pathname);
-      if (result) {
-        reports.push(await new Response(result.body).text());
-      }
-    } catch {
-      /* skip unreadable blobs */
+    const resp = await fetch(blob.downloadUrl, {
+      cache: 'no-store',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (resp.ok) {
+      reports.push(await resp.text());
     }
   }
 
@@ -49,6 +50,7 @@ export default async function DailyReportPage({ params }: { params: Promise<{ da
         </h1>
       </header>
       <div style={{ maxWidth: '720px', margin: '0 auto', padding: '0 16px' }}>
+        <TeamNotes date={date} />
         {reports.length === 0 ? (
           <p style={{ color: '#888', fontSize: '14px', textAlign: 'center', padding: '40px' }}>
             No reports found for this date.
