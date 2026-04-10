@@ -334,28 +334,27 @@
 .report-card {
     max-width: 680px;
     margin: 24px auto;
-    background: #fff;
+    background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     overflow: hidden;
-    font-family: Georgia, serif;
-    color: #333;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: #545454;
 }
 .report-card .report-header {
-    background: #1a3a2a;
+    background: #545454;
     padding: 20px 24px;
-    color: #fff;
+    color: #fcfcfc;
 }
 .report-card .report-header .date-label {
     font-size: 12px;
     opacity: 0.7;
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-family: -apple-system, sans-serif;
 }
 .report-card .report-header h2 {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     margin: 4px 0 0;
 }
 .report-card .report-header .meta {
@@ -364,22 +363,20 @@
     margin-top: 10px;
     font-size: 13px;
     opacity: 0.8;
-    font-family: -apple-system, sans-serif;
 }
 .report-section {
     padding: 20px 24px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e8e8e8;
 }
 .report-section .section-label {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #888;
+    color: #757575;
     font-weight: 600;
     margin-bottom: 8px;
-    font-family: -apple-system, sans-serif;
 }
-.report-section p { font-size: 14px; line-height: 1.6; margin: 0; }
+.report-section p { font-size: 16px; line-height: 1.6; margin: 0; }
 .risk-boxes { display: flex; gap: 16px; }
 .risk-box { flex: 1; border-radius: 8px; padding: 14px; }
 .risk-box.before { background: #fef3e2; }
@@ -388,22 +385,21 @@
 .risk-box.after { background: #e8f5e9; }
 .risk-box.after .section-label { color: #2e7d32; }
 .risk-box.after p { color: #2a4a2a; }
-.risk-arrow { display: flex; align-items: center; font-size: 24px; color: #888; }
+.risk-arrow { display: flex; align-items: center; font-size: 24px; color: #757575; }
 .report-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.report-photos img { width: 100%; border-radius: 8px; height: 140px; object-fit: cover; background: #eee; }
-.report-photos .caption { font-size: 12px; color: #666; margin-top: 4px; font-family: -apple-system, sans-serif; }
+.report-photos img { width: 100%; border-radius: 8px; height: 160px; object-fit: cover; background: #e8e8e8; }
+.report-photos .caption { font-size: 12px; color: #757575; margin-top: 4px; }
 .issue-row {
     display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0;
-    font-family: -apple-system, sans-serif;
 }
 .issue-dot { font-size: 16px; }
 .issue-dot.resolved { color: #2e7d32; }
-.issue-dot.in-progress { color: #1976d2; }
+.issue-dot.in-progress { color: #df653a; }
 .issue-dot.documented-only { color: #b8860b; }
 .issue-dot.unknown { color: #888; }
 .report-footer {
-    padding: 14px 24px; background: #f0f0ee; text-align: center;
-    font-size: 12px; color: #888; font-family: -apple-system, sans-serif;
+    padding: 14px 24px; background: #f0f0f0; text-align: center;
+    font-size: 12px; color: #757575;
 }
 /* Day timeline for weekly reports */
 .day-entry {
@@ -1922,30 +1918,29 @@ function renderReports(reports, date) {
             <div class="report-section">
                 <div class="risk-boxes">
                     <div class="risk-box before">
-                        <div class="section-label">Risk Before Work</div>
+                        <div class="section-label">Condition Before Work</div>
                         <p>${rpt.risk_before || ''}</p>
                     </div>
                     <div class="risk-arrow">&rarr;</div>
                     <div class="risk-box after">
-                        <div class="section-label">After Today's Work</div>
+                        <div class="section-label">Condition After Work</div>
                         <p>${rpt.risk_after || ''}</p>
                     </div>
                 </div>
             </div>
 
             <div class="report-section">
-                <div class="section-label">What We Did Today</div>
+                <div class="section-label">Work Performed Today</div>
                 <p>${rpt.what_we_did || ''}</p>
             </div>
 
             ${photos.length > 0 ? `
             <div class="report-section">
-                <div class="section-label">Today's Photos</div>
+                <div class="section-label">${rpt.total_day_photos ? `Selected Photos — ${rpt.total_day_photos} documented today` : 'Selected Photos'}</div>
                 <div class="report-photos">
                     ${photos.map(p => `
                         <div>
                             <img src="/api/photo/${p.photo_id}/thumb" loading="lazy" onerror="this.style.background='#ddd'">
-                            <div class="caption">${p.caption || ''}</div>
                         </div>
                     `).join('')}
                 </div>
@@ -1953,7 +1948,7 @@ function renderReports(reports, date) {
             ` : ''}
 
             <div class="report-section">
-                <div class="section-label">The Value To Your Home</div>
+                <div class="section-label">Value to Your Property</div>
                 <p>${rpt.value_statement || ''}</p>
             </div>
 
@@ -2170,12 +2165,12 @@ function renderWeeklyReports(reports, weekStart) {
             (rpt.weekly_narrative ? '<div class="report-section"><div class="section-label">This Week\'s Progress</div><p>' + rpt.weekly_narrative + '</p></div>' : '') +
 
             '<div class="report-section"><div class="risk-boxes">' +
-                '<div class="risk-box before"><div class="section-label">Risk at Start of Week</div><p>' + (rpt.risk_before || '') + '</p></div>' +
+                '<div class="risk-box before"><div class="section-label">Condition at Start of Week</div><p>' + (rpt.risk_before || '') + '</p></div>' +
                 '<div class="risk-arrow">\u2192</div>' +
-                '<div class="risk-box after"><div class="section-label">After This Week\'s Work</div><p>' + (rpt.risk_after || '') + '</p></div>' +
+                '<div class="risk-box after"><div class="section-label">Condition After This Week</div><p>' + (rpt.risk_after || '') + '</p></div>' +
             '</div></div>' +
 
-            '<div class="report-section"><div class="section-label">What We Accomplished</div><p>' + (rpt.what_we_did || '') + '</p></div>' +
+            '<div class="report-section"><div class="section-label">Work Performed This Week</div><p>' + (rpt.what_we_did || '') + '</p></div>' +
 
             (photos.length > 0 ? '<div class="report-section"><div class="section-label">This Week\'s Photos</div><div class="report-photos">' +
                 photos.map(function(p) {
@@ -2183,18 +2178,19 @@ function renderWeeklyReports(reports, weekStart) {
                 }).join('') +
             '</div></div>' : '') +
 
-            '<div class="report-section"><div class="section-label">The Value To Your Home</div><p>' + (rpt.value_statement || '') + '</p></div>' +
+            '<div class="report-section"><div class="section-label">Value to Your Property</div><p>' + (rpt.value_statement || '') + '</p></div>' +
 
-            (timeline.length > 0 ? '<div class="report-section"><div class="section-label">Day by Day</div>' +
+            (timeline.length > 0 ? '<div class="report-section">' +
                 timeline.map(function(day) {
                     var dayDate = new Date(day.date + 'T00:00:00');
                     var dayLabel = dayDate.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'});
-                    var thumbIds = (day.photo_ids || []).slice(0, 2);
-                    return '<div class="day-entry">' +
-                        '<div class="day-date">' + dayLabel + '</div>' +
-                        '<div class="day-summary">' + (day.summary || '') + '</div>' +
-                        (thumbIds.length > 0 ? '<div class="day-thumbs">' +
-                            thumbIds.map(function(id) { return '<img src="/api/photo/' + id + '/thumb" loading="lazy" onerror="this.style.display=\'none\'">'; }).join('') +
+                    var totalPhotos = day.total_photos || (day.photo_ids || []).length;
+                    var photoIds = day.photo_ids || [];
+                    return '<div style="margin-bottom:16px">' +
+                        '<div class="section-label">' + dayLabel + (totalPhotos ? ' — ' + totalPhotos + ' documented' : '') + '</div>' +
+                        '<div class="day-summary" style="margin-bottom:8px">' + (day.summary || '') + '</div>' +
+                        (photoIds.length > 0 ? '<div class="report-photos">' +
+                            photoIds.map(function(id) { return '<div><img src="/api/photo/' + id + '/thumb" loading="lazy" onerror="this.style.background=\'#ddd\'"><div class="caption">' + (rpt.photo_captions && rpt.photo_captions[id] || '') + '</div></div>'; }).join('') +
                         '</div>' : '') +
                     '</div>';
                 }).join('') +
