@@ -74,7 +74,7 @@ class CompanyCamClient:
         address_str = ", ".join(p for p in parts if p)
         return {
             "id": str(raw["id"]),
-            "name": raw.get("name", "(unnamed)"),
+            "name": raw.get("name") or "(unnamed)",
             "address": address_str,
             "lat": coords.get("lat", 0) or 0,
             "lng": coords.get("lon", 0) or 0,
