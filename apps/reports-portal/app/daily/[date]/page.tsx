@@ -1,24 +1,72 @@
 import { list } from '@vercel/blob';
 import TeamNotes from './TeamNotes';
+import ReportCard from './ReportCard';
 
 export const dynamic = 'force-dynamic';
+
+interface ReportData {
+  projectId: string;
+  originalHtml: string;
+  revisedHtml: string | null;
+  feedbackAppliedAt: string | null;
+}
 
 export default async function DailyReportPage({ params }: { params: Promise<{ date: string }> }) {
   const { date } = await params;
   const token = process.env.BLOB_READ_WRITE_TOKEN;
 
   const { blobs } = await list({ prefix: `daily/${date}/`, token });
-  const htmlBlobs = blobs.filter((b) => b.pathname.endsWith('.html'));
 
-  const reports: string[] = [];
-  for (const blob of htmlBlobs) {
-    const resp = await fetch(blob.downloadUrl, {
+  // Find all original report HTML files (exclude .revised.html)
+  const originalBlobs = blobs.filter(
+    (b) => b.pathname.endsWith('.html') && !b.pathname.endsWith('.revised.html'),
+  );
+
+  const reports: ReportData[] = [];
+
+  for (const blob of originalBlobs) {
+    // Extract projectId: "daily/2026-04-10/abc123.html" -> "abc123"
+    const filename = blob.pathname.split('/').pop() || '';
+    const projectId = filename.replace('.html', '');
+
+    // Fetch original HTML
+    const origResp = await fetch(blob.downloadUrl, {
       cache: 'no-store',
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (resp.ok) {
-      reports.push(await resp.text());
+    if (!origResp.ok) continue;
+    const originalHtml = await origResp.text();
+
+    // Check for revised version
+    let revisedHtml: string | null = null;
+    const revisedBlob = blobs.find((b) => b.pathname === `daily/${date}/${projectId}.revised.html`);
+    if (revisedBlob) {
+      const revResp = await fetch(revisedBlob.downloadUrl, {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (revResp.ok) {
+        revisedHtml = await revResp.text();
+      }
     }
+
+    // Check for feedback metadata
+    let feedbackAppliedAt: string | null = null;
+    const feedbackBlob = blobs.find(
+      (b) => b.pathname === `daily/${date}/${projectId}.feedback.json`,
+    );
+    if (feedbackBlob) {
+      const fbResp = await fetch(feedbackBlob.downloadUrl, {
+        cache: 'no-store',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (fbResp.ok) {
+        const fbData = await fbResp.json();
+        feedbackAppliedAt = fbData.applied_at || null;
+      }
+    }
+
+    reports.push({ projectId, originalHtml, revisedHtml, feedbackAppliedAt });
   }
 
   const dateFormatted = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
@@ -56,7 +104,16 @@ export default async function DailyReportPage({ params }: { params: Promise<{ da
             No reports found for this date.
           </p>
         ) : (
-          reports.map((html, i) => <div key={i} dangerouslySetInnerHTML={{ __html: html }} />)
+          reports.map((report) => (
+            <ReportCard
+              key={report.projectId}
+              originalHtml={report.originalHtml}
+              revisedHtml={report.revisedHtml}
+              projectId={report.projectId}
+              date={date}
+              feedbackAppliedAt={report.feedbackAppliedAt}
+            />
+          ))
         )}
       </div>
     </div>
