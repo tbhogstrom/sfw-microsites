@@ -221,6 +221,7 @@ Rules:
 - daily_timeline: one entry per day with photos, 1-sentence summary per day. Include total_photos (total photo count for that day)
 - headline: punchy, risk-focused, under 10 words
 - Do NOT predict next week's work
+- Use plain, factual language. No severity adjectives (major, severe, significant, extensive, critical). If repair work is structural, say that. Otherwise describe what was done and where.
 - IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed", etc. This creates legal liability. Instead use hedged phrasing like "addressed the identified siding damage", "treated the areas of dry rot", "repaired the damaged sections". Describe what was worked on, not that everything is definitively complete.
 
 Respond in JSON only:
@@ -375,19 +376,28 @@ async def generate_weekly_report(
                 rd = json.loads(r["report_data"])
                 daily_summaries.append(f"{day_str}: {rd.get('what_we_did', '')}")
 
+    # Get project scope context
+    from photo_scanner.companycam import CompanyCamClient
+    project_context = CompanyCamClient.get_project_context(project) if project else {"scope_of_work": "", "pages": []}
+    scope_text = project_context["scope_of_work"]
+
     # Build prompt
     prompt_parts = [
         f"Project: {project['name'] if project else project_id}",
         f"Address: {project['address'] if project else ''}",
         f"Company: {defaults.get('company_name', 'SFW Construction')}",
         f"Week: {sorted(days.keys())[0]} to {sorted(days.keys())[-1]}",
-        f"Total photos this week: {len(week_photos)} across {len(days)} days",
+    ]
+    if scope_text:
+        prompt_parts.append(f"\nScope of work:\n{scope_text}")
+    prompt_parts.extend([
+        f"\nTotal photos this week: {len(week_photos)} across {len(days)} days",
         "",
         "Photos by day:",
         "\n\n".join(day_sections),
         "",
         f"Selected photos for report (generate captions for these): {selected_ids}",
-    ]
+    ])
 
     if daily_summaries:
         prompt_parts.append("")
@@ -443,5 +453,10 @@ async def generate_weekly_report(
          "day": datetime.fromtimestamp(int(p.get("taken_at", "0")), tz=timezone.utc).strftime("%Y-%m-%d")}
         for p in selected
     ]
+
+    # Suppress photo counts below threshold
+    for day_entry in report.get("daily_timeline", []):
+        if day_entry.get("total_photos", 0) < MIN_PHOTOS_FOR_COUNT:
+            day_entry["total_photos"] = None
 
     return report
