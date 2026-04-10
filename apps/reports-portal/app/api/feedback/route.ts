@@ -49,17 +49,14 @@ export async function POST(request: Request) {
   let revisedHtml: string;
   try {
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 16000,
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 8192,
+      system:
+        'You edit construction field reports. Apply the requested changes to the HTML. Only change what is asked. Preserve all HTML structure and styling. Return ONLY the revised HTML, nothing else.',
       messages: [
         {
           role: 'user',
-          content: `You are editing a construction field report. Apply the following feedback to the report HTML below. Only change what the feedback asks for. Preserve all HTML structure, styling, and formatting. Return only the revised HTML with no other text.
-
-Feedback: ${feedback}
-
-Report HTML:
-${reportHtml}`,
+          content: `Feedback: ${feedback}\n\nReport HTML:\n${reportHtml}`,
         },
       ],
     });
