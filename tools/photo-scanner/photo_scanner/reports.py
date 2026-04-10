@@ -5,25 +5,28 @@ from pathlib import Path
 MIN_PHOTOS_FOR_COUNT = 10
 
 REPORT_PROMPT = """\
-Generate a daily project report for a homeowner. Be friendly and concise. Lead with risk and value.
+Write as SFW Construction — a licensed general contractor communicating directly with the homeowner. Tone is formal, professional, and authoritative. Language should reflect craftsmanship expertise, not sales. Use precise construction terminology (e.g., "building envelope," "substrate," "flashing detail") but remain clear to a homeowner.
+
+Generate a daily project report.
 
 Rules:
-- Short sentences. No filler.
-- risk_before and risk_after: 1-2 sentences each
-- what_we_did: 2-3 sentences max
-- value_statement: 1-2 sentences
-- headline: punchy, risk-focused, under 10 words
+- Structured, confident sentences. No casual language, filler, or exaggeration.
+- headline: professional and specific, under 12 words (e.g., "Window Flashing Corrections Complete — Building Envelope Secured")
+- risk_before and risk_after: 1-2 sentences each, factual, describing the condition and its implications for the structure
+- what_we_did: 2-3 sentences. Describe the work performed with industry terminology. Position as expert contractor, not handyman.
+- value_statement: 1-2 sentences. Focus on building trust through clarity — what was protected, what was corrected, why it matters structurally.
 - Do NOT generate photo_captions — photos are shown without descriptions
-- Use plain, factual language. No severity adjectives (major, severe, significant, extensive, critical). If repair work is structural, say that. Otherwise describe what was done and where.
-- IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed", etc. This creates legal liability. Instead use hedged phrasing like "addressed the identified siding damage", "treated the areas of dry rot", "repaired the damaged sections". Describe what was worked on, not that everything is definitively complete.
+- No severity adjectives (major, severe, significant, extensive, critical). If the repair is structural, say that. Otherwise describe what was done and where.
+- No humor, sarcasm, or casual phrasing.
+- IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed". This creates legal liability. Use precise language: "addressed the identified damage at the south elevation," "corrected the flashing detail at the window head."
 
 Respond in JSON only:
 {
-  "headline": "short risk-focused headline",
-  "risk_before": "what was at risk before today's work",
-  "risk_after": "current risk status after today's work",
-  "what_we_did": "plain-language summary of today's work",
-  "value_statement": "why this matters to the homeowner",
+  "headline": "professional, specific headline",
+  "risk_before": "condition and structural implications before today's work",
+  "risk_after": "current condition after today's work",
+  "what_we_did": "work performed today, using construction terminology",
+  "value_statement": "why this work matters to the property",
   "issues_status": [
     {"issue": "name", "status": "resolved|in-progress|documented-only", "changed_today": true/false}
   ]
@@ -207,31 +210,32 @@ async def generate_daily_report(
 
 
 WEEKLY_REPORT_PROMPT = """\
-Generate a weekly project report for a homeowner. Be friendly and concise. Lead with risk and value.
+Write as SFW Construction — a licensed general contractor communicating directly with the homeowner. Tone is formal, professional, and authoritative. Language should reflect craftsmanship expertise, not sales. Use precise construction terminology (e.g., "building envelope," "substrate," "flashing detail") but remain clear to a homeowner.
 
-This covers a full week of work. Provide both a narrative arc and a day-by-day timeline.
+Generate a weekly project report. This covers a full week of work.
 
 Rules:
-- Short sentences. No filler.
-- weekly_narrative: 3-4 sentences covering the week's arc — where we started, what we accomplished, where we stand now
-- risk_before and risk_after: 1-2 sentences each (for the whole week, not per day)
-- what_we_did: 2-3 sentences summarizing the week's work
-- value_statement: 1-2 sentences
-- photo_captions: one short sentence per photo, homeowner-friendly (no jargon)
-- daily_timeline: one entry per day with photos, 1-sentence summary per day. Include total_photos (total photo count for that day)
-- headline: punchy, risk-focused, under 10 words
+- Structured, confident sentences. No casual language, filler, or exaggeration.
+- weekly_narrative: 3-4 sentences documenting the progression of work — initial conditions, work performed, current status
+- risk_before and risk_after: 1-2 sentences each (for the whole week, not per day), factual, describing the condition and its structural implications
+- what_we_did: 2-3 sentences summarizing the week's work with industry terminology
+- value_statement: 1-2 sentences. Focus on building trust through clarity — what was protected, what was corrected, why it matters structurally.
+- photo_captions: one concise sentence per photo using construction terminology, accessible to a homeowner
+- daily_timeline: one entry per day, one-sentence professional summary. Include total_photos (total photo count for that day)
+- headline: professional and specific, under 12 words
 - Do NOT predict next week's work
-- Use plain, factual language. No severity adjectives (major, severe, significant, extensive, critical). If repair work is structural, say that. Otherwise describe what was done and where.
-- IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed", etc. This creates legal liability. Instead use hedged phrasing like "addressed the identified siding damage", "treated the areas of dry rot", "repaired the damaged sections". Describe what was worked on, not that everything is definitively complete.
+- No severity adjectives (major, severe, significant, extensive, critical). If the repair is structural, say that. Otherwise describe what was done and where.
+- No humor, sarcasm, or casual phrasing.
+- IMPORTANT: Never use declarative completion language like "all siding repaired", "all dry rot remediated", "all damage fixed". This creates legal liability. Use precise language: "addressed the identified damage at the south elevation," "corrected the flashing detail at the window head."
 
 Respond in JSON only:
 {
-  "headline": "short risk-focused headline for the week",
-  "weekly_narrative": "3-4 sentence arc of the week",
-  "risk_before": "risk status at start of week",
-  "risk_after": "risk status at end of week",
-  "what_we_did": "summary of the week's work",
-  "value_statement": "why this week matters",
+  "headline": "professional, specific headline for the week",
+  "weekly_narrative": "3-4 sentence progression of work",
+  "risk_before": "condition at start of week",
+  "risk_after": "condition at end of week",
+  "what_we_did": "summary of work performed this week",
+  "value_statement": "why this week's work matters to the property",
   "photo_captions": {"photo_id": "caption", ...},
   "issues_status": [
     {"issue": "name", "status": "resolved|in-progress|documented-only", "changed_this_week": true/false}

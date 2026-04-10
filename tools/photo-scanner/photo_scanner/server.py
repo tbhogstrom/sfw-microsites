@@ -1240,6 +1240,7 @@ async def api_publish_reports(request: Request):
 def render_report_html(report: dict, project_name: str, project_address: str,
                        date_str: str, report_type: str, logo_b64: str, photo_b64: dict) -> str:
     """Render a single report as self-contained HTML with embedded images."""
+    from photo_scanner import report_style as brand
     rpt = report
     photos = rpt.get("photos", [])
     issues = rpt.get("issues_status", [])
@@ -1251,47 +1252,46 @@ def render_report_html(report: dict, project_name: str, project_address: str,
         ws = datetime.strptime(date_str, "%Y-%m-%d")
         we = ws + timedelta(days=4)
         date_display = f"Week of {ws.strftime('%B %d')} – {we.strftime('%B %d, %Y')}"
-        header_bg = "#1a2a3a"
         label = "Weekly Project Report"
     else:
         from datetime import datetime
         d = datetime.strptime(date_str, "%Y-%m-%d")
         date_display = d.strftime("%A, %B %d, %Y")
-        header_bg = "#1a3a2a"
         label = "Daily Project Update"
+    header_bg = brand.HEADER_BG
 
-    css = """
+    css = f"""
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-        body { background: #f8f7f4; }
-        .report-card { max-width: 680px; margin: 24px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; font-family: Georgia, serif; color: #333; }
-        .report-header { padding: 20px 24px; color: #fff; position: relative; padding-right: 90px; }
-        .report-logo { position: absolute; top: 50%; right: 20px; height: 50px; opacity: 0.85; transform: translateY(-50%); }
-        .date-label { font-size: 12px; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; font-family: -apple-system, sans-serif; }
-        .report-header h2 { font-size: 22px; font-weight: 600; margin: 4px 0 0; }
-        .report-section { padding: 20px 24px; border-bottom: 1px solid #eee; }
-        .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; font-weight: 600; margin-bottom: 8px; font-family: -apple-system, sans-serif; }
-        .report-section p { font-size: 14px; line-height: 1.6; }
-        .risk-boxes { display: flex; gap: 16px; }
-        .risk-box { flex: 1; border-radius: 8px; padding: 14px; }
-        .risk-box.before { background: #fef3e2; }
-        .risk-box.before .section-label { color: #b8860b; }
-        .risk-box.before p { color: #5a4a2a; }
-        .risk-box.after { background: #e8f5e9; }
-        .risk-box.after .section-label { color: #2e7d32; }
-        .risk-box.after p { color: #2a4a2a; }
-        .risk-arrow { display: flex; align-items: center; font-size: 24px; color: #888; }
-        .report-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .report-photos img { width: 100%; border-radius: 8px; height: 140px; object-fit: cover; background: #eee; }
-        .report-photos .caption { font-size: 12px; color: #666; margin-top: 4px; font-family: -apple-system, sans-serif; }
-        .issue-row { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; font-family: -apple-system, sans-serif; }
-        .report-footer { padding: 14px 24px; background: #f0f0ee; text-align: center; font-size: 12px; color: #888; font-family: -apple-system, sans-serif; }
-        .day-entry { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #eee; font-family: -apple-system, sans-serif; }
-        .day-entry:last-child { border-bottom: none; }
-        .day-date { min-width: 90px; font-size: 13px; font-weight: 600; color: #555; }
-        .day-summary { flex: 1; font-size: 13px; color: #333; line-height: 1.5; }
-        .day-thumbs { display: flex; gap: 4px; }
-        .day-thumbs img { width: 60px; height: 45px; object-fit: cover; border-radius: 4px; }
+        * {{ margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }}
+        body {{ background: {brand.BG_LIGHT}; }}
+        .report-card {{ max-width: 680px; margin: 24px auto; background: {brand.CARD_BG}; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; font-family: {brand.FONT_FAMILY}; color: {brand.TEXT_DARK}; }}
+        .report-header {{ padding: 20px 24px; color: {brand.HEADER_TEXT}; position: relative; padding-right: 90px; }}
+        .report-logo {{ position: absolute; top: 50%; right: 20px; height: 50px; opacity: 0.85; transform: translateY(-50%); }}
+        .date-label {{ font-size: 12px; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; }}
+        .report-header h2 {{ font-size: {brand.H2_SIZE}; font-weight: 700; margin: 4px 0 0; }}
+        .report-section {{ padding: 20px 24px; border-bottom: 1px solid {brand.BORDER}; }}
+        .section-label {{ font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: {brand.SECTION_LABEL_COLOR}; font-weight: 600; margin-bottom: 8px; }}
+        .report-section p {{ font-size: {brand.BODY_SIZE}; line-height: 1.6; }}
+        .risk-boxes {{ display: flex; gap: 16px; }}
+        .risk-box {{ flex: 1; border-radius: 8px; padding: 14px; }}
+        .risk-box.before {{ background: {brand.RISK_BEFORE_BG}; }}
+        .risk-box.before .section-label {{ color: {brand.RISK_BEFORE_LABEL}; }}
+        .risk-box.before p {{ color: {brand.RISK_BEFORE_TEXT}; }}
+        .risk-box.after {{ background: {brand.RISK_AFTER_BG}; }}
+        .risk-box.after .section-label {{ color: {brand.RISK_AFTER_LABEL}; }}
+        .risk-box.after p {{ color: {brand.RISK_AFTER_TEXT}; }}
+        .risk-arrow {{ display: flex; align-items: center; font-size: 24px; color: {brand.SECTION_LABEL_COLOR}; }}
+        .report-photos {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }}
+        .report-photos img {{ width: 100%; border-radius: 8px; height: 160px; object-fit: cover; background: {brand.BORDER}; }}
+        .report-photos .caption {{ font-size: 12px; color: {brand.CAPTION_COLOR}; margin-top: 4px; }}
+        .issue-row {{ display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; }}
+        .report-footer {{ padding: 14px 24px; background: {brand.FOOTER_BG}; text-align: center; font-size: 12px; color: {brand.SECTION_LABEL_COLOR}; }}
+        .day-entry {{ display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid {brand.BORDER}; }}
+        .day-entry:last-child {{ border-bottom: none; }}
+        .day-date {{ min-width: 90px; font-size: 13px; font-weight: 600; color: {brand.TEXT_DARK}; }}
+        .day-summary {{ flex: 1; font-size: 13px; color: {brand.TEXT_DARK}; line-height: 1.5; }}
+        .day-thumbs {{ display: flex; gap: 4px; }}
+        .day-thumbs img {{ width: 60px; height: 45px; object-fit: cover; border-radius: 4px; }}
     </style>
     """
 
@@ -1311,9 +1311,12 @@ def render_report_html(report: dict, project_name: str, project_address: str,
                 photo_items.append(f'<div><img src="{src}"></div>')
         total_day_photos = rpt.get("total_day_photos", len(photos))
         if report_type == "weekly":
-            photos_label = "This Week's Photos"
+            photos_label = "Selected Photos — This Week"
         else:
-            photos_label = f"Selected Photos from Today ({total_day_photos} photos taken)"
+            if total_day_photos:
+                photos_label = f"Selected Photos — {total_day_photos} documented today"
+            else:
+                photos_label = "Selected Photos"
         photos_html = f'<div class="report-section"><div class="section-label">{photos_label}</div><div class="report-photos">{"".join(photo_items)}</div></div>'
 
     # Issues HTML
@@ -1322,7 +1325,7 @@ def render_report_html(report: dict, project_name: str, project_address: str,
         issue_items = []
         for iss in issues:
             status = iss.get("status", "unknown")
-            color = "#2e7d32" if status == "resolved" else "#1976d2" if status == "in-progress" else "#b8860b"
+            color = brand.STATUS_RESOLVED if status == "resolved" else brand.STATUS_IN_PROGRESS if status == "in-progress" else brand.STATUS_DOCUMENTED
             status_label = "Resolved" if status == "resolved" else "In progress" if status == "in-progress" else "Documented" if status == "documented-only" else "Pending"
             changed_key = "changed_this_week" if report_type == "weekly" else "changed_today"
             changed = f" — {'this week' if report_type == 'weekly' else 'updated today'}" if iss.get(changed_key) else ""
@@ -1354,7 +1357,7 @@ def render_report_html(report: dict, project_name: str, project_address: str,
                 photo_grid = f'<div class="report-photos">{"".join(photo_items_day)}</div>'
             day_items.append(
                 f'<div style="margin-bottom:16px">'
-                f'<div class="section-label">{day_label} — Selected Photos from Today ({total_photos} photos taken)</div>'
+                f'<div class="section-label">{day_label}{f" — {total_photos} documented" if total_photos else ""}</div>'
                 f'<div class="day-summary" style="margin-bottom:8px">{day.get("summary","")}</div>'
                 f'{photo_grid}'
                 f'</div>'
@@ -1364,9 +1367,9 @@ def render_report_html(report: dict, project_name: str, project_address: str,
     # Weekly narrative
     narrative_html = ""
     if rpt.get("weekly_narrative") and report_type == "weekly":
-        narrative_html = f'<div class="report-section"><div class="section-label">This Week\'s Progress</div><p>{rpt["weekly_narrative"]}</p></div>'
+        narrative_html = f'<div class="report-section"><div class="section-label">Weekly Summary</div><p>{rpt["weekly_narrative"]}</p></div>'
 
-    what_label = "What We Accomplished" if report_type == "weekly" else "What We Did Today"
+    what_label = "Work Performed This Week" if report_type == "weekly" else "Work Performed Today"
 
     html = f"""{css}
 <div class="report-card">
@@ -1374,21 +1377,21 @@ def render_report_html(report: dict, project_name: str, project_address: str,
         {logo_img}
         <div class="date-label">{label}</div>
         <h2>{rpt.get('headline', 'Project Update')}</h2>
-        <div style="font-size:13px;opacity:0.8;font-family:-apple-system,sans-serif;margin-top:10px">{project_name}</div>
-        <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">{project_address}</div>
-        <div style="font-size:12px;opacity:0.6;margin-top:2px;font-family:-apple-system,sans-serif">{date_display}</div>
+        <div style="font-size:13px;opacity:0.8;margin-top:10px">{project_name}</div>
+        <div style="font-size:12px;opacity:0.6;margin-top:2px">{project_address}</div>
+        <div style="font-size:12px;opacity:0.6;margin-top:2px">{date_display}</div>
     </div>
     {narrative_html}
     <div class="report-section">
         <div class="risk-boxes">
-            <div class="risk-box before"><div class="section-label">{'Risk at Start of Week' if report_type == 'weekly' else 'Risk Before Work'}</div><p>{rpt.get('risk_before','')}</p></div>
+            <div class="risk-box before"><div class="section-label">{'Condition at Start of Week' if report_type == 'weekly' else 'Condition Before Work'}</div><p>{rpt.get('risk_before','')}</p></div>
             <div class="risk-arrow">→</div>
-            <div class="risk-box after"><div class="section-label">{"After This Week's Work" if report_type == 'weekly' else "After Today's Work"}</div><p>{rpt.get('risk_after','')}</p></div>
+            <div class="risk-box after"><div class="section-label">{"Condition After This Week" if report_type == 'weekly' else "Condition After Work"}</div><p>{rpt.get('risk_after','')}</p></div>
         </div>
     </div>
     <div class="report-section"><div class="section-label">{what_label}</div><p>{rpt.get('what_we_did','')}</p></div>
     {photos_html}
-    <div class="report-section"><div class="section-label">The Value To Your Home</div><p>{rpt.get('value_statement','')}</p></div>
+    <div class="report-section"><div class="section-label">Value to Your Property</div><p>{rpt.get('value_statement','')}</p></div>
     {timeline_html}
     {issues_html}
     <div class="report-footer">SFW Construction — {label}</div>
