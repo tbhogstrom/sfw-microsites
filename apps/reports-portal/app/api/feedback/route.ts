@@ -2,7 +2,28 @@ import { NextResponse } from 'next/server';
 import { list, put } from '@vercel/blob';
 import Anthropic from '@anthropic-ai/sdk';
 
-export const maxDuration = 60;
+export const maxDuration = 120;
+
+// Strip base64 data URIs (images, fonts) before sending to Claude, restore after.
+// These can be 100s of KB each and Claude doesn't need them to edit text.
+function stripDataUris(html: string): { stripped: string; replacements: Map<string, string> } {
+  const replacements = new Map<string, string>();
+  let counter = 0;
+  const stripped = html.replace(/data:[^;]+;base64,[A-Za-z0-9+/=]+/g, (match) => {
+    const placeholder = `__DATA_URI_${counter++}__`;
+    replacements.set(placeholder, match);
+    return placeholder;
+  });
+  return { stripped, replacements };
+}
+
+function restoreDataUris(html: string, replacements: Map<string, string>): string {
+  let result = html;
+  for (const [placeholder, original] of replacements) {
+    result = result.replace(placeholder, original);
+  }
+  return result;
+}
 
 export async function POST(request: Request) {
   try {
@@ -54,19 +75,22 @@ export async function POST(request: Request) {
     }
     const reportHtml = await resp.text();
 
+    // Strip base64 data URIs to reduce token count dramatically
+    const { stripped, replacements } = stripDataUris(reportHtml);
+
     // Call Claude to apply the feedback
     const anthropic = new Anthropic({ apiKey });
-    let revisedHtml: string;
+    let revisedStripped: string;
     try {
       const message = await anthropic.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: 8192,
         system:
-          'You edit construction field reports. Apply the requested changes to the HTML. Only change what is asked. Preserve all HTML structure and styling. Return ONLY the revised HTML, nothing else.',
+          'You edit construction field reports. Apply the requested changes to the HTML. Only change what the feedback asks for. Preserve all HTML structure, styling, and formatting. Placeholders like __DATA_URI_0__ represent images — leave them exactly as-is. Return ONLY the revised HTML, nothing else.',
         messages: [
           {
             role: 'user',
-            content: `Feedback: ${feedback}\n\nReport HTML:\n${reportHtml}`,
+            content: `Feedback: ${feedback}\n\nReport HTML:\n${stripped}`,
           },
         ],
       });
@@ -77,13 +101,16 @@ export async function POST(request: Request) {
           { status: 500 },
         );
       }
-      revisedHtml = textBlock.text;
+      revisedStripped = textBlock.text;
     } catch (e) {
       return NextResponse.json(
         { error: `Claude API error: ${e instanceof Error ? e.message : String(e)}` },
         { status: 500 },
       );
     }
+
+    // Restore base64 data URIs in the revised HTML
+    const revisedHtml = restoreDataUris(revisedStripped, replacements);
 
     // Store revised HTML
     await put(`${prefix}.revised.html`, revisedHtml, {
