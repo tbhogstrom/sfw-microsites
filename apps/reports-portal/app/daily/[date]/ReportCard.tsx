@@ -28,16 +28,30 @@ export default function ReportCard({
   const isRevised = revisedHtml !== null;
   const displayHtml = showingOriginal ? originalHtml : (revisedHtml ?? originalHtml);
 
+  const [error, setError] = useState<string | null>(null);
+
   const applyFeedback = useCallback(async () => {
     if (!feedbackText.trim()) return;
     setSubmitting(true);
+    setError(null);
     try {
       const resp = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ date, projectId, feedback: feedbackText }),
       });
-      const data = await resp.json();
+      const text = await resp.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        setError(`Server returned non-JSON (${resp.status}): ${text.slice(0, 200)}`);
+        return;
+      }
+      if (!resp.ok) {
+        setError(`Error ${resp.status}: ${data.error}${data.detail ? ' — ' + data.detail : ''}`);
+        return;
+      }
       if (data.ok && data.html) {
         setRevisedHtml(data.html);
         setAppliedAt(new Date().toISOString());
@@ -45,6 +59,8 @@ export default function ReportCard({
         setFeedbackText('');
         setFeedbackOpen(false);
       }
+    } catch (e) {
+      setError(`Request failed: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       setSubmitting(false);
     }
@@ -191,6 +207,23 @@ export default function ReportCard({
             padding: '12px 16px',
           }}
         >
+          {error && (
+            <div
+              style={{
+                background: '#fdecea',
+                border: '1px solid #f5c6cb',
+                borderRadius: '4px',
+                padding: '8px 12px',
+                marginBottom: '8px',
+                fontSize: '12px',
+                color: '#721c24',
+                fontFamily: 'monospace',
+                wordBreak: 'break-all',
+              }}
+            >
+              {error}
+            </div>
+          )}
           <label
             style={{
               fontSize: '12px',
