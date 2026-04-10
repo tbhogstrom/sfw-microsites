@@ -942,15 +942,30 @@ async def api_generate_reports(request: Request):
                 _report_task_state["step"] = f"No projects had photos on {date_str}"
                 return
 
-            _report_task_state["step"] = f"{len(projects_with_photos)} projects had photos on {date_str}. Analyzing..."
+            # Check which projects already have saved reports (for resume)
+            existing = catalog.get_daily_reports(date_str)
+            existing_pids = {r["project_id"] for r in existing}
 
-            # Step 3: Analyze unanalyzed photos for each project
+            total = len(projects_with_photos)
+            skipped = 0
+            reports = []
+
+            # Process each project end-to-end: analyze → generate → save
             for i, pid in enumerate(projects_with_photos):
                 proj = catalog.get_project(pid)
                 pname = proj["name"] if proj else pid
+                progress = f"({i+1}/{total})"
+
+                # Skip projects that already have a saved report
+                if pid in existing_pids:
+                    skipped += 1
+                    _report_task_state["step"] = f"Skipping {pname} {progress} — report already saved"
+                    continue
+
+                # Analyze unanalyzed photos
                 unanalyzed = catalog.get_unanalyzed_photos(pid)
                 if unanalyzed:
-                    _report_task_state["step"] = f"Analyzing {pname} ({len(unanalyzed)} new photos) ({i+1}/{len(projects_with_photos)})"
+                    _report_task_state["step"] = f"Analyzing {pname} ({len(unanalyzed)} new photos) {progress}"
                     try:
                         await analyze_project_from_catalog(
                             catalog=catalog, project_id=pid,
@@ -958,14 +973,11 @@ async def api_generate_reports(request: Request):
                         )
                     except Exception as e:
                         _report_task_state["step"] = f"Analysis error on {pname}: {e}"
+                        reports.append({"project_id": pid, "error": f"analysis: {e}"})
+                        continue
 
-            # Step 4: Generate reports
-            _report_task_state["step"] = "Generating reports..."
-            reports = []
-            for i, pid in enumerate(projects_with_photos):
-                proj = catalog.get_project(pid)
-                pname = proj["name"] if proj else pid
-                _report_task_state["step"] = f"Generating report for {pname} ({i+1}/{len(projects_with_photos)})"
+                # Generate and save report
+                _report_task_state["step"] = f"Generating report for {pname} {progress}"
                 try:
                     report = await generate_daily_report(
                         catalog=catalog, project_id=pid,
@@ -982,11 +994,18 @@ async def api_generate_reports(request: Request):
                             "report": report,
                         })
                 except Exception as e:
-                    reports.append({"project_id": pid, "error": str(e)})
+                    reports.append({"project_id": pid, "error": f"report: {e}"})
 
             _report_task_state["reports"] = reports
             _report_task_state["status"] = "complete"
-            _report_task_state["step"] = f"Done — {len(reports)} reports generated"
+            done = len([r for r in reports if "report" in r])
+            errors = len([r for r in reports if "error" in r])
+            parts = [f"{done} generated"]
+            if skipped:
+                parts.append(f"{skipped} already saved")
+            if errors:
+                parts.append(f"{errors} errors")
+            _report_task_state["step"] = f"Done — {', '.join(parts)}"
 
         except Exception as e:
             _report_task_state["status"] = "error"
@@ -1061,8 +1080,16 @@ async def api_generate_weekly_reports(request: Request):
     if not project_ids:
         return {"reports": [], "message": f"No projects with 3+ days of photos for week of {week_start_str}"}
 
+    # Check which projects already have saved weekly reports (for resume)
+    existing = catalog.get_weekly_reports(week_start_str)
+    existing_pids = {r["project_id"] for r in existing}
+
     reports = []
+    skipped = 0
     for pid in project_ids:
+        if pid in existing_pids:
+            skipped += 1
+            continue
         try:
             report = await generate_weekly_report(
                 catalog=catalog,
@@ -1084,7 +1111,7 @@ async def api_generate_weekly_reports(request: Request):
         except Exception as e:
             reports.append({"project_id": pid, "error": str(e)})
 
-    return {"reports": reports, "week_start": week_start_str}
+    return {"reports": reports, "skipped": skipped, "week_start": week_start_str}
 
 
 @app.get("/api/reports/weekly")
@@ -1177,28 +1204,37 @@ async def api_publish_reports(request: Request):
             "html": html,
         })
 
-    # POST to portal
+    # POST to portal in batches of 3 to stay under Vercel's 4.5MB payload limit
     import httpx
+    published = 0
+    errors = []
+    batch_size = 3
     async with httpx.AsyncClient(timeout=60) as client:
-        ingest_body = {
-            "type": report_type,
-            "reports": publish_reports,
-        }
-        if report_type == "weekly":
-            ingest_body["week_start"] = date_str
-        else:
-            ingest_body["date"] = date_str
+        for i in range(0, len(publish_reports), batch_size):
+            batch = publish_reports[i:i + batch_size]
+            ingest_body = {
+                "type": report_type,
+                "reports": batch,
+            }
+            if report_type == "weekly":
+                ingest_body["week_start"] = date_str
+            else:
+                ingest_body["date"] = date_str
 
-        resp = await client.post(
-            f"{portal_url}/api/ingest",
-            json=ingest_body,
-            headers={"Authorization": f"Bearer {portal_key}"},
-        )
-        if resp.status_code != 200:
-            return JSONResponse({"error": f"Portal returned {resp.status_code}: {resp.text}"}, status_code=502)
-        result = resp.json()
+            resp = await client.post(
+                f"{portal_url}/api/ingest",
+                json=ingest_body,
+                headers={"Authorization": f"Bearer {portal_key}"},
+            )
+            if resp.status_code != 200:
+                errors.append(f"Batch {i//batch_size+1}: {resp.status_code} {resp.text[:200]}")
+            else:
+                published += resp.json().get("published", 0)
 
-    return {"ok": True, "published": result.get("published", 0), "portal_url": portal_url}
+    if errors and published == 0:
+        return JSONResponse({"error": f"All batches failed: {'; '.join(errors)}"}, status_code=502)
+
+    return {"ok": True, "published": published, "errors": errors if errors else None, "portal_url": portal_url}
 
 
 def render_report_html(report: dict, project_name: str, project_address: str,
@@ -1268,9 +1304,17 @@ def render_report_html(report: dict, project_name: str, project_address: str,
         for p in photos:
             pid = p.get("photo_id", "")
             src = photo_b64.get(pid, "")
-            caption = p.get("caption", "")
-            photo_items.append(f'<div><img src="{src}"><div class="caption">{caption}</div></div>')
-        photos_html = f'<div class="report-section"><div class="section-label">{"This Week\'s" if report_type == "weekly" else "Today\'s"} Photos</div><div class="report-photos">{"".join(photo_items)}</div></div>'
+            if report_type == "weekly":
+                caption = p.get("caption", "")
+                photo_items.append(f'<div><img src="{src}"><div class="caption">{caption}</div></div>')
+            else:
+                photo_items.append(f'<div><img src="{src}"></div>')
+        total_day_photos = rpt.get("total_day_photos", len(photos))
+        if report_type == "weekly":
+            photos_label = "This Week's Photos"
+        else:
+            photos_label = f"Selected Photos from Today ({total_day_photos} photos taken)"
+        photos_html = f'<div class="report-section"><div class="section-label">{photos_label}</div><div class="report-photos">{"".join(photo_items)}</div></div>'
 
     # Issues HTML
     issues_html = ""
@@ -1290,6 +1334,7 @@ def render_report_html(report: dict, project_name: str, project_address: str,
     timeline_html = ""
     if timeline and report_type == "weekly":
         from datetime import datetime
+        captions = rpt.get("photo_captions", {})
         day_items = []
         for day in timeline:
             try:
@@ -1297,14 +1342,24 @@ def render_report_html(report: dict, project_name: str, project_address: str,
                 day_label = dd.strftime("%a, %b %d")
             except Exception:
                 day_label = day.get("date", "")
-            thumbs = ""
-            for tid in (day.get("photo_ids") or [])[:2]:
-                src = photo_b64.get(tid, "")
-                if src:
-                    thumbs += f'<img src="{src}">'
-            thumbs_html = f'<div class="day-thumbs">{thumbs}</div>' if thumbs else ""
-            day_items.append(f'<div class="day-entry"><div class="day-date">{day_label}</div><div class="day-summary">{day.get("summary","")}</div>{thumbs_html}</div>')
-        timeline_html = f'<div class="report-section"><div class="section-label">Day by Day</div>{"".join(day_items)}</div>'
+            total_photos = day.get("total_photos", len(day.get("photo_ids") or []))
+            photo_ids = day.get("photo_ids") or []
+            photo_grid = ""
+            if photo_ids:
+                photo_items_day = []
+                for tid in photo_ids:
+                    src = photo_b64.get(tid, "")
+                    caption = captions.get(tid, "")
+                    photo_items_day.append(f'<div><img src="{src}"><div class="caption">{caption}</div></div>')
+                photo_grid = f'<div class="report-photos">{"".join(photo_items_day)}</div>'
+            day_items.append(
+                f'<div style="margin-bottom:16px">'
+                f'<div class="section-label">{day_label} — Selected Photos from Today ({total_photos} photos taken)</div>'
+                f'<div class="day-summary" style="margin-bottom:8px">{day.get("summary","")}</div>'
+                f'{photo_grid}'
+                f'</div>'
+            )
+        timeline_html = f'<div class="report-section">{"".join(day_items)}</div>'
 
     # Weekly narrative
     narrative_html = ""
