@@ -1,4 +1,4 @@
-import { list, get } from '@vercel/blob';
+import { list } from '@vercel/blob';
 
 export const dynamic = 'force-dynamic';
 
@@ -8,19 +8,19 @@ export default async function WeeklyReportPage({
   params: Promise<{ weekStart: string }>;
 }) {
   const { weekStart } = await params;
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
 
-  const { blobs } = await list({ prefix: `weekly/${weekStart}/` });
+  const { blobs } = await list({ prefix: `weekly/${weekStart}/`, token });
   const htmlBlobs = blobs.filter((b) => b.pathname.endsWith('.html'));
 
   const reports: string[] = [];
   for (const blob of htmlBlobs) {
-    try {
-      const result = await get(blob.pathname);
-      if (result) {
-        reports.push(await new Response(result.body).text());
-      }
-    } catch {
-      /* skip unreadable blobs */
+    const resp = await fetch(blob.downloadUrl, {
+      cache: 'no-store',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (resp.ok) {
+      reports.push(await resp.text());
     }
   }
 
