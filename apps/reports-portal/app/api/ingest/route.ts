@@ -37,6 +37,7 @@ export async function POST(request: Request) {
         access: 'private',
         contentType: 'text/html',
         addRandomSuffix: false,
+        allowOverwrite: true,
         token,
       });
       published++;
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
       access: 'private',
       contentType: 'application/json',
       addRandomSuffix: false,
+      allowOverwrite: true,
       token,
     });
   } catch (e) {
