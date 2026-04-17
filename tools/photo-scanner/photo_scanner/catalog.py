@@ -128,6 +128,20 @@ class Catalog:
             )
         """)
 
+        # project_reports table — one row per generation, history preserved
+        self.db.execute("""
+            CREATE TABLE IF NOT EXISTS project_reports (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                project_id TEXT NOT NULL,
+                report_data TEXT NOT NULL,
+                generated_at TEXT NOT NULL,
+                model TEXT
+            )
+        """)
+        self.db.execute(
+            "CREATE INDEX IF NOT EXISTS idx_project_reports_project ON project_reports(project_id)"
+        )
+
     def close(self):
         self.db.close()
 
@@ -236,6 +250,61 @@ class Catalog:
             WHERE wr.week_start = ?
             ORDER BY p.name
         """, (week_start,)).fetchall()
+        return [dict(r) for r in rows]
+
+    # --- Project Reports ---
+
+    def save_project_report(self, project_id: str, report_data: dict, model: str = "") -> int:
+        """Insert a new project report row. Returns the new row id."""
+        now = datetime.now(timezone.utc).isoformat()
+        cur = self.db.execute(
+            """
+            INSERT INTO project_reports (project_id, report_data, generated_at, model)
+            VALUES (?, ?, ?, ?)
+            """,
+            (project_id, json.dumps(report_data), now, model),
+        )
+        self.db.commit()
+        return cur.lastrowid
+
+    def get_project_report(self, report_id: int) -> dict | None:
+        row = self.db.execute(
+            """
+            SELECT pr.*, p.name AS project_name, p.address AS project_address
+            FROM project_reports pr
+            LEFT JOIN projects p ON pr.project_id = p.id
+            WHERE pr.id = ?
+            """,
+            (report_id,),
+        ).fetchone()
+        return dict(row) if row else None
+
+    def list_project_reports(self, project_id: str | None = None) -> list[dict]:
+        """If project_id given: all reports for that project, newest first.
+        Otherwise: latest report per project across all projects."""
+        if project_id:
+            rows = self.db.execute(
+                """
+                SELECT pr.*, p.name AS project_name, p.address AS project_address
+                FROM project_reports pr
+                LEFT JOIN projects p ON pr.project_id = p.id
+                WHERE pr.project_id = ?
+                ORDER BY pr.id DESC
+                """,
+                (project_id,),
+            ).fetchall()
+        else:
+            rows = self.db.execute(
+                """
+                SELECT pr.*, p.name AS project_name, p.address AS project_address
+                FROM project_reports pr
+                LEFT JOIN projects p ON pr.project_id = p.id
+                WHERE pr.id IN (
+                    SELECT MAX(id) FROM project_reports GROUP BY project_id
+                )
+                ORDER BY pr.generated_at DESC
+                """
+            ).fetchall()
         return [dict(r) for r in rows]
 
     def get_eligible_weekly_projects(self, ts_start: int, ts_end: int, min_days: int = 3) -> list[dict]:
