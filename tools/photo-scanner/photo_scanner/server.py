@@ -1810,6 +1810,15 @@ async def api_get_project_report(report_id: int):
     }
 
 
+@app.get("/reports/forward/milwaukie", response_class=HTMLResponse)
+async def render_milwaukie_forward():
+    """One-off forward-looking report for the Milwaukie Presbyterian project."""
+    from datetime import datetime
+    template = jinja_env.get_template("milwaukie_forward.html")
+    today = datetime.now().strftime("%B %d, %Y")
+    return template.render(today=today)
+
+
 @app.get("/reports/project/{report_id}", response_class=HTMLResponse)
 async def render_project_report(report_id: int):
     if not catalog:

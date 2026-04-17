@@ -2476,21 +2476,54 @@ async function pollProjectReportTask(btn, statusEl) {
     }, 1500);
 }
 
+const ONE_OFF_REPORTS = [
+    {
+        href: '/reports/forward/milwaukie',
+        title: 'Carpentry and Window Glazing Scheduled',
+        project: 'David Devore / Milwaukie Presbyterian Church - Paint 04-06-2026',
+        kind: 'Forward-looking — upcoming work',
+    },
+];
+
+function renderOneOffReports() {
+    if (!ONE_OFF_REPORTS.length) return '';
+    return ONE_OFF_REPORTS.map(o => `
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin-bottom:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                <div>
+                    <div style="font-weight:600;font-size:14px">${escapeHtmlPR(o.title)}</div>
+                    <div style="font-size:12px;color:#aaa">${escapeHtmlPR(o.project)}</div>
+                    <div style="font-size:10px;color:#777;margin-top:4px">${escapeHtmlPR(o.kind)}</div>
+                </div>
+                <div style="display:flex;gap:6px">
+                    <a class="btn" target="_blank" href="${o.href}">Open</a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
 async function loadProjectReports() {
     const container = document.getElementById('project-reports-container');
     container.innerHTML = '<div style="color:#888;padding:20px">Loading…</div>';
     try {
         const list = await fetch('/api/reports/project/list').then(r => r.json());
         const meta = list.reports || [];
+        const oneOffs = renderOneOffReports();
         if (meta.length === 0) {
-            container.innerHTML = '<div style="text-align:center;color:#888;padding:40px">No project reports yet. Pick a project and click "Generate Project Report".</div>';
+            container.innerHTML = oneOffs +
+                '<div style="text-align:center;color:#888;padding:40px">No generated project reports yet. Pick a project and click "Generate Project Report".</div>';
             return;
         }
         // Fetch each report's full data in parallel so we can render full cards
         const fulls = await Promise.all(meta.map(m =>
             fetch(`/api/reports/project/${m.id}`).then(r => r.json())
         ));
-        renderProjectReports(fulls);
+        container.innerHTML = oneOffs;
+        // Append generated reports below the one-offs
+        const cards = document.createElement('div');
+        cards.innerHTML = fulls.map(f => renderProjectReportCard(f)).join('');
+        container.appendChild(cards);
     } catch (e) {
         container.innerHTML = `<div style="color:#f97316;padding:20px">Error: ${escapeHtmlPR(e.message)}</div>`;
     }

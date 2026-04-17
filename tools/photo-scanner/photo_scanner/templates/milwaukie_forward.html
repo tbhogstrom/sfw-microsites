@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upcoming Carpentry and Window Glazing — Milwaukie Presbyterian</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  body { background: #f0f0f0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: #545454; padding: 24px 0; }
+  .report-card { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); overflow: hidden; }
+  .report-header { background: #1a3a2a; padding: 20px 24px; color: #fff; position: relative; padding-right: 90px; }
+  .report-header .date-label { font-size: 12px; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; }
+  .report-header h2 { font-size: 22px; font-weight: 700; margin: 4px 0 0; }
+  .report-header .project-name { font-size: 13px; opacity: 0.85; margin-top: 10px; }
+  .report-header .project-address { font-size: 12px; opacity: 0.65; margin-top: 2px; }
+  .report-header .generated { font-size: 12px; opacity: 0.65; margin-top: 2px; }
+  .report-logo { position: absolute; top: 50%; right: 20px; height: 50px; opacity: 0.85; transform: translateY(-50%); }
+  .report-section { padding: 20px 24px; border-bottom: 1px solid #e8e8e8; }
+  .report-section:last-of-type { border-bottom: none; }
+  .report-section .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #757575; font-weight: 600; margin-bottom: 8px; }
+  .report-section p { font-size: 14px; line-height: 1.65; margin: 0; color: #333; }
+  .crew-row { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px dashed #eee; }
+  .crew-row:last-child { border-bottom: none; }
+  .crew-row .who { font-weight: 600; color: #1a3a2a; min-width: 180px; font-size: 13px; }
+  .crew-row .what { flex: 1; font-size: 13px; color: #444; line-height: 1.55; }
+  .value-box { background: #e8f0e8; border-left: 4px solid #1a3a2a; padding: 12px 14px; border-radius: 4px; }
+  .value-box p { color: #2a4a2a !important; }
+  .report-footer { padding: 14px 24px; background: #f0f0f0; text-align: center; font-size: 12px; color: #757575; }
+  .toolbar { max-width: 720px; margin: 0 auto 12px; padding: 0 4px; display: flex; gap: 8px; justify-content: flex-end; }
+  .toolbar button { background: #1a3a2a; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; font-size: 12px; cursor: pointer; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .report-card { box-shadow: none; max-width: 100%; border-radius: 0; }
+    .toolbar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="report-card">
+  <div class="report-header">
+    <img class="report-logo" src="/static/sfw-emblem.png" onerror="this.style.display='none'">
+    <div class="date-label">Project Report — Upcoming Work</div>
+    <h2>Carpentry and Window Glazing Scheduled</h2>
+    <div class="project-name">David Devore / Milwaukie Presbyterian Church - Paint 04-06-2026</div>
+    <div class="project-address">2416 SE Lake Rd, Milwaukie, OR</div>
+    <div class="generated">{{ today }}</div>
+  </div>
+
+  <div class="report-section">
+    <div class="section-label">Project Overview</div>
+    <p>This update outlines the next phase of work scheduled at the property. Our carpentry team will be on site to address documented dry rot and the remaining siding repairs, and the window specialists will complete glazing work on site as part of the same phase.</p>
+  </div>
+
+  <div class="report-section">
+    <div class="section-label">Upcoming Work</div>
+    <p>Carpenters will address the dry rot identified in the wood substrate and siding boards, and will complete the remaining siding repair at the affected elevations. In parallel, the window specialists will be on site to complete the window glazing. Sequencing the carpentry and glazing work together keeps the building envelope coordinated as each crew finishes their portion.</p>
+  </div>
+
+  <div class="report-section">
+    <div class="section-label">Crew &amp; Schedule</div>
+    <div class="crew-row">
+      <div class="who">Carpentry crew</div>
+      <div class="what">Dry rot remediation and remaining siding repair at the documented locations.</div>
+    </div>
+    <div class="crew-row">
+      <div class="who">Window specialists</div>
+      <div class="what">Window glazing completed on site as part of this phase.</div>
+    </div>
+  </div>
+
+  <div class="report-section">
+    <div class="section-label">Value to Your Property</div>
+    <div class="value-box"><p>Completing the carpentry repairs and window glazing in the same phase restores the building envelope at the affected areas and protects the underlying structure from further moisture intrusion.</p></div>
+  </div>
+
+  <div class="report-footer">
+    SFW Construction — Project Report
+  </div>
+</div>
+
+</body>
+</html>
