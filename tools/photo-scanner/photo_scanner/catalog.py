@@ -294,6 +294,7 @@ class Catalog:
                 (project_id,),
             ).fetchall()
         else:
+            # MAX(id) is correct only because id is AUTOINCREMENT — strictly increasing per insert
             rows = self.db.execute(
                 """
                 SELECT pr.*, p.name AS project_name, p.address AS project_address
