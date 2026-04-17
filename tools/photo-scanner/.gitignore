@@ -8,3 +8,5 @@ catalog.db-shm
 .grids/
 scan_results.json
 venv/
+milwaukie-report.html
+milwaukie-report.json
