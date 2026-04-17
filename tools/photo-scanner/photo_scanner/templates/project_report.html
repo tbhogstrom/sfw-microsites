@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ report.headline or 'Project Report' }} — {{ project.name }}</title>
+<style>
+  :root { --bg: #0a0a0a; --surface: #141414; --border: #2a2a2a; --text: #e5e5e5; --muted: #777; --accent: #3b82f6; --green: #22c55e; --yellow: #eab308; --orange: #f97316; --purple: #a78bfa; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 24px; max-width: 980px; margin: 0 auto; line-height: 1.55; }
+  .header { margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .header .project-name { font-size: 14px; color: #aaa; }
+  .header .project-address { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .partial-flag { display: inline-block; margin-top: 8px; padding: 3px 10px; font-size: 11px; background: #f9731622; color: var(--orange); border: 1px solid #f9731644; border-radius: 4px; }
+  .stats-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; min-width: 90px; }
+  .stat-box .val { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat-box .label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .section { margin-bottom: 28px; }
+  .section h2 { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .section p { color: #ddd; font-size: 14px; }
+  .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 14px; }
+  .photo-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .photo-card img { width: 100%; height: 220px; object-fit: cover; display: block; background: #000; }
+  .photo-card .caption { padding: 10px 12px; font-size: 12px; color: #ccc; }
+  .photo-card .meta { padding: 0 12px 10px; font-size: 10px; color: var(--muted); }
+  .value-statement { background: #3b82f614; border: 1px solid #3b82f644; border-radius: 8px; padding: 14px 16px; font-size: 14px; color: #cce6ff; }
+  .issues-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .issues-table th, .issues-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .issues-table th { color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em; }
+  .status-pill { display: inline-block; padding: 2px 8px; font-size: 10px; border-radius: 4px; }
+  .status-pill.resolved { background: #22c55e22; color: var(--green); border: 1px solid #22c55e44; }
+  .status-pill.in-progress { background: #eab30822; color: var(--yellow); border: 1px solid #eab30844; }
+  .status-pill.documented-only { background: #ffffff10; color: var(--muted); border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>{{ report.headline or 'Project Report' }}</h1>
+  <div class="project-name">{{ project.name }}</div>
+  <div class="project-address">{{ project.address }}</div>
+  {% if report.partial %}<div class="partial-flag">Partial — fewer than 6 photos available</div>{% endif %}
+</div>
+
+{% if report.stats %}
+<div class="stats-bar">
+  <div class="stat-box"><div class="val">{{ report.stats.total_photos }}</div><div class="label">Photos</div></div>
+  <div class="stat-box"><div class="val">{{ report.stats.analyzed }}</div><div class="label">Analyzed</div></div>
+  {% if report.stats.phases.before %}<div class="stat-box"><div class="val">{{ report.stats.phases.before }}</div><div class="label">Before</div></div>{% endif %}
+  {% if report.stats.phases.during %}<div class="stat-box"><div class="val">{{ report.stats.phases.during }}</div><div class="label">During</div></div>{% endif %}
+  {% if report.stats.phases.after %}<div class="stat-box"><div class="val">{{ report.stats.phases.after }}</div><div class="label">After</div></div>{% endif %}
+</div>
+{% endif %}
+
+{% if report.executive_summary %}
+<div class="section"><h2>Executive Summary</h2><p>{{ report.executive_summary }}</p></div>
+{% endif %}
+
+{% if report.scope_narrative %}
+<div class="section"><h2>Scope</h2><p>{{ report.scope_narrative }}</p></div>
+{% endif %}
+
+{% if report.conditions_found %}
+<div class="section">
+  <h2>Conditions Found</h2>
+  <p>{{ report.conditions_found }}</p>
+  {% set conditions_photos = report.photos | selectattr("role", "equalto", "conditions") | list %}
+  {% if conditions_photos %}
+  <div class="photo-grid">
+    {% for p in conditions_photos %}
+    <div class="photo-card">
+      <img src="/api/photo/{{ p.photo_id }}/full" alt="{{ p.caption }}">
+      <div class="caption">{{ p.caption }}</div>
+      <div class="meta">{{ p.phase }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if report.work_performed %}
+<div class="section">
+  <h2>Work Performed</h2>
+  <p>{{ report.work_performed }}</p>
+  {% set work_photos = report.photos | selectattr("role", "equalto", "work") | list %}
+  {% if work_photos %}
+  <div class="photo-grid">
+    {% for p in work_photos %}
+    <div class="photo-card">
+      <img src="/api/photo/{{ p.photo_id }}/full" alt="{{ p.caption }}">
+      <div class="caption">{{ p.caption }}</div>
+      <div class="meta">{{ p.phase }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if report.current_status %}
+<div class="section">
+  <h2>Current Status</h2>
+  <p>{{ report.current_status }}</p>
+  {% set status_photos = report.photos | selectattr("role", "equalto", "status") | list %}
+  {% if status_photos %}
+  <div class="photo-grid">
+    {% for p in status_photos %}
+    <div class="photo-card">
+      <img src="/api/photo/{{ p.photo_id }}/full" alt="{{ p.caption }}">
+      <div class="caption">{{ p.caption }}</div>
+      <div class="meta">{{ p.phase }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if report.value_statement %}
+<div class="section"><h2>What This Means for Your Property</h2><div class="value-statement">{{ report.value_statement }}</div></div>
+{% endif %}
+
+{% if report.issues_summary %}
+<div class="section">
+  <h2>Issues Summary</h2>
+  <table class="issues-table">
+    <thead><tr><th>Issue</th><th>Service</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for issue in report.issues_summary %}
+      <tr>
+        <td>{{ issue.issue }}</td>
+        <td>{{ issue.service_type }}</td>
+        <td><span class="status-pill {{ issue.status }}">{{ issue.status }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+</body>
+</html>

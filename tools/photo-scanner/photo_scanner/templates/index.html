@@ -369,7 +369,7 @@
     border-bottom: 1px solid #e8e8e8;
 }
 .report-section .section-label {
-    font-size: 11px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #757575;
@@ -445,6 +445,7 @@
     <div class="nav-tab" data-section="map" onclick="switchSection('map')">Map</div>
     <div class="nav-tab" data-section="reports" onclick="switchSection('reports')">Reports</div>
     <div class="nav-tab" data-section="weekly-reports" onclick="switchSection('weekly-reports')">Weekly Reports</div>
+    <div class="nav-tab" data-section="project-reports" onclick="switchSection('project-reports')">Project Reports</div>
     <div class="nav-tab" data-section="data" onclick="switchSection('data')">Data</div>
     <div class="nav-spacer"></div>
     <div class="nav-status" id="sync-status"></div>
@@ -576,6 +577,24 @@
             <span id="weekly-report-status" style="color:#888;font-size:12px"></span>
         </div>
         <div id="weekly-reports-container"></div>
+    </div>
+</div>
+
+<div id="section-project-reports" class="main-section">
+    <div style="padding:16px;max-width:1200px;margin:0 auto;width:100%">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+            <input type="search" id="project-report-search" placeholder="Search projects…"
+                   style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;color:#ccc;font-size:13px;min-width:240px"
+                   oninput="filterProjectReportPicker()">
+            <select id="project-report-picker"
+                    style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 12px;color:#ccc;font-size:13px;min-width:280px">
+                <option value="">— select an analyzed project —</option>
+            </select>
+            <button class="btn btn-primary" id="generate-project-report-btn" onclick="generateProjectReport()">Generate Project Report</button>
+            <button class="btn" onclick="loadProjectReports()">Refresh</button>
+            <span id="project-report-status" style="color:#888;font-size:12px"></span>
+        </div>
+        <div id="project-reports-container"></div>
     </div>
 </div>
 
@@ -1381,6 +1400,7 @@ function switchSection(section) {
     if (section === 'map') loadMap();
     if (section === 'reports') initReportsTab();
     if (section === 'weekly-reports') initWeeklyReportsTab();
+    if (section === 'project-reports') initProjectReportsTab();
     if (section === 'data') loadDataOverview();
 }
 
@@ -2367,6 +2387,121 @@ async function loadDataOverview() {
     } catch (e) {
         container.innerHTML = '<div style="color:#f85149;padding:20px">Error: ' + e.message + '</div>';
         statusEl.textContent = 'Error loading data';
+    }
+}
+
+// --- Project Reports ---
+
+let _projectReportProjectsCache = [];
+
+async function initProjectReportsTab() {
+    const picker = document.getElementById('project-report-picker');
+    if (picker.options.length <= 1) {
+        await loadProjectReportPicker();
+    }
+    loadProjectReports();
+}
+
+async function loadProjectReportPicker() {
+    const picker = document.getElementById('project-report-picker');
+    try {
+        const data = await fetch('/api/companycam/projects?per_page=200').then(r => r.json());
+        _projectReportProjectsCache = (data.projects || []).filter(p => p.last_analyzed);
+        renderProjectReportPicker();
+    } catch (e) {
+        picker.innerHTML = '<option value="">— failed to load projects —</option>';
+    }
+}
+
+function renderProjectReportPicker(filter = '') {
+    const picker = document.getElementById('project-report-picker');
+    const f = filter.trim().toLowerCase();
+    const filtered = f
+        ? _projectReportProjectsCache.filter(p => (p.name || '').toLowerCase().includes(f) || (p.address || '').toLowerCase().includes(f))
+        : _projectReportProjectsCache;
+    picker.innerHTML = '<option value="">— select an analyzed project —</option>' +
+        filtered.map(p => `<option value="${p.id}">${escapeHtmlPR(p.name)} (${escapeHtmlPR(p.address || '')})</option>`).join('');
+}
+
+function filterProjectReportPicker() {
+    const v = document.getElementById('project-report-search').value;
+    renderProjectReportPicker(v);
+}
+
+function escapeHtmlPR(s) {
+    return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function generateProjectReport() {
+    const projectId = document.getElementById('project-report-picker').value;
+    if (!projectId) { alert('Pick a project first'); return; }
+    const btn = document.getElementById('generate-project-report-btn');
+    const statusEl = document.getElementById('project-report-status');
+    btn.disabled = true;
+    statusEl.textContent = 'Starting…';
+    try {
+        const resp = await fetch('/api/reports/project/generate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({project_id: projectId}),
+        });
+        const data = await resp.json();
+        if (!resp.ok) {
+            statusEl.textContent = 'Error: ' + (data.error || resp.status);
+            btn.disabled = false;
+            return;
+        }
+        await pollProjectReportTask(btn, statusEl);
+    } catch (e) {
+        statusEl.textContent = 'Error: ' + e.message;
+        btn.disabled = false;
+    }
+}
+
+async function pollProjectReportTask(btn, statusEl) {
+    const interval = setInterval(async () => {
+        try {
+            const state = await fetch('/api/reports/project/task').then(r => r.json());
+            statusEl.textContent = `${state.status}: ${state.step || ''}`;
+            if (state.status === 'complete' || state.status === 'error') {
+                clearInterval(interval);
+                btn.disabled = false;
+                if (state.status === 'complete') loadProjectReports();
+            }
+        } catch (e) {
+            clearInterval(interval);
+            btn.disabled = false;
+            statusEl.textContent = 'Polling failed: ' + e.message;
+        }
+    }, 1500);
+}
+
+async function loadProjectReports() {
+    const container = document.getElementById('project-reports-container');
+    container.innerHTML = '<div style="color:#888;padding:20px">Loading…</div>';
+    try {
+        const data = await fetch('/api/reports/project/list').then(r => r.json());
+        const reports = data.reports || [];
+        if (reports.length === 0) {
+            container.innerHTML = '<div style="text-align:center;color:#888;padding:40px">No project reports yet. Pick a project and click "Generate Project Report".</div>';
+            return;
+        }
+        container.innerHTML = reports.map(r => `
+            <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px;margin-bottom:10px">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                    <div>
+                        <div style="font-weight:600;font-size:14px">${escapeHtmlPR(r.headline) || '(no headline)'}</div>
+                        <div style="font-size:12px;color:#aaa">${escapeHtmlPR(r.project_name || '')} — ${escapeHtmlPR(r.project_address || '')}</div>
+                        <div style="font-size:10px;color:#777;margin-top:4px">Generated ${escapeHtmlPR(r.generated_at)} · model ${escapeHtmlPR(r.model || '')}</div>
+                    </div>
+                    <div style="display:flex;gap:6px">
+                        <a class="btn" target="_blank" href="/reports/project/${r.id}">Open</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } catch (e) {
+        container.innerHTML = `<div style="color:#f97316;padding:20px">Error: ${escapeHtmlPR(e.message)}</div>`;
     }
 }
 

@@ -15,7 +15,6 @@ import webbrowser
 from pathlib import Path
 
 import httpx
-from dotenv import load_dotenv
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,6 +25,11 @@ from PIL import Image, ImageDraw, ImageFont
 from photo_scanner.catalog import Catalog
 from photo_scanner.companycam import CompanyCamClient
 from photo_scanner.reports import generate_daily_report, generate_weekly_report
+from photo_scanner.anthropic_auth import (
+    describe_anthropic_auth,
+    get_async_anthropic_client as build_async_anthropic_client,
+    load_project_env,
+)
 
 SERVICE_TO_MICROSITE = {
     "siding": "siding-repair",
@@ -104,14 +108,7 @@ report_state = {"status": "idle", "projects": [], "stats": {}, "path": ""}
 
 
 def get_anthropic_client_sync():
-    env_path = Path(__file__).parent.parent / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
-    key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        return None
-    import anthropic
-    return anthropic.AsyncAnthropic(api_key=key)
+    return build_async_anthropic_client()
 
 
 def build_report_grid(images: list[Path], cell_size: int = 256) -> Image.Image:
@@ -187,7 +184,7 @@ async def generate_report(report_path: Path):
     client = get_anthropic_client_sync()
     if not client:
         report_state["status"] = "error"
-        report_state["stats"] = {"error": "No ANTHROPIC_API_KEY"}
+        report_state["stats"] = {"error": "No Anthropic auth configured"}
         return
 
     folders = find_report_images(report_path)
@@ -524,7 +521,7 @@ async def cc_analyze_project(project_id: str):
     from photo_scanner.scanner import analyze_project_from_catalog, get_async_anthropic_client
     anthropic_client = get_async_anthropic_client()
     if not anthropic_client:
-        return JSONResponse({"error": "No ANTHROPIC_API_KEY configured"}, status_code=503)
+        return JSONResponse({"error": "No Anthropic auth configured"}, status_code=503)
 
     _task_state = {"status": "running", "project_id": project_id, "progress": {}}
 
@@ -566,7 +563,7 @@ async def cc_batch_sync_analyze(request: Request):
     if do_analyze:
         anthropic_client = get_async_anthropic_client()
         if not anthropic_client:
-            return JSONResponse({"error": "No ANTHROPIC_API_KEY configured"}, status_code=503)
+            return JSONResponse({"error": "No Anthropic auth configured"}, status_code=503)
 
     results = []
     for pid in project_ids:
@@ -862,7 +859,7 @@ async def api_generate_reports(request: Request):
     from photo_scanner.scanner import get_async_anthropic_client, analyze_project_from_catalog
     anthropic_client = get_async_anthropic_client()
     if not anthropic_client:
-        return JSONResponse({"error": "ANTHROPIC_API_KEY not configured"}, status_code=503)
+        return JSONResponse({"error": "Anthropic auth not configured"}, status_code=503)
 
     if _report_task_state["status"] == "running":
         return JSONResponse({"error": "Report generation already running"}, status_code=409)
@@ -1068,7 +1065,7 @@ async def api_generate_weekly_reports(request: Request):
     from photo_scanner.scanner import get_async_anthropic_client
     anthropic_client = get_async_anthropic_client()
     if not anthropic_client:
-        return JSONResponse({"error": "ANTHROPIC_API_KEY not configured"}, status_code=503)
+        return JSONResponse({"error": "Anthropic auth not configured"}, status_code=503)
 
     # Find eligible projects (3+ business days of photos)
     if project_id:
@@ -1141,9 +1138,7 @@ async def api_publish_reports(request: Request):
     if not catalog or not cc_client:
         return JSONResponse({"error": "Catalog or CompanyCam not configured"}, status_code=503)
 
-    env_path = Path(__file__).parent.parent / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
+    load_project_env()
     portal_url = os.environ.get("PORTAL_URL")
     portal_key = os.environ.get("PORTAL_INGEST_KEY")
     if not portal_url or not portal_key:
@@ -1208,7 +1203,7 @@ async def api_publish_reports(request: Request):
     import httpx
     published = 0
     errors = []
-    batch_size = 3
+    batch_size = 1
     async with httpx.AsyncClient(timeout=60) as client:
         for i in range(0, len(publish_reports), batch_size):
             batch = publish_reports[i:i + batch_size]
@@ -1671,15 +1666,15 @@ def main():
     print(f"Catalog: {Path(__file__).parent.parent / 'catalog.db'}", file=sys.stderr)
 
     # Initialize CompanyCam client (if token available)
-    env_path = Path(__file__).parent.parent / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
+    load_project_env()
     cc_token = os.environ.get("COMPANYCAM_API_TOKEN")
     if cc_token:
         cc_client = CompanyCamClient(token=cc_token)
         print("CompanyCam: connected", file=sys.stderr)
     else:
         print("CompanyCam: no token (COMPANYCAM_API_TOKEN not set)", file=sys.stderr)
+
+    print(f"Anthropic auth: {describe_anthropic_auth()}", file=sys.stderr)
 
     # Load external gallery files
     if args.galleries:
@@ -1692,6 +1687,146 @@ def main():
     webbrowser.open(url)
 
     uvicorn.run(app, host="0.0.0.0", port=args.port, log_level="warning")
+
+
+# --- Project Reports ---
+
+_project_report_task_state: dict = {"status": "idle"}
+
+
+@app.post("/api/reports/project/generate")
+async def api_generate_project_report(request: Request):
+    """Kick off project report generation in a background task."""
+    global _project_report_task_state
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    if not cc_client:
+        return JSONResponse({"error": "CompanyCam not configured"}, status_code=503)
+
+    body = await request.json()
+    project_id = body.get("project_id")
+    if not project_id:
+        return JSONResponse({"error": "project_id is required"}, status_code=400)
+
+    project = catalog.get_project(project_id)
+    if not project:
+        return JSONResponse({"error": f"Project {project_id} not in catalog"}, status_code=404)
+
+    summary = catalog.get_project_summary_data(project_id)
+    if not summary:
+        return JSONResponse(
+            {"error": "Project has no summary — run analysis first"}, status_code=422
+        )
+
+    if _project_report_task_state.get("status") == "running":
+        return JSONResponse(
+            {"error": "Project report generation already running",
+             "task": _project_report_task_state},
+            status_code=409,
+        )
+
+    from photo_scanner.scanner import get_async_anthropic_client
+    anthropic_client = get_async_anthropic_client()
+    if not anthropic_client:
+        return JSONResponse({"error": "Anthropic auth not configured"}, status_code=503)
+
+    from photo_scanner.reports import ANTHROPIC_MODEL, generate_project_report
+
+    _project_report_task_state = {
+        "status": "running", "project_id": project_id,
+        "project_name": project["name"], "step": "starting", "report_id": None,
+    }
+
+    async def run():
+        global _project_report_task_state
+        try:
+            _project_report_task_state["step"] = "Generating report (narrative + triage + selection)"
+            report = await generate_project_report(
+                catalog=catalog, project_id=project_id,
+                anthropic_client=anthropic_client, cc_client=cc_client,
+            )
+            new_id = catalog.save_project_report(project_id, report, model=ANTHROPIC_MODEL)
+            _project_report_task_state["status"] = "complete"
+            _project_report_task_state["step"] = f"Saved report id={new_id}"
+            _project_report_task_state["report_id"] = new_id
+        except ValueError as e:
+            _project_report_task_state["status"] = "error"
+            _project_report_task_state["step"] = str(e)
+        except Exception as e:
+            _project_report_task_state["status"] = "error"
+            _project_report_task_state["step"] = f"Unexpected error: {e}"
+
+    asyncio.create_task(run())
+    return JSONResponse({"ok": True, "task": _project_report_task_state}, status_code=202)
+
+
+@app.get("/api/reports/project/task")
+async def api_project_report_task():
+    return _project_report_task_state
+
+
+@app.get("/api/reports/project/list")
+async def api_list_project_reports(project_id: str | None = Query(None)):
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    rows = catalog.list_project_reports(project_id=project_id)
+    out = []
+    for r in rows:
+        try:
+            data = json.loads(r["report_data"])
+        except Exception:
+            data = {}
+        out.append({
+            "id": r["id"],
+            "project_id": r["project_id"],
+            "project_name": r.get("project_name"),
+            "project_address": r.get("project_address"),
+            "generated_at": r["generated_at"],
+            "headline": data.get("headline", ""),
+            "model": r.get("model"),
+        })
+    return {"reports": out}
+
+
+@app.get("/api/reports/project/{report_id}")
+async def api_get_project_report(report_id: int):
+    if not catalog:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    r = catalog.get_project_report(report_id)
+    if not r:
+        return JSONResponse({"error": "Report not found"}, status_code=404)
+    try:
+        report_data = json.loads(r["report_data"])
+    except Exception:
+        report_data = {}
+    return {
+        "id": r["id"],
+        "project_id": r["project_id"],
+        "project_name": r.get("project_name"),
+        "project_address": r.get("project_address"),
+        "generated_at": r["generated_at"],
+        "model": r.get("model"),
+        "report": report_data,
+    }
+
+
+@app.get("/reports/project/{report_id}", response_class=HTMLResponse)
+async def render_project_report(report_id: int):
+    if not catalog:
+        return HTMLResponse("<h1>Catalog not initialized</h1>", status_code=503)
+    r = catalog.get_project_report(report_id)
+    if not r:
+        return HTMLResponse("<h1>Report not found</h1>", status_code=404)
+    try:
+        report_data = json.loads(r["report_data"])
+    except Exception:
+        report_data = {}
+    project = {"name": r.get("project_name") or "", "address": r.get("project_address") or ""}
+    template = jinja_env.get_template("project_report.html")
+    return template.render(
+        report=report_data, project=project,
+        report_json=json.dumps(report_data, indent=2),
+    )
 
 
 if __name__ == "__main__":
