@@ -7,7 +7,7 @@
 **Architecture:**
 - Centralize all new SEO primitives in `@sfw/ui` and `@sfw/content` so one change propagates to all 12 apps.
 - Per-app changes (vercel.json, robots.txt, llms.txt) are templated — identical content modulo the domain string.
-- Verification is build-output-based (`pnpm build` + inspect `dist/`), not a new test framework. Astro's built-in `astro check` runs via `pnpm lint`.
+- Verification is build-output-based (`npm run build` + inspect `dist/`), not a new test framework. Astro's built-in `astro check` runs via `npm run lint`.
 - JSON-LD migration keeps existing entity schemas (LocalBusiness, FAQ, Breadcrumb, BlogPosting) but links them in a `@graph` with `@id` references.
 
 **Tech Stack:**
@@ -15,12 +15,14 @@
 - `@astrojs/sitemap`, `@astrojs/rss`
 - `satori` + `sharp` (Phase 4, OG cards)
 - `lychee` (Phase 5, GitHub Action)
-- TypeScript, pnpm workspaces, Turborepo
+- TypeScript, npm workspaces, Turborepo
+
+**Package manager note:** despite what CLAUDE.md says, the repo's `package.json` field `packageManager: "npm@10.9.2"` locks this repo to npm. All plan commands have been normalized to npm + `npx turbo`. Do not use pnpm.
 
 **Scope Decisions (locked before execution):**
 - Apply to all 12 Astro apps: beam-repair, chimney-repair, crawlspace-rot, deck-repair, dry-rot, flashing-repair, lead-paint, leak-repair, mold-testing, restoration, siding-repair, trim-repair. Per project memory, mold-testing and restoration are excluded from **V1 content work** — but SEO infrastructure (cache headers, 404, schema endpoints) deploys to all 12 since it's purely technical and harmless on unreleased sites.
 - `apps/reports-portal` (Next.js) is **excluded** — it's internal tooling.
-- No new test framework. Verification steps use `pnpm build`, `pnpm lint`, `curl` against `pnpm preview`, and `grep` against `dist/` HTML.
+- No new test framework. Verification steps use `npm run build`, `npm run lint`, `curl` against `npm run preview`, and `grep` against `dist/` HTML.
 - `@jdevalk/astro-seo-graph` is **not adopted wholesale**. Phase 5 re-evaluates its FuzzyRedirect component as a buy-vs-build decision.
 
 **App list constant (used throughout plan):**
@@ -39,8 +41,8 @@ APPS=(beam-repair chimney-repair crawlspace-rot deck-repair dry-rot flashing-rep
 - [ ] **Step 1: Verify all 12 apps build clean before starting**
 
 ```bash
-pnpm install
-pnpm build
+npm install
+npm run build
 ```
 
 Expected: All 12 Astro apps build successfully. If any app is already broken, stop and report — don't layer SEO changes on top of a broken baseline.
@@ -267,7 +269,7 @@ For each remaining app, create `apps/<app-name>/src/pages/404.astro` with the sa
 - [ ] **Step 3: Build one app and verify 404 output exists**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 ls apps/beam-repair/dist/404.html
 ```
 
@@ -285,7 +287,7 @@ Expected: both return the file path (matches found).
 - [ ] **Step 5: Lint all apps**
 
 ```bash
-pnpm -w lint
+npm run lint
 ```
 
 Expected: no errors. Warnings OK.
@@ -435,10 +437,10 @@ The two images need explicit dimensions. If the component doesn't currently acce
 
 Same pattern. For gallery thumbs use smaller dimensions (e.g. 400×300); for the lightbox display use larger (e.g. 1600×1200). If dimensions aren't available on the data shape, add them to the component props with documented defaults.
 
-- [ ] **Step 9: Run `pnpm lint` from root**
+- [ ] **Step 9: Run `npm run lint` from root**
 
 ```bash
-pnpm -w lint
+npm run lint
 ```
 
 Expected: no new errors. If a width/height prop change breaks a caller, fix the caller or make the prop optional.
@@ -446,7 +448,7 @@ Expected: no new errors. If a width/height prop change breaks a caller, fix the 
 - [ ] **Step 10: Visually verify a build**
 
 ```bash
-cd apps/beam-repair && pnpm build && pnpm preview &
+cd apps/beam-repair && npm run build && npm run preview &
 sleep 3
 curl -s http://localhost:4321/ | grep -o '<img[^>]*' | head -20
 kill %1 2>/dev/null || true
@@ -563,7 +565,7 @@ trim-repair        → https://exteriortrimrepairs.com
 - [ ] **Step 4: Run lint at root**
 
 ```bash
-pnpm -w lint
+npm run lint
 ```
 
 Expected: zero errors. If any consumer of `SiteConfig` breaks (e.g. other components reference deprecated field shapes), fix inline.
@@ -898,7 +900,7 @@ Destructure them and pass to the `<SEO>` component.
 - [ ] **Step 6: Build + verify JSON-LD is a graph now**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 grep -o '"@graph"' apps/beam-repair/dist/index.html | head -1
 ```
 
@@ -973,7 +975,7 @@ In each of the three components, remove the `<script type="application/ld+json">
 - [ ] **Step 5: Build all apps; verify no duplicate `@id` collisions**
 
 ```bash
-pnpm build
+npm run build
 # pick a representative page from one app
 node -e "
 const fs=require('fs');
@@ -989,7 +991,7 @@ Expected: only **one** JSON-LD block per page (the one from SEO.astro). All bloc
 - [ ] **Step 6: Lint + commit**
 
 ```bash
-pnpm -w lint
+npm run lint
 git add apps/ packages/ui/
 git commit -m "refactor(seo): route breadcrumbs/FAQ/blog JSON-LD through unified graph"
 ./pushall.ps1
@@ -1132,7 +1134,7 @@ export const GET: APIRoute = () => {
 - [ ] **Step 5: Build beam-repair; verify routes produce valid output**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 ls apps/beam-repair/dist/schema/
 ls apps/beam-repair/dist/schemamap.xml
 node -e "JSON.parse(require('fs').readFileSync('apps/beam-repair/dist/schema/page.json','utf8'))" && echo "page.json parses"
@@ -1172,7 +1174,7 @@ Schemamap: https://beamrepairexpert.com/schemamap.xml
 - [ ] **Step 8: Commit**
 
 ```bash
-pnpm -w lint
+npm run lint
 git add apps/ packages/ui/
 git commit -m "feat(seo): add /schema/*.json endpoints and Schemamap directive"
 ./pushall.ps1
@@ -1251,7 +1253,7 @@ Same file content across all 12 apps.
 - [ ] **Step 5: Build beam-repair; verify key file exists**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 ls apps/beam-repair/dist/*.txt
 cat apps/beam-repair/dist/<KEY>.txt
 ```
@@ -1378,7 +1380,7 @@ This is a one-time, out-of-band setup: in each of the 12 Vercel projects, add en
 - [ ] **Step 9: Dry-run locally**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 INDEXNOW_KEY=test-key INDEXNOW_SKIP=0 node tools/indexnow-submit/submit.mjs beam-repair
 ```
 
@@ -1533,7 +1535,7 @@ Wire into each app's postbuild script (alongside the IndexNow submitter):
 - [ ] **Step 4: Build + verify**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 ls apps/beam-repair/dist/sitemap-*.xml
 cat apps/beam-repair/dist/sitemap-index.xml
 ```
@@ -1636,7 +1638,7 @@ for (const item of items) {
 - [ ] **Step 3: Verify on beam-repair**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 grep '<lastmod>' apps/beam-repair/dist/sitemap-pages.xml | head -5
 ```
 
@@ -1691,7 +1693,7 @@ git commit -m "feat(seo): add git-based lastmod dates to sitemaps"
 
 ```bash
 cd packages/ui
-pnpm add satori @resvg/resvg-js
+npm install satori @resvg/resvg-js
 cd ../..
 ```
 
@@ -1707,7 +1709,7 @@ Download `Inter-Bold.ttf` from https://github.com/rsms/inter/releases (latest st
 ls public/shared/fonts/inter/Inter-Bold.ttf
 ```
 
-Expected: file exists. If downloading isn't practical here, swap to Google Fonts' Inter and bundle via npm: `pnpm add -w @fontsource/inter` and read from `node_modules/@fontsource/inter/files/inter-latin-700-normal.ttf`.
+Expected: file exists. If downloading isn't practical here, swap to Google Fonts' Inter and bundle via npm: `npm install -w @fontsource/inter` and read from `node_modules/@fontsource/inter/files/inter-latin-700-normal.ttf`.
 
 - [ ] **Step 2: Create the OG renderer**
 
@@ -1863,7 +1865,7 @@ Then use `computedOgImage` in all `og:image` and `twitter:image` tags.
 - [ ] **Step 5: Build + verify**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 ls apps/beam-repair/dist/og/
 file apps/beam-repair/dist/og/services.png
 ```
@@ -1894,7 +1896,7 @@ git commit -m "feat(seo): dynamic OG image generation with satori"
 - [ ] **Step 1: Add the dep**
 
 ```bash
-cd apps/beam-repair && pnpm add @astrojs/rss && cd ../..
+cd apps/beam-repair && npm install @astrojs/rss && cd ../..
 ```
 
 Replicate to the other 11 apps (or set it as a root devDep — but @astrojs/rss is a per-app integration, so per-app install is cleaner).
@@ -1938,7 +1940,7 @@ In `BaseLayout.astro`, after the font preload line, add:
 - [ ] **Step 4: Build + verify**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 head -30 apps/beam-repair/dist/rss.xml
 ```
 
@@ -1946,14 +1948,14 @@ Expected: valid `<rss>` XML with `<channel>` and `<item>` entries.
 
 - [ ] **Step 5: Validate with a feed linter (manual)**
 
-Copy feed URL after deploy (or serve locally with `pnpm preview`) and paste into https://validator.w3.org/feed/. Expected: valid RSS 2.0.
+Copy feed URL after deploy (or serve locally with `npm run preview`) and paste into https://validator.w3.org/feed/. Expected: valid RSS 2.0.
 
 - [ ] **Step 6: Replicate to 11 remaining apps**
 
 - [ ] **Step 7: Commit**
 
 ```bash
-git add apps/*/src/pages/rss.xml.ts apps/*/package.json pnpm-lock.yaml packages/ui/src/layouts/BaseLayout.astro
+git add apps/*/src/pages/rss.xml.ts apps/*/package.json package-lock.json packages/ui/src/layouts/BaseLayout.astro
 git commit -m "feat(seo): add RSS feeds and alternate link tags"
 ./pushall.ps1
 ```
@@ -2054,7 +2056,7 @@ Add to each `apps/<app>/package.json`'s postbuild script (chain before sitemap-s
 - [ ] **Step 3: Run the validator against beam-repair**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 ```
 
 Expected: either succeeds (all pages clean) or prints specific violations. **If it fails, fix the content issues before committing.**
@@ -2120,7 +2122,7 @@ Replicate to 11 remaining apps.
 - [ ] **Step 3: Build + verify**
 
 ```bash
-cd apps/beam-repair && pnpm build && cd ../..
+cd apps/beam-repair && npm run build && cd ../..
 cat apps/beam-repair/dist/nlweb/index.json
 grep 'rel="nlweb"' apps/beam-repair/dist/index.html
 ```
@@ -2174,7 +2176,7 @@ prefetch: {
 - [ ] **Step 3: Build and inspect network**
 
 ```bash
-cd apps/beam-repair && pnpm build && pnpm preview &
+cd apps/beam-repair && npm run build && npm run preview &
 sleep 3
 curl -sI http://localhost:4321/ | head
 # Open in a browser: scroll around, open devtools Network tab, filter by "Initiator: prefetch"
@@ -2301,7 +2303,7 @@ Place the `<p>` above the "Back to Home" buttons.
 - [ ] **Step 3: Build + test**
 
 ```bash
-cd apps/beam-repair && pnpm build && pnpm preview &
+cd apps/beam-repair && npm run build && npm run preview &
 sleep 3
 # A real 404 page: hit a bogus URL close to a real one.
 # If the real URL is /services/portland, try /servces/portland
@@ -2378,19 +2380,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: npm
 
-      - run: pnpm install --frozen-lockfile
+      - run: npm ci
 
       - name: Build all apps
-        run: pnpm build
+        run: npm run build
 
       - name: Run lychee
         uses: lycheeverse/lychee-action@v2
@@ -2431,9 +2429,9 @@ After push, check https://github.com/tbhogstrom/sfw-microsites/actions (or the t
 - [ ] **Step 1: Full pipeline build**
 
 ```bash
-pnpm install
-pnpm -w lint
-pnpm build
+npm install
+npm run lint
+npm run build
 ```
 
 Expected: all 12 apps build, all validate-SEO hooks pass, lychee workflow queued.
