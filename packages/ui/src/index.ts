@@ -10,6 +10,7 @@ export * from './components/forms';
 export * from './components/hero';
 export * from './components/content';
 export * from './components/blog';
+export * from './pages';
 
 // Export types
 export * from './types';

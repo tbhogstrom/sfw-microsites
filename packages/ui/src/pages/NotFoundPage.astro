@@ -1,0 +1,63 @@
+---
+/**
+ * NotFoundPage.astro — Branded 404 page body.
+ * Each app's src/pages/404.astro imports this inside BaseLayout.
+ * Phase 5 Task 5.3 enhances this with fuzzy redirect matching.
+ */
+import type { SiteConfig } from '@sfw/ui/types';
+import Button from '../components/ui/Button.astro';
+
+export interface Props {
+  config: SiteConfig;
+  /** Canonical paths for the "Popular pages" links. Pass app-specific routes. */
+  suggestedLinks?: Array<{ label: string; href: string }>;
+}
+
+const { config, suggestedLinks = [] } = Astro.props;
+
+const defaultLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'Locations', href: '/locations' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Blog', href: '/blog' },
+];
+
+const links = suggestedLinks.length > 0 ? suggestedLinks : defaultLinks;
+---
+
+<section class="flex min-h-[60vh] items-center justify-center px-4 py-16">
+  <div class="max-w-2xl text-center">
+    <p class="mb-2 font-mono text-sm uppercase tracking-widest text-primary">404</p>
+    <h1 class="mb-4 font-heading text-4xl sm:text-5xl">Page not found</h1>
+    <p class="mb-8 text-lg text-gray-600">
+      We couldn't find the page you're looking for. It may have moved, or the link may be out of
+      date.
+    </p>
+
+    <div class="mb-10 flex flex-wrap justify-center gap-3">
+      <Button href="/" variant="primary">Back to Home</Button>
+      <Button href={`tel:${config.phone}`} variant="outline">
+        Call {config.phone}
+      </Button>
+    </div>
+
+    <div class="border-t border-gray-200 pt-8">
+      <p class="mb-4 font-mono text-xs uppercase tracking-wider text-gray-500">Popular pages</p>
+      <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-primary underline underline-offset-4 hover:no-underline"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
