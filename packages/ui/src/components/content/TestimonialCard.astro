@@ -5,6 +5,7 @@
  */
 import type { BaseProps, Testimonial } from '@sfw/ui/types';
 import Icon from '../ui/Icon.astro';
+import OptimizedImg from '../ui/OptimizedImg.astro';
 
 export interface Props extends BaseProps {
   testimonial: Testimonial;
@@ -46,7 +47,13 @@ const classes = ['bg-white rounded-lg shadow-md p-6 h-full flex flex-col', class
   <div class="flex items-center">
     {
       showImage && image && (
-        <img src={image} alt={name} class="w-12 h-12 rounded-full object-cover mr-4" />
+        <OptimizedImg
+          src={image}
+          alt={name}
+          width={48}
+          height={48}
+          class="w-12 h-12 rounded-full object-cover mr-4"
+        />
       )
     }
     <div>

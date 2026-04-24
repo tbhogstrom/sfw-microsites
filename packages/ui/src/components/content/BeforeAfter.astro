@@ -5,6 +5,7 @@
  */
 import { cn } from '@sfw/utils';
 import type { BaseProps } from '@sfw/ui/types';
+import OptimizedImg from '../ui/OptimizedImg.astro';
 
 export interface Props extends BaseProps {
   before: string;
@@ -12,6 +13,12 @@ export interface Props extends BaseProps {
   alt?: string;
   beforeLabel?: string;
   afterLabel?: string;
+  /** Intrinsic dimensions of the "before" image (default 1200x800) — used to reserve layout space and prevent CLS. */
+  beforeWidth?: number;
+  beforeHeight?: number;
+  /** Intrinsic dimensions of the "after" image (default 1200x800). */
+  afterWidth?: number;
+  afterHeight?: number;
 }
 
 const {
@@ -20,6 +27,10 @@ const {
   alt = 'Before and after comparison',
   beforeLabel = 'Before',
   afterLabel = 'After',
+  beforeWidth = 1200,
+  beforeHeight = 800,
+  afterWidth = 1200,
+  afterHeight = 800,
   class: className = '',
   ...rest
 } = Astro.props;
@@ -30,17 +41,24 @@ const {
   data-before-after
   {...rest}
 >
-  <img src={after} alt={`${alt} - after`} class="block w-full" loading="lazy" />
+  <OptimizedImg
+    src={after}
+    alt={`${alt} - after`}
+    width={afterWidth}
+    height={afterHeight}
+    class="block w-full"
+  />
   <div
     class="absolute inset-0 overflow-hidden"
     style="clip-path: inset(0 50% 0 0);"
     data-before-clip
   >
-    <img
+    <OptimizedImg
       src={before}
       alt={`${alt} - before`}
+      width={beforeWidth}
+      height={beforeHeight}
       class="block w-full h-full object-cover"
-      loading="lazy"
     />
   </div>
 

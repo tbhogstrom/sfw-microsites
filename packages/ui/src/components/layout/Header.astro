@@ -6,6 +6,7 @@
 import type { BaseProps, NavigationItem, SiteConfig } from '@sfw/ui/types';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import OptimizedImg from '../ui/OptimizedImg.astro';
 
 export interface Props extends BaseProps {
   config: SiteConfig;
@@ -39,7 +40,14 @@ const classes = [
       <a href="/" class="flex items-center space-x-2">
         {
           logo ? (
-            <img src={logo} alt={config.name} class="h-12 w-auto" />
+            <OptimizedImg
+              src={logo}
+              alt={config.name}
+              width={160}
+              height={48}
+              loading="eager"
+              class="h-12 w-auto"
+            />
           ) : (
             <span class="text-2xl font-heading font-bold text-dark">{config.name}</span>
           )

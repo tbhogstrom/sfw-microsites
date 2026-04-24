@@ -1,0 +1,47 @@
+---
+/**
+ * OptimizedImg.astro — Drop-in <img> replacement for runtime string src values
+ * that can't use Astro's <Image> (because they reference /public paths with
+ * no build-time dimensions). Enforces lazy loading, async decoding, and
+ * explicit width/height to prevent CLS.
+ *
+ * Any additional HTML attributes (e.g. data-* attributes, id, style) are
+ * spread onto the underlying <img>.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'alt' | 'width' | 'height'> {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  class?: string;
+  sizes?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  loading = 'lazy',
+  decoding = 'async',
+  class: className,
+  sizes,
+  ...rest
+} = Astro.props;
+---
+
+<img
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={loading}
+  decoding={decoding}
+  sizes={sizes}
+  class={className}
+  {...rest}
+/>

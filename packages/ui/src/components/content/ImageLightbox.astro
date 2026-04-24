@@ -1,6 +1,7 @@
 ---
 import { cn } from '@sfw/utils';
 import type { BaseProps } from '@sfw/ui/types';
+import OptimizedImg from '../ui/OptimizedImg.astro';
 
 export interface LightboxImage {
   src: string;
@@ -12,9 +13,24 @@ export interface LightboxImage {
 export interface Props extends BaseProps {
   images: LightboxImage[];
   columns?: 2 | 3 | 4;
+  /** Intrinsic dimensions for gallery thumbnails (default 400x300 — 4:3 matches the aspect container). */
+  thumbnailWidth?: number;
+  thumbnailHeight?: number;
+  /** Intrinsic dimensions for the lightbox main display (default 1600x1200). */
+  lightboxWidth?: number;
+  lightboxHeight?: number;
 }
 
-const { images, columns = 3, class: className = '', ...rest } = Astro.props;
+const {
+  images,
+  columns = 3,
+  thumbnailWidth = 400,
+  thumbnailHeight = 300,
+  lightboxWidth = 1600,
+  lightboxHeight = 1200,
+  class: className = '',
+  ...rest
+} = Astro.props;
 const lightboxId = `lightbox-${Math.random().toString(36).substr(2, 9)}`;
 
 const colClasses = {
@@ -37,11 +53,12 @@ const colClasses = {
           data-full-src={image.src}
         >
           <div class="aspect-[4/3] relative">
-            <img
+            <OptimizedImg
               src={image.thumbnail || image.src}
               alt={image.alt}
+              width={thumbnailWidth}
+              height={thumbnailHeight}
               class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              loading="lazy"
             />
           </div>
           {(image.caption || image.alt) && (
@@ -83,7 +100,14 @@ const colClasses = {
           class="absolute right-2 top-1/2 -translate-y-1/2 text-white/60 hover:text-white text-3xl z-10 focus:outline-none p-2"
           aria-label="Next">&#x203A;</button
         >
-        <img data-lightbox-img class="max-w-full max-h-full object-contain" src="" alt="" />
+        <OptimizedImg
+          data-lightbox-img
+          src=""
+          alt=""
+          width={lightboxWidth}
+          height={lightboxHeight}
+          class="max-w-full max-h-full object-contain"
+        />
       </div>
 
       <!-- Caption bar -->

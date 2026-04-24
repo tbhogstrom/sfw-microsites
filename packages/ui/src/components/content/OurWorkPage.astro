@@ -6,6 +6,7 @@
  */
 import BeforeAfter from './BeforeAfter.astro';
 import ImageLightbox from './ImageLightbox.astro';
+import OptimizedImg from '../ui/OptimizedImg.astro';
 
 export interface ServicePageImage {
   title: string;
@@ -92,9 +93,11 @@ const hasServiceImages = servicePageImages.length > 0;
                   <div class="grid grid-cols-2 gap-2 mb-4">
                     <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
                       <div class="aspect-[4/3]">
-                        <img
+                        <OptimizedImg
                           src={gallery.images[0].src}
                           alt={gallery.images[0].alt}
+                          width={800}
+                          height={600}
                           class="w-full h-full object-cover"
                         />
                       </div>
@@ -104,9 +107,11 @@ const hasServiceImages = servicePageImages.length > 0;
                     </div>
                     <div class="relative bg-neutral-100 rounded-xl overflow-hidden">
                       <div class="aspect-[4/3]">
-                        <img
+                        <OptimizedImg
                           src={gallery.images[gallery.images.length - 1].src}
                           alt={gallery.images[gallery.images.length - 1].alt}
+                          width={800}
+                          height={600}
                           class="w-full h-full object-cover"
                         />
                       </div>
@@ -128,11 +133,12 @@ const hasServiceImages = servicePageImages.length > 0;
                         <div class="snap-start shrink-0 w-48 md:w-56">
                           <div class="relative bg-neutral-100 rounded-lg overflow-hidden">
                             <div class="aspect-[4/3]">
-                              <img
+                              <OptimizedImg
                                 src={img.src}
                                 alt={img.alt}
+                                width={800}
+                                height={600}
                                 class="w-full h-full object-cover"
-                                loading="lazy"
                               />
                             </div>
                             <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
@@ -166,11 +172,12 @@ const hasServiceImages = servicePageImages.length > 0;
               <a href={img.href} class="group block">
                 <div class="bg-neutral-100 rounded-lg overflow-hidden">
                   <div class="aspect-[4/3]">
-                    <img
+                    <OptimizedImg
                       src={img.image}
                       alt={img.title}
+                      width={400}
+                      height={300}
                       class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
                     />
                   </div>
                 </div>
