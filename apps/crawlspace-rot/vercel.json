@@ -2,5 +2,24 @@
   "buildCommand": "cd ../.. && npx turbo build --filter=crawlspace-rot",
   "installCommand": "cd ../.. && npm install",
   "framework": "astro",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/_astro/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/shared/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "No-Vary-Search",
+          "value": "params=(\"utm_source\" \"utm_medium\" \"utm_campaign\" \"utm_term\" \"utm_content\" \"gclid\" \"fbclid\")"
+        }
+      ]
+    }
+  ]
 }
