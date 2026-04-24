@@ -1,0 +1,16 @@
+---
+import { BaseLayout, NotFoundPage } from '@sfw/ui';
+import { serviceConfigs, defaultNav } from '@sfw/content';
+
+const config = serviceConfigs['mold-testing'];
+---
+
+<BaseLayout
+  title="Page not found"
+  description={`The page you're looking for doesn't exist on ${config.name}.`}
+  config={config}
+  navigation={defaultNav}
+  noindex={true}
+>
+  <NotFoundPage config={config} />
+</BaseLayout>
