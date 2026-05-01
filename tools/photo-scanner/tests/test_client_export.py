@@ -56,3 +56,30 @@ def test_migration_adds_columns_to_existing_db(tmp_path):
     assert "client_export_status" in cols
     assert "client_export_flags" in cols
     cat.close()
+
+
+def test_client_export_selections_table_exists(catalog):
+    cursor = catalog.db.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='client_export_selections'"
+    )
+    assert cursor.fetchone() is not None
+
+
+def test_set_and_get_selection(catalog):
+    catalog.set_selection("p1", "photo-a", included=False)
+    assert catalog.get_selection("p1", "photo-a") is False
+
+    catalog.set_selection("p1", "photo-a", included=True)
+    assert catalog.get_selection("p1", "photo-a") is True
+
+    assert catalog.get_selection("p1", "photo-missing") is None
+
+
+def test_get_excluded_photo_ids(catalog):
+    catalog.set_selection("p1", "a", included=False)
+    catalog.set_selection("p1", "b", included=True)
+    catalog.set_selection("p1", "c", included=False)
+    catalog.set_selection("p2", "x", included=False)  # different project — must not leak
+
+    excluded = catalog.get_excluded_photo_ids("p1")
+    assert excluded == {"a", "c"}

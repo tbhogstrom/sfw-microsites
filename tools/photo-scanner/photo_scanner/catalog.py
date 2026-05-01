@@ -56,6 +56,14 @@ class Catalog:
             CREATE INDEX IF NOT EXISTS idx_photos_project ON photos(project_id);
             CREATE INDEX IF NOT EXISTS idx_photos_score ON photos(marketing_score);
 
+            CREATE TABLE IF NOT EXISTS client_export_selections (
+                project_id TEXT NOT NULL,
+                photo_id TEXT NOT NULL,
+                included INTEGER NOT NULL,
+                updated_at TEXT NOT NULL,
+                PRIMARY KEY (project_id, photo_id)
+            );
+
             CREATE VIRTUAL TABLE IF NOT EXISTS photo_fts USING fts5(
                 id UNINDEXED,
                 scene,
@@ -576,3 +584,36 @@ class Catalog:
             "photos_last_week": last_week,
             "projects_with_new_photos": projects_this_week,
         }
+
+    # --- Client export selections ---
+
+    def set_selection(self, project_id: str, photo_id: str, included: bool):
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc).isoformat()
+        self.db.execute(
+            """
+            INSERT INTO client_export_selections (project_id, photo_id, included, updated_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(project_id, photo_id) DO UPDATE SET
+                included = excluded.included,
+                updated_at = excluded.updated_at
+            """,
+            (project_id, photo_id, 1 if included else 0, now),
+        )
+        self.db.commit()
+
+    def get_selection(self, project_id: str, photo_id: str) -> bool | None:
+        row = self.db.execute(
+            "SELECT included FROM client_export_selections WHERE project_id = ? AND photo_id = ?",
+            (project_id, photo_id),
+        ).fetchone()
+        if row is None:
+            return None
+        return bool(row[0])
+
+    def get_excluded_photo_ids(self, project_id: str) -> set[str]:
+        rows = self.db.execute(
+            "SELECT photo_id FROM client_export_selections WHERE project_id = ? AND included = 0",
+            (project_id,),
+        ).fetchall()
+        return {r[0] for r in rows}
