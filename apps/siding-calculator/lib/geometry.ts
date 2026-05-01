@@ -14,7 +14,24 @@ export function netSidingSqFt(wall: Project['wall'], openings: Opening[]): numbe
   return Math.max(0, wallSqFt(wall) - openingsSqFt(openings));
 }
 
-// trimLinFt comes in the next task
-export function trimLinFt(_wall: Project['wall'], _openings: Opening[]): number {
-  throw new Error('not implemented');
+export function trimLinFt(wall: Project['wall'], openings: Opening[]): number {
+  const W = wall.rect.widthFt;
+  const H = wall.rect.heightFt;
+
+  const cornerBoards = 2 * H;
+  const waterTable = W;
+
+  let topRun: number;
+  if (wall.gable) {
+    // Two rake edges instead of a horizontal top fascia.
+    const halfW = W / 2;
+    const rake = Math.sqrt(halfW * halfW + wall.gable.peakHeightFt * wall.gable.peakHeightFt);
+    topRun = 2 * rake;
+  } else {
+    topRun = W; // top fascia
+  }
+
+  const openingPerimeters = openings.reduce((sum, o) => sum + 2 * (o.widthFt + o.heightFt), 0);
+
+  return cornerBoards + waterTable + topRun + openingPerimeters;
 }
