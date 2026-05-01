@@ -600,6 +600,19 @@ async def client_export_status(project_id: str):
     return _task_state
 
 
+@app.post("/client-export/{project_id}/toggle")
+async def client_export_toggle(project_id: str, request: Request):
+    if catalog is None:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    body = await request.json()
+    photo_id = body.get("photo_id")
+    included = bool(body.get("included"))
+    if not photo_id:
+        return JSONResponse({"error": "photo_id required"}, status_code=400)
+    catalog.set_selection(project_id, photo_id, included)
+    return {"ok": True, "photo_id": photo_id, "included": included}
+
+
 # --- Sync and analyze ---
 
 @app.post("/api/companycam/projects/{project_id}/sync")
