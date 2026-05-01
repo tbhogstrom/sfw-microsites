@@ -12,11 +12,12 @@ import json
 import os
 import sys
 import webbrowser
+from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, Query, Request
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from jinja2 import Environment, FileSystemLoader
@@ -611,6 +612,29 @@ async def client_export_toggle(project_id: str, request: Request):
         return JSONResponse({"error": "photo_id required"}, status_code=400)
     catalog.set_selection(project_id, photo_id, included)
     return {"ok": True, "photo_id": photo_id, "included": included}
+
+
+@app.get("/client-export/{project_id}/zip")
+async def client_export_zip(project_id: str):
+    if cc_client is None:
+        return JSONResponse({"error": "CompanyCam not configured"}, status_code=503)
+    if catalog is None:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+
+    from photo_scanner import client_export as ce
+    project = catalog.get_project(project_id) or {"name": project_id}
+    slug = ce._slugify(project["name"])
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    zip_bytes = await ce.build_export_zip(catalog, project_id, cc_client)
+
+    return Response(
+        content=zip_bytes,
+        media_type="application/zip",
+        headers={
+            "Content-Disposition": f'attachment; filename="{slug}_{today}.zip"',
+        },
+    )
 
 
 # --- Sync and analyze ---

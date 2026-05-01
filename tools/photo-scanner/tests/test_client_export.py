@@ -236,3 +236,52 @@ def _one_pixel_jpeg() -> bytes:
     buf = io.BytesIO()
     Image.new("RGB", (1, 1), (0, 0, 0)).save(buf, format="JPEG")
     return buf.getvalue()
+
+
+import io
+import zipfile
+
+
+def test_build_zip_groups_by_date_and_excludes_documents(catalog):
+    catalog.upsert_project({
+        "id": "p1", "name": "P", "address": "", "lat": 0, "lng": 0,
+        "created_at": "", "photo_count": 0, "notepad": "",
+    })
+    photos = [
+        {"id": "a", "uri": "https://e.com/a.jpg", "taken_at": "1776297600", "status": "picked"},
+        {"id": "b", "uri": "https://e.com/b.jpg", "taken_at": "1776297600", "status": "picked"},
+        {"id": "c", "uri": "https://e.com/c.jpg", "taken_at": "1776384000", "status": "picked"},
+        {"id": "d", "uri": "https://e.com/d.jpg", "taken_at": "1776297600", "status": "document"},
+    ]
+    for p in photos:
+        catalog.upsert_photo({
+            "id": p["id"], "project_id": "p1",
+            "uri": p["uri"], "thumb_uri": p["uri"],
+            "taken_at": p["taken_at"], "creator_name": "", "description": "",
+        })
+        catalog.db.execute("UPDATE photos SET triage_status = ? WHERE id = ?",
+                           (p["status"], p["id"]))
+    catalog.db.commit()
+    catalog.set_selection("p1", "b", included=False)  # curator excluded
+
+    fetched = []
+    async def fake_get_bytes(uri):
+        fetched.append(uri)
+        return _one_pixel_jpeg()
+    cc = MagicMock()
+    cc.get_photo_bytes = fake_get_bytes
+
+    zip_bytes = asyncio.run(client_export.build_export_zip(catalog, "p1", cc))
+
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+        names = sorted(zf.namelist())
+
+    # Document 'd' and curator-excluded 'b' must not be in the zip.
+    assert any("a.jpg" in n for n in names)
+    assert any("c.jpg" in n for n in names)
+    assert not any("b.jpg" in n for n in names)
+    assert not any("d.jpg" in n for n in names)
+    # Verify date folders are present in the path.
+    # 1776297600 = 2026-04-16 UTC, 1776384000 = 2026-04-17 UTC.
+    assert any("/2026-04-16/" in n for n in names)
+    assert any("/2026-04-17/" in n for n in names)

@@ -241,3 +241,48 @@ async def prepare_project_for_export(catalog, project_id: str, cc_client,
     # 3. Run the safety pass for any photo not yet checked.
     await run_safety_pass(catalog, project_id, cc_client, anthropic_client,
                           on_progress=on_progress)
+
+
+import re
+import zipfile
+
+
+def _slugify(name: str) -> str:
+    s = re.sub(r"[^A-Za-z0-9._-]+", "-", name).strip("-")
+    return s or "project"
+
+
+async def build_export_zip(catalog, project_id: str, cc_client) -> bytes:
+    """Fetch every included photo and return zip bytes.
+
+    Structure:
+      <slug>_<today>/
+        YYYY-MM-DD/
+          <filename>.jpg
+    """
+    project = catalog.get_project(project_id) or {"name": project_id}
+    project_slug = _slugify(project["name"])
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    top_folder = f"{project_slug}_{today}"
+
+    included_ids = compute_export_photo_set(catalog, project_id)
+    rows = catalog.db.execute(
+        "SELECT id, uri, taken_at FROM photos WHERE project_id = ?",
+        (project_id,),
+    ).fetchall()
+    targets = [(r[0], r[1], r[2]) for r in rows if r[0] in included_ids]
+
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zf:
+        for photo_id, uri, taken_at in targets:
+            try:
+                data = await cc_client.get_photo_bytes(uri)
+            except Exception as e:
+                print(f"[client_export] zip: skipping {photo_id}: {e}",
+                      file=sys.stderr, flush=True)
+                continue
+            date_folder = date_folder_for_taken_at(taken_at)
+            filename = filename_from_uri(uri, photo_id)
+            arcname = f"{top_folder}/{date_folder}/{filename}"
+            zf.writestr(arcname, data)
+    return buf.getvalue()
