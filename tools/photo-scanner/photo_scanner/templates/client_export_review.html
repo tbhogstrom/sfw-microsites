@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{ project.name }} — Client Photo Export</title>
+<style>
+  :root {
+    --bg:#0a0a0a; --surface:#141414; --border:#2a2a2a;
+    --text:#e5e5e5; --muted:#777; --accent:#3b82f6;
+    --green:#22c55e; --orange:#f97316; --red:#ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+  header { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 16px; }
+  header h1 { font-size: 16px; font-weight: 600; }
+  header .addr { color: var(--muted); font-size: 12px; }
+  header .spacer { flex: 1; }
+  header .counter { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .btn { padding: 8px 16px; border-radius: 5px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+  .container { padding: 20px; }
+  .empty { text-align: center; color: var(--muted); padding: 60px 20px; }
+  .empty .btn { margin-top: 16px; display: inline-block; }
+  .progress { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .tile { position: relative; background: var(--surface); border: 2px solid transparent; border-radius: 6px; overflow: hidden; cursor: pointer; aspect-ratio: 4 / 3; user-select: none; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tile.excluded { opacity: 0.35; border-color: var(--red); }
+  .tile.excluded::after { content: '✕'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 60px; color: var(--red); font-weight: 700; text-shadow: 0 0 6px #000; }
+  .tile .flags { position: absolute; bottom: 4px; left: 4px; right: 4px; display: flex; flex-wrap: wrap; gap: 3px; }
+  .flag { font-size: 9px; padding: 1px 5px; background: var(--orange); color: #000; border-radius: 3px; font-weight: 600; }
+</style>
+</head>
+<body>
+<header>
+  <a href="/client-export" class="btn">← Projects</a>
+  <div>
+    <h1>{{ project.name }}</h1>
+    <div class="addr">{{ project.address }}</div>
+  </div>
+  <div class="spacer"></div>
+  {% if status == 'check-done' %}
+    <span class="counter" id="counter">{{ included_count }} of {{ total_count }} included</span>
+    <a class="btn btn-primary" id="export-btn" href="/client-export/{{ project.id }}/zip">Export ZIP</a>
+  {% endif %}
+</header>
+
+<div class="container">
+{% if status != 'check-done' %}
+  <div class="empty">
+    <div>This project hasn't been prepared for export yet.</div>
+    <button class="btn btn-primary" id="run-check-btn">Run analysis</button>
+    <div class="progress" id="progress"></div>
+  </div>
+{% else %}
+  <div class="grid" id="grid">
+  {% for photo in photos %}
+    <div class="tile {% if not photo.included %}excluded{% endif %}"
+         data-photo-id="{{ photo.id }}"
+         data-included="{{ '1' if photo.included else '0' }}">
+      <img loading="lazy" src="{{ photo.thumb_uri }}" alt="">
+      {% if photo.flags %}
+        <div class="flags">
+        {% for f in photo.flags %}<span class="flag">{{ f }}</span>{% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+{% endif %}
+</div>
+
+<script>
+const PROJECT_ID = {{ project.id|tojson }};
+
+const runBtn = document.getElementById('run-check-btn');
+if (runBtn) {
+  runBtn.addEventListener('click', async () => {
+    runBtn.disabled = true;
+    const progressEl = document.getElementById('progress');
+    progressEl.textContent = 'Starting...';
+    const r = await fetch(`/client-export/${PROJECT_ID}/run-check`, { method: 'POST' });
+    if (!r.ok) {
+      const err = await r.json();
+      progressEl.textContent = 'Error: ' + (err.error || 'unknown');
+      runBtn.disabled = false;
+      return;
+    }
+    const poll = async () => {
+      const s = await fetch(`/client-export/${PROJECT_ID}/status`).then(r => r.json());
+      const p = s.progress || {};
+      if (s.status === 'complete') { window.location.reload(); return; }
+      if (s.status === 'error') { progressEl.textContent = 'Error: ' + (p.error || 'unknown'); return; }
+      const phase = p.phase || '...';
+      const cur = p.current ?? '';
+      const tot = p.total ?? '';
+      progressEl.textContent = `${phase}: ${cur}/${tot}`;
+      setTimeout(poll, 1000);
+    };
+    poll();
+  });
+}
+
+const grid = document.getElementById('grid');
+const counter = document.getElementById('counter');
+if (grid) {
+  // Counter format: "<included> of <total> included"
+  const parts = counter.textContent.trim().split(/\s+/);
+  let included = parseInt(parts[0], 10);
+  const total = parseInt(parts[2], 10);
+
+  grid.addEventListener('click', async (e) => {
+    const tile = e.target.closest('.tile');
+    if (!tile) return;
+    const id = tile.dataset.photoId;
+    const wasIncluded = tile.dataset.included === '1';
+    const nowIncluded = !wasIncluded;
+
+    // Optimistic UI update.
+    tile.classList.toggle('excluded', !nowIncluded);
+    tile.dataset.included = nowIncluded ? '1' : '0';
+    included += nowIncluded ? 1 : -1;
+    counter.textContent = `${included} of ${total} included`;
+
+    try {
+      const r = await fetch(`/client-export/${PROJECT_ID}/toggle`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ photo_id: id, included: nowIncluded }),
+      });
+      if (!r.ok) throw new Error('toggle failed');
+    } catch (err) {
+      // Revert on failure.
+      tile.classList.toggle('excluded', !wasIncluded);
+      tile.dataset.included = wasIncluded ? '1' : '0';
+      included += wasIncluded ? 1 : -1;
+      counter.textContent = `${included} of ${total} included`;
+    }
+  });
+}
+</script>
+</body>
+</html>

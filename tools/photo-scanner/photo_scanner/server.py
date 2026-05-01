@@ -513,6 +513,93 @@ async def client_export_index(q: str | None = Query(None)):
     return HTMLResponse(template.render(projects=projects, query=q or ""))
 
 
+@app.get("/client-export/{project_id}", response_class=HTMLResponse)
+async def client_export_review(project_id: str):
+    if catalog is None:
+        return HTMLResponse("<h1>Catalog not initialized</h1>", status_code=503)
+    project = catalog.get_project(project_id)
+    if project is None:
+        # Try fetching from CompanyCam so we can render a "Run analysis" page anyway.
+        project = {"id": project_id, "name": project_id, "address": ""}
+
+    status = _client_export_status(project_id)
+
+    photos = []
+    if status == "check-done":
+        rows = catalog.db.execute(
+            """
+            SELECT id, uri, thumb_uri, taken_at, triage_status,
+                   client_export_status, client_export_flags
+            FROM photos
+            WHERE project_id = ?
+              AND (triage_status IS NULL OR triage_status != 'document')
+            ORDER BY CAST(taken_at AS INTEGER), id
+            """,
+            (project_id,),
+        ).fetchall()
+        excluded = catalog.get_excluded_photo_ids(project_id)
+        import json as _json
+        photos = [
+            {
+                "id": r[0],
+                "uri": r[1],
+                "thumb_uri": r[2] or r[1],
+                "taken_at": r[3],
+                "triage_status": r[4],
+                "client_export_status": r[5],
+                "flags": _json.loads(r[6]) if r[6] else [],
+                "included": r[0] not in excluded,
+            }
+            for r in rows
+        ]
+
+    template = jinja_env.get_template("client_export_review.html")
+    return HTMLResponse(template.render(
+        project=project, status=status, photos=photos,
+        included_count=sum(1 for p in photos if p["included"]),
+        total_count=len(photos),
+    ))
+
+
+@app.post("/client-export/{project_id}/run-check")
+async def client_export_run_check(project_id: str):
+    global _task_state
+    if cc_client is None:
+        return JSONResponse({"error": "CompanyCam not configured"}, status_code=503)
+    if catalog is None:
+        return JSONResponse({"error": "Catalog not initialized"}, status_code=503)
+    if _task_state.get("status") == "running":
+        return JSONResponse({"error": "Task already running", "task": _task_state}, status_code=409)
+
+    from photo_scanner import client_export as ce
+    from photo_scanner.scanner import get_async_anthropic_client
+    anthropic_client = get_async_anthropic_client()
+    if not anthropic_client:
+        return JSONResponse({"error": "No Anthropic auth configured"}, status_code=503)
+
+    _task_state = {"status": "running", "project_id": project_id, "progress": {}}
+
+    async def run():
+        global _task_state
+        try:
+            def on_progress(info: dict):
+                _task_state["progress"] = info
+            await ce.prepare_project_for_export(catalog, project_id, cc_client,
+                                                anthropic_client, on_progress=on_progress)
+            _task_state["status"] = "complete"
+        except Exception as e:
+            _task_state["status"] = "error"
+            _task_state["progress"] = {"error": str(e)}
+
+    asyncio.create_task(run())
+    return {"ok": True, "task": _task_state}
+
+
+@app.get("/client-export/{project_id}/status")
+async def client_export_status(project_id: str):
+    return _task_state
+
+
 # --- Sync and analyze ---
 
 @app.post("/api/companycam/projects/{project_id}/sync")
