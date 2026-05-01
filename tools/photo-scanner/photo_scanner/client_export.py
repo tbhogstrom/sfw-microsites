@@ -195,3 +195,49 @@ async def run_safety_pass(catalog, project_id: str, cc_client, anthropic_client,
                     on_progress({"phase": "safety", "current": completed, "total": total})
 
     await asyncio.gather(*(analyze(pid, uri) for pid, uri in targets))
+
+
+async def prepare_project_for_export(catalog, project_id: str, cc_client,
+                                     anthropic_client, on_progress=None):
+    """End-to-end prep: sync (if needed), run scanner triage (if needed), run safety pass.
+
+    Idempotent: re-runs only fill in what hasn't been done.
+    """
+    from photo_scanner.companycam import CompanyCamClient
+    from photo_scanner.scanner import analyze_project_from_catalog
+
+    # 1. Sync if we have no photos for this project yet.
+    have_photos = catalog.db.execute(
+        "SELECT COUNT(*) FROM photos WHERE project_id = ?", (project_id,)
+    ).fetchone()[0]
+
+    if have_photos == 0:
+        if on_progress:
+            on_progress({"phase": "sync", "current": 0, "total": 0})
+        raw_proj = await cc_client.get_project(project_id)
+        catalog.upsert_project(CompanyCamClient.normalize_project(raw_proj))
+        page = 1
+        while True:
+            raw_photos = await cc_client.list_project_photos(project_id, page=page, per_page=100)
+            if not raw_photos:
+                break
+            for rp in raw_photos:
+                catalog.upsert_photo(CompanyCamClient.normalize_photo(rp, project_id))
+            if len(raw_photos) < 100:
+                break
+            page += 1
+        catalog.set_project_synced(project_id)
+
+    # 2. Run prescreen/triage if any photo lacks a triage_status.
+    has_unanalyzed = catalog.db.execute(
+        "SELECT COUNT(*) FROM photos WHERE project_id = ? AND triage_status IS NULL",
+        (project_id,),
+    ).fetchone()[0]
+
+    if has_unanalyzed:
+        await analyze_project_from_catalog(catalog, project_id, cc_client,
+                                           anthropic_client, on_progress=on_progress)
+
+    # 3. Run the safety pass for any photo not yet checked.
+    await run_safety_pass(catalog, project_id, cc_client, anthropic_client,
+                          on_progress=on_progress)
