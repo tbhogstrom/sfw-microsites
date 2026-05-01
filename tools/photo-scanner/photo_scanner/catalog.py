@@ -48,7 +48,9 @@ class Catalog:
                 marketing_score INTEGER,
                 marketing_notes TEXT,
                 before_after_potential INTEGER DEFAULT 0,
-                damage_details TEXT
+                damage_details TEXT,
+                client_export_status TEXT,
+                client_export_flags TEXT
             );
 
             CREATE INDEX IF NOT EXISTS idx_photos_project ON photos(project_id);
@@ -103,6 +105,14 @@ class Catalog:
             self.db.execute("SELECT notepad FROM projects LIMIT 0")
         except sqlite3.OperationalError:
             self.db.execute("ALTER TABLE projects ADD COLUMN notepad TEXT DEFAULT ''")
+        try:
+            self.db.execute("SELECT client_export_status FROM photos LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE photos ADD COLUMN client_export_status TEXT")
+        try:
+            self.db.execute("SELECT client_export_flags FROM photos LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE photos ADD COLUMN client_export_flags TEXT")
 
         # daily_reports table
         self.db.execute("""
