@@ -470,6 +470,49 @@ async def cc_get_project_photos(
     return {"photos": photos, "page": page, "per_page": per_page}
 
 
+# --- Client photo export ---
+
+def _client_export_status(project_id: str) -> str:
+    """Return one of: 'unscanned', 'analyzed', 'check-done'."""
+    if catalog is None:
+        return "unscanned"
+    total = catalog.db.execute(
+        "SELECT COUNT(*) FROM photos WHERE project_id = ?", (project_id,)
+    ).fetchone()[0]
+    if total == 0:
+        return "unscanned"
+    has_unanalyzed = catalog.db.execute(
+        "SELECT 1 FROM photos WHERE project_id = ? AND triage_status IS NULL LIMIT 1",
+        (project_id,),
+    ).fetchone()
+    if has_unanalyzed:
+        return "unscanned"
+    has_unchecked = catalog.db.execute(
+        """
+        SELECT 1 FROM photos
+        WHERE project_id = ?
+          AND (triage_status IS NULL OR triage_status != 'document')
+          AND client_export_status IS NULL
+        LIMIT 1
+        """,
+        (project_id,),
+    ).fetchone()
+    if has_unchecked:
+        return "analyzed"
+    return "check-done"
+
+
+@app.get("/client-export", response_class=HTMLResponse)
+async def client_export_index(q: str | None = Query(None)):
+    if catalog is None:
+        return HTMLResponse("<h1>Catalog not initialized</h1>", status_code=503)
+    projects = catalog.list_projects(query=q, page=1, per_page=200)
+    for p in projects:
+        p["export_status"] = _client_export_status(p["id"])
+    template = jinja_env.get_template("client_export_index.html")
+    return HTMLResponse(template.render(projects=projects, query=q or ""))
+
+
 # --- Sync and analyze ---
 
 @app.post("/api/companycam/projects/{project_id}/sync")
