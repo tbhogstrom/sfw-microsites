@@ -112,3 +112,86 @@ def compute_export_photo_set(catalog, project_id: str) -> set[str]:
         r[0] for r in rows
         if r[1] != "document" and r[0] not in excluded
     }
+
+
+import asyncio
+import io
+import logging
+import sys
+
+from PIL import Image
+
+from photo_scanner.scanner import image_to_b64
+
+ANTHROPIC_MODEL = "claude-sonnet-4-20250514"
+MAX_IMAGE_DIM = 768
+CONCURRENCY = 5
+
+log = logging.getLogger("photo_scanner.client_export")
+
+
+async def _safety_call_for_photo(anthropic_client, image: Image.Image) -> dict:
+    b64, media_type = image_to_b64(image, max_dim=MAX_IMAGE_DIM)
+    response = await anthropic_client.messages.create(
+        model=ANTHROPIC_MODEL,
+        max_tokens=512,
+        messages=[{
+            "role": "user",
+            "content": [
+                {"type": "image", "source": {"type": "base64",
+                                              "media_type": media_type, "data": b64}},
+                {"type": "text", "text": SAFETY_PROMPT},
+            ],
+        }],
+    )
+    return parse_safety_response(response.content[0].text)
+
+
+async def run_safety_pass(catalog, project_id: str, cc_client, anthropic_client,
+                          on_progress=None):
+    """Run the client-export safety pass over every non-document photo in the project
+    that has not already been checked. Persists status + flags to the catalog.
+    """
+    rows = catalog.db.execute(
+        """
+        SELECT id, uri FROM photos
+        WHERE project_id = ?
+          AND (triage_status IS NULL OR triage_status != 'document')
+          AND client_export_status IS NULL
+        """,
+        (project_id,),
+    ).fetchall()
+    targets = [(r[0], r[1]) for r in rows]
+    total = len(targets)
+    print(f"[client_export] {total} photos to safety-check for project {project_id}",
+          file=sys.stderr, flush=True)
+    if on_progress:
+        on_progress({"phase": "safety", "current": 0, "total": total})
+
+    sem = asyncio.Semaphore(CONCURRENCY)
+    completed = 0
+
+    async def analyze(photo_id: str, uri: str):
+        nonlocal completed
+        async with sem:
+            try:
+                img_bytes = await cc_client.get_photo_bytes(uri)
+                img = Image.open(io.BytesIO(img_bytes))
+                if img.mode != "RGB":
+                    img = img.convert("RGB")
+                result = await _safety_call_for_photo(anthropic_client, img)
+                status = "ok" if result["ok"] else "flagged"
+                catalog.db.execute(
+                    "UPDATE photos SET client_export_status = ?, client_export_flags = ? WHERE id = ?",
+                    (status, json.dumps(result["flags"]), photo_id),
+                )
+                catalog.db.commit()
+            except Exception as e:
+                print(f"[client_export] error on {photo_id}: {e}",
+                      file=sys.stderr, flush=True)
+            finally:
+                completed += 1
+                if on_progress:
+                    on_progress({"phase": "safety", "current": completed, "total": total})
+
+    await asyncio.gather(*(analyze(pid, uri) for pid, uri in targets))

@@ -179,3 +179,60 @@ def test_compute_export_photo_set_respects_curator_exclusions(catalog):
 
     included_ids = client_export.compute_export_photo_set(catalog, "p1")
     assert included_ids == {"a", "c"}
+
+
+import asyncio
+from unittest.mock import AsyncMock, MagicMock
+
+
+def _make_anthropic_response(text: str):
+    """Build a fake Anthropic response object with .content[0].text."""
+    block = MagicMock()
+    block.text = text
+    resp = MagicMock()
+    resp.content = [block]
+    return resp
+
+
+def test_run_safety_pass_persists_results_to_catalog(catalog):
+    """A safety pass over two photos writes status + flags to both rows."""
+    catalog.upsert_project({
+        "id": "p1", "name": "P", "address": "", "lat": 0, "lng": 0,
+        "created_at": "", "photo_count": 0, "notepad": "",
+    })
+    for pid in ["a", "b"]:
+        catalog.upsert_photo({
+            "id": pid, "project_id": "p1",
+            "uri": f"https://example.com/{pid}.jpg",
+            "thumb_uri": f"https://example.com/{pid}-thumb.jpg",
+            "taken_at": "1776297600", "creator_name": "", "description": "",
+        })
+        catalog.db.execute("UPDATE photos SET triage_status = 'picked' WHERE id = ?", (pid,))
+    catalog.db.commit()
+
+    cc_client = MagicMock()
+    cc_client.get_photo_bytes = AsyncMock(return_value=_one_pixel_jpeg())
+
+    anthropic_client = MagicMock()
+    anthropic_client.messages.create = AsyncMock(side_effect=[
+        _make_anthropic_response('{"ok": true, "flags": [], "notes": ""}'),
+        _make_anthropic_response('{"ok": false, "flags": ["face"], "notes": "worker visible"}'),
+    ])
+
+    asyncio.run(client_export.run_safety_pass(catalog, "p1", cc_client, anthropic_client))
+
+    a = catalog.get_photo("a")
+    b = catalog.get_photo("b")
+    assert a["client_export_status"] == "ok"
+    assert json.loads(a["client_export_flags"]) == []
+    assert b["client_export_status"] == "flagged"
+    assert json.loads(b["client_export_flags"]) == ["face"]
+
+
+def _one_pixel_jpeg() -> bytes:
+    """Smallest valid JPEG so PIL can open it without crashing."""
+    import io
+    from PIL import Image
+    buf = io.BytesIO()
+    Image.new("RGB", (1, 1), (0, 0, 0)).save(buf, format="JPEG")
+    return buf.getvalue()
