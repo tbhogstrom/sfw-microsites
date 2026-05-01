@@ -83,3 +83,99 @@ def test_get_excluded_photo_ids(catalog):
 
     excluded = catalog.get_excluded_photo_ids("p1")
     assert excluded == {"a", "c"}
+
+
+from photo_scanner import client_export
+
+
+def test_parse_safety_response_ok():
+    text = '{"ok": true, "flags": [], "notes": ""}'
+    result = client_export.parse_safety_response(text)
+    assert result == {"ok": True, "flags": [], "notes": ""}
+
+
+def test_parse_safety_response_flagged_with_codefence():
+    text = '```json\n{"ok": false, "flags": ["face","mess"], "notes": "worker visible"}\n```'
+    result = client_export.parse_safety_response(text)
+    assert result["ok"] is False
+    assert result["flags"] == ["face", "mess"]
+    assert "worker" in result["notes"]
+
+
+def test_parse_safety_response_drops_unknown_flags():
+    """Unknown flag values are filtered out so we don't leak garbage into the badge UI."""
+    text = '{"ok": false, "flags": ["face","bogus","mess"], "notes": ""}'
+    result = client_export.parse_safety_response(text)
+    assert result["flags"] == ["face", "mess"]
+
+
+def test_parse_safety_response_invalid_json_returns_safe_default():
+    """Invalid JSON falls back to ok=True with empty flags so a bad response doesn't lose the photo."""
+    result = client_export.parse_safety_response("not json at all")
+    assert result == {"ok": True, "flags": [], "notes": ""}
+
+
+def test_filename_from_uri_jpg():
+    uri = "https://api.companycam.com/photos/123abc/abc.jpg"
+    assert client_export.filename_from_uri(uri, "photo-1") == "abc.jpg"
+
+
+def test_filename_from_uri_no_extension():
+    uri = "https://example.com/photos/streamhandler"
+    assert client_export.filename_from_uri(uri, "photo-1") == "photo-1.jpg"
+
+
+def test_filename_from_uri_with_query_string():
+    uri = "https://example.com/photos/foo.jpg?signature=abc&exp=1"
+    assert client_export.filename_from_uri(uri, "photo-1") == "foo.jpg"
+
+
+def test_date_folder_from_unix_timestamp():
+    # 2026-04-15 12:00 UTC = 1776254400
+    assert client_export.date_folder_for_taken_at("1776254400") == "2026-04-15"
+
+
+def test_date_folder_handles_iso_string():
+    assert client_export.date_folder_for_taken_at("2026-04-15T12:00:00Z") == "2026-04-15"
+
+
+def test_date_folder_falls_back_when_unparseable():
+    assert client_export.date_folder_for_taken_at("") == "unknown-date"
+    assert client_export.date_folder_for_taken_at("garbage") == "unknown-date"
+
+
+def test_compute_export_photo_set_documents_excluded(catalog):
+    """Documents are filtered out before the curator ever sees them."""
+    catalog.upsert_project({
+        "id": "p1", "name": "P", "address": "", "lat": 0, "lng": 0,
+        "created_at": "", "photo_count": 0, "notepad": "",
+    })
+    for pid, status in [("a", "picked"), ("b", "document"), ("c", "skip")]:
+        catalog.upsert_photo({
+            "id": pid, "project_id": "p1", "uri": "u", "thumb_uri": "t",
+            "taken_at": "", "creator_name": "", "description": "",
+        })
+        catalog.db.execute("UPDATE photos SET triage_status = ? WHERE id = ?", (status, pid))
+    catalog.db.commit()
+
+    included_ids = client_export.compute_export_photo_set(catalog, "p1")
+    assert included_ids == {"a", "c"}
+
+
+def test_compute_export_photo_set_respects_curator_exclusions(catalog):
+    catalog.upsert_project({
+        "id": "p1", "name": "P", "address": "", "lat": 0, "lng": 0,
+        "created_at": "", "photo_count": 0, "notepad": "",
+    })
+    for pid, status in [("a", "picked"), ("b", "picked"), ("c", "picked")]:
+        catalog.upsert_photo({
+            "id": pid, "project_id": "p1", "uri": "u", "thumb_uri": "t",
+            "taken_at": "", "creator_name": "", "description": "",
+        })
+        catalog.db.execute("UPDATE photos SET triage_status = ? WHERE id = ?", (status, pid))
+    catalog.db.commit()
+
+    catalog.set_selection("p1", "b", included=False)
+
+    included_ids = client_export.compute_export_photo_set(catalog, "p1")
+    assert included_ids == {"a", "c"}
