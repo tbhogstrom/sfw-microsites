@@ -13,6 +13,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.87.0",
     "@react-pdf/renderer": "^4.1.0",
     "@vercel/blob": "^2.3.3",
     "exceljs": "^4.4.0",

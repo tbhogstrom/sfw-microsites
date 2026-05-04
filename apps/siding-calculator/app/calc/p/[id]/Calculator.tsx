@@ -14,6 +14,7 @@ import { useDrawingTool } from '@/components/canvas/useDrawingTool';
 import { FinishDefs, sidingFillFor, trimColorFor } from '@/components/canvas/finishPatterns';
 import { HelpPanel } from '@/components/canvas/HelpPanel';
 import { ElevationTabs } from '@/components/canvas/ElevationTabs';
+import { AutoDetectButton } from '@/components/canvas/AutoDetectButton';
 import { ElementsDrawer } from '@/components/drawer/ElementsDrawer';
 import { PresetPicker } from '@/components/materials/PresetPicker';
 import { PhaseRow } from '@/components/materials/PhaseRow';
@@ -232,6 +233,15 @@ export function Calculator({ initial }: { initial: Project }) {
             zoom={zoom}
             onZoomChange={setZoom}
           />
+          <div className="absolute right-4 top-4">
+            <AutoDetectButton
+              projectId={project.id}
+              elevationId={active.id}
+              onDetected={(detected) => {
+                updateActive((e) => ({ ...e, openings: [...e.openings, ...detected] }));
+              }}
+            />
+          </div>
           <div className="grid h-full place-items-center overflow-auto">
             <CanvasSurface
               size={active.canvas}
