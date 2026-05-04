@@ -39,6 +39,36 @@ function NumberCell({
   );
 }
 
+function Bubble({
+  label,
+  dims,
+  selected,
+  onClick,
+}: {
+  label: string;
+  dims: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`shrink-0 rounded-full border px-3 py-1 text-xs ${
+        selected
+          ? 'border-slate-900 bg-slate-900 text-white'
+          : 'border-slate-200 bg-white hover:bg-slate-50'
+      }`}
+    >
+      <span className="font-medium uppercase tracking-wide">{label}</span>
+      <span className={`ml-2 ${selected ? 'text-slate-300' : 'text-slate-500'}`}>{dims}</span>
+    </button>
+  );
+}
+
+function fmtDim(v: number): string {
+  return `${Number.isInteger(v) ? v : v.toFixed(1)}'`;
+}
+
 export function ElementsDrawer({
   project,
   selectedId,
@@ -48,37 +78,76 @@ export function ElementsDrawer({
   onDeleteOpening,
   onAdvance,
 }: Props) {
+  const selectedOpening =
+    selectedId && selectedId !== 'wall'
+      ? (project.openings.find((o) => o.id === selectedId) ?? null)
+      : null;
+  const wallSelected = selectedId === 'wall';
+
   return (
     <div className="border-t border-slate-200 bg-white px-4 py-3">
-      <div className="flex items-start gap-6 overflow-x-auto">
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={() => onSelect('wall')}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') onSelect('wall');
-          }}
-          className={`shrink-0 cursor-pointer rounded border px-3 py-2 ${selectedId === 'wall' ? 'border-slate-900' : 'border-slate-200'}`}
-        >
-          <div className="text-xs uppercase tracking-wide text-slate-500">Wall</div>
-          <div className="mt-1 flex items-center gap-2">
-            <NumberCell
-              label="W"
-              value={project.wall.rect.widthFt}
-              onChange={(v) =>
-                onUpdateWall({ ...project.wall, rect: { ...project.wall.rect, widthFt: v } })
-              }
-            />
-            <NumberCell
-              label="H"
-              value={project.wall.rect.heightFt}
-              onChange={(v) =>
-                onUpdateWall({ ...project.wall, rect: { ...project.wall.rect, heightFt: v } })
-              }
-            />
-          </div>
+      {/* Header row — always visible */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="text-sm text-slate-500">
+          Wall {fmtDim(project.wall.rect.widthFt)}×{fmtDim(project.wall.rect.heightFt)}
           {project.wall.gable && (
-            <div className="mt-1 flex items-center gap-2">
+            <span className="ml-1 text-slate-400">
+              + gable {fmtDim(project.wall.gable.peakHeightFt)}
+            </span>
+          )}
+          {project.openings.length > 0 && (
+            <span className="ml-2 text-slate-400">
+              · {project.openings.length} opening{project.openings.length === 1 ? '' : 's'}
+            </span>
+          )}
+        </div>
+        <button
+          onClick={onAdvance}
+          className="shrink-0 rounded-full bg-[var(--accent)] px-4 py-2 text-sm text-white"
+        >
+          Next → materials
+        </button>
+      </div>
+
+      {/* Bubbles row — wraps */}
+      <div className="mt-3 flex flex-wrap gap-2">
+        <Bubble
+          label="Wall"
+          dims={`${fmtDim(project.wall.rect.widthFt)}×${fmtDim(project.wall.rect.heightFt)}`}
+          selected={wallSelected}
+          onClick={() => onSelect(wallSelected ? null : 'wall')}
+        />
+        {project.openings.map((o) => (
+          <Bubble
+            key={o.id}
+            label={o.type}
+            dims={`${fmtDim(o.widthFt)}×${fmtDim(o.heightFt)}`}
+            selected={selectedId === o.id}
+            onClick={() => onSelect(selectedId === o.id ? null : o.id)}
+          />
+        ))}
+      </div>
+
+      {/* Inspector — only shows when something is selected */}
+      {wallSelected && (
+        <div className="mt-3 flex flex-wrap items-center gap-4 rounded border border-slate-200 bg-slate-50 px-3 py-2">
+          <span className="text-xs uppercase tracking-wide text-slate-500">Wall</span>
+          <NumberCell
+            label="W"
+            value={project.wall.rect.widthFt}
+            onChange={(v) =>
+              onUpdateWall({ ...project.wall, rect: { ...project.wall.rect, widthFt: v } })
+            }
+          />
+          <NumberCell
+            label="H"
+            value={project.wall.rect.heightFt}
+            onChange={(v) =>
+              onUpdateWall({ ...project.wall, rect: { ...project.wall.rect, heightFt: v } })
+            }
+          />
+          {project.wall.gable && (
+            <>
               <NumberCell
                 label="Gable peak"
                 value={project.wall.gable.peakHeightFt}
@@ -90,60 +159,49 @@ export function ElementsDrawer({
                 }
               />
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onUpdateWall({ ...project.wall, gable: undefined });
-                }}
+                onClick={() => onUpdateWall({ ...project.wall, gable: undefined })}
                 className="text-xs text-slate-500 underline"
               >
                 remove gable
               </button>
-            </div>
+            </>
           )}
         </div>
+      )}
 
-        {project.openings.map((o) => (
-          <div
-            key={o.id}
-            onClick={() => onSelect(o.id)}
-            className={`shrink-0 rounded border px-3 py-2 ${selectedId === o.id ? 'border-slate-900' : 'border-slate-200'}`}
-          >
-            <div className="text-xs uppercase tracking-wide text-slate-500">{o.type}</div>
-            <div className="mt-1 flex items-center gap-2">
-              <NumberCell
-                label="W"
-                value={o.widthFt}
-                onChange={(v) => onUpdateOpening({ ...o, widthFt: v })}
-              />
-              <NumberCell
-                label="H"
-                value={o.heightFt}
-                onChange={(v) => onUpdateOpening({ ...o, heightFt: v })}
-              />
-              <NumberCell label="x" value={o.x} onChange={(v) => onUpdateOpening({ ...o, x: v })} />
-              <NumberCell label="y" value={o.y} onChange={(v) => onUpdateOpening({ ...o, y: v })} />
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onDeleteOpening(o.id);
-              }}
-              className="mt-1 text-xs text-red-600 underline"
-            >
-              delete
-            </button>
-          </div>
-        ))}
-
-        <div className="ml-auto self-center">
+      {selectedOpening && (
+        <div className="mt-3 flex flex-wrap items-center gap-4 rounded border border-slate-200 bg-slate-50 px-3 py-2">
+          <span className="text-xs uppercase tracking-wide text-slate-500">
+            {selectedOpening.type}
+          </span>
+          <NumberCell
+            label="W"
+            value={selectedOpening.widthFt}
+            onChange={(v) => onUpdateOpening({ ...selectedOpening, widthFt: v })}
+          />
+          <NumberCell
+            label="H"
+            value={selectedOpening.heightFt}
+            onChange={(v) => onUpdateOpening({ ...selectedOpening, heightFt: v })}
+          />
+          <NumberCell
+            label="x"
+            value={selectedOpening.x}
+            onChange={(v) => onUpdateOpening({ ...selectedOpening, x: v })}
+          />
+          <NumberCell
+            label="y"
+            value={selectedOpening.y}
+            onChange={(v) => onUpdateOpening({ ...selectedOpening, y: v })}
+          />
           <button
-            onClick={onAdvance}
-            className="rounded-full bg-[var(--accent)] px-4 py-2 text-white"
+            onClick={() => onDeleteOpening(selectedOpening.id)}
+            className="ml-auto text-xs text-red-600 underline"
           >
-            Next →
+            delete
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }

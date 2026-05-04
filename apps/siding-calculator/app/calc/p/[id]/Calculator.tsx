@@ -11,6 +11,7 @@ import { Opening as OpeningEl } from '@/components/canvas/Opening';
 import { DimensionOverlay } from '@/components/canvas/DimensionOverlay';
 import { useDrawingTool } from '@/components/canvas/useDrawingTool';
 import { FinishDefs, sidingFillFor, trimColorFor } from '@/components/canvas/finishPatterns';
+import { HelpPanel } from '@/components/canvas/HelpPanel';
 import { ElementsDrawer } from '@/components/drawer/ElementsDrawer';
 import { PresetPicker } from '@/components/materials/PresetPicker';
 import { PhaseRow } from '@/components/materials/PhaseRow';
@@ -104,15 +105,21 @@ export function Calculator({ initial }: { initial: Project }) {
     } else {
       const type = draw.tool as OpeningType;
       const def = OPENING_DEFAULTS[type];
+      const wallW = project.wall.rect.widthFt;
+      const wallH = project.wall.rect.heightFt;
+      // Allow openings into the gable area (wall+gable bounding box).
+      const totalH = wallH + (project.wall.gable?.peakHeightFt ?? 0);
       const wx = Math.max(0, rect.x - project.wall.rect.x);
       const wy = Math.max(0, rect.y - project.wall.rect.y);
+      const widthFt = rect.widthFt > 0.5 ? rect.widthFt : def.widthFt;
+      const heightFt = rect.heightFt > 0.5 ? rect.heightFt : def.heightFt;
       const op: Opening = {
         id: ulid(),
         type,
-        x: Math.min(wx, project.wall.rect.widthFt - def.widthFt),
-        y: Math.min(wy, project.wall.rect.heightFt - def.heightFt),
-        widthFt: rect.widthFt > 0.5 ? rect.widthFt : def.widthFt,
-        heightFt: rect.heightFt > 0.5 ? rect.heightFt : def.heightFt,
+        x: Math.min(wx, Math.max(0, wallW - widthFt)),
+        y: Math.min(wy, Math.max(0, totalH - heightFt)),
+        widthFt,
+        heightFt,
       };
       setProject((p) => ({ ...p, openings: [...p.openings, op] }));
     }
@@ -135,65 +142,79 @@ export function Calculator({ initial }: { initial: Project }) {
 
   return (
     <main className="flex min-h-screen flex-col">
-      {/* Stage 1: canvas */}
-      <div
-        ref={containerRef}
-        className="relative h-[calc(100vh-160px)] min-h-[420px] shrink-0 bg-[var(--paper)]"
-      >
-        <Toolbar
-          canvas={project.canvas}
-          onCanvasChange={(c) => setProject((p) => ({ ...p, canvas: c }))}
-          tool={draw.tool}
-          onToolChange={draw.setTool}
-          zoom={zoom}
-          onZoomChange={setZoom}
-        />
-        <div className="grid h-full place-items-center overflow-auto">
-          <CanvasSurface
-            size={project.canvas}
-            pixelsPerFt={pixelsPerFt}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-          >
-            <FinishDefs pixelsPerFt={pixelsPerFt} />
-            <WallShape
-              wall={project.wall}
+      {/* Stage 1: canvas with help gutter */}
+      <div className="flex h-[calc(100vh-160px)] min-h-[420px] shrink-0">
+        <HelpPanel />
+        <div ref={containerRef} className="relative flex-1 bg-[var(--paper)]">
+          <Toolbar
+            canvas={project.canvas}
+            onCanvasChange={(c) => setProject((p) => ({ ...p, canvas: c }))}
+            tool={draw.tool}
+            onToolChange={draw.setTool}
+            zoom={zoom}
+            onZoomChange={setZoom}
+          />
+          <div className="grid h-full place-items-center overflow-auto">
+            <CanvasSurface
+              size={project.canvas}
               pixelsPerFt={pixelsPerFt}
-              selected={selectedId === 'wall'}
-              onSelect={() => setSelectedId('wall')}
-              sidingFill={
-                project.scope.phases.siding.enabled
-                  ? sidingFillFor(project.scope.phases.siding.materialId)
-                  : undefined
-              }
-              trimColor={
-                project.scope.phases.trim.enabled
-                  ? trimColorFor(project.scope.phases.trim.materialId)
-                  : null
-              }
-            />
-            {project.openings.map((o) => (
-              <OpeningEl
-                key={o.id}
-                opening={o}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+            >
+              <FinishDefs pixelsPerFt={pixelsPerFt} />
+              <WallShape
                 wall={project.wall}
                 pixelsPerFt={pixelsPerFt}
-                selected={selectedId === o.id}
-                onSelect={setSelectedId}
+                selected={selectedId === 'wall'}
+                onSelect={() => setSelectedId('wall')}
+                sidingFill={
+                  project.scope.phases.siding.enabled
+                    ? sidingFillFor(project.scope.phases.siding.materialId)
+                    : undefined
+                }
                 trimColor={
                   project.scope.phases.trim.enabled
                     ? trimColorFor(project.scope.phases.trim.materialId)
                     : null
                 }
               />
-            ))}
-            <DimensionOverlay
-              draft={draftRect}
-              pixelsPerFt={pixelsPerFt}
-              canvasHeightPx={project.canvas.heightFt * pixelsPerFt}
-            />
-          </CanvasSurface>
+              {project.openings.map((o) => (
+                <OpeningEl
+                  key={o.id}
+                  opening={o}
+                  wall={project.wall}
+                  pixelsPerFt={pixelsPerFt}
+                  selected={selectedId === o.id}
+                  onSelect={setSelectedId}
+                  onMove={(id, xFt, yFt) => {
+                    const wallW = project.wall.rect.widthFt;
+                    const totalH =
+                      project.wall.rect.heightFt + (project.wall.gable?.peakHeightFt ?? 0);
+                    setProject((p) => ({
+                      ...p,
+                      openings: p.openings.map((op) => {
+                        if (op.id !== id) return op;
+                        const clampedX = Math.max(0, Math.min(xFt, wallW - op.widthFt));
+                        const clampedY = Math.max(0, Math.min(yFt, totalH - op.heightFt));
+                        return { ...op, x: clampedX, y: clampedY };
+                      }),
+                    }));
+                  }}
+                  trimColor={
+                    project.scope.phases.trim.enabled
+                      ? trimColorFor(project.scope.phases.trim.materialId)
+                      : null
+                  }
+                />
+              ))}
+              <DimensionOverlay
+                draft={draftRect}
+                pixelsPerFt={pixelsPerFt}
+                canvasHeightPx={project.canvas.heightFt * pixelsPerFt}
+              />
+            </CanvasSurface>
+          </div>
         </div>
       </div>
 
