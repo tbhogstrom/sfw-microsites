@@ -34,9 +34,11 @@ export function Calculator({ initial }: { initial: Project }) {
 
   const isDesktop = useIsDesktop();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [pixelsPerFt, setPixelsPerFt] = useState(20);
+  const [basePixelsPerFt, setBasePixelsPerFt] = useState(20);
+  const [zoom, setZoom] = useState(1);
+  const pixelsPerFt = basePixelsPerFt * zoom;
 
-  // Fit canvas to container.
+  // Fit canvas to container at zoom = 1.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -45,11 +47,25 @@ export function Calculator({ initial }: { initial: Project }) {
         h = el.clientHeight;
       const fitW = w / project.canvas.widthFt;
       const fitH = h / project.canvas.heightFt;
-      setPixelsPerFt(Math.max(8, Math.min(fitW, fitH) * 0.95));
+      setBasePixelsPerFt(Math.max(8, Math.min(fitW, fitH) * 0.95));
     });
     observer.observe(el);
     return () => observer.disconnect();
   }, [project.canvas.widthFt, project.canvas.heightFt]);
+
+  // Ctrl/Cmd + wheel to zoom over the canvas.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      setZoom((z) => Math.max(0.4, Math.min(3, Number((z + delta).toFixed(2)))));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
 
   // Autosave on change (debounced 1s).
   useEffect(() => {
@@ -128,8 +144,10 @@ export function Calculator({ initial }: { initial: Project }) {
           onCanvasChange={(c) => setProject((p) => ({ ...p, canvas: c }))}
           tool={draw.tool}
           onToolChange={draw.setTool}
+          zoom={zoom}
+          onZoomChange={setZoom}
         />
-        <div className="grid h-full place-items-center">
+        <div className="grid h-full place-items-center overflow-auto">
           <CanvasSurface
             size={project.canvas}
             pixelsPerFt={pixelsPerFt}
