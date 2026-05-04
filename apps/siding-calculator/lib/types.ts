@@ -1,6 +1,13 @@
 import { z } from 'zod';
 
-export const PHASE_KEYS = ['insulation', 'sheathing', 'vaporBarrier', 'siding', 'trim'] as const;
+export const PHASE_KEYS = [
+  'insulation',
+  'sheathing',
+  'vaporBarrier',
+  'siding',
+  'trim',
+  'paint',
+] as const;
 export type PhaseKey = (typeof PHASE_KEYS)[number];
 
 export const PRESET_IDS = ['siding-only', 'reside-with-wrb', 'full-envelope', 'custom'] as const;
@@ -66,6 +73,7 @@ export const ProjectSchema = z.object({
         vaporBarrier: PhaseSlotSchema,
         siding: PhaseSlotSchema,
         trim: PhaseSlotSchema,
+        paint: PhaseSlotSchema,
       })
       .strict(),
   }),
@@ -87,7 +95,7 @@ export const MaterialSchema = z.object({
   phase: z.enum(PHASE_KEYS),
   brand: z.string().nullable(),
   name: z.string().min(1),
-  unit: z.enum(['sqft', 'linft', 'sheet', 'roll', 'piece']),
+  unit: z.enum(['sqft', 'linft', 'sheet', 'roll', 'piece', 'gallon']),
   coveragePerUnit: PositiveFt,
   wastePct: z.number().finite().min(0).max(1),
   notes: z.string().optional(),

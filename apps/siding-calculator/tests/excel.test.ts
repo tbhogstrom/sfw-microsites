@@ -29,6 +29,7 @@ const project: Project = {
       vaporBarrier: { enabled: false, materialId: null },
       siding: { enabled: true, materialId: 'sid-hardieplank-625' },
       trim: { enabled: false, materialId: null },
+      paint: { enabled: false, materialId: null },
     },
   },
 };

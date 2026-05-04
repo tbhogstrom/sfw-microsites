@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import type { MaterialsLine } from '@/lib/materials';
+import { unitLabel } from '@/lib/materials';
 
 export function MaterialsTable({ lines }: { lines: MaterialsLine[] }) {
   if (lines.length === 0) {
@@ -28,7 +29,7 @@ export function MaterialsTable({ lines }: { lines: MaterialsLine[] }) {
               {l.material.name}
             </td>
             <td className="font-medium">{l.qty}</td>
-            <td>{l.unit === 'linft' ? 'lin ft' : l.unit === 'sqft' ? 'sq ft' : l.unit}</td>
+            <td>{unitLabel(l.unit)}</td>
             <td className="text-slate-500">{l.coverageNote}</td>
           </tr>
         ))}

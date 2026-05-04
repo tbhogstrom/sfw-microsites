@@ -18,6 +18,7 @@ const project: Project = {
       vaporBarrier: { enabled: true, materialId: 'wrb-tyvek-drainwrap' },
       siding: { enabled: true, materialId: 'sid-hardieplank-625' },
       trim: { enabled: true, materialId: 'trim-hardietrim-44' },
+      paint: { enabled: false, materialId: null },
     },
   },
 };

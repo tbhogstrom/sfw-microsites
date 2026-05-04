@@ -21,6 +21,7 @@ function blankProject(): Project {
         vaporBarrier: { enabled: false, materialId: null },
         siding: { enabled: true, materialId: null },
         trim: { enabled: true, materialId: null },
+        paint: { enabled: false, materialId: null },
       },
     },
   };

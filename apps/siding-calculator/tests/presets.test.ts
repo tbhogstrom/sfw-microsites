@@ -8,6 +8,7 @@ const emptyPhases: Project['scope']['phases'] = {
   vaporBarrier: { enabled: false, materialId: null },
   siding: { enabled: false, materialId: null },
   trim: { enabled: false, materialId: null },
+  paint: { enabled: false, materialId: null },
 };
 
 describe('PRESETS', () => {

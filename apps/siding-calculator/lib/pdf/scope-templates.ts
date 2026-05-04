@@ -39,6 +39,12 @@ export function renderScopeBullets(project: Project): string[] {
       `Install ${matName(project, 'trim')} at corners, fascia, water-table, and all openings (~${trim} lin ft).`,
     );
   }
+  if (phases.paint.enabled) {
+    const colorNote = phases.paint.colorHex ? ` (${phases.paint.colorHex})` : '';
+    bullets.push(
+      `Apply ${matName(project, 'paint')}${colorNote} to all siding and trim (~${sidingArea} sq ft).`,
+    );
+  }
 
   bullets.push('Caulk and seal all penetrations and trim transitions.');
   bullets.push('Haul away debris and leave the work area broom-clean.');

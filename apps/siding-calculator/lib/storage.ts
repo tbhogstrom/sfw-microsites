@@ -24,6 +24,21 @@ export async function saveProject(project: Project): Promise<void> {
   });
 }
 
+/**
+ * Backfill missing fields when loading an older saved project so it conforms
+ * to the current ProjectSchema. Each entry is a forward migration step.
+ */
+function migrate(raw: unknown): unknown {
+  if (!raw || typeof raw !== 'object') return raw;
+  const r = raw as Record<string, any>;
+  // Add paint phase if missing (introduced after initial release).
+  const phases = r.scope?.phases;
+  if (phases && !phases.paint) {
+    phases.paint = { enabled: false, materialId: null };
+  }
+  return r;
+}
+
 export async function loadProject(id: string): Promise<Project | null> {
   const key = projectKey(id);
   const { blobs } = await list({ prefix: key, token: BLOB_TOKEN });
@@ -35,7 +50,7 @@ export async function loadProject(id: string): Promise<Project | null> {
   });
   if (!res.ok) return null;
   const json = await res.json();
-  return ProjectSchema.parse(json);
+  return ProjectSchema.parse(migrate(json));
 }
 
 export async function saveOutput(

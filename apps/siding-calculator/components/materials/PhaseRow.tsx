@@ -19,6 +19,7 @@ const LABELS: Record<PhaseKey, string> = {
   vaporBarrier: 'Vapor Barrier / WRB',
   siding: 'Siding',
   trim: 'Trim',
+  paint: 'Paint / Finish',
 };
 
 // Phases where a paint/finish color makes sense to override.
@@ -28,6 +29,7 @@ const COLOR_PICKABLE: Record<PhaseKey, boolean> = {
   vaporBarrier: false,
   siding: true,
   trim: true,
+  paint: true,
 };
 
 // Default swatch shown in the picker when no color override is set.

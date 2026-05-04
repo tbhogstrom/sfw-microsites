@@ -142,6 +142,57 @@ export const CATALOG: Material[] = [
     coveragePerUnit: 1,
     wastePct: 0.1,
   },
+
+  // --- Paint (exterior) ---
+  // Coverage = effective sq ft per gallon at 2 coats (typical exterior siding job).
+  {
+    id: 'paint-sw-emerald-exterior',
+    phase: 'paint',
+    brand: 'Sherwin-Williams',
+    name: 'Emerald Exterior Acrylic Latex (premium, 2 coats)',
+    unit: 'gallon',
+    coveragePerUnit: 125,
+    wastePct: 0.05,
+    refDocPath: 'sherwin-williams/',
+  },
+  {
+    id: 'paint-sw-superpaint-exterior',
+    phase: 'paint',
+    brand: 'Sherwin-Williams',
+    name: 'SuperPaint Exterior (mid-tier, 2 coats)',
+    unit: 'gallon',
+    coveragePerUnit: 150,
+    wastePct: 0.05,
+    refDocPath: 'sherwin-williams/',
+  },
+  {
+    id: 'paint-sw-duration-exterior',
+    phase: 'paint',
+    brand: 'Sherwin-Williams',
+    name: 'Duration Exterior Acrylic Latex (2 coats)',
+    unit: 'gallon',
+    coveragePerUnit: 135,
+    wastePct: 0.05,
+    refDocPath: 'sherwin-williams/',
+  },
+  {
+    id: 'paint-generic-exterior-latex',
+    phase: 'paint',
+    brand: null,
+    name: 'Generic exterior acrylic latex (2 coats)',
+    unit: 'gallon',
+    coveragePerUnit: 150,
+    wastePct: 0.05,
+  },
+  {
+    id: 'paint-primer-exterior',
+    phase: 'paint',
+    brand: null,
+    name: 'Exterior primer (1 coat, for raw / repaired siding)',
+    unit: 'gallon',
+    coveragePerUnit: 250,
+    wastePct: 0.05,
+  },
 ];
 
 export function materialsByPhase(phase: PhaseKey): Material[] {

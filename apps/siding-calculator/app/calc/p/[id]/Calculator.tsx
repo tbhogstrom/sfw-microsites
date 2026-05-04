@@ -162,10 +162,14 @@ export function Calculator({ initial }: { initial: Project }) {
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
             >
+              {/* Paint color overrides siding color when paint phase is enabled */}
               <FinishDefs
                 pixelsPerFt={pixelsPerFt}
                 sidingMaterialId={project.scope.phases.siding.materialId}
-                sidingColorHex={project.scope.phases.siding.colorHex}
+                sidingColorHex={
+                  (project.scope.phases.paint.enabled && project.scope.phases.paint.colorHex) ||
+                  project.scope.phases.siding.colorHex
+                }
               />
               <WallShape
                 wall={project.wall}
@@ -176,7 +180,9 @@ export function Calculator({ initial }: { initial: Project }) {
                   project.scope.phases.siding.enabled
                     ? sidingFillFor(
                         project.scope.phases.siding.materialId,
-                        project.scope.phases.siding.colorHex,
+                        (project.scope.phases.paint.enabled &&
+                          project.scope.phases.paint.colorHex) ||
+                          project.scope.phases.siding.colorHex,
                       )
                     : undefined
                 }
@@ -263,7 +269,7 @@ export function Calculator({ initial }: { initial: Project }) {
             />
           </div>
           <div className="mt-4 max-w-2xl">
-            {(['insulation', 'sheathing', 'vaporBarrier', 'siding', 'trim'] as const).map(
+            {(['insulation', 'sheathing', 'vaporBarrier', 'siding', 'trim', 'paint'] as const).map(
               (phase) => (
                 <PhaseRow
                   key={phase}

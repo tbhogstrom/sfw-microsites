@@ -9,6 +9,7 @@ export const PRESETS: Record<PresetId, Record<PhaseKey, boolean>> = {
     vaporBarrier: false,
     siding: true,
     trim: true,
+    paint: false,
   },
   'reside-with-wrb': {
     insulation: false,
@@ -16,6 +17,7 @@ export const PRESETS: Record<PresetId, Record<PhaseKey, boolean>> = {
     vaporBarrier: true,
     siding: true,
     trim: true,
+    paint: false,
   },
   'full-envelope': {
     insulation: true,
@@ -23,8 +25,16 @@ export const PRESETS: Record<PresetId, Record<PhaseKey, boolean>> = {
     vaporBarrier: true,
     siding: true,
     trim: true,
+    paint: true,
   },
-  custom: { insulation: false, sheathing: false, vaporBarrier: false, siding: false, trim: false }, // unused
+  custom: {
+    insulation: false,
+    sheathing: false,
+    vaporBarrier: false,
+    siding: false,
+    trim: false,
+    paint: false,
+  },
 };
 
 export function applyPreset(presetId: PresetId, phases: PhaseMap): PhaseMap {
@@ -36,6 +46,7 @@ export function applyPreset(presetId: PresetId, phases: PhaseMap): PhaseMap {
     vaporBarrier: { ...phases.vaporBarrier, enabled: flags.vaporBarrier },
     siding: { ...phases.siding, enabled: flags.siding },
     trim: { ...phases.trim, enabled: flags.trim },
+    paint: { ...phases.paint, enabled: flags.paint },
   };
 }
 
