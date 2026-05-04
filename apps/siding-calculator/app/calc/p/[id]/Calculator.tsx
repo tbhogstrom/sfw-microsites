@@ -117,9 +117,12 @@ export function Calculator({ initial }: { initial: Project }) {
   const materialsPicked = lines.length > 0;
 
   return (
-    <main className="flex h-screen flex-col">
+    <main className="flex min-h-screen flex-col">
       {/* Stage 1: canvas */}
-      <div ref={containerRef} className="relative flex-1 bg-[var(--paper)]">
+      <div
+        ref={containerRef}
+        className="relative h-[calc(100vh-160px)] min-h-[420px] shrink-0 bg-[var(--paper)]"
+      >
         <Toolbar
           canvas={project.canvas}
           onCanvasChange={(c) => setProject((p) => ({ ...p, canvas: c }))}
