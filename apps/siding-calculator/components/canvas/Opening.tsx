@@ -8,14 +8,16 @@ type Props = {
   pixelsPerFt: number;
   selected?: boolean;
   onSelect?: (id: string) => void;
+  trimColor?: string | null;
 };
 
-export function Opening({ opening, wall, pixelsPerFt, selected, onSelect }: Props) {
+export function Opening({ opening, wall, pixelsPerFt, selected, onSelect, trimColor }: Props) {
   const x = (wall.rect.x + opening.x) * pixelsPerFt;
   const y = (wall.rect.y + opening.y) * pixelsPerFt;
   const w = opening.widthFt * pixelsPerFt;
   const h = opening.heightFt * pixelsPerFt;
-  const stroke = selected ? '#2a4d8f' : '#34507a';
+  const stroke = selected ? '#2a4d8f' : (trimColor ?? '#34507a');
+  const strokeWidth = selected ? 2 : trimColor ? 3 : 1;
   return (
     <g
       onClick={(e) => {
@@ -30,7 +32,7 @@ export function Opening({ opening, wall, pixelsPerFt, selected, onSelect }: Prop
         height={h}
         fill="white"
         stroke={stroke}
-        strokeWidth={selected ? 2 : 1}
+        strokeWidth={strokeWidth}
       />
       <text
         x={x + w / 2}

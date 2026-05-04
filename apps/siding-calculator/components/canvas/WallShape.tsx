@@ -7,14 +7,18 @@ type Props = {
   pixelsPerFt: number;
   selected?: boolean;
   onSelect?: () => void;
+  sidingFill?: string;
+  trimColor?: string | null;
 };
 
-export function WallShape({ wall, pixelsPerFt, selected, onSelect }: Props) {
+export function WallShape({ wall, pixelsPerFt, selected, onSelect, sidingFill, trimColor }: Props) {
   const x = wall.rect.x * pixelsPerFt;
   const y = wall.rect.y * pixelsPerFt;
   const w = wall.rect.widthFt * pixelsPerFt;
   const h = wall.rect.heightFt * pixelsPerFt;
-  const stroke = selected ? '#2a4d8f' : '#34507a';
+  const fill = sidingFill ?? 'rgba(42,77,143,0.05)';
+  const stroke = selected ? '#2a4d8f' : (trimColor ?? '#34507a');
+  const strokeWidth = selected ? 2.5 : trimColor ? 4 : 1.5;
   return (
     <g onClick={onSelect}>
       <rect
@@ -22,9 +26,9 @@ export function WallShape({ wall, pixelsPerFt, selected, onSelect }: Props) {
         y={y}
         width={w}
         height={h}
-        fill="rgba(42,77,143,0.05)"
+        fill={fill}
         stroke={stroke}
-        strokeWidth={selected ? 2 : 1.5}
+        strokeWidth={strokeWidth}
       />
       {wall.gable &&
         (() => {
@@ -33,9 +37,9 @@ export function WallShape({ wall, pixelsPerFt, selected, onSelect }: Props) {
           return (
             <polygon
               points={`${x},${y + h} ${x + w},${y + h} ${peakX},${peakY}`}
-              fill="rgba(42,77,143,0.05)"
+              fill={fill}
               stroke={stroke}
-              strokeWidth={selected ? 2 : 1.5}
+              strokeWidth={strokeWidth}
             />
           );
         })()}

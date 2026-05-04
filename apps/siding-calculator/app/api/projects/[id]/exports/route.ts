@@ -20,11 +20,6 @@ export async function POST(req: Request, { params }: Ctx) {
   const project = await loadProject(id);
   if (!project) return NextResponse.json({ error: 'not_found' }, { status: 404 });
 
-  // Server-side gate: xlsx + pdf require a captured lead.
-  if ((format === 'xlsx' || format === 'pdf') && !project.lead) {
-    return NextResponse.json({ error: 'lead_required' }, { status: 403 });
-  }
-
   const lines = computeMaterialsList(project);
   const shareUrl = `${req.headers.get('origin') ?? ''}/calc/p/${project.id}`;
 

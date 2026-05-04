@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 
 type Props = {
   projectId: string;
-  hasLead: boolean;
-  onRequireLead: (intent: 'export') => void;
 };
 
 async function fetchExport(projectId: string, format: 'csv' | 'xlsx' | 'pdf'): Promise<string> {
@@ -18,14 +16,10 @@ async function fetchExport(projectId: string, format: 'csv' | 'xlsx' | 'pdf'): P
   return url;
 }
 
-export function ExportButtons({ projectId, hasLead, onRequireLead }: Props) {
+export function ExportButtons({ projectId }: Props) {
   const [busy, setBusy] = useState<string | null>(null);
 
   async function handle(format: 'csv' | 'xlsx' | 'pdf') {
-    if ((format === 'xlsx' || format === 'pdf') && !hasLead) {
-      onRequireLead('export');
-      return;
-    }
     setBusy(format);
     try {
       const url = await fetchExport(projectId, format);
@@ -35,37 +29,24 @@ export function ExportButtons({ projectId, hasLead, onRequireLead }: Props) {
     }
   }
 
+  const labels: Record<'csv' | 'xlsx' | 'pdf', string> = {
+    csv: 'Download CSV',
+    xlsx: 'Download Excel',
+    pdf: 'Download Scope PDF',
+  };
+
   return (
     <div className="flex flex-wrap gap-2">
-      <button
-        onClick={() => handle('csv')}
-        disabled={busy !== null}
-        className="rounded border border-slate-300 px-3 py-1.5 text-sm"
-      >
-        {busy === 'csv' ? 'Building…' : 'Download CSV'}
-      </button>
-      <button
-        onClick={() => handle('xlsx')}
-        disabled={busy !== null}
-        className="rounded border border-slate-300 px-3 py-1.5 text-sm"
-      >
-        {busy === 'xlsx'
-          ? 'Building…'
-          : hasLead
-            ? 'Download Excel'
-            : 'Download Excel — requires info'}
-      </button>
-      <button
-        onClick={() => handle('pdf')}
-        disabled={busy !== null}
-        className="rounded border border-slate-300 px-3 py-1.5 text-sm"
-      >
-        {busy === 'pdf'
-          ? 'Building…'
-          : hasLead
-            ? 'Download Scope PDF'
-            : 'Download Scope PDF — requires info'}
-      </button>
+      {(['csv', 'xlsx', 'pdf'] as const).map((fmt) => (
+        <button
+          key={fmt}
+          onClick={() => handle(fmt)}
+          disabled={busy !== null}
+          className="rounded border border-slate-300 px-3 py-1.5 text-sm disabled:opacity-60"
+        >
+          {busy === fmt ? 'Building…' : labels[fmt]}
+        </button>
+      ))}
     </div>
   );
 }

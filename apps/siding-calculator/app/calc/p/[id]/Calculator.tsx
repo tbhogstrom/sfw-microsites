@@ -10,6 +10,7 @@ import { WallShape } from '@/components/canvas/WallShape';
 import { Opening as OpeningEl } from '@/components/canvas/Opening';
 import { DimensionOverlay } from '@/components/canvas/DimensionOverlay';
 import { useDrawingTool } from '@/components/canvas/useDrawingTool';
+import { FinishDefs, sidingFillFor, trimColorFor } from '@/components/canvas/finishPatterns';
 import { ElementsDrawer } from '@/components/drawer/ElementsDrawer';
 import { PresetPicker } from '@/components/materials/PresetPicker';
 import { PhaseRow } from '@/components/materials/PhaseRow';
@@ -155,11 +156,22 @@ export function Calculator({ initial }: { initial: Project }) {
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
           >
+            <FinishDefs pixelsPerFt={pixelsPerFt} />
             <WallShape
               wall={project.wall}
               pixelsPerFt={pixelsPerFt}
               selected={selectedId === 'wall'}
               onSelect={() => setSelectedId('wall')}
+              sidingFill={
+                project.scope.phases.siding.enabled
+                  ? sidingFillFor(project.scope.phases.siding.materialId)
+                  : undefined
+              }
+              trimColor={
+                project.scope.phases.trim.enabled
+                  ? trimColorFor(project.scope.phases.trim.materialId)
+                  : null
+              }
             />
             {project.openings.map((o) => (
               <OpeningEl
@@ -169,6 +181,11 @@ export function Calculator({ initial }: { initial: Project }) {
                 pixelsPerFt={pixelsPerFt}
                 selected={selectedId === o.id}
                 onSelect={setSelectedId}
+                trimColor={
+                  project.scope.phases.trim.enabled
+                    ? trimColorFor(project.scope.phases.trim.materialId)
+                    : null
+                }
               />
             ))}
             <DimensionOverlay
@@ -266,11 +283,7 @@ export function Calculator({ initial }: { initial: Project }) {
             <MaterialsTable lines={lines} />
           </div>
           <div className="mt-4">
-            <ExportButtons
-              projectId={project.id}
-              hasLead={!!project.lead}
-              onRequireLead={() => setLeadIntent('export')}
-            />
+            <ExportButtons projectId={project.id} />
           </div>
         </section>
       )}
