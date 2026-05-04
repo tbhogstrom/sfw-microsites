@@ -31,11 +31,11 @@ export function applyPreset(presetId: PresetId, phases: PhaseMap): PhaseMap {
   if (presetId === 'custom') return phases;
   const flags = PRESETS[presetId];
   return {
-    insulation: { enabled: flags.insulation, materialId: phases.insulation.materialId },
-    sheathing: { enabled: flags.sheathing, materialId: phases.sheathing.materialId },
-    vaporBarrier: { enabled: flags.vaporBarrier, materialId: phases.vaporBarrier.materialId },
-    siding: { enabled: flags.siding, materialId: phases.siding.materialId },
-    trim: { enabled: flags.trim, materialId: phases.trim.materialId },
+    insulation: { ...phases.insulation, enabled: flags.insulation },
+    sheathing: { ...phases.sheathing, enabled: flags.sheathing },
+    vaporBarrier: { ...phases.vaporBarrier, enabled: flags.vaporBarrier },
+    siding: { ...phases.siding, enabled: flags.siding },
+    trim: { ...phases.trim, enabled: flags.trim },
   };
 }
 

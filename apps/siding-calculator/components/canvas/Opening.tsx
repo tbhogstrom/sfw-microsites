@@ -9,6 +9,11 @@ type Props = {
   selected?: boolean;
   onSelect?: (id: string) => void;
   onMove?: (id: string, xFt: number, yFt: number) => void;
+  /**
+   * Color for the trim casing rendered around the opening. Casing is always
+   * rendered (trim is a visual default on every opening); pass null/undefined
+   * to use a sensible fallback white.
+   */
   trimColor?: string | null;
 };
 
@@ -19,6 +24,9 @@ type DragBaseline = {
   baseX: number;
   baseY: number;
 };
+
+// 3.5" wide casing around each opening (matches typical 4/4 trim).
+const CASING_WIDTH_FT = 3.5 / 12;
 
 export function Opening({
   opening,
@@ -33,8 +41,11 @@ export function Opening({
   const y = (wall.rect.y + opening.y) * pixelsPerFt;
   const w = opening.widthFt * pixelsPerFt;
   const h = opening.heightFt * pixelsPerFt;
-  const stroke = selected ? '#2a4d8f' : (trimColor ?? '#34507a');
-  const strokeWidth = selected ? 2 : trimColor ? 3 : 1;
+  const casing = CASING_WIDTH_FT * pixelsPerFt;
+
+  const casingFill = trimColor ?? '#fafafa';
+  const casingStroke = selected ? '#2a4d8f' : '#9aa3ae';
+  const casingStrokeWidth = selected ? 1.5 : 0.5;
 
   const dragRef = useRef<DragBaseline | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -59,8 +70,6 @@ export function Opening({
     if (!base || !onMove) return;
     e.stopPropagation();
     const dxFt = (e.clientX - base.baseClientX) / pixelsPerFt;
-    // SVG content is rendered inside a y-flipped group (scale(1,-1) in
-    // CanvasSurface), so screen-y-down corresponds to world-y-down. Subtract.
     const dyFt = -(e.clientY - base.baseClientY) / pixelsPerFt;
     onMove(opening.id, base.baseX + dxFt, base.baseY + dyFt);
   }
@@ -89,14 +98,25 @@ export function Opening({
       onPointerCancel={endDrag}
       style={{ cursor: onMove ? (isDragging ? 'grabbing' : 'grab') : 'pointer' }}
     >
+      {/* Trim casing — outer frame */}
+      <rect
+        x={x - casing}
+        y={y - casing}
+        width={w + casing * 2}
+        height={h + casing * 2}
+        fill={casingFill}
+        stroke={casingStroke}
+        strokeWidth={casingStrokeWidth}
+      />
+      {/* Glass / opening — inner */}
       <rect
         x={x}
         y={y}
         width={w}
         height={h}
         fill="white"
-        stroke={stroke}
-        strokeWidth={strokeWidth}
+        stroke="#34507a"
+        strokeWidth={selected ? 1.5 : 0.6}
       />
       <text
         x={x + w / 2}

@@ -26,6 +26,10 @@ export type Opening = z.infer<typeof OpeningSchema>;
 const PhaseSlotSchema = z.object({
   enabled: z.boolean(),
   materialId: z.string().nullable(),
+  colorHex: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/, 'colorHex must be a 6-digit hex color')
+    .optional(),
 });
 
 export const ProjectSchema = z.object({

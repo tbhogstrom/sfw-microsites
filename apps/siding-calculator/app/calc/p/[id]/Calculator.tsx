@@ -162,7 +162,11 @@ export function Calculator({ initial }: { initial: Project }) {
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
             >
-              <FinishDefs pixelsPerFt={pixelsPerFt} />
+              <FinishDefs
+                pixelsPerFt={pixelsPerFt}
+                sidingMaterialId={project.scope.phases.siding.materialId}
+                sidingColorHex={project.scope.phases.siding.colorHex}
+              />
               <WallShape
                 wall={project.wall}
                 pixelsPerFt={pixelsPerFt}
@@ -170,12 +174,18 @@ export function Calculator({ initial }: { initial: Project }) {
                 onSelect={() => setSelectedId('wall')}
                 sidingFill={
                   project.scope.phases.siding.enabled
-                    ? sidingFillFor(project.scope.phases.siding.materialId)
+                    ? sidingFillFor(
+                        project.scope.phases.siding.materialId,
+                        project.scope.phases.siding.colorHex,
+                      )
                     : undefined
                 }
                 trimColor={
-                  project.scope.phases.trim.enabled
-                    ? trimColorFor(project.scope.phases.trim.materialId)
+                  project.scope.phases.trim.enabled && project.scope.phases.trim.materialId
+                    ? trimColorFor(
+                        project.scope.phases.trim.materialId,
+                        project.scope.phases.trim.colorHex,
+                      )
                     : null
                 }
               />
@@ -201,11 +211,10 @@ export function Calculator({ initial }: { initial: Project }) {
                       }),
                     }));
                   }}
-                  trimColor={
-                    project.scope.phases.trim.enabled
-                      ? trimColorFor(project.scope.phases.trim.materialId)
-                      : null
-                  }
+                  trimColor={trimColorFor(
+                    project.scope.phases.trim.materialId,
+                    project.scope.phases.trim.colorHex,
+                  )}
                 />
               ))}
               <DimensionOverlay
@@ -261,6 +270,7 @@ export function Calculator({ initial }: { initial: Project }) {
                   phase={phase}
                   enabled={project.scope.phases[phase].enabled}
                   materialId={project.scope.phases[phase].materialId}
+                  colorHex={project.scope.phases[phase].colorHex}
                   onToggle={(en) =>
                     setProject((p) => ({
                       ...p,
@@ -282,6 +292,18 @@ export function Calculator({ initial }: { initial: Project }) {
                         phases: {
                           ...p.scope.phases,
                           [phase]: { ...p.scope.phases[phase], materialId: id },
+                        },
+                      },
+                    }))
+                  }
+                  onColorChange={(hex) =>
+                    setProject((p) => ({
+                      ...p,
+                      scope: {
+                        ...p.scope,
+                        phases: {
+                          ...p.scope.phases,
+                          [phase]: { ...p.scope.phases[phase], colorHex: hex },
                         },
                       },
                     }))
