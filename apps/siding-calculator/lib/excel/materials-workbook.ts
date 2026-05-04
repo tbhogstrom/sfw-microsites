@@ -2,6 +2,7 @@ import ExcelJS from 'exceljs';
 import type { Project } from '../types';
 import type { MaterialsLine } from '../materials';
 import { wallSqFt, openingsSqFt, netSidingSqFt, trimLinFt } from '../geometry';
+import { totalSidingSqFt, totalTrimLinFt } from '../materials';
 import { PRESET_LABELS } from '../presets';
 
 export async function buildMaterialsWorkbook(
@@ -14,22 +15,33 @@ export async function buildMaterialsWorkbook(
 
   // --- Project sheet ---
   const proj = wb.addWorksheet('Project');
-  proj.columns = [{ width: 28 }, { width: 40 }];
+  proj.columns = [{ width: 28 }, { width: 50 }];
   proj.addRows([
     ['Project ID', project.id],
     ['Created', project.createdAt],
     ['Preset', PRESET_LABELS[project.scope.presetId]],
-    ['Canvas', `${project.canvas.widthFt}' × ${project.canvas.heightFt}'`],
-    [
-      'Wall',
-      `${project.wall.rect.widthFt}' × ${project.wall.rect.heightFt}'${project.wall.gable ? ` + gable peak ${project.wall.gable.peakHeightFt}'` : ''}`,
-    ],
-    ['Wall area', `${wallSqFt(project.wall).toFixed(1)} sq ft`],
-    ['Openings area', `${openingsSqFt(project.openings).toFixed(1)} sq ft`],
-    ['Net siding area', `${netSidingSqFt(project.wall, project.openings).toFixed(1)} sq ft`],
-    ['Trim length', `${trimLinFt(project.wall, project.openings).toFixed(1)} lin ft`],
+    ['Elevations', String(project.elevations.length)],
+    ['Total net siding area', `${totalSidingSqFt(project).toFixed(1)} sq ft`],
+    ['Total trim length', `${totalTrimLinFt(project).toFixed(1)} lin ft`],
+    [],
   ]);
   proj.getColumn(1).font = { bold: true };
+
+  // --- Per-elevation breakdown ---
+  proj.addRow(['Per-elevation breakdown', '']);
+  proj.lastRow!.font = { bold: true };
+  proj.addRow(['Elevation', 'Wall · Net siding · Trim']);
+  for (const e of project.elevations) {
+    const wallDesc = `${e.wall.rect.widthFt}' × ${e.wall.rect.heightFt}'${e.wall.gable ? ` + gable peak ${e.wall.gable.peakHeightFt}'` : ''}`;
+    const wallA = wallSqFt(e.wall).toFixed(1);
+    const opA = openingsSqFt(e.openings).toFixed(1);
+    const net = netSidingSqFt(e.wall, e.openings).toFixed(1);
+    const trim = trimLinFt(e.wall, e.openings).toFixed(1);
+    proj.addRow([
+      e.name,
+      `${wallDesc} · wall ${wallA} sqft · openings ${opA} sqft · net ${net} sqft · trim ${trim} linft`,
+    ]);
+  }
 
   // --- Materials sheet ---
   const ws = wb.addWorksheet('Materials');

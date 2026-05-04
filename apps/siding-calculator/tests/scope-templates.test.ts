@@ -6,10 +6,17 @@ const project: Project = {
   id: 'p1',
   createdAt: 't',
   updatedAt: 't',
-  schemaVersion: 1,
-  canvas: { widthFt: 30, heightFt: 12, snapInches: 12 },
-  wall: { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } },
-  openings: [],
+  schemaVersion: 2,
+  elevations: [
+    {
+      id: 'e1',
+      name: 'Front',
+      canvas: { widthFt: 30, heightFt: 12, snapInches: 12 },
+      wall: { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } },
+      openings: [],
+    },
+  ],
+  activeElevationId: 'e1',
   scope: {
     presetId: 'reside-with-wrb',
     phases: {

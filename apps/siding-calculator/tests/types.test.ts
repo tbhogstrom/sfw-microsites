@@ -5,10 +5,17 @@ const baseProject: Project = {
   id: '01HXXXXXXXXXXXXXXXXXXXXXX',
   createdAt: '2026-05-01T00:00:00Z',
   updatedAt: '2026-05-01T00:00:00Z',
-  schemaVersion: 1,
-  canvas: { widthFt: 30, heightFt: 12, snapInches: 12 },
-  wall: { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } },
-  openings: [],
+  schemaVersion: 2,
+  elevations: [
+    {
+      id: 'e1',
+      name: 'Front',
+      canvas: { widthFt: 30, heightFt: 12, snapInches: 12 },
+      wall: { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } },
+      openings: [],
+    },
+  ],
+  activeElevationId: 'e1',
   scope: {
     presetId: 'siding-only',
     phases: {
@@ -28,7 +35,15 @@ describe('ProjectSchema', () => {
   });
 
   it('rejects negative wall dimensions', () => {
-    const bad = { ...baseProject, wall: { rect: { x: 0, y: 0, widthFt: -1, heightFt: 9 } } };
+    const bad = {
+      ...baseProject,
+      elevations: [
+        {
+          ...baseProject.elevations[0],
+          wall: { rect: { x: 0, y: 0, widthFt: -1, heightFt: 9 } },
+        },
+      ],
+    };
     expect(() => ProjectSchema.parse(bad)).toThrow();
   });
 

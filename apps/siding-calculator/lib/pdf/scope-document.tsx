@@ -9,10 +9,11 @@ import {
   Polygon,
   pdf,
 } from '@react-pdf/renderer';
-import type { Project } from '../types';
+import type { Project, Elevation } from '../types';
 import type { MaterialsLine } from '../materials';
 import { renderScopeBullets } from './scope-templates';
 import { wallSqFt, netSidingSqFt, trimLinFt } from '../geometry';
+import { totalSidingSqFt, totalTrimLinFt } from '../materials';
 import { PRESET_LABELS } from '../presets';
 
 const styles = StyleSheet.create({
@@ -20,7 +21,8 @@ const styles = StyleSheet.create({
   h1: { fontSize: 18, fontWeight: 700, marginBottom: 4 },
   meta: { fontSize: 9, color: '#666', marginBottom: 16 },
   h2: { fontSize: 12, fontWeight: 700, marginTop: 12, marginBottom: 6 },
-  diagram: { height: 140, border: '1pt solid #ccc', marginBottom: 12 },
+  h3: { fontSize: 10, fontWeight: 700, marginTop: 6, marginBottom: 4 },
+  diagram: { height: 110, border: '1pt solid #ccc', marginBottom: 6 },
   table: { display: 'flex', flexDirection: 'column', borderTop: '0.5pt solid #ccc' },
   row: { flexDirection: 'row', borderBottom: '0.5pt solid #ccc', paddingVertical: 3 },
   th: { fontWeight: 700, fontSize: 9 },
@@ -36,13 +38,13 @@ const COL = [
   { key: 'notes', width: '25%' },
 ];
 
-function ElevationDiagram({ project }: { project: Project }) {
-  const totalW = project.wall.rect.widthFt;
-  const totalH = project.wall.rect.heightFt + (project.wall.gable?.peakHeightFt ?? 0);
-  const scale = Math.min(500 / totalW, 130 / totalH);
+function ElevationDiagram({ elevation }: { elevation: Elevation }) {
+  const totalW = elevation.wall.rect.widthFt;
+  const totalH = elevation.wall.rect.heightFt + (elevation.wall.gable?.peakHeightFt ?? 0);
+  const scale = Math.min(500 / totalW, 100 / totalH);
   const w = totalW * scale;
   const h = totalH * scale;
-  const wallH = project.wall.rect.heightFt * scale;
+  const wallH = elevation.wall.rect.heightFt * scale;
   const wallTopY = h - wallH;
 
   return (
@@ -56,9 +58,9 @@ function ElevationDiagram({ project }: { project: Project }) {
         strokeWidth={1.5}
         fill="rgba(42,77,143,0.05)"
       />
-      {project.wall.gable &&
+      {elevation.wall.gable &&
         (() => {
-          const peakX = w / 2 + project.wall.gable.peakOffsetFt * scale;
+          const peakX = w / 2 + elevation.wall.gable.peakOffsetFt * scale;
           const points = `0,${wallTopY} ${w},${wallTopY} ${peakX},0`;
           return (
             <Polygon
@@ -69,9 +71,9 @@ function ElevationDiagram({ project }: { project: Project }) {
             />
           );
         })()}
-      {project.openings.map((o) => {
+      {elevation.openings.map((o) => {
         const ox = o.x * scale;
-        const oy = h - wallH + (project.wall.rect.heightFt - o.y - o.heightFt) * scale;
+        const oy = h - wallH + (elevation.wall.rect.heightFt - o.y - o.heightFt) * scale;
         const ow = o.widthFt * scale;
         const oh = o.heightFt * scale;
         return (
@@ -107,17 +109,30 @@ export function ScopeDocument({
         <Text style={styles.h1}>Siding Project Scope</Text>
         <Text style={styles.meta}>
           Project {project.id} · Generated {new Date().toLocaleDateString()} ·{' '}
-          {PRESET_LABELS[project.scope.presetId]}
+          {PRESET_LABELS[project.scope.presetId]} · {project.elevations.length} elevation
+          {project.elevations.length === 1 ? '' : 's'}
         </Text>
 
-        <Text style={styles.h2}>Elevation</Text>
-        <ElevationDiagram project={project} />
+        <Text style={styles.h2}>Elevations</Text>
+        {project.elevations.map((e) => (
+          <View key={e.id} wrap={false}>
+            <Text style={styles.h3}>
+              {e.name} — {e.wall.rect.widthFt}' × {e.wall.rect.heightFt}'
+              {e.wall.gable ? ` + gable peak ${e.wall.gable.peakHeightFt}'` : ''}
+            </Text>
+            <ElevationDiagram elevation={e} />
+            <Text style={{ fontSize: 8, color: '#666', marginBottom: 6 }}>
+              Wall {wallSqFt(e.wall).toFixed(0)} sq ft · Net siding{' '}
+              {netSidingSqFt(e.wall, e.openings).toFixed(0)} sq ft · Trim{' '}
+              {trimLinFt(e.wall, e.openings).toFixed(0)} lin ft
+            </Text>
+          </View>
+        ))}
 
-        <Text style={styles.h2}>Wall summary</Text>
+        <Text style={styles.h2}>Project totals</Text>
         <Text>
-          Wall area: {wallSqFt(project.wall).toFixed(0)} sq ft · Net siding:{' '}
-          {netSidingSqFt(project.wall, project.openings).toFixed(0)} sq ft · Trim:{' '}
-          {trimLinFt(project.wall, project.openings).toFixed(0)} lin ft
+          Net siding (all elevations): {totalSidingSqFt(project).toFixed(0)} sq ft · Trim:{' '}
+          {totalTrimLinFt(project).toFixed(0)} lin ft
         </Text>
 
         <Text style={styles.h2}>Materials</Text>

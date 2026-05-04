@@ -17,10 +17,17 @@ const project: Project = {
   id: 'p1',
   createdAt: '2026-05-01T00:00:00Z',
   updatedAt: '2026-05-01T00:00:00Z',
-  schemaVersion: 1,
-  canvas: { widthFt: 30, heightFt: 12, snapInches: 12 },
-  wall: { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } },
-  openings: [],
+  schemaVersion: 2,
+  elevations: [
+    {
+      id: 'e1',
+      name: 'Front',
+      canvas: { widthFt: 30, heightFt: 12, snapInches: 12 },
+      wall: { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } },
+      openings: [],
+    },
+  ],
+  activeElevationId: 'e1',
   scope: {
     presetId: 'siding-only',
     phases: {

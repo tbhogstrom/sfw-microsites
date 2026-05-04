@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { wallSqFt, openingsSqFt, netSidingSqFt, trimLinFt } from '@/lib/geometry';
-import type { Project, Opening } from '@/lib/types';
+import type { Wall, Opening } from '@/lib/types';
 
-const wallNoGable: Project['wall'] = {
+const wallNoGable: Wall = {
   rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 },
 };
-const wallWithGable: Project['wall'] = {
+const wallWithGable: Wall = {
   rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 },
   gable: { peakHeightFt: 6, peakOffsetFt: 0 },
 };
@@ -44,8 +44,8 @@ describe('netSidingSqFt', () => {
 });
 
 describe('trimLinFt', () => {
-  const wallNoGable: Project['wall'] = { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } };
-  const wallWithGable: Project['wall'] = {
+  const wallNoGable: Wall = { rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 } };
+  const wallWithGable: Wall = {
     rect: { x: 0, y: 0, widthFt: 24, heightFt: 9 },
     gable: { peakHeightFt: 6, peakOffsetFt: 0 },
   };
@@ -74,7 +74,7 @@ describe('trimLinFt', () => {
   });
 
   it('returns > 0 for a tiny wall (defensive)', () => {
-    const tiny: Project['wall'] = { rect: { x: 0, y: 0, widthFt: 0.0001, heightFt: 0.0001 } };
+    const tiny: Wall = { rect: { x: 0, y: 0, widthFt: 0.0001, heightFt: 0.0001 } };
     expect(trimLinFt(tiny, [])).toBeGreaterThan(0);
   });
 });

@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import type { Project, Opening as OpeningT } from '@/lib/types';
+import type { Elevation, Wall, Opening as OpeningT } from '@/lib/types';
 
 type Props = {
-  project: Project;
+  elevation: Elevation;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
-  onUpdateWall: (next: Project['wall']) => void;
+  onUpdateWall: (next: Wall) => void;
   onUpdateOpening: (next: OpeningT) => void;
   onDeleteOpening: (id: string) => void;
   onAdvance: () => void;
@@ -70,7 +70,7 @@ function fmtDim(v: number): string {
 }
 
 export function ElementsDrawer({
-  project,
+  elevation,
   selectedId,
   onSelect,
   onUpdateWall,
@@ -78,9 +78,10 @@ export function ElementsDrawer({
   onDeleteOpening,
   onAdvance,
 }: Props) {
+  const project = { wall: elevation.wall, openings: elevation.openings };
   const selectedOpening =
     selectedId && selectedId !== 'wall'
-      ? (project.openings.find((o) => o.id === selectedId) ?? null)
+      ? (elevation.openings.find((o) => o.id === selectedId) ?? null)
       : null;
   const wallSelected = selectedId === 'wall';
 

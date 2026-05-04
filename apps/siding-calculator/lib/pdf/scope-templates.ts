@@ -1,6 +1,6 @@
 import type { Project, PhaseKey } from '../types';
 import { getMaterial } from '../catalog';
-import { netSidingSqFt, trimLinFt } from '../geometry';
+import { totalSidingSqFt, totalTrimLinFt } from '../materials';
 
 function matName(project: Project, phase: PhaseKey): string {
   const id = project.scope.phases[phase].materialId;
@@ -11,8 +11,8 @@ function matName(project: Project, phase: PhaseKey): string {
 export function renderScopeBullets(project: Project): string[] {
   const bullets: string[] = [];
   const phases = project.scope.phases;
-  const sidingArea = Math.round(netSidingSqFt(project.wall, project.openings));
-  const trim = Math.round(trimLinFt(project.wall, project.openings));
+  const sidingArea = Math.round(totalSidingSqFt(project));
+  const trim = Math.round(totalTrimLinFt(project));
 
   bullets.push('Remove existing siding to sheathing.');
 

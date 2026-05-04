@@ -39,31 +39,45 @@ const PhaseSlotSchema = z.object({
     .optional(),
 });
 
+const WallSchema = z.object({
+  rect: z.object({
+    x: NonNegFt,
+    y: NonNegFt,
+    widthFt: PositiveFt,
+    heightFt: PositiveFt,
+  }),
+  gable: z
+    .object({
+      peakHeightFt: PositiveFt,
+      peakOffsetFt: z.number().finite(),
+    })
+    .optional(),
+});
+export type Wall = z.infer<typeof WallSchema>;
+
+const CanvasSchema = z.object({
+  widthFt: PositiveFt,
+  heightFt: PositiveFt,
+  snapInches: z.union([z.literal(0), z.literal(6), z.literal(12)]),
+});
+export type Canvas = z.infer<typeof CanvasSchema>;
+
+export const ElevationSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1).max(40),
+  canvas: CanvasSchema,
+  wall: WallSchema,
+  openings: z.array(OpeningSchema),
+});
+export type Elevation = z.infer<typeof ElevationSchema>;
+
 export const ProjectSchema = z.object({
   id: z.string().min(1),
   createdAt: z.string(),
   updatedAt: z.string(),
-  schemaVersion: z.literal(1),
-  canvas: z.object({
-    widthFt: PositiveFt,
-    heightFt: PositiveFt,
-    snapInches: z.union([z.literal(0), z.literal(6), z.literal(12)]),
-  }),
-  wall: z.object({
-    rect: z.object({
-      x: NonNegFt,
-      y: NonNegFt,
-      widthFt: PositiveFt,
-      heightFt: PositiveFt,
-    }),
-    gable: z
-      .object({
-        peakHeightFt: PositiveFt,
-        peakOffsetFt: z.number().finite(),
-      })
-      .optional(),
-  }),
-  openings: z.array(OpeningSchema),
+  schemaVersion: z.literal(2),
+  elevations: z.array(ElevationSchema).min(1),
+  activeElevationId: z.string().min(1),
   scope: z.object({
     presetId: z.enum(PRESET_IDS),
     phases: z
@@ -89,6 +103,16 @@ export const ProjectSchema = z.object({
     .optional(),
 });
 export type Project = z.infer<typeof ProjectSchema>;
+
+/**
+ * Resolve the active elevation. Falls back to the first elevation if the
+ * `activeElevationId` doesn't match anything (defensive — should always match).
+ */
+export function getActiveElevation(project: Project): Elevation {
+  return (
+    project.elevations.find((e) => e.id === project.activeElevationId) ?? project.elevations[0]
+  );
+}
 
 export const MaterialSchema = z.object({
   id: z.string().min(1),

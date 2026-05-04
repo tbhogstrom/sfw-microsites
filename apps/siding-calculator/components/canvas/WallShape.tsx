@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import type { Project } from '@/lib/types';
+import type { Wall } from '@/lib/types';
 
 type Props = {
-  wall: Project['wall'];
+  wall: Wall;
   pixelsPerFt: number;
   selected?: boolean;
   onSelect?: () => void;

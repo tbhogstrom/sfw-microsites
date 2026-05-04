@@ -1,4 +1,5 @@
 import { put, list, del } from '@vercel/blob';
+import { ulid } from 'ulid';
 import { ProjectSchema, type Project } from './types';
 
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
@@ -31,11 +32,32 @@ export async function saveProject(project: Project): Promise<void> {
 function migrate(raw: unknown): unknown {
   if (!raw || typeof raw !== 'object') return raw;
   const r = raw as Record<string, any>;
-  // Add paint phase if missing (introduced after initial release).
+
+  // v1 → v1.1: add paint phase if missing.
   const phases = r.scope?.phases;
   if (phases && !phases.paint) {
     phases.paint = { enabled: false, materialId: null };
   }
+
+  // v1.x → v2: wrap top-level wall/openings/canvas into a single elevation.
+  if (r.schemaVersion === 1 || (!r.elevations && r.wall)) {
+    const elevationId = ulid();
+    r.elevations = [
+      {
+        id: elevationId,
+        name: 'Elevation 1',
+        canvas: r.canvas ?? { widthFt: 30, heightFt: 12, snapInches: 12 },
+        wall: r.wall,
+        openings: r.openings ?? [],
+      },
+    ];
+    r.activeElevationId = elevationId;
+    r.schemaVersion = 2;
+    delete r.wall;
+    delete r.openings;
+    delete r.canvas;
+  }
+
   return r;
 }
 

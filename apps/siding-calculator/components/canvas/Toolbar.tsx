@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import type { DrawTool } from './useDrawingTool';
-import type { Project } from '@/lib/types';
+import type { Canvas } from '@/lib/types';
 
 type Props = {
-  canvas: Project['canvas'];
-  onCanvasChange: (next: Project['canvas']) => void;
+  canvas: Canvas;
+  onCanvasChange: (next: Canvas) => void;
   tool: DrawTool;
   onToolChange: (t: DrawTool) => void;
   zoom: number;

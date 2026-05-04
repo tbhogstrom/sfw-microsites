@@ -39,9 +39,19 @@ const UNIT_DIM: Record<Material['unit'], string> = {
   gallon: 'sq ft',
 };
 
+/** Sum net siding area across every elevation in the project. */
+export function totalSidingSqFt(project: Project): number {
+  return project.elevations.reduce((sum, e) => sum + netSidingSqFt(e.wall, e.openings), 0);
+}
+
+/** Sum trim linear feet across every elevation in the project. */
+export function totalTrimLinFt(project: Project): number {
+  return project.elevations.reduce((sum, e) => sum + trimLinFt(e.wall, e.openings), 0);
+}
+
 export function computeMaterialsList(project: Project): MaterialsLine[] {
-  const sidingArea = netSidingSqFt(project.wall, project.openings);
-  const trim = trimLinFt(project.wall, project.openings);
+  const sidingArea = totalSidingSqFt(project);
+  const trim = totalTrimLinFt(project);
 
   const lines: MaterialsLine[] = [];
 

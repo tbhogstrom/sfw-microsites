@@ -1,10 +1,10 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import type { Opening as OpeningT, Project } from '@/lib/types';
+import type { Opening as OpeningT, Wall } from '@/lib/types';
 
 type Props = {
   opening: OpeningT;
-  wall: Project['wall'];
+  wall: Wall;
   pixelsPerFt: number;
   selected?: boolean;
   onSelect?: (id: string) => void;

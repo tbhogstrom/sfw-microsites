@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { loadProject } from '@/lib/storage';
-import { computeMaterialsList } from '@/lib/materials';
+import { computeMaterialsList, totalSidingSqFt, totalTrimLinFt } from '@/lib/materials';
 import { renderScopeBullets } from '@/lib/pdf/scope-templates';
 import { wallSqFt, netSidingSqFt, trimLinFt } from '@/lib/geometry';
 import { PRESET_LABELS } from '@/lib/presets';
@@ -16,14 +16,27 @@ export default async function ScopePage({ params }: { params: Promise<{ id: stri
     <main className="mx-auto max-w-3xl p-8">
       <h1 className="text-2xl font-semibold">Siding Project Scope</h1>
       <p className="mt-1 text-sm text-slate-500">
-        Project {project.id} · {PRESET_LABELS[project.scope.presetId]}
+        Project {project.id} · {PRESET_LABELS[project.scope.presetId]} · {project.elevations.length}{' '}
+        elevation{project.elevations.length === 1 ? '' : 's'}
       </p>
-      <h2 className="mt-6 text-lg font-semibold">Wall summary</h2>
+
+      <h2 className="mt-6 text-lg font-semibold">Elevations</h2>
+      <ul className="space-y-1 text-sm">
+        {project.elevations.map((e) => (
+          <li key={e.id}>
+            <strong>{e.name}</strong>: wall {wallSqFt(e.wall).toFixed(0)} sq ft · net{' '}
+            {netSidingSqFt(e.wall, e.openings).toFixed(0)} sq ft · trim{' '}
+            {trimLinFt(e.wall, e.openings).toFixed(0)} lin ft
+          </li>
+        ))}
+      </ul>
+
+      <h2 className="mt-6 text-lg font-semibold">Project totals</h2>
       <p>
-        Wall {wallSqFt(project.wall).toFixed(0)} sq ft · Net siding{' '}
-        {netSidingSqFt(project.wall, project.openings).toFixed(0)} sq ft · Trim{' '}
-        {trimLinFt(project.wall, project.openings).toFixed(0)} lin ft
+        Net siding {totalSidingSqFt(project).toFixed(0)} sq ft · Trim{' '}
+        {totalTrimLinFt(project).toFixed(0)} lin ft
       </p>
+
       <h2 className="mt-6 text-lg font-semibold">Materials</h2>
       <ul>
         {lines.map((l) => (
