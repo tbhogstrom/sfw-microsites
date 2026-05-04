@@ -51,9 +51,14 @@ export function ElementsDrawer({
   return (
     <div className="border-t border-slate-200 bg-white px-4 py-3">
       <div className="flex items-start gap-6 overflow-x-auto">
-        <button
+        <div
+          role="button"
+          tabIndex={0}
           onClick={() => onSelect('wall')}
-          className={`shrink-0 rounded border px-3 py-2 ${selectedId === 'wall' ? 'border-slate-900' : 'border-slate-200'}`}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') onSelect('wall');
+          }}
+          className={`shrink-0 cursor-pointer rounded border px-3 py-2 ${selectedId === 'wall' ? 'border-slate-900' : 'border-slate-200'}`}
         >
           <div className="text-xs uppercase tracking-wide text-slate-500">Wall</div>
           <div className="mt-1 flex items-center gap-2">
@@ -85,14 +90,17 @@ export function ElementsDrawer({
                 }
               />
               <button
-                onClick={() => onUpdateWall({ ...project.wall, gable: undefined })}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onUpdateWall({ ...project.wall, gable: undefined });
+                }}
                 className="text-xs text-slate-500 underline"
               >
                 remove gable
               </button>
             </div>
           )}
-        </button>
+        </div>
 
         {project.openings.map((o) => (
           <div
