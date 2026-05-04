@@ -5,31 +5,21 @@ type Props = {
   projectId: string;
 };
 
-async function fetchExport(projectId: string, format: 'csv' | 'xlsx' | 'pdf'): Promise<string> {
-  const res = await fetch(`/api/projects/${projectId}/exports`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ format }),
-  });
-  if (!res.ok) throw new Error(`export failed: ${res.status}`);
-  const { url } = await res.json();
-  return url;
-}
+type Format = 'csv' | 'xlsx' | 'pdf';
 
 export function ExportButtons({ projectId }: Props) {
-  const [busy, setBusy] = useState<string | null>(null);
+  const [busy, setBusy] = useState<Format | null>(null);
 
-  async function handle(format: 'csv' | 'xlsx' | 'pdf') {
+  function handle(format: Format) {
     setBusy(format);
-    try {
-      const url = await fetchExport(projectId, format);
-      window.open(url, '_blank');
-    } finally {
-      setBusy(null);
-    }
+    // Trigger a real browser download via the streaming GET route.
+    // The route regenerates the artifact and serves it with Content-Disposition: attachment.
+    window.location.href = `/api/projects/${projectId}/exports?format=${format}`;
+    // Reset busy state after a beat — we lose the navigation but the download itself runs in background.
+    setTimeout(() => setBusy(null), 1500);
   }
 
-  const labels: Record<'csv' | 'xlsx' | 'pdf', string> = {
+  const labels: Record<Format, string> = {
     csv: 'Download CSV',
     xlsx: 'Download Excel',
     pdf: 'Download Scope PDF',
