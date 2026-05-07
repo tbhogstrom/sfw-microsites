@@ -462,3 +462,34 @@ async def score_location_quality(
         messages=[{"role": "user", "content": content_blocks}],
     )
     return _parse_json_from_text(response.content[0].text)
+
+
+# ==== Section: Ranking ====
+
+
+_CONFIDENCE_WEIGHT = {"high": 3.0, "medium": 1.0, "low": 0.25}
+
+
+def score_project(plan: dict) -> float:
+    """Score formula:
+        sum(confidence_weight per match) + 0.5 * (curb + wide + landscaping)
+    """
+    shots_total = sum(
+        _CONFIDENCE_WEIGHT.get(m.get("confidence"), 0)
+        for m in plan["matches"]["matches"]
+    )
+    loc = plan["location"]
+    location_total = (loc.get("curb_appeal", 0) + loc.get("wide_shot_room", 0)
+                      + loc.get("landscaping", 0))
+    return shots_total + 0.5 * location_total
+
+
+def rank_projects(plans: list[dict]) -> list[dict]:
+    """Sort plans by (score desc, curb_appeal desc, distance_miles asc)."""
+    def key(plan):
+        return (
+            -score_project(plan),
+            -(plan["location"].get("curb_appeal", 0)),
+            plan["project"].get("distance_miles", 9999),
+        )
+    return sorted(plans, key=key)

@@ -427,3 +427,47 @@ async def test_score_location_quality_calls_anthropic_with_images():
     sent_msg = fake_client.messages.create.call_args.kwargs["messages"][0]["content"]
     image_blocks = [b for b in sent_msg if b.get("type") == "image"]
     assert len(image_blocks) == 1
+
+
+def test_score_project_combines_shots_and_quality():
+    plan = {
+        "matches": {"matches": [
+            {"shot_id": "a", "confidence": "high", "reason": "", "evidence_photo_id": None},
+            {"shot_id": "b", "confidence": "high", "reason": "", "evidence_photo_id": None},
+            {"shot_id": "c", "confidence": "medium", "reason": "", "evidence_photo_id": None},
+            {"shot_id": "d", "confidence": "low", "reason": "", "evidence_photo_id": None},
+        ]},
+        "location": {"curb_appeal": 4, "wide_shot_room": 5, "landscaping": 3, "callouts": []},
+    }
+    s = video_store.score_project(plan)
+    # 2 high * 3 = 6, 1 med * 1 = 1, 1 low * 0.25 = 0.25, location = (4+5+3)*0.5 = 6
+    assert s == pytest.approx(6 + 1 + 0.25 + 6)
+
+
+def test_rank_projects_orders_by_score_then_curb_appeal_then_distance():
+    plans = [
+        {"project": {"id": "poor_matches_great_location", "distance_miles": 2},
+         "matches": {"matches": [{"shot_id": "x", "confidence": "low",
+                                  "reason": "", "evidence_photo_id": None}]},
+         "location": {"curb_appeal": 5, "wide_shot_room": 5, "landscaping": 5, "callouts": []}},
+        {"project": {"id": "best_matches", "distance_miles": 18},
+         "matches": {"matches": [{"shot_id": "x", "confidence": "high",
+                                  "reason": "", "evidence_photo_id": None},
+                                 {"shot_id": "y", "confidence": "high",
+                                  "reason": "", "evidence_photo_id": None}]},
+         "location": {"curb_appeal": 3, "wide_shot_room": 3, "landscaping": 3, "callouts": []}},
+        {"project": {"id": "tie_a", "distance_miles": 5},
+         "matches": {"matches": [{"shot_id": "x", "confidence": "medium",
+                                  "reason": "", "evidence_photo_id": None}]},
+         "location": {"curb_appeal": 2, "wide_shot_room": 2, "landscaping": 2, "callouts": []}},
+        {"project": {"id": "tie_b", "distance_miles": 3},
+         "matches": {"matches": [{"shot_id": "x", "confidence": "medium",
+                                  "reason": "", "evidence_photo_id": None}]},
+         "location": {"curb_appeal": 2, "wide_shot_room": 2, "landscaping": 2, "callouts": []}},
+    ]
+    ranked = video_store.rank_projects(plans)
+    ids = [p["project"]["id"] for p in ranked]
+    assert ids[0] == "best_matches"
+    # tie_a and tie_b have identical score+curb_appeal; tie_b is closer → before tie_a
+    assert ids.index("tie_b") < ids.index("tie_a")
+    assert ids[-1] == "tie_a"
