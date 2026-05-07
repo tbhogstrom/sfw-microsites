@@ -584,3 +584,118 @@ def test_load_scripts_handles_directory(tmp_path):
     assert "Script A" in text
     assert "Script B" in text
     assert "Should be included too" in text
+
+
+@pytest.mark.asyncio
+async def test_end_to_end_run_writes_report(tmp_path, monkeypatch):
+    # Build a fake catalog under tmp_path. We point Catalog at this DB by setting
+    # the working dir so its default path is tmp_path/catalog.db. Easier: pass
+    # explicit db_path by monkeypatching Catalog().__init__'s default.
+    db_path = tmp_path / "catalog.db"
+    real_init = Catalog.__init__
+    def patched_init(self, dbp=None):
+        return real_init(self, dbp or db_path)
+    monkeypatch.setattr(Catalog, "__init__", patched_init)
+
+    cat = Catalog()
+    now_ts = int(_dt.datetime.now().timestamp())
+
+    cat.upsert_project({
+        "id": "p1", "name": "Test Project",
+        "address": "1234 NE Alberta St, Portland OR",
+        "lat": 45.55, "lng": -122.65,
+        "created_at": "", "photo_count": 1, "notepad": "",
+    })
+    cat.upsert_photo({"id": "ph1", "project_id": "p1",
+                      "uri": "https://example.com/ph1.jpg", "thumb_uri": "",
+                      "taken_at": str(now_ts - 3 * 86400), "creator_name": "Crew"})
+    cat.update_photo_analysis("ph1", {
+        "triage_status": "picked", "scene": "Dry rot in sheathing",
+        "service_types": ["dry-rot"], "phase": "during",
+        "entities": ["sheathing", "rot"], "marketing_score": 4,
+        "marketing_notes": "", "before_after_potential": True, "damage_details": {},
+    })
+    cat.close()
+
+    # Stub anthropic — different responses per pipeline step. Use call count.
+    call_log = []
+    async def fake_create(model, max_tokens, messages):
+        # Inspect the prompt to decide which step we're in
+        content = messages[0]["content"]
+        text_content = content if isinstance(content, str) else " ".join(
+            b.get("text", "") for b in content if isinstance(b, dict)
+        )
+        call_log.append(text_content[:80])
+        if "extracting a structured shot list" in text_content:
+            return _mock_anthropic_text_response(json.dumps({
+                "scripts": [{"title": "Dry rot", "narrator_summary": "",
+                             "shots": [
+                                 {"id": "dr-01", "category": "static_condition",
+                                  "description": "Dry rot in sheathing",
+                                  "service": "dry-rot", "required_phase": None}
+                             ]}]
+            }))
+        if "review" in text_content and "single construction job site" in text_content:
+            return _mock_anthropic_text_response(json.dumps({
+                "job_summary": "Active dry rot work",
+                "current_phase": "during",
+                "predicted_monday": {"phase": "during",
+                                     "work": "Continuing repair",
+                                     "confidence": "high", "reasoning": ""},
+                "available_conditions": ["dry rot exposed"],
+            }))
+        if "matching a video shot list" in text_content:
+            return _mock_anthropic_text_response(json.dumps({
+                "matches": [
+                    {"shot_id": "dr-01", "confidence": "high",
+                     "reason": "Visible in recent photos.", "evidence_photo_id": "ph1"}
+                ]
+            }))
+        # Vision call (location quality) — message is a list of blocks
+        return _mock_anthropic_text_response(json.dumps({
+            "curb_appeal": 4, "wide_shot_room": 4, "landscaping": 4,
+            "callouts": ["Nice yard"]
+        }))
+
+    fake_anthropic = AsyncMock()
+    fake_anthropic.messages.create = AsyncMock(side_effect=fake_create)
+    monkeypatch.setattr(video_store, "get_async_anthropic_client", lambda: fake_anthropic)
+
+    # Stub CompanyCamClient.get_photo_bytes to avoid real network
+    class FakeCCClient:
+        async def get_photo_bytes(self, uri):
+            return b"\xff\xd8\xff\xd9"
+    monkeypatch.setattr("photo_scanner.companycam.CompanyCamClient",
+                        lambda token=None: FakeCCClient())
+    monkeypatch.setenv("COMPANYCAM_API_TOKEN", "test")
+
+    out = tmp_path / "plan.html"
+    rc = await video_store.run(
+        script_path=tmp_path / "script.md",
+        week_of=_dt.date(2026, 5, 11),
+        max_distance_miles=20.0,
+        output_path=out,
+        refresh_shots=False,
+        refresh_quality=False,
+        refresh_triage=False,
+    )
+    # Need a script file
+    assert rc != 0  # we did not write the script yet, run should error gracefully
+
+    (tmp_path / "script.md").write_text("dummy script", encoding="utf-8")
+    rc = await video_store.run(
+        script_path=tmp_path / "script.md",
+        week_of=_dt.date(2026, 5, 11),
+        max_distance_miles=20.0,
+        output_path=out,
+        refresh_shots=False,
+        refresh_quality=False,
+        refresh_triage=False,
+    )
+    assert rc == 0
+    assert out.exists()
+    html = out.read_text(encoding="utf-8")
+    assert "Test Project" in html
+    assert "Dry rot in sheathing" in html
+    # Cache directory should now exist
+    assert (Path(video_store.__file__).parent.parent / ".video_store_cache").exists()
