@@ -8,9 +8,13 @@ See docs/superpowers/specs/2026-05-07-video-store-design.md.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import math
+from pathlib import Path
 
 from photo_scanner.catalog import Catalog
+from photo_scanner.reports import ANTHROPIC_MODEL
 
 # Portland centroid (downtown)
 PORTLAND_LAT = 45.5152
@@ -69,3 +73,95 @@ def filter_candidate_projects(
 
     results.sort(key=lambda p: p["distance_miles"])
     return results
+
+
+# ==== Section: Shot extraction ====
+
+
+SHOT_EXTRACT_PROMPT = """\
+You are extracting a structured shot list from a video script document.
+
+Read the document and identify every distinct visual shot/image referenced. Each
+shot belongs to one of three CATEGORIES:
+
+- "static_condition": a visible defect or material state that exists on a job
+  site whether or not the crew is working that day. Examples: "peeling paint",
+  "cracked caulking", "spongy wood", "discolored trim", "dry rot crumbling
+  (on-camera, but the rot itself is the static thing)".
+- "in_progress_action": requires the crew to be actively performing the work on
+  the day of filming. Examples: "crew member cutting out section", "crew member
+  installing moisture barrier", "removing affected board".
+- "establishing": generic B-roll or wide shots of the home itself. Examples:
+  "establishing shot of home", "wide shot of house", "MED of siding".
+
+For each shot, also infer:
+- "service": one of siding, deck, dry-rot, chimney, crawlspace, flashing, trim,
+  beam, leak, lead-paint, mold, restoration, or null if generic.
+- "required_phase": one of "before", "during", "after", or null. Set "during"
+  for in-progress actions; null for static_condition and establishing unless the
+  context clearly says otherwise.
+
+If the document contains multiple scripts (multiple titles), return one entry per
+script.
+
+Respond with JSON only, no other text:
+{
+  "scripts": [
+    {
+      "title": "string",
+      "narrator_summary": "1-2 sentence summary of what the narrator covers",
+      "shots": [
+        {"id": "kebab-id-unique-within-script", "category": "...",
+         "description": "concise visual description",
+         "service": "..." | null, "required_phase": "..." | null}
+      ]
+    }
+  ]
+}
+"""
+
+
+def _parse_json_from_text(text: str) -> dict:
+    """Extract the outermost JSON object from a Claude text response."""
+    text = text.strip()
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1:
+        raise ValueError(f"No JSON object found in response: {text[:200]}")
+    return json.loads(text[start:end + 1])
+
+
+def _shot_cache_path(cache_dir: Path, script_text: str) -> Path:
+    sha = hashlib.sha256(script_text.encode("utf-8")).hexdigest()
+    return cache_dir / f"{sha}.json"
+
+
+async def extract_shots(
+    script_text: str,
+    *,
+    anthropic_client,
+    cache_dir: Path,
+    force_refresh: bool = False,
+) -> dict:
+    """Extract a structured shot list from a script document.
+
+    Caches by SHA-256 of the script content. Editing the script invalidates.
+    """
+    cache_dir = Path(cache_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = _shot_cache_path(cache_dir, script_text)
+
+    if not force_refresh and cache_path.exists():
+        return json.loads(cache_path.read_text(encoding="utf-8"))
+
+    response = await anthropic_client.messages.create(
+        model=ANTHROPIC_MODEL,
+        max_tokens=4096,
+        messages=[{
+            "role": "user",
+            "content": f"{SHOT_EXTRACT_PROMPT}\n\n--- SCRIPT DOCUMENT ---\n{script_text}",
+        }],
+    )
+    parsed = _parse_json_from_text(response.content[0].text)
+    cache_path.write_text(json.dumps(parsed, indent=2), encoding="utf-8")
+    return parsed

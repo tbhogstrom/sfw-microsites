@@ -107,3 +107,96 @@ def test_filter_active_local_projects(catalog):
     assert ids == {"p_local"}
     # distance is decorated onto the result
     assert results[0]["distance_miles"] < 1
+
+
+SAMPLE_SCRIPT = """\
+WHAT ARE SIGNS OF DRY ROT?
+(NARRATOR)
+Peeling paint, cracked caulking, soft or spongy wood, and discoloration around trim
+or siding can all point to hidden moisture damage.    STILL IMAGES:
+Peeling Paint
+Cracked Caulking
+Spongy Wood
+Discolored Trim
+You might also notice wood crumbling apart or feeling hollow when touched.
+    CU: Touching Dry Rot Slow-Motion crumbling
+"""
+
+
+def _mock_anthropic_text_response(text: str):
+    """Build a fake AsyncAnthropic.messages.create return value."""
+    class _Block:
+        def __init__(self, t): self.text = t
+    class _Resp:
+        def __init__(self, t): self.content = [_Block(t)]
+    return _Resp(text)
+
+
+@pytest.mark.asyncio
+async def test_extract_shots_calls_anthropic_and_parses_json(tmp_path):
+    extracted = {
+        "scripts": [{
+            "title": "What are signs of dry rot?",
+            "narrator_summary": "Visual signs of dry rot.",
+            "shots": [
+                {"id": "dryrot-01", "category": "static_condition",
+                 "description": "Peeling paint", "service": "dry-rot", "required_phase": None},
+                {"id": "dryrot-02", "category": "in_progress_action",
+                 "description": "Touching dry rot crumbling", "service": "dry-rot",
+                 "required_phase": "during"},
+            ],
+        }]
+    }
+    fake_resp = _mock_anthropic_text_response(json.dumps(extracted))
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock(return_value=fake_resp)
+
+    cache_dir = tmp_path / ".cache"
+    result = await video_store.extract_shots(
+        SAMPLE_SCRIPT, anthropic_client=fake_client, cache_dir=cache_dir,
+    )
+
+    assert result == extracted
+    assert fake_client.messages.create.called
+    # Cache file written
+    assert any(cache_dir.glob("*.json"))
+
+
+@pytest.mark.asyncio
+async def test_extract_shots_uses_cache_on_second_call(tmp_path):
+    cached = {"scripts": []}
+    cache_dir = tmp_path / ".cache"
+    cache_dir.mkdir()
+    import hashlib
+    sha = hashlib.sha256(SAMPLE_SCRIPT.encode("utf-8")).hexdigest()
+    (cache_dir / f"{sha}.json").write_text(json.dumps(cached))
+
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock()
+    result = await video_store.extract_shots(
+        SAMPLE_SCRIPT, anthropic_client=fake_client, cache_dir=cache_dir,
+    )
+
+    assert result == cached
+    assert not fake_client.messages.create.called  # cache hit
+
+
+@pytest.mark.asyncio
+async def test_extract_shots_force_refresh_skips_cache(tmp_path):
+    cached = {"scripts": [{"title": "old"}]}
+    fresh = {"scripts": [{"title": "new", "narrator_summary": "", "shots": []}]}
+    cache_dir = tmp_path / ".cache"
+    cache_dir.mkdir()
+    import hashlib
+    sha = hashlib.sha256(SAMPLE_SCRIPT.encode("utf-8")).hexdigest()
+    (cache_dir / f"{sha}.json").write_text(json.dumps(cached))
+
+    fake_resp = _mock_anthropic_text_response(json.dumps(fresh))
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock(return_value=fake_resp)
+
+    result = await video_store.extract_shots(
+        SAMPLE_SCRIPT, anthropic_client=fake_client, cache_dir=cache_dir,
+        force_refresh=True,
+    )
+    assert result == fresh
