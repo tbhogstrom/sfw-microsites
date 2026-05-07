@@ -8,6 +8,7 @@ See docs/superpowers/specs/2026-05-07-video-store-design.md.
 """
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 import math
@@ -360,5 +361,104 @@ async def match_shots_for_project(
         model=ANTHROPIC_MODEL,
         max_tokens=2048,
         messages=[{"role": "user", "content": prompt}],
+    )
+    return _parse_json_from_text(response.content[0].text)
+
+
+# ==== Section: Location quality ====
+
+
+LOCATION_QUALITY_PROMPT = """\
+You are scoring a job site for video-shoot suitability based on a few wide
+exterior photos.
+
+Score three traits 1-5 (5 = best for video):
+- curb_appeal: how attractive/well-maintained the home looks on camera
+- wide_shot_room: how much space the videographer has to back up and frame the
+  full elevation (street width, setback, obstructions like fences/cars/trees)
+- landscaping: presence and quality of landscaping (mature plantings, clean
+  yard, presentable hardscape)
+
+Also produce 2-4 short callouts — concrete observations a video editor cares
+about, e.g., "large front yard with mature landscaping", "clear sightline to
+full elevation", "appears to be high-end craftsman in nice neighborhood",
+"power lines crossing front of house — limits drone framing", "narrow lot, hard
+to back up for wide shots".
+
+Be honest. A modest home in a tight lot should score low. Don't over-score.
+
+Respond with JSON only:
+{"curb_appeal": 1-5, "wide_shot_room": 1-5, "landscaping": 1-5,
+ "callouts": ["string", "string"]}
+"""
+
+
+def select_wide_shot_photos(catalog: Catalog, project_id: str, limit: int = 3) -> list[dict]:
+    """Pick up to `limit` photos best suited for location-quality scoring.
+    Prefers phase=overview (highest marketing_score first), then top remaining
+    photos by marketing_score.
+    """
+    rows = catalog.db.execute(
+        """
+        SELECT * FROM photos
+        WHERE project_id = ?
+          AND scene IS NOT NULL
+        """,
+        (project_id,),
+    ).fetchall()
+    photos = [dict(r) for r in rows]
+    overview = sorted(
+        [p for p in photos if p.get("phase") == "overview"],
+        key=lambda p: p.get("marketing_score") or 0, reverse=True,
+    )
+    others = sorted(
+        [p for p in photos if p.get("phase") != "overview"],
+        key=lambda p: p.get("marketing_score") or 0, reverse=True,
+    )
+    return (overview + others)[:limit]
+
+
+async def score_location_quality(
+    *,
+    project: dict,
+    wide_photos: list[dict],
+    anthropic_client,
+    fetch_bytes,
+) -> dict:
+    """Run a vision call on up to 3 wide photos and score the location.
+
+    `fetch_bytes` is an async callable `(uri: str) -> bytes` so tests can stub it.
+    Production passes `CompanyCamClient.get_photo_bytes`.
+    """
+    content_blocks: list[dict] = []
+    for ph in wide_photos[:3]:
+        try:
+            raw = await fetch_bytes(ph["uri"])
+        except Exception as e:
+            # Skip photos that fail to download — log and continue
+            print(f"[video_store] WARN: failed to fetch {ph['id']} ({e}); skipping in vision score",
+                  flush=True)
+            continue
+        b64 = base64.standard_b64encode(raw).decode("ascii")
+        content_blocks.append({
+            "type": "image",
+            "source": {"type": "base64", "media_type": "image/jpeg", "data": b64},
+        })
+
+    address_line = project.get("address") or "(address unknown)"
+    content_blocks.append({
+        "type": "text",
+        "text": f"Project address: {address_line}\n\n{LOCATION_QUALITY_PROMPT}",
+    })
+
+    if not any(b.get("type") == "image" for b in content_blocks):
+        # No images succeeded — bail out with a neutral score so the pipeline continues
+        return {"curb_appeal": 3, "wide_shot_room": 3, "landscaping": 3,
+                "callouts": ["No exterior photos available for scoring."]}
+
+    response = await anthropic_client.messages.create(
+        model=ANTHROPIC_MODEL,
+        max_tokens=1024,
+        messages=[{"role": "user", "content": content_blocks}],
     )
     return _parse_json_from_text(response.content[0].text)

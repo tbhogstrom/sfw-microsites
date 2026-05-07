@@ -369,3 +369,61 @@ async def test_match_shots_returns_structured_matches():
     assert "ph-1" in sent_msg
     assert "dr-01" in sent_msg
     assert "moisture barrier" in sent_msg
+
+
+def test_select_wide_shot_photos_prefers_overview_then_score(catalog):
+    catalog.upsert_project({"id": "p1", "name": "x", "address": "", "lat": 45.5, "lng": -122.6,
+                            "created_at": "", "photo_count": 0, "notepad": ""})
+    rows = [
+        ("a", "during", 5),  # high score, not overview
+        ("b", "overview", 3),  # overview, low score
+        ("c", "overview", 5),  # overview, high score → best
+        ("d", "before", 4),
+    ]
+    for pid, phase, score in rows:
+        catalog.upsert_photo({"id": pid, "project_id": "p1",
+                              "uri": f"u/{pid}", "thumb_uri": "",
+                              "taken_at": "1778000000", "creator_name": ""})
+        catalog.update_photo_analysis(pid, {
+            "triage_status": "picked", "scene": "", "service_types": [],
+            "phase": phase, "entities": [], "marketing_score": score,
+            "marketing_notes": "", "before_after_potential": False,
+            "damage_details": {},
+        })
+
+    picks = video_store.select_wide_shot_photos(catalog, "p1", limit=3)
+    ids = [p["id"] for p in picks]
+    # Overview photos first (highest score within overview), then non-overview by score
+    assert ids[0] == "c"
+    assert ids[1] == "b"
+    assert "a" in ids  # highest non-overview score
+    assert len(ids) == 3
+
+
+@pytest.mark.asyncio
+async def test_score_location_quality_calls_anthropic_with_images():
+    project = {"id": "p1", "name": "x", "address": "", "lat": 45.5, "lng": -122.6}
+    photos = [
+        {"id": "ph1", "uri": "https://example.com/a.jpg", "thumb_uri": "", "scene": "wide front of house"},
+    ]
+    score_payload = {
+        "curb_appeal": 4, "wide_shot_room": 5, "landscaping": 4,
+        "callouts": ["Mature landscaping", "Clear sightline"],
+    }
+    fake_resp = _mock_anthropic_text_response(json.dumps(score_payload))
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock(return_value=fake_resp)
+
+    # Stub the photo-bytes fetch
+    async def fake_fetch(uri):
+        return b"\xff\xd8\xff\xd9"  # tiny fake JPEG bytes
+    result = await video_store.score_location_quality(
+        project=project, wide_photos=photos,
+        anthropic_client=fake_client, fetch_bytes=fake_fetch,
+    )
+
+    assert result == score_payload
+    # Verify the prompt sent includes image content blocks
+    sent_msg = fake_client.messages.create.call_args.kwargs["messages"][0]["content"]
+    image_blocks = [b for b in sent_msg if b.get("type") == "image"]
+    assert len(image_blocks) == 1
