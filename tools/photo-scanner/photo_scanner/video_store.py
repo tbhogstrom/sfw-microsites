@@ -493,3 +493,83 @@ def rank_projects(plans: list[dict]) -> list[dict]:
             plan["project"].get("distance_miles", 9999),
         )
     return sorted(plans, key=key)
+
+
+# ==== Section: HTML rendering ====
+
+
+_TEMPLATES_DIR = Path(__file__).parent / "templates"
+
+
+def _build_render_context(ranked: list[dict], shot_list: dict) -> dict:
+    """Pre-compute per-script coverage and per-project shot groupings for the template."""
+    # Index shots by id -> (script_title, shot_dict)
+    shot_index: dict[str, tuple[str, dict]] = {}
+    for script in shot_list["scripts"]:
+        for shot in script["shots"]:
+            shot_index[shot["id"]] = (script["title"], shot)
+
+    matches_by_script: dict[str, dict[str, list[dict]]] = {}
+    matched_shot_ids_by_script: dict[str, set] = {script["title"]: set() for script in shot_list["scripts"]}
+
+    for plan in ranked:
+        pid = plan["project"]["id"]
+        per_script: dict[str, list[dict]] = {script["title"]: [] for script in shot_list["scripts"]}
+        for m in plan["matches"]["matches"]:
+            shot_meta = shot_index.get(m["shot_id"])
+            if not shot_meta:
+                continue
+            title, shot = shot_meta
+            evidence_photo = plan.get("evidence_photos", {}).get(m.get("evidence_photo_id") or "")
+            per_script[title].append({
+                "shot_id": m["shot_id"],
+                "description": shot["description"],
+                "category": shot["category"],
+                "confidence": m.get("confidence", "low"),
+                "reason": m.get("reason", ""),
+                "thumb_uri": (evidence_photo or {}).get("thumb_uri", ""),
+                "uri": (evidence_photo or {}).get("uri", ""),
+            })
+            matched_shot_ids_by_script[title].add(m["shot_id"])
+        matches_by_script[pid] = per_script
+
+    coverage_by_script = {
+        script["title"]: {
+            "matched": len(matched_shot_ids_by_script[script["title"]]),
+            "total": len(script["shots"]),
+        }
+        for script in shot_list["scripts"]
+    }
+
+    total_matches = sum(len(plan["matches"]["matches"]) for plan in ranked)
+    scripts_with_coverage = sum(1 for c in coverage_by_script.values() if c["matched"] > 0)
+
+    return {
+        "matches_by_script": matches_by_script,
+        "coverage_by_script": coverage_by_script,
+        "total_matches": total_matches,
+        "scripts_with_coverage": scripts_with_coverage,
+    }
+
+
+def render_report(
+    *,
+    ranked: list[dict],
+    shot_list: dict,
+    week_of: str,
+    max_distance_miles: float,
+) -> str:
+    """Render the final HTML report."""
+    from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+    ctx = _build_render_context(ranked, shot_list)
+    env = Environment(
+        loader=FileSystemLoader(str(_TEMPLATES_DIR)),
+        autoescape=select_autoescape(["html"]),
+    )
+    template = env.get_template("video_shoot_plan.html")
+    return template.render(
+        ranked=ranked, shot_list=shot_list,
+        week_of=week_of, max_distance_miles=max_distance_miles,
+        **ctx,
+    )

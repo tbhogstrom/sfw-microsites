@@ -471,3 +471,79 @@ def test_rank_projects_orders_by_score_then_curb_appeal_then_distance():
     # tie_a and tie_b have identical score+curb_appeal; tie_b is closer → before tie_a
     assert ids.index("tie_b") < ids.index("tie_a")
     assert ids[-1] == "tie_a"
+
+
+def test_render_report_produces_html_with_key_facts():
+    ranked = [
+        {
+            "project": {"id": "p1", "name": "Bahar Residence",
+                        "address": "1234 NE Alberta St, Portland OR",
+                        "distance_miles": 3.2, "lat": 45.55, "lng": -122.65},
+            "triage": {
+                "job_summary": "South-elevation siding tear-off underway.",
+                "current_phase": "during",
+                "predicted_monday": {
+                    "phase": "during",
+                    "work": "Continuing sheathing replacement and starting moisture barrier.",
+                    "confidence": "high",
+                    "reasoning": "Steady daily progress.",
+                },
+                "available_conditions": ["dry rot exposed", "rotted sheathing"],
+            },
+            "matches": {"matches": [
+                {"shot_id": "dr-01", "confidence": "high",
+                 "reason": "Sheathing rot exposed in recent photos.",
+                 "evidence_photo_id": "ph-1"},
+                {"shot_id": "dr-02", "confidence": "high",
+                 "reason": "Predicted Monday work is moisture barrier install.",
+                 "evidence_photo_id": None},
+            ]},
+            "location": {"curb_appeal": 4, "wide_shot_room": 5, "landscaping": 4,
+                         "callouts": ["Mature landscaping", "Clear sightline"]},
+            "evidence_photos": {"ph-1": {"thumb_uri": "https://example.com/ph-1-t.jpg",
+                                          "uri": "https://example.com/ph-1.jpg"}},
+            "recent_phase_strip": [
+                {"date": "2026-05-01", "phase": "before"},
+                {"date": "2026-05-04", "phase": "during"},
+                {"date": "2026-05-05", "phase": "during"},
+            ],
+        }
+    ]
+    shot_list = {"scripts": [{
+        "title": "Signs of dry rot",
+        "narrator_summary": "",
+        "shots": [
+            {"id": "dr-01", "category": "static_condition",
+             "description": "Dry rot in sheathing", "service": "dry-rot", "required_phase": None},
+            {"id": "dr-02", "category": "in_progress_action",
+             "description": "Crew installing moisture barrier", "service": "dry-rot",
+             "required_phase": "during"},
+            {"id": "dr-03", "category": "establishing",
+             "description": "Wide shot of home", "service": None, "required_phase": None},
+        ],
+    }]}
+
+    html = video_store.render_report(
+        ranked=ranked, shot_list=shot_list, week_of="2026-05-11",
+        max_distance_miles=20,
+    )
+    # Header facts present
+    assert "Week of" in html
+    assert "2026-05-11" in html
+    assert "1 project" in html or "1 projects" in html
+    # Project card content
+    assert "Bahar Residence" in html
+    assert "1234 NE Alberta St" in html
+    assert "3.2" in html  # distance
+    assert "South-elevation siding tear-off" in html
+    assert "moisture barrier" in html.lower()
+    # Shot rows from both scripts
+    assert "Dry rot in sheathing" in html
+    assert "moisture barrier" in html.lower()
+    # Script coverage shows 2/3 since dr-03 was not matched
+    assert "2 / 3" in html or "2/3" in html
+    # Address links to maps and zillow
+    assert "google.com/maps" in html
+    assert "zillow.com" in html
+    # Callouts present
+    assert "Mature landscaping" in html

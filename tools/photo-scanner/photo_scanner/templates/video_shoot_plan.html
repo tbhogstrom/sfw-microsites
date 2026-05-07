@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Video Shoot Plan — Week of {{ week_of }}</title>
+<style>
+  body { font-family: -apple-system, system-ui, Segoe UI, sans-serif;
+         max-width: 1100px; margin: 0 auto; padding: 24px; color: #222; }
+  h1 { margin: 0 0 4px 0; }
+  .header-meta { color: #666; font-size: 14px; margin-bottom: 24px; }
+  .summary { background: #f4f6f8; padding: 16px; border-radius: 8px; margin-bottom: 24px; }
+  .summary h2 { margin-top: 0; font-size: 16px; }
+  .script-cov { display: flex; align-items: center; gap: 8px; margin: 4px 0; font-size: 13px; }
+  .script-cov .bar { flex: 1; height: 6px; background: #e0e4e8; border-radius: 3px; overflow: hidden; }
+  .script-cov .bar > div { height: 100%; background: #2c7be5; }
+  .project { border: 1px solid #e0e4e8; border-radius: 8px; padding: 16px;
+             margin-bottom: 18px; }
+  .project header { display: flex; align-items: center; flex-wrap: wrap;
+                    gap: 12px; margin-bottom: 8px; }
+  .project header .name { font-weight: 600; font-size: 18px; }
+  .project header .meta { color: #666; font-size: 13px; }
+  .project header .stars { color: #f0a000; }
+  .links a { color: #2c7be5; text-decoration: none; margin-right: 8px; font-size: 13px; }
+  .summary-line { font-size: 14px; line-height: 1.45; margin: 8px 0; }
+  .pred { background: #fffbe5; padding: 10px 12px; border-radius: 6px;
+          margin: 8px 0; font-size: 14px; }
+  .pred .phase { display: inline-block; background: #2c7be5; color: white;
+                 padding: 2px 8px; border-radius: 999px; font-size: 12px; margin-right: 6px; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px;
+          font-size: 12px; font-weight: 600; }
+  .pill.high { background: #d4edda; color: #155724; }
+  .pill.medium { background: #fff3cd; color: #856404; }
+  .pill.low { background: #f8d7da; color: #721c24; }
+  .shot-group { margin: 8px 0; }
+  .shot-group h4 { margin: 8px 0 4px 0; font-size: 13px; color: #444; }
+  .shot { display: flex; align-items: flex-start; gap: 10px;
+          padding: 6px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
+  .shot .thumb { width: 64px; height: 48px; object-fit: cover; border-radius: 4px; }
+  .shot .body { flex: 1; }
+  .shot .desc { font-weight: 500; }
+  .shot .reason { color: #555; font-size: 12px; margin-top: 2px; }
+  ul.callouts { margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; }
+  .strip { display: flex; gap: 4px; margin-top: 10px; }
+  .strip .day { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: #eee; color: #555; }
+  .strip .day.before { background: #d4edda; color: #155724; }
+  .strip .day.during { background: #fff3cd; color: #856404; }
+  .strip .day.after  { background: #cfe2ff; color: #084298; }
+  .strip .day.idle   { background: #f8d7da; color: #721c24; }
+</style>
+</head>
+<body>
+
+<h1>Video Shoot Plan</h1>
+<div class="header-meta">
+  Week of {{ week_of }} —
+  {{ ranked|length }} project{{ '' if ranked|length == 1 else 's' }} •
+  {{ total_matches }} matched shots •
+  {{ scripts_with_coverage }} / {{ shot_list.scripts|length }} scripts covered •
+  Within {{ max_distance_miles }} mi of Portland
+</div>
+
+<div class="summary">
+  <h2>Script coverage</h2>
+  {% for script in shot_list.scripts %}
+    {% set cov = coverage_by_script.get(script.title, {"matched": 0, "total": script.shots|length}) %}
+    <div class="script-cov">
+      <div style="min-width: 240px;">{{ script.title }}</div>
+      <div class="bar"><div style="width: {{ (100 * cov.matched / cov.total)|int if cov.total else 0 }}%"></div></div>
+      <div>{{ cov.matched }} / {{ cov.total }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+{% for plan in ranked %}
+  {% set p = plan.project %}
+  {% set t = plan.triage %}
+  {% set loc = plan.location %}
+  <div class="project">
+    <header>
+      <div class="name">{{ p.name }}</div>
+      <div class="meta">{{ p.address }} • {{ "%.1f"|format(p.distance_miles) }} mi from PDX</div>
+      <div class="stars">
+        {% for _ in range(loc.curb_appeal) %}★{% endfor %}{% for _ in range(5 - loc.curb_appeal) %}☆{% endfor %}
+      </div>
+      <div class="links">
+        <a target="_blank" href="https://www.google.com/maps/search/?api=1&query={{ p.lat }},{{ p.lng }}">Maps</a>
+        <a target="_blank" href="https://www.zillow.com/homes/{{ p.address|urlencode }}_rb/">Zillow</a>
+      </div>
+    </header>
+
+    <div class="summary-line">{{ t.job_summary }}</div>
+
+    <div class="pred">
+      <span class="phase">{{ t.predicted_monday.phase }}</span>
+      <span class="pill {{ t.predicted_monday.confidence }}">{{ t.predicted_monday.confidence }} confidence</span>
+      <div style="margin-top: 6px;">{{ t.predicted_monday.work }}</div>
+    </div>
+
+    {% for script in shot_list.scripts %}
+      {% set script_matches = matches_by_script[p.id].get(script.title, []) %}
+      {% if script_matches %}
+        <div class="shot-group">
+          <h4>{{ script.title }}</h4>
+          {% for shot in script_matches %}
+            <div class="shot">
+              {% if shot.thumb_uri %}
+                <img class="thumb" src="{{ shot.thumb_uri }}" alt="">
+              {% endif %}
+              <div class="body">
+                <div class="desc">
+                  <span class="pill {{ shot.confidence }}">{{ shot.confidence }}</span>
+                  {{ shot.description }}
+                </div>
+                <div class="reason">{{ shot.reason }}</div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% if loc.callouts %}
+      <ul class="callouts">
+        {% for c in loc.callouts %}<li>{{ c }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if plan.recent_phase_strip %}
+      <div class="strip">
+        {% for d in plan.recent_phase_strip %}
+          <div class="day {{ d.phase }}">{{ d.date[5:] }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+
+</body>
+</html>
