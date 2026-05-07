@@ -200,3 +200,116 @@ async def test_extract_shots_force_refresh_skips_cache(tmp_path):
         force_refresh=True,
     )
     assert result == fresh
+
+
+@pytest.fixture
+def project_with_week_of_photos(catalog):
+    """A project with daily photos progressing before → during over 5 days."""
+    now = 1778400000
+    catalog.upsert_project({
+        "id": "p1", "name": "Bahar Residence",
+        "address": "1234 NE Alberta St, Portland OR",
+        "lat": 45.55, "lng": -122.65,
+        "created_at": "", "photo_count": 7, "notepad": "5-day siding tear-off and replace",
+    })
+    timeline = [
+        ("p1-d1-1", now - 6 * 86400, "before", ["siding"], "South elevation, intact rotted cedar siding visible"),
+        ("p1-d1-2", now - 6 * 86400, "before", ["siding"], "Close-up of failed caulking and peeling paint"),
+        ("p1-d2-1", now - 5 * 86400, "during", ["siding"], "Crew removing first run of cedar siding"),
+        ("p1-d3-1", now - 4 * 86400, "during", ["siding", "dry-rot"], "Tear-off complete, sheathing exposed"),
+        ("p1-d3-2", now - 4 * 86400, "during", ["dry-rot"], "Visible dry rot in sheathing at sill plate"),
+        ("p1-d4-1", now - 3 * 86400, "during", ["dry-rot"], "Damaged sheathing being removed"),
+        ("p1-d5-1", now - 2 * 86400, "during", ["siding"], "New sheathing installed, ready for moisture barrier"),
+    ]
+    for pid, ts, phase, services, scene in timeline:
+        catalog.upsert_photo({
+            "id": pid, "project_id": "p1",
+            "uri": f"https://example.com/{pid}.jpg", "thumb_uri": "",
+            "taken_at": str(ts), "creator_name": "Crew",
+        })
+        catalog.update_photo_analysis(pid, {
+            "triage_status": "picked",
+            "scene": scene,
+            "service_types": services,
+            "phase": phase,
+            "entities": ["cedar siding", "sheathing"],
+            "marketing_score": 4,
+            "marketing_notes": "",
+            "before_after_potential": True,
+            "damage_details": {},
+        })
+    return catalog, "p1", now
+
+
+@pytest.mark.asyncio
+async def test_triage_project_calls_anthropic_and_caches(project_with_week_of_photos):
+    catalog, project_id, now = project_with_week_of_photos
+    week_of = "2026-05-11"
+
+    triage_response = {
+        "job_summary": "South-elevation siding tear-off; sheathing replacement underway.",
+        "current_phase": "during",
+        "predicted_monday": {
+            "phase": "during",
+            "work": "Continuing sheathing replacement, likely starting moisture barrier install.",
+            "confidence": "high",
+            "reasoning": "Steady daily progress; new sheathing installed Friday.",
+        },
+        "available_conditions": ["dry rot exposed", "rotted sheathing", "cedar siding removed"],
+    }
+    fake_resp = _mock_anthropic_text_response(json.dumps(triage_response))
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock(return_value=fake_resp)
+
+    result = await video_store.triage_project(
+        catalog, project_id, week_of=week_of, now_ts=now,
+        anthropic_client=fake_client,
+    )
+
+    assert result == triage_response
+    assert fake_client.messages.create.called
+    # Cached
+    assert catalog.get_video_triage(project_id, week_of) == triage_response
+
+
+@pytest.mark.asyncio
+async def test_triage_project_uses_cache(project_with_week_of_photos):
+    catalog, project_id, now = project_with_week_of_photos
+    week_of = "2026-05-11"
+    cached = {"job_summary": "cached", "current_phase": "before",
+              "predicted_monday": {"phase": "during", "work": "", "confidence": "low", "reasoning": ""},
+              "available_conditions": []}
+    catalog.set_video_triage(project_id, week_of, cached)
+
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock()
+    result = await video_store.triage_project(
+        catalog, project_id, week_of=week_of, now_ts=now,
+        anthropic_client=fake_client,
+    )
+
+    assert result == cached
+    assert not fake_client.messages.create.called
+
+
+@pytest.mark.asyncio
+async def test_triage_project_force_refresh(project_with_week_of_photos):
+    catalog, project_id, now = project_with_week_of_photos
+    week_of = "2026-05-11"
+    catalog.set_video_triage(project_id, week_of, {"job_summary": "old"})
+
+    fresh = {
+        "job_summary": "fresh",
+        "current_phase": "during",
+        "predicted_monday": {"phase": "during", "work": "x", "confidence": "high", "reasoning": "y"},
+        "available_conditions": [],
+    }
+    fake_resp = _mock_anthropic_text_response(json.dumps(fresh))
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock(return_value=fake_resp)
+
+    result = await video_store.triage_project(
+        catalog, project_id, week_of=week_of, now_ts=now,
+        anthropic_client=fake_client, force_refresh=True,
+    )
+    assert result == fresh

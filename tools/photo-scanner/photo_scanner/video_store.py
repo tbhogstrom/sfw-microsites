@@ -165,3 +165,121 @@ async def extract_shots(
     parsed = _parse_json_from_text(response.content[0].text)
     cache_path.write_text(json.dumps(parsed, indent=2), encoding="utf-8")
     return parsed
+
+
+# ==== Section: Per-project triage ====
+
+
+TRIAGE_PROMPT = """\
+You are reviewing a single construction job site to plan video shoots for next week.
+
+Inputs:
+- Project metadata (name, address, notepad)
+- A chronological list of photos from the last 7 days, oldest first
+
+Goal: Produce a job summary and predict what the crew will be doing on the
+upcoming Monday so a video editor can decide whether to send a crew there.
+
+Be honest about uncertainty. If photos taper off mid-week or the project looks
+done, say "idle" for the predicted phase and explain why. Do not invent activity
+that the photos do not support.
+
+"available_conditions" should list the visible static conditions and exposed
+materials seen in recent photos that would still be present on Monday — these
+are matched against shot lists. Examples: "dry rot exposed", "rotted sheathing
+visible", "cedar siding removed", "moisture damage on plywood", "intact
+weathered siding".
+
+Respond with JSON only:
+{
+  "job_summary": "1-3 sentence narrative of what's been happening this week",
+  "current_phase": "before | during | after | idle",
+  "predicted_monday": {
+    "phase": "before | during | after | idle",
+    "work": "1-3 sentence prediction of what the crew will be doing Monday",
+    "confidence": "high | medium | low",
+    "reasoning": "1-2 sentences citing specific evidence from the timeline"
+  },
+  "available_conditions": ["short phrase", "another short phrase"]
+}
+"""
+
+
+def _format_photo_for_triage(photo: dict) -> str:
+    services = json.loads(photo["service_types"]) if photo.get("service_types") else []
+    entities = json.loads(photo["entities"]) if photo.get("entities") else []
+    damage = json.loads(photo["damage_details"]) if photo.get("damage_details") else {}
+    parts = [
+        f"  taken_at_ts={photo.get('taken_at','')}",
+        f"  creator={photo.get('creator_name','')}",
+        f"  phase={photo.get('phase','')}",
+        f"  services={services}",
+        f"  scene=\"{photo.get('scene','')}\"",
+        f"  entities={entities}",
+    ]
+    notes = photo.get("marketing_notes") or ""
+    if notes:
+        parts.append(f"  notes=\"{notes}\"")
+    if damage:
+        parts.append(f"  damage={damage}")
+    return f"- photo_id={photo['id']}\n" + "\n".join(parts)
+
+
+def _get_recent_photos_for_triage(catalog: Catalog, project_id: str, now_ts: int, days: int = 7) -> list[dict]:
+    cutoff = now_ts - days * 86400
+    rows = catalog.db.execute(
+        """
+        SELECT * FROM photos
+        WHERE project_id = ?
+          AND CAST(taken_at AS INTEGER) >= ?
+        ORDER BY CAST(taken_at AS INTEGER) ASC
+        """,
+        (project_id, cutoff),
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
+async def triage_project(
+    catalog: Catalog,
+    project_id: str,
+    *,
+    week_of: str,
+    now_ts: int,
+    anthropic_client,
+    force_refresh: bool = False,
+) -> dict:
+    """Triage a project's last 7 days of photos. Cached per project per week."""
+    if not force_refresh:
+        cached = catalog.get_video_triage(project_id, week_of)
+        if cached is not None:
+            return cached
+
+    project = catalog.get_project(project_id)
+    if not project:
+        raise ValueError(f"Project {project_id!r} not found")
+
+    photos = _get_recent_photos_for_triage(catalog, project_id, now_ts)
+    photo_lines = [_format_photo_for_triage(p) for p in photos] if photos else ["(no photos in last 7 days)"]
+
+    prompt_parts = [
+        TRIAGE_PROMPT,
+        "",
+        "--- PROJECT ---",
+        f"name: {project.get('name','')}",
+        f"address: {project.get('address','')}",
+        f"notepad: {(project.get('notepad') or '')[:1000]}",
+        "",
+        f"--- PHOTOS (last 7 days, {len(photos)} total, oldest first) ---",
+        "\n".join(photo_lines),
+        "",
+        f"Planning for Monday: {week_of}",
+    ]
+
+    response = await anthropic_client.messages.create(
+        model=ANTHROPIC_MODEL,
+        max_tokens=2048,
+        messages=[{"role": "user", "content": "\n".join(prompt_parts)}],
+    )
+    triage = _parse_json_from_text(response.content[0].text)
+    catalog.set_video_triage(project_id, week_of, triage)
+    return triage
