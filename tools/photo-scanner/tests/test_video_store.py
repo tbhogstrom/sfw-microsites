@@ -699,3 +699,35 @@ async def test_end_to_end_run_writes_report(tmp_path, monkeypatch):
     assert "Dry rot in sheathing" in html
     # Cache directory should now exist
     assert (Path(video_store.__file__).parent.parent / ".video_store_cache").exists()
+
+
+def test_select_wide_shot_photos_filters_by_since_ts(catalog):
+    catalog.upsert_project({"id": "p1", "name": "x", "address": "", "lat": 45.5, "lng": -122.6,
+                            "created_at": "", "photo_count": 0, "notepad": ""})
+    now = 1778400000
+    rows = [
+        ("recent_overview", "overview", 5, str(now - 10 * 86400)),
+        ("old_overview", "overview", 5, str(now - 200 * 86400)),
+    ]
+    for pid, phase, score, taken_at in rows:
+        catalog.upsert_photo({"id": pid, "project_id": "p1",
+                              "uri": f"u/{pid}", "thumb_uri": "",
+                              "taken_at": taken_at, "creator_name": ""})
+        catalog.update_photo_analysis(pid, {
+            "triage_status": "picked", "scene": "x", "service_types": [],
+            "phase": phase, "entities": [], "marketing_score": score,
+            "marketing_notes": "", "before_after_potential": False,
+            "damage_details": {},
+        })
+    picks = video_store.select_wide_shot_photos(
+        catalog, "p1", limit=3, since_ts=now - 90 * 86400,
+    )
+    ids = [p["id"] for p in picks]
+    assert ids == ["recent_overview"]
+
+
+def test_parse_json_from_text_raises_value_error_on_malformed():
+    with pytest.raises(ValueError, match="No JSON object"):
+        video_store._parse_json_from_text("just plain text")
+    with pytest.raises(ValueError, match="Malformed JSON"):
+        video_store._parse_json_from_text("garbage {not: valid json}")

@@ -141,7 +141,11 @@ def _parse_json_from_text(text: str) -> dict:
     end = text.rfind("}")
     if start == -1 or end == -1:
         raise ValueError(f"No JSON object found in response: {text[:200]}")
-    return json.loads(text[start:end + 1])
+    try:
+        return json.loads(text[start:end + 1])
+    except json.JSONDecodeError as exc:
+        snippet = text[start:start + 200]
+        raise ValueError(f"Malformed JSON in response: {exc}\n{snippet}") from exc
 
 
 def _shot_cache_path(cache_dir: Path, script_text: str) -> Path:
@@ -405,19 +409,37 @@ Respond with JSON only:
 """
 
 
-def select_wide_shot_photos(catalog: Catalog, project_id: str, limit: int = 3) -> list[dict]:
+def select_wide_shot_photos(
+    catalog: Catalog,
+    project_id: str,
+    limit: int = 3,
+    *,
+    since_ts: int | None = None,
+) -> list[dict]:
     """Pick up to `limit` photos best suited for location-quality scoring.
     Prefers phase=overview (highest marketing_score first), then top remaining
-    photos by marketing_score.
+    photos by marketing_score. If `since_ts` is given, only photos with
+    `taken_at >= since_ts` are considered.
     """
-    rows = catalog.db.execute(
-        """
-        SELECT * FROM photos
-        WHERE project_id = ?
-          AND scene IS NOT NULL
-        """,
-        (project_id,),
-    ).fetchall()
+    if since_ts is not None:
+        rows = catalog.db.execute(
+            """
+            SELECT * FROM photos
+            WHERE project_id = ?
+              AND scene IS NOT NULL
+              AND CAST(taken_at AS INTEGER) >= ?
+            """,
+            (project_id, since_ts),
+        ).fetchall()
+    else:
+        rows = catalog.db.execute(
+            """
+            SELECT * FROM photos
+            WHERE project_id = ?
+              AND scene IS NOT NULL
+            """,
+            (project_id,),
+        ).fetchall()
     photos = [dict(r) for r in rows]
     overview = sorted(
         [p for p in photos if p.get("phase") == "overview"],
@@ -618,9 +640,9 @@ def _is_recent_enough(scored_at: str | None, days: int = 14) -> bool:
         return False
     try:
         ts = _dt.datetime.fromisoformat(scored_at)
-    except ValueError:
+        return (_dt.datetime.now() - ts).days < days
+    except (ValueError, TypeError):
         return False
-    return (_dt.datetime.now() - ts).days < days
 
 
 # ==== Section: CLI orchestration ====
@@ -639,6 +661,12 @@ async def run(
     refresh_quality: bool,
     refresh_triage: bool,
 ) -> int:
+    # If shots changed, the triage's available_conditions and the matcher's
+    # context are also potentially stale — auto-refresh both to keep them
+    # consistent.
+    if refresh_shots:
+        refresh_triage = True
+
     load_project_env()
     print(f"[video_store] Anthropic auth: {describe_anthropic_auth()}", file=sys.stderr)
 
@@ -696,71 +724,78 @@ async def run(
     plans: list[dict] = []
     for i, project in enumerate(candidates, 1):
         print(f"[video_store] [{i}/{len(candidates)}] {project['name']!r}", file=sys.stderr)
+        try:
+            triage = await triage_project(
+                catalog, project["id"], week_of=week_of_iso, now_ts=now_ts,
+                anthropic_client=anthropic_client, force_refresh=refresh_triage,
+            )
 
-        triage = await triage_project(
-            catalog, project["id"], week_of=week_of_iso, now_ts=now_ts,
-            anthropic_client=anthropic_client, force_refresh=refresh_triage,
-        )
+            recent_rows = _get_recent_photos_for_triage(catalog, project["id"], now_ts)
+            recent_for_match = [
+                {"id": p["id"], "scene": p.get("scene", ""),
+                 "entities": json.loads(p["entities"]) if p.get("entities") else []}
+                for p in recent_rows
+            ]
+            evidence_photos = {p["id"]: {"thumb_uri": p.get("thumb_uri", ""),
+                                         "uri": p.get("uri", "")} for p in recent_rows}
 
-        recent_rows = _get_recent_photos_for_triage(catalog, project["id"], now_ts)
-        recent_for_match = [
-            {"id": p["id"], "scene": p.get("scene", ""),
-             "entities": json.loads(p["entities"]) if p.get("entities") else []}
-            for p in recent_rows
-        ]
-        evidence_photos = {p["id"]: {"thumb_uri": p.get("thumb_uri", ""),
-                                     "uri": p.get("uri", "")} for p in recent_rows}
+            # Phase strip from same recent photos (one entry per day, latest phase wins)
+            strip: dict[str, str] = {}
+            for p in recent_rows:
+                try:
+                    ts = int(p["taken_at"])
+                except (TypeError, ValueError):
+                    continue
+                d = _dt.date.fromtimestamp(ts).isoformat()
+                strip[d] = p.get("phase") or "idle"
+            recent_phase_strip = [{"date": d, "phase": strip[d]} for d in sorted(strip)]
 
-        # Phase strip from same recent photos (one entry per day, latest phase wins)
-        strip: dict[str, str] = {}
-        for p in recent_rows:
-            try:
-                ts = int(p["taken_at"])
-            except (TypeError, ValueError):
-                continue
-            d = _dt.date.fromtimestamp(ts).isoformat()
-            strip[d] = p.get("phase") or "idle"
-        recent_phase_strip = [{"date": d, "phase": strip[d]} for d in sorted(strip)]
+            matches = await match_shots_for_project(
+                triage=triage, shot_list=shot_list, recent_photos=recent_for_match,
+                anthropic_client=anthropic_client,
+            )
 
-        matches = await match_shots_for_project(
-            triage=triage, shot_list=shot_list, recent_photos=recent_for_match,
-            anthropic_client=anthropic_client,
-        )
+            existing_loc = catalog.get_video_location_score(project["id"])
+            loc_row = catalog.db.execute(
+                "SELECT video_location_scored_at FROM projects WHERE id = ?", (project["id"],),
+            ).fetchone()
+            scored_at = loc_row[0] if loc_row else None
 
-        existing_loc = catalog.get_video_location_score(project["id"])
-        loc_row = catalog.db.execute(
-            "SELECT video_location_scored_at FROM projects WHERE id = ?", (project["id"],),
-        ).fetchone()
-        scored_at = loc_row[0] if loc_row else None
-
-        if existing_loc and _is_recent_enough(scored_at) and not refresh_quality:
-            location = existing_loc
-        else:
-            wide_photos = select_wide_shot_photos(catalog, project["id"], limit=3)
-            try:
-                cc = _get_cc_client()
-                location = await score_location_quality(
-                    project=project, wide_photos=wide_photos,
-                    anthropic_client=anthropic_client,
-                    fetch_bytes=cc.get_photo_bytes,
+            if existing_loc and _is_recent_enough(scored_at) and not refresh_quality:
+                location = existing_loc
+            else:
+                wide_photos = select_wide_shot_photos(
+                    catalog, project["id"], limit=3,
+                    since_ts=now_ts - 90 * 86400,
                 )
-                catalog.set_video_location_score(
-                    project["id"], location, scored_at=_dt.datetime.now().isoformat(),
-                )
-            except RuntimeError as e:
-                print(f"[video_store] WARN: skipping location quality for {project['id']}: {e}",
-                      file=sys.stderr)
-                location = {"curb_appeal": 3, "wide_shot_room": 3, "landscaping": 3,
-                            "callouts": [f"Location not scored: {e}"]}
+                try:
+                    cc = _get_cc_client()
+                    location = await score_location_quality(
+                        project=project, wide_photos=wide_photos,
+                        anthropic_client=anthropic_client,
+                        fetch_bytes=cc.get_photo_bytes,
+                    )
+                    catalog.set_video_location_score(
+                        project["id"], location, scored_at=_dt.datetime.now().isoformat(),
+                    )
+                except RuntimeError as e:
+                    print(f"[video_store] WARN: skipping location quality for {project['id']}: {e}",
+                          file=sys.stderr)
+                    location = {"curb_appeal": 3, "wide_shot_room": 3, "landscaping": 3,
+                                "callouts": [f"Location not scored: {e}"]}
 
-        plans.append({
-            "project": project,
-            "triage": triage,
-            "matches": matches,
-            "location": location,
-            "evidence_photos": evidence_photos,
-            "recent_phase_strip": recent_phase_strip,
-        })
+            plans.append({
+                "project": project,
+                "triage": triage,
+                "matches": matches,
+                "location": location,
+                "evidence_photos": evidence_photos,
+                "recent_phase_strip": recent_phase_strip,
+            })
+        except ValueError as e:
+            print(f"[video_store] WARN: skipping {project['id']} due to LLM/parse error: {e}",
+                  file=sys.stderr)
+            continue
 
     # Step 6 — rank + render
     ranked = rank_projects(plans)
@@ -792,7 +827,8 @@ def main() -> None:
                         help="Max distance from Portland in miles (default 20)")
     parser.add_argument("--out", type=Path, default=None,
                         help="Output HTML path (default video_shoot_plan_<week>.html)")
-    parser.add_argument("--refresh-shots", action="store_true")
+    parser.add_argument("--refresh-shots", action="store_true",
+                        help="Re-extract shot list from the script. Implies --refresh-triage.")
     parser.add_argument("--refresh-quality", action="store_true")
     parser.add_argument("--refresh-triage", action="store_true")
     args = parser.parse_args()
