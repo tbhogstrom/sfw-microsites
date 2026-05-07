@@ -547,3 +547,40 @@ def test_render_report_produces_html_with_key_facts():
     assert "zillow.com" in html
     # Callouts present
     assert "Mature landscaping" in html
+
+
+import datetime as _dt
+
+
+def test_next_monday_from_thursday():
+    thu = _dt.date(2026, 5, 7)  # Thursday
+    assert video_store.next_monday(thu) == _dt.date(2026, 5, 11)
+
+
+def test_next_monday_from_monday_returns_following_monday():
+    mon = _dt.date(2026, 5, 11)
+    assert video_store.next_monday(mon) == _dt.date(2026, 5, 18)
+
+
+def test_next_monday_from_sunday():
+    sun = _dt.date(2026, 5, 10)
+    assert video_store.next_monday(sun) == _dt.date(2026, 5, 11)
+
+
+def test_load_scripts_handles_file(tmp_path):
+    p = tmp_path / "script.md"
+    p.write_text("Some script content", encoding="utf-8")
+    text = video_store.load_scripts(p)
+    assert "Some script content" in text
+
+
+def test_load_scripts_handles_directory(tmp_path):
+    d = tmp_path / "scripts"
+    d.mkdir()
+    (d / "a.md").write_text("Script A", encoding="utf-8")
+    (d / "b.md").write_text("Script B", encoding="utf-8")
+    (d / "ignore.txt").write_text("Should be included too", encoding="utf-8")
+    text = video_store.load_scripts(d)
+    assert "Script A" in text
+    assert "Script B" in text
+    assert "Should be included too" in text

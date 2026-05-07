@@ -8,11 +8,23 @@ See docs/superpowers/specs/2026-05-07-video-store-design.md.
 """
 from __future__ import annotations
 
+import argparse
+import asyncio
 import base64
+import datetime as _dt
 import hashlib
 import json
 import math
+import os
+import sys
+import webbrowser
 from pathlib import Path
+
+from photo_scanner.anthropic_auth import (
+    describe_anthropic_auth,
+    get_async_anthropic_client,
+    load_project_env,
+)
 
 from photo_scanner.catalog import Catalog
 from photo_scanner.reports import ANTHROPIC_MODEL
@@ -573,3 +585,237 @@ def render_report(
         week_of=week_of, max_distance_miles=max_distance_miles,
         **ctx,
     )
+
+
+# ==== Section: CLI helpers ====
+
+
+def next_monday(today: _dt.date | None = None) -> _dt.date:
+    """Return the next Monday strictly after `today` (today=Monday → +7 days)."""
+    today = today or _dt.date.today()
+    days_ahead = (0 - today.weekday()) % 7
+    if days_ahead == 0:
+        days_ahead = 7
+    return today + _dt.timedelta(days=days_ahead)
+
+
+def load_scripts(path: Path) -> str:
+    """Load script content from a single file or concatenate every file in a directory."""
+    path = Path(path)
+    if path.is_file():
+        return path.read_text(encoding="utf-8")
+    if path.is_dir():
+        chunks = []
+        for f in sorted(path.iterdir()):
+            if f.is_file():
+                chunks.append(f"=== {f.name} ===\n{f.read_text(encoding='utf-8')}")
+        return "\n\n".join(chunks)
+    raise FileNotFoundError(f"Script path not found: {path}")
+
+
+def _is_recent_enough(scored_at: str | None, days: int = 14) -> bool:
+    if not scored_at:
+        return False
+    try:
+        ts = _dt.datetime.fromisoformat(scored_at)
+    except ValueError:
+        return False
+    return (_dt.datetime.now() - ts).days < days
+
+
+# ==== Section: CLI orchestration ====
+
+
+CACHE_DIR = Path(__file__).parent.parent / ".video_store_cache"
+
+
+async def run(
+    script_path: Path,
+    *,
+    week_of: _dt.date,
+    max_distance_miles: float,
+    output_path: Path,
+    refresh_shots: bool,
+    refresh_quality: bool,
+    refresh_triage: bool,
+) -> int:
+    load_project_env()
+    print(f"[video_store] Anthropic auth: {describe_anthropic_auth()}", file=sys.stderr)
+
+    anthropic_client = get_async_anthropic_client()
+    if not anthropic_client:
+        print("[video_store] ERROR: no Anthropic auth configured.", file=sys.stderr)
+        return 2
+
+    # CompanyCam client is only needed if we have to fetch image bytes for vision.
+    cc_client = None
+
+    def _get_cc_client():
+        nonlocal cc_client
+        if cc_client is None:
+            from photo_scanner.companycam import CompanyCamClient
+            token = os.environ.get("COMPANYCAM_API_TOKEN", "")
+            if not token:
+                raise RuntimeError("COMPANYCAM_API_TOKEN not set; cannot fetch photos for vision scoring")
+            cc_client = CompanyCamClient(token=token)
+        return cc_client
+
+    catalog = Catalog()
+    week_of_iso = week_of.isoformat()
+    now_ts = int(_dt.datetime.now().timestamp())
+
+    print(f"[video_store] Planning for Monday {week_of_iso}", file=sys.stderr)
+
+    # Step 1 — extract shots
+    try:
+        script_text = load_scripts(Path(script_path))
+    except FileNotFoundError as e:
+        print(f"[video_store] ERROR: {e}", file=sys.stderr)
+        return 2
+
+    shot_list = await extract_shots(
+        script_text, anthropic_client=anthropic_client,
+        cache_dir=CACHE_DIR, force_refresh=refresh_shots,
+    )
+    total_shots = sum(len(s["shots"]) for s in shot_list["scripts"])
+    print(f"[video_store] Loaded {len(shot_list['scripts'])} script(s), "
+          f"{total_shots} total shots", file=sys.stderr)
+
+    # Step 2 — filter projects
+    candidates = filter_candidate_projects(
+        catalog, max_distance_miles=max_distance_miles, now_ts=now_ts,
+    )
+    print(f"[video_store] {len(candidates)} candidate project(s) within "
+          f"{max_distance_miles} mi", file=sys.stderr)
+
+    if not candidates:
+        print("[video_store] No candidate projects. Nothing to plan.", file=sys.stderr)
+        return 1
+
+    # Steps 3-5 — per-project triage, matching, location quality
+    plans: list[dict] = []
+    for i, project in enumerate(candidates, 1):
+        print(f"[video_store] [{i}/{len(candidates)}] {project['name']!r}", file=sys.stderr)
+
+        triage = await triage_project(
+            catalog, project["id"], week_of=week_of_iso, now_ts=now_ts,
+            anthropic_client=anthropic_client, force_refresh=refresh_triage,
+        )
+
+        recent_rows = _get_recent_photos_for_triage(catalog, project["id"], now_ts)
+        recent_for_match = [
+            {"id": p["id"], "scene": p.get("scene", ""),
+             "entities": json.loads(p["entities"]) if p.get("entities") else []}
+            for p in recent_rows
+        ]
+        evidence_photos = {p["id"]: {"thumb_uri": p.get("thumb_uri", ""),
+                                     "uri": p.get("uri", "")} for p in recent_rows}
+
+        # Phase strip from same recent photos (one entry per day, latest phase wins)
+        strip: dict[str, str] = {}
+        for p in recent_rows:
+            try:
+                ts = int(p["taken_at"])
+            except (TypeError, ValueError):
+                continue
+            d = _dt.date.fromtimestamp(ts).isoformat()
+            strip[d] = p.get("phase") or "idle"
+        recent_phase_strip = [{"date": d, "phase": strip[d]} for d in sorted(strip)]
+
+        matches = await match_shots_for_project(
+            triage=triage, shot_list=shot_list, recent_photos=recent_for_match,
+            anthropic_client=anthropic_client,
+        )
+
+        existing_loc = catalog.get_video_location_score(project["id"])
+        loc_row = catalog.db.execute(
+            "SELECT video_location_scored_at FROM projects WHERE id = ?", (project["id"],),
+        ).fetchone()
+        scored_at = loc_row[0] if loc_row else None
+
+        if existing_loc and _is_recent_enough(scored_at) and not refresh_quality:
+            location = existing_loc
+        else:
+            wide_photos = select_wide_shot_photos(catalog, project["id"], limit=3)
+            try:
+                cc = _get_cc_client()
+                location = await score_location_quality(
+                    project=project, wide_photos=wide_photos,
+                    anthropic_client=anthropic_client,
+                    fetch_bytes=cc.get_photo_bytes,
+                )
+                catalog.set_video_location_score(
+                    project["id"], location, scored_at=_dt.datetime.now().isoformat(),
+                )
+            except RuntimeError as e:
+                print(f"[video_store] WARN: skipping location quality for {project['id']}: {e}",
+                      file=sys.stderr)
+                location = {"curb_appeal": 3, "wide_shot_room": 3, "landscaping": 3,
+                            "callouts": [f"Location not scored: {e}"]}
+
+        plans.append({
+            "project": project,
+            "triage": triage,
+            "matches": matches,
+            "location": location,
+            "evidence_photos": evidence_photos,
+            "recent_phase_strip": recent_phase_strip,
+        })
+
+    # Step 6 — rank + render
+    ranked = rank_projects(plans)
+    html = render_report(
+        ranked=ranked, shot_list=shot_list, week_of=week_of_iso,
+        max_distance_miles=max_distance_miles,
+    )
+    output_path = Path(output_path)
+    output_path.write_text(html, encoding="utf-8")
+    print(f"[video_store] Wrote {output_path}", file=sys.stderr)
+
+    try:
+        webbrowser.open(output_path.resolve().as_uri())
+    except Exception:
+        pass
+    return 0
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        prog="photo_scanner.video_store",
+        description="Generate a Friday shoot plan for next Monday from a video script document.",
+    )
+    parser.add_argument("script", type=Path,
+                        help="Path to a script file or a directory of script files")
+    parser.add_argument("--week-of", type=str, default=None,
+                        help="Monday of the week to plan (YYYY-MM-DD); default = next Monday")
+    parser.add_argument("--max-distance", type=float, default=20.0,
+                        help="Max distance from Portland in miles (default 20)")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="Output HTML path (default video_shoot_plan_<week>.html)")
+    parser.add_argument("--refresh-shots", action="store_true")
+    parser.add_argument("--refresh-quality", action="store_true")
+    parser.add_argument("--refresh-triage", action="store_true")
+    args = parser.parse_args()
+
+    if args.week_of:
+        week_of = _dt.date.fromisoformat(args.week_of)
+    else:
+        week_of = next_monday()
+
+    if args.out is None:
+        args.out = Path(f"video_shoot_plan_{week_of.isoformat()}.html")
+
+    rc = asyncio.run(run(
+        script_path=args.script,
+        week_of=week_of,
+        max_distance_miles=args.max_distance,
+        output_path=args.out,
+        refresh_shots=args.refresh_shots,
+        refresh_quality=args.refresh_quality,
+        refresh_triage=args.refresh_triage,
+    ))
+    sys.exit(rc)
+
+
+if __name__ == "__main__":
+    main()
