@@ -283,3 +283,82 @@ async def triage_project(
     triage = _parse_json_from_text(response.content[0].text)
     catalog.set_video_triage(project_id, week_of, triage)
     return triage
+
+
+# ==== Section: Shot matching ====
+
+
+MATCH_SHOTS_PROMPT = """\
+You are matching a video shot list to one job site.
+
+You will be given:
+- A triage of what's predicted to happen on Monday at this site
+- A list of "available_conditions" — visible static conditions on the site
+- A list of recent photos with IDs (so you can cite evidence)
+- The full shot list across all scripts
+
+For EACH shot, decide whether it can plausibly be filmed at this site on Monday:
+- "static_condition" shots: match if the condition appears in available_conditions
+  or the recent photos' scenes/entities. Set evidence_photo_id to the strongest
+  matching photo's ID.
+- "in_progress_action" shots: match only if the predicted Monday work clearly
+  involves that action AND the predicted phase matches the shot's required_phase.
+- "establishing" shots: match if the site is active (predicted phase != "idle").
+
+Confidence levels:
+- "high": clear, direct match with strong evidence
+- "medium": plausible but not guaranteed
+- "low": speculative — only include if it's a near miss worth flagging
+
+Omit shots with no plausible match.
+
+Respond with JSON only:
+{
+  "matches": [
+    {"shot_id": "...", "confidence": "high|medium|low",
+     "reason": "1 sentence citing evidence", "evidence_photo_id": "..." | null}
+  ]
+}
+"""
+
+
+async def match_shots_for_project(
+    *,
+    triage: dict,
+    shot_list: dict,
+    recent_photos: list[dict],
+    anthropic_client,
+) -> dict:
+    """Run one Claude call to match shots → this project's Monday."""
+    photo_index_lines = []
+    for ph in recent_photos:
+        scene = ph.get("scene") or ""
+        entities = ph.get("entities") or []
+        if isinstance(entities, str):
+            try:
+                entities = json.loads(entities)
+            except (TypeError, ValueError):
+                entities = []
+        photo_index_lines.append(
+            f"- photo_id={ph['id']}: scene=\"{scene}\", entities={entities}"
+        )
+
+    prompt = "\n".join([
+        MATCH_SHOTS_PROMPT,
+        "",
+        "--- TRIAGE ---",
+        json.dumps(triage, indent=2),
+        "",
+        f"--- RECENT PHOTOS ({len(recent_photos)}) ---",
+        "\n".join(photo_index_lines) if photo_index_lines else "(none)",
+        "",
+        "--- SHOT LIST ---",
+        json.dumps(shot_list, indent=2),
+    ])
+
+    response = await anthropic_client.messages.create(
+        model=ANTHROPIC_MODEL,
+        max_tokens=2048,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return _parse_json_from_text(response.content[0].text)

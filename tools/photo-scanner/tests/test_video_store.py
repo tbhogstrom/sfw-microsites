@@ -313,3 +313,59 @@ async def test_triage_project_force_refresh(project_with_week_of_photos):
         anthropic_client=fake_client, force_refresh=True,
     )
     assert result == fresh
+
+
+@pytest.mark.asyncio
+async def test_match_shots_returns_structured_matches():
+    triage = {
+        "job_summary": "tearing off siding",
+        "current_phase": "during",
+        "predicted_monday": {
+            "phase": "during",
+            "work": "Installing moisture barrier on south wall.",
+            "confidence": "high", "reasoning": "",
+        },
+        "available_conditions": ["dry rot exposed", "rotted sheathing visible"],
+    }
+    shot_list = {"scripts": [{
+        "title": "Signs of dry rot",
+        "narrator_summary": "",
+        "shots": [
+            {"id": "dr-01", "category": "static_condition",
+             "description": "Dry rot in sheathing", "service": "dry-rot", "required_phase": None},
+            {"id": "dr-02", "category": "in_progress_action",
+             "description": "Crew installing moisture barrier", "service": "dry-rot",
+             "required_phase": "during"},
+            {"id": "dr-03", "category": "establishing",
+             "description": "Wide shot of home", "service": None, "required_phase": None},
+        ],
+    }]}
+    recent_photos = [
+        {"id": "ph-1", "scene": "Dry rot visible in exposed sheathing",
+         "entities": ["dry rot", "sheathing"]},
+    ]
+
+    matches_payload = {"matches": [
+        {"shot_id": "dr-01", "confidence": "high",
+         "reason": "Sheathing rot exposed in recent photos.", "evidence_photo_id": "ph-1"},
+        {"shot_id": "dr-02", "confidence": "high",
+         "reason": "Predicted Monday work is moisture barrier install.",
+         "evidence_photo_id": None},
+        {"shot_id": "dr-03", "confidence": "medium",
+         "reason": "Active site, presentable.", "evidence_photo_id": None},
+    ]}
+    fake_resp = _mock_anthropic_text_response(json.dumps(matches_payload))
+    fake_client = AsyncMock()
+    fake_client.messages.create = AsyncMock(return_value=fake_resp)
+
+    result = await video_store.match_shots_for_project(
+        triage=triage, shot_list=shot_list, recent_photos=recent_photos,
+        anthropic_client=fake_client,
+    )
+
+    assert result == matches_payload
+    # Verify the prompt included the photo IDs (so Claude can reference evidence)
+    sent_msg = fake_client.messages.create.call_args.kwargs["messages"][0]["content"]
+    assert "ph-1" in sent_msg
+    assert "dr-01" in sent_msg
+    assert "moisture barrier" in sent_msg
