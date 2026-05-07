@@ -122,6 +122,24 @@ class Catalog:
         except sqlite3.OperationalError:
             self.db.execute("ALTER TABLE photos ADD COLUMN client_export_flags TEXT")
 
+        # video_store columns on projects
+        try:
+            self.db.execute("SELECT video_triage_json FROM projects LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE projects ADD COLUMN video_triage_json TEXT")
+        try:
+            self.db.execute("SELECT video_triage_week FROM projects LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE projects ADD COLUMN video_triage_week TEXT")
+        try:
+            self.db.execute("SELECT video_location_score_json FROM projects LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE projects ADD COLUMN video_location_score_json TEXT")
+        try:
+            self.db.execute("SELECT video_location_scored_at FROM projects LIMIT 0")
+        except sqlite3.OperationalError:
+            self.db.execute("ALTER TABLE projects ADD COLUMN video_location_scored_at TEXT")
+
         # daily_reports table
         self.db.execute("""
             CREATE TABLE IF NOT EXISTS daily_reports (
@@ -215,6 +233,40 @@ class Catalog:
         if row and row[0]:
             return json.loads(row[0])
         return None
+
+    # --- Video store ---
+
+    def set_video_triage(self, project_id: str, week_of: str, triage: dict):
+        self.db.execute(
+            "UPDATE projects SET video_triage_json = ?, video_triage_week = ? WHERE id = ?",
+            (json.dumps(triage), week_of, project_id),
+        )
+        self.db.commit()
+
+    def get_video_triage(self, project_id: str, week_of: str) -> dict | None:
+        row = self.db.execute(
+            "SELECT video_triage_json, video_triage_week FROM projects WHERE id = ?",
+            (project_id,),
+        ).fetchone()
+        if not row or not row[0] or row[1] != week_of:
+            return None
+        return json.loads(row[0])
+
+    def set_video_location_score(self, project_id: str, score: dict, scored_at: str):
+        self.db.execute(
+            "UPDATE projects SET video_location_score_json = ?, video_location_scored_at = ? WHERE id = ?",
+            (json.dumps(score), scored_at, project_id),
+        )
+        self.db.commit()
+
+    def get_video_location_score(self, project_id: str) -> dict | None:
+        row = self.db.execute(
+            "SELECT video_location_score_json FROM projects WHERE id = ?",
+            (project_id,),
+        ).fetchone()
+        if not row or not row[0]:
+            return None
+        return json.loads(row[0])
 
     # --- Daily Reports ---
 
