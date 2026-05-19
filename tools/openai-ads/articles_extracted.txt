@@ -1,0 +1,1571 @@
+================================================================================
+FILE: 20001206-ads-manager-beta-overview.html
+TITLE: Ads Manager Beta Overview | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Ads Manager Beta Overview 
+
+ 
+
+Ads Manager Beta Overview
+
+Create, launch, and manage campaigns in OpenAI Ads Manager Beta.
+
+Updated: 13 days ago
+
+OpenAI Ads Manager Beta is the platform for creating, launching, and managing campaigns in ChatGPT Ads, with tools to monitor performance and make updates in one place. This is a beta product and will continue to evolve over time.
+
+What you can do in Ads Manager Beta
+
+Ads Manager Beta supports the core workflows required to run campaigns end to end:
+
+ Create and manage campaigns: create campaigns individually in the guided workflow or create them at scale with bulk upload
+
+ Monitor performance: track impressions, clicks, and spend across campaigns, ad groups, and ads using table views, charts, and CSV exports
+
+ Manage account settings: access account-level settings such as members, permissions, API keys , billing details, and change logs
+
+Because Ads Manager Beta is still evolving, some capabilities are limited today and additional functionality will be added over time.
+
+Next steps
+
+ Set up your Ads Manager Beta account 
+
+ Launch your first campaign on Ads Manager Beta 
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001207-ads-in-chatgpt-the-basics.html
+TITLE: Ads in ChatGPT: The Basics | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Ads in ChatGPT: The Basics 
+
+ 
+
+Ads in ChatGPT: The Basics
+
+An introduction to the ChatGPT Ads experience, including ad format, delivery, pricing, and measurement.
+
+Updated: 13 days ago
+
+Ads in ChatGPT help advertisers reach users as they explore, compare, and decide within a single conversational experience. By using richer conversational context, ChatGPT Ads create opportunities to deliver relevant, helpful messages aligned with what users are trying to accomplish.
+
+Who may see ads
+
+Today, we show ads to Free and Go users in the United States, Canada, Australia, and New Zealand. We do not show ads to users on Plus, Pro, or any Business plan, or to any users who tell us or we predict are under the age of 18.
+
+Ad format
+
+Ads appear below relevant ChatGPT conversations. Each ad includes:
+
+Advertiser name
+
+Favicon (advertiser logo)
+
+Title (headline)
+
+Copy (description)
+
+Landing page
+
+Image asset (creative)
+
+See below for an example ad unit.
+
+ 
+
+Selection and delivery
+
+Our ads system primarily selects ads based on how relevant they are to the context and intent of the conversation. Ad selection considers multiple inputs such as context hints, landing page, ad title, and ad copy.
+
+At the ad group level, advertisers can provide context hints that describe the conversations, topics, or keywords where their products or services may be relevant. These hints help guide ad matching, but they are not exact-match keywords and do not guarantee delivery in specific conversations.
+
+Pricing
+
+ChatGPT Ads supports cost per thousand impressions (CPM) and cost per click (CPC) buying options, allowing advertisers to optimize campaigns based on their goals. Advertisers can choose a Reach objective to buy on a CPM basis or a Clicks objective to buy on a CPC basis.
+
+Advertisers can set custom max bids for their CPC campaigns. We recommend a starting max bid of $3-5 USD per click.
+
+For CPM campaigns, the default max bid is $60 CPM.
+
+We use a relevance-weighted, second-price auction to find the best ad for eligible conversations. Our system aims to maximize both advertiser and user value.
+
+Tracking and measurement
+
+Ads Manager Beta reporting currently includes impressions, clicks, spend, click-through rate (CTR), average CPC, average CPM, and conversions.
+
+To measure conversions from ChatGPT Ads, advertisers can set up conversion measurement in Ads Manager Beta. For step-by-step guidance, visit our measurement documentation .
+
+Advertisers can also track traffic from ChatGPT Ads by adding static tracking parameters (e.g. UTM parameters) to landing page URLs. These parameters persist on ad clicks and can be used in existing analytics tools to understand traffic from ChatGPT Ads.
+
+Brand safety
+
+OpenAI’s policy is to place ads only near chats that are safe, appropriate, and aligned with user trust and brand safety. Our safeguards are designed to prevent ads from appearing in sensitive user contexts or brand-unsafe environments, including the contexts outlined in our Ads Policies .
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001209-launch-campaigns.html
+TITLE: Launch Campaigns | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Launch campaigns 
+
+ 
+
+ Launch Campaigns 
+
+ 
+
+Launch Campaigns
+
+Follow this step-by-step process to launch campaigns in OpenAI Ads Manager Beta.
+
+Updated: 6 days ago
+
+Overview
+
+This guide walks you through the step-by-step process to launch your first campaign in Ads Manager Beta. It covers the core steps from campaign setup to launch.
+
+Before you begin
+
+Make sure you have:
+
+An Ads Manager Beta account
+
+Your advertiser account set up (name, favicon)
+
+Your billing profile and payment method set up
+
+Campaign inputs ready (campaigns, ad groups, ads)
+
+Step 1: Choose how to create your first campaign
+
+You can create campaigns in two ways:
+
+ Guided campaign creation: build campaigns step-by-step directly in Ads Manager Beta
+
+ Bulk upload via CSV: create campaigns at scale by uploading a completed ad schema template. This is best for larger launches or multiple campaigns. To access the template, navigate to Create > Upload bulk
+
+All campaigns follow the same structure:
+
+ Campaign: defines the overall goal and budget
+
+ Ad Group: organizes that goal into specific themes or intents
+
+ Ad: the creative unit shown to users (includes title, copy, landing page, and image)
+
+Step 2: Create your campaigns
+
+Campaigns are the top-level objects that define your objective, budget, and country targeting.
+
+ Guided Campaign Creation 
+
+In Ads Manager Beta, click ‘Create’, then ‘Create campaign’
+
+Enter all required fields for each campaign as outlined above
+
+Save the campaign
+
+Repeat for any additional campaigns
+
+ 
+
+ Bulk Upload 
+
+Navigate to the Campaigns tab in the ad schema template
+
+Add a row for each campaign
+
+For each campaign, enter all required fields:
+
+ Campaign name (unique, descriptive)
+
+ Budget (max spend per campaign)
+
+ Start and end dates (YYYY-MM-DD format)
+
+ Objective (Views or Clicks)
+
+ Country (target countries)
+
+A few tips as you fill out your campaign schema for the first time:
+
+Keep campaign and ad group names consistent across tabs
+
+Do not rename tabs or column headers
+
+ 
+
+Refer to our Create Campaigns for ChatGPT article for best practices as you create your campaigns.
+
+Step 3: Create your ad groups
+
+Ad groups represent themes, intents, and context hint clusters under a campaign that can influence where and how ads are delivered.
+
+ Guided Campaign Creation 
+
+In Ads Manager Beta, select a campaign, then add your ad groups
+
+Enter all required fields for each ad group as outlined above
+
+Save the ad group
+
+Repeat for any additional ad groups
+
+ Bulk Upload 
+
+Navigate to the ‘Ad Groups’ tab in the ad schema template
+
+Add a row for each ad group
+
+For each ad group, enter all required fields:
+
+ Campaign name (must match exactly across tabs)
+
+ Ad group name (unique, descriptive)
+
+ Max bid (required for Clicks campaigns; leave blank for Reach campaigns)
+
+ Context hints (JSON array in the schema: [“hint1”, “hint2”])
+
+Refer to our Create Ad Groups for ChatGPT article for best practices as you create your ad groups.
+
+Step 4: Create your ads
+
+An Ad is the creative unit shown in ChatGPT. It includes your brand name, logo, title, copy, landing page, and image.
+
+ Guided Campaign Creation 
+
+In Ads Manager Beta, select an ad group, then add your ads
+
+Enter all required fields for each ad as outlined above
+
+Save the ad
+
+Repeat for any additional ads
+
+ Bulk Upload 
+
+Navigate to the Ads tab in the ad schema template
+
+Add a row for each ad
+
+For each ad, enter all required fields:
+
+ Ad group name (must match exactly across tabs)
+
+ Ad title (16–24 characters recommended; 50 characters maximum)
+
+ Ad copy (32–48 characters recommended; 100 characters maximum)
+
+ Landing page URL (valid, reachable, and not blocked by OpenAI crawlers )
+
+ Image URL (PNG or JPG, square, no larger than 1200 x 1200, publicly accessible)
+
+Refer to our Creating Ads for ChatGPT article for best practices as you create your ads. Note that each ad account can include up to 5,000 campaigns, 5,000 ad groups, and 5,000 ads.
+
+Step 5: Validate before you submit
+
+ Bulk Upload 
+
+Ensure all required fields for campaigns/ad groups/ads are filled in
+
+Check that all campaign and ad group names match exactly across tabs and that there are no duplicates
+
+Context hints are correctly formatted in JSON [“hint1”, “hint2”]
+
+Ad titles and copy are within character limits (title: 16-24 characters, copy: 32-48 characters)
+
+Landing page URLs are valid and reachable
+
+Image URLs are publicly accessible and link directly to supported file types
+
+Image assets meet size and format requirements (square, 1200 x 1200 max)
+
+Step 6: Submit your campaign structure
+
+ Guided Campaign Creation 
+
+Ensure campaigns are turned to status ‘Active’
+
+ Bulk Upload 
+
+In Ads Manager Beta, click ‘Create’, then upload your filled out ad schema template
+
+Step 7: Resolve upload errors (bulk upload only)
+
+Our system will reject any ad schema that does not exactly match our system requirements. If an error occurs during ingestion, Ads Manager Beta will display a specific error message.
+
+ How to troubleshoot: 
+
+ Fix directly in the Ad Schema template: Most issues can be resolved by correcting formatting, required fields, links, or naming mismatches
+
+ Re-upload after validation: Once fixes are made, re-upload the updated file into Ads Manager Beta
+
+ Reach out to support when needed: if errors persist or are unclear, contact support (ads-support@openai.com) with your file and error details
+
+Step 8: Launch and monitor early signals
+
+After launch, confirm that your campaigns, ad groups, and ads are marked Active and begin receiving impressions and clicks within 24 hours. Please note that there is typically a delay of up to 7 hours between ad delivery and results appearing in Ads Manager Beta. If you are not seeing any delivery, refer to our Troubleshooting Common Issues and Frequently Asked Questions articles for troubleshooting guidance.
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001210-create-campaigns-for-chatgpt.html
+TITLE: Create Campaigns for ChatGPT | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Campaign setup 
+
+ 
+
+ Create Campaigns for ChatGPT 
+
+ 
+
+Create Campaigns for ChatGPT
+
+Best practices for creating campaigns for ChatGPT
+
+Updated: 13 days ago
+
+Campaigns define your overall advertising objective and budget in ChatGPT Ads Manager Beta. A good campaign groups together ad groups and ads that support a shared business goal.
+
+Each campaign contains:
+
+Campaign title
+
+Objective
+
+Budget
+
+Start and end dates
+
+Countries to target
+
+Choosing a campaign objective
+
+Your campaign objective determines how your ads are priced and optimized.
+
+You can currently choose between:
+
+ Views : optimized for reach and visibility using CPM pricing (cost per thousand impressions)
+
+ Clicks : optimized for engagement and traffic using CPC pricing (cost per click)
+
+Setting your budget
+
+Your campaign budget controls how much you are willing to spend across all ads within the campaign.
+
+When setting your budget:
+
+Distribute your total planned spend across each campaign based on priority
+
+Set budgets that balance testing a new platform with giving campaigns enough room to deliver and generate meaningful performance signals
+
+Budgets can be adjusted over time as you learn what performs best
+
+Choosing start and end dates
+
+Your campaign start and end dates control how long your ads are eligible to run.
+
+When choosing dates:
+
+Give campaigns enough time to gain traction and gather meaningful performance data. Campaigns can always be paused or adjusted later
+
+Consider seasonality, including seasonal products, new launches, promotions, holidays, or other time-sensitive campaigns
+
+Align campaign timing with your broader marketing budget and business goals
+
+Choosing countries to target
+
+Country targeting determines where your ads are eligible to appear. At this time, advertisers can serve ads in the United States only. We will expand to additional markets over time and will notify advertisers when they are able to launch campaigns in new countries.
+
+Best practices
+
+Structure campaigns around distinct business goals or initiatives
+
+Use separate campaigns for meaningfully different objectives, regions, or product categories
+
+Keep campaign naming clear and consistent for easier reporting and management
+
+Create multiple ad groups within each campaign to test different themes, value props, or messaging approaches
+
+Next steps
+
+After creating your campaigns, you can:
+
+ Create ad groups and add context hints 
+
+ Create ads and creative variations 
+
+ Launch your campaign and monitor performance 
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001211-create-ad-groups-for-chatgpt.html
+TITLE: Create Ad Groups for ChatGPT | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Campaign setup 
+
+ 
+
+ Create Ad Groups for ChatGPT 
+
+ 
+
+Create Ad Groups for ChatGPT
+
+Best practices for creating ad groups for ChatGPT
+
+Updated: 6 days ago
+
+Ad groups help organize your campaigns into focused themes and include context hints, which help determine how your ads are matched to relevant conversations in ChatGPT.
+
+Each ad group contains:
+
+Ad group title
+
+Context hints: describe the conversations, topics, or keywords where your products or services may be relevant; these hints guide matching but are not exact-match targeting rules
+
+Maximum CPC bid, for campaigns with a Clicks objective; for campaigns with a Reach objective, this field does not apply
+
+Writing effective context hints
+
+Context hints help ChatGPT understand the types of conversations your ads should be eligible for.
+
+Think of context hints as broad thematic signals, not exact keyword matching.
+
+Good context hints:
+
+Describe the user intent or topic area
+
+Stay closely related to your ad group theme and ads within the ad group
+
+Write context hints that describe the types of questions, needs, or situations a user might bring to ChatGPT, rather than just listing standalone keywords
+
+Prioritize relevance over broad coverage
+
+Best practices
+
+Keep each ad group focused on a single product category, theme, or intent area
+
+Use separate ad groups for meaningfully different audiences or use cases
+
+Avoid combining unrelated products or themes into the same ad group
+
+Include multiple ads within each ad group to test different messaging approaches
+
+Next steps
+
+After creating your ad groups, you can:
+
+ Create ads and creative variations 
+
+ Launch your campaign and monitor performance 
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001212-create-ads-for-chatgpt.html
+TITLE: Create Ads for ChatGPT | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Campaign setup 
+
+ 
+
+ Create Ads for ChatGPT 
+
+ 
+
+Create Ads for ChatGPT
+
+Best practices for creating ads for ChatGPT
+
+Updated: 13 days ago
+
+Creating ads for ChatGPT requires a different approach than keyword-based platforms. Instead of matching ads to simple search queries, ChatGPT matches ads to richer, conversational user intent, helping advertisers reach people with more relevant messages at the right moment.
+
+In ChatGPT, clear, specific, and benefit-focused ads are more likely to align with relevant conversational intent. The goal is not just to write a catchy line, but to describe what you offer, who it is for, and when it may be helpful.
+
+Overall guidance
+
+ Build for coverage, not just one message: a high volume and diverse set of ads (multiple title/copy variations per offering) allows the system to match ads across a wider range of conversations
+
+ Keep creatives distinct from each other: each title and description variation for a given offering should introduce a different angle rather than repeating the same message
+
+ Focus on usefulness: ads should feel helpful and relevant to what the user is trying to do
+
+ Represent your offering accurately: clear, honest messaging improves both user experience and performance
+
+ All ads must align with our ad policies: your ad creative, image, and landing page must comply with OpenAI’s Ads Policies . Ads may be rejected if they are misleading, inconsistent, or include disallowed content
+
+Ad title best practices
+
+ Spell out the value clearly: make it immediately clear what the product offers or why it may be useful
+
+ Keep titles concise: use clear, focused language and stay within recommended character limits
+
+ Make titles informative: prioritize clear, useful details over broad marketing language
+
+Ad copy best practices
+
+ Complement the title: add new information rather than repeating the same message
+
+ Expand on the value proposition: provide more detail on benefits, features, or use cases
+
+ Keep the message easy to understand: use straightforward language that helps users quickly evaluate the offering
+
+Landing page best practices
+
+ Link to the most relevant destination: use product pages, collections, or content pages rather than defaulting to a generic homepage
+
+ Create a seamless path to action: a clear connection between ad and landing page helps users move more smoothly from interest to action
+
+ Add tracking parameters directly to destination URLs: you can include your own UTM parameters for each creative
+
+ Ensure landing pages are valid and reachable: all landing pages must use valid links and must not block OpenAI user agents (OAI-AdsBot and OAI-SearchBot)
+
+Image best practices
+
+ Keep images simple and relevant: use clear visuals that support the message of the ad
+
+ Avoid overly abstract or cluttered visuals: keep images straightforward and easy to interpret
+
+ Align images with the ad message: where possible, ensure the visual matches the title and copy so the creative feels cohesive
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001213-ads-manager-beta-account-setup.html
+TITLE: Ads Manager Beta Account Setup | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Ads Manager Beta Account Setup 
+
+ 
+
+Ads Manager Beta Account Setup
+
+Learn how to set up your Ads Manager Beta account.
+
+Updated: 13 days ago
+
+Account setup is the process of configuring your advertiser account so you can create and manage campaigns in Ads Manager Beta. This includes completing onboarding, verifying your account, setting up billing, and inviting team members.
+
+Each business should have only one account owner create the advertiser account. After the account is created, the account owner can invite additional team members to access Ads Manager Beta. Campaigns will not deliver until all required steps are complete.
+
+Setup flow
+
+Account setup happens in five steps:
+
+Access Ads Manager Beta and create your account
+
+Complete account onboarding and verification
+
+Complete account information
+
+Set up billing and payment
+
+Invite team members
+
+1. Access Ads Manager Beta and create your account
+
+To get started, navigate to Ads Manager Beta and follow the sign-up flow. You will need an OpenAI account to create an Ads Manager Beta account. If you do not already have an OpenAI account, you can create one during the Ads Manager Beta sign-up flow.
+
+2. Complete account onboarding and verification
+
+As part of sign-up, enter your business details to create your advertiser account. By creating an ad account, you agree to our Terms and have read our Privacy Policy.
+
+ Account verification 
+
+After you enter your business information, you will see the account verification screen. Our team will review your account and email you once full platform access is available.
+
+3. Complete account information
+
+Navigate to Settings, then ‘Account Information’. If you have not already added a favicon (brand logo), please add one here.
+
+Your account name and favicon will appear in every ad unit, so make sure they match how you want your brand to appear in ChatGPT.
+
+4. Set up billing and payment
+
+Before campaigns can deliver, billing must be fully set up in Ads Manager Beta.
+
+This includes two steps:
+
+ Create a billing profile: enter your business name, business address, and invoice delivery email. The invoice delivery email is used for invoicing and other finance-related communication.
+
+ Add a payment method: enter your credit card details and billing address information.
+
+5. Invite team members
+
+After your advertiser account is set up, you can invite additional team members to access Ads Manager Beta.
+
+To invite team members, navigate to ‘ Settings ’, then ‘ Users ’, then ‘ Invite ’ and enter the email addresses of the people you want to add.
+
+If you manage multiple advertisers
+
+Each advertiser requires its own account. If you are managing multiple advertisers, you will need to create an account for each advertiser following the steps above.
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001214-measure-results.html
+TITLE: Measure Results | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Manage and optimize campaigns 
+
+ 
+
+ Measure Results 
+
+ 
+
+Measure Results
+
+Understand the reporting tools available in Ads Manager Beta.
+
+Updated: 13 days ago
+
+In Ads Manager Beta, you can measure campaign performance with reporting tools that help you track delivery and monitor results. As the platform evolves, we’ll introduce additional metrics, reporting views, and insights over time.
+
+Metrics
+
+You can currently track the following metrics across all levels (campaign, ad group, and ad):
+
+ Impressions : Number of times your ads were shown
+
+ Clicks : Number of times users clicked on your ads
+
+ Spend : Total amount spent delivering your ads
+
+ CTR: Percentage of impressions that resulted in clicks
+
+ Avg CPC: Average cost per click
+
+ Avg CPM: Average cost per thousand impressions
+
+ Conversions: Number of conversion events attributed to your campaigns, if conversion measurement is set up. To get started with conversions, visit our measurement documentation 
+
+These metrics are available in table view, chart view, and CSV export downloads and can be used to evaluate delivery, engagement, and pacing across your campaigns.
+
+Table view
+
+Table view is the default reporting view for monitoring performance in Ads Manager Beta.
+
+Navigate to the Campaigns, Ad Groups, or Ads page
+
+Review performance metrics directly in the table on each page, including impressions, clicks, spend, CTR, Avg CPC, Avg CPM, and conversions when available
+
+ CSV download 
+
+CSV downloads allow you to export reporting data from Ads Manager Beta for offline analysis.
+
+ Cumulative values: 
+
+Set the date range in the top right corner to the period you want to analyze
+
+Click the three-dot menu in the top right corner
+
+Select ‘Download Cumulative Values’
+
+ Daily values: 
+
+Click the three-dot menu in the top right corner
+
+Select the dates you want to download reporting for
+
+Select ‘Download Daily Values’
+
+ Insights charts 
+
+Ads Manager Beta includes chart views that allow you to analyze performance trends over time.
+
+Select the chart icon next to the three-dot menu
+
+Click View insights
+
+Select the metric(s) you want to view: impressions, clicks, spend, or any combination of all three
+
+Set the date range you want to analyze
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001215-edit-campaigns.html
+TITLE: Edit Campaigns | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Manage and optimize campaigns 
+
+ 
+
+ Edit Campaigns 
+
+ 
+
+Edit Campaigns
+
+Learn how to make updates to campaigns, ad groups, and ads.
+
+Updated: 13 days ago
+
+There are two primary ways to make changes to campaigns in Ads Manager Beta today.
+
+ In-line edits (for quick updates): make quick changes directly in Ads Manager Beta. Use this for quick updates such as adjusting budgets, updating ad copy, or pausing campaigns.
+
+ Bulk edits (recommended for larger changes): update your campaign data in the ad schema template and re-upload. Use this for structural changes such as updating context hints, ad copy, or landing pages at scale.
+
+In-line edits
+
+In-line edits are best for quick, one-off updates that do not require editing the campaign schema template.
+
+Edit existing campaigns, ad groups, or ads
+
+Use this workflow for small updates such as adjusting budgets, updating ad copy, or updating the image of an ad.
+
+Hover over the campaign, ad group, or ad
+
+Click the three-dot menu
+
+Select ‘ Edit ’
+
+Make your changes directly
+
+Select ‘ Save ’
+
+Create new ad groups or ads
+
+Use this workflow when you want to quickly add new objects within an existing campaign structure.
+
+To create a new ad group:
+
+Click into the campaign to access ad groups within that campaign
+
+Click ‘ Create’, then ‘Create ‘ad group’ ’
+
+To create a new ad:
+
+Click into the ad group to access ads within that ad group
+
+Click ‘ Create’, then ‘Create ad’ ’
+
+Bulk updates
+
+Bulk edits are best for making changes across multiple campaigns, ad groups, or ads at once.
+
+Update existing campaigns, ad groups, or ads
+
+Use this workflow when you want to modify existing campaigns, ad groups, or ads at scale.
+
+Select the campaigns, ad groups, or ads you want to update
+
+Click ‘Export for edit’. This will download a file with the selected campaigns, ad groups, or ads for editing
+
+Make updates directly in the exported schema file
+
+In Ads Manager Beta, click ‘Create’, then ‘Bulk upload’
+
+Select the relevant object type: Campaign, Ad Group, or Ad, and upload the updated file
+
+After the file is uploaded, your updates will be reflected to the selected campaigns, ad groups, or ads.
+
+Create new ad groups or ads within existing campaigns
+
+Use this workflow when you want to expand existing campaigns by adding new ad groups or ads.
+
+Select the existing ad groups in the campaign where you want to add new ad groups, or select existing ads in the ad group where you want to add new ads
+
+Click ‘Export for edit’. This will download a file that you can add more ad groups or ads to
+
+In the schema file:
+
+To add a new ad group: copy the campaign ID into a new row in the Ad Groups tab, leave the ad group ID field blank, and define the new ad group details
+
+To add a new ad: copy the ad group ID into a new row in the Ads tab, leave the ad ID field blank, and define the new ad details
+
+In Ads Manager Beta, click Create → Bulk upload
+
+Select the relevant object type: Campaign, Ad Group, or Ad and upload the updated file
+
+New ad groups and ads will be created and linked to the existing campaign structure based on the IDs provided.
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001216-billing-payment.html
+TITLE: Billing &amp; Payment | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Support & resources 
+
+ 
+
+ Billing & Payment 
+
+ 
+
+Billing & Payment
+
+Learn how billing works for ChatGPT Ads.
+
+Updated: 13 days ago
+
+This article explains how billing works for ChatGPT Ads, including what must be configured before campaigns can deliver, how charges are applied, how spend is controlled, and what to do if you need help with a billing issue.
+
+Set up billing before delivery starts
+
+Before campaigns can begin delivering, billing must be fully set up in Ads Manager Beta. This involves two steps:
+
+ Create a billing profile: enter your business name, business address, and invoice delivery email. The invoice delivery email is used for invoices and other billing-related communication
+
+ Add a payment method: enter your credit card details and billing address information. When you add a card, OpenAI may place a $100 authorization hold to verify the payment method. This hold is temporary and may remain on your card for up to 7 days before being returned to your card
+
+How billing works
+
+ChatGPT Ads currently uses a postpay billing model that charges advertisers after ads have been delivered. As your campaigns run, spend accrues on your account and charges are applied to the payment method saved in Ads Manager Beta.
+
+Currently, ChatGPT Ads can be purchased on a cost per thousand impressions (CPM) basis or a cost per click (CPC) basis based on the campaign objective you select.
+
+Select a Views objective to buy on a cost per thousand impressions basis (CPM) and optimize for reach. With this objective, you are billed for impressions served
+
+Select a Clicks objective to buy on a cost per click basis (CPC) and optimize for traffic. With this objective, you are billed for each click
+
+Your campaign budget controls the maximum amount you are willing to spend for a campaign. Actual spend may vary based on delivery, user engagement, and the pricing model selected. In Ads Manager Beta, you can monitor spend and performance using metrics such as impressions, clicks, spend, CTR, Average CPC, Average CPM, and conversions if conversion measurement is set up.
+
+When charges happen
+
+Your saved payment method is charged when your account reaches its assigned payment threshold.
+
+When you sign up for an Ads Manager Beta account, your account is assigned a payment threshold that determines how much unpaid spend can accrue before your saved payment method is charged. This is not the same as a campaign budget and is not an account spend cap.
+
+Approved advertisers typically start with a lower payment threshold and we may increase your payment threshold automatically over time based on successful payment history and other factors.
+
+For example, if your account has a $25 payment threshold, your card will be charged once your account accrues $25 in unpaid spend. After a successful payment, your outstanding balance will be reduced by the payment amount. If delivery continues, your account can accrue spend again until it reaches the threshold or the end of the month.
+
+If your account still has an outstanding balance at the end of the month, that balance will also be charged at the end of the month even if you have not yet reached your payment threshold. You will receive an emailed receipt for each successful payment.
+
+Please note that you cannot manually change your payment threshold, and our support team will not change thresholds on behalf of advertisers.
+
+If a payment fails
+
+If a payment fails after your account reaches its payment threshold, your ads may stop delivering until the billing issue is resolved. You will receive an email notification if an invoice payment fails. If this happens, your campaigns, ad groups, and ads may show as ‘Not serving’. You can open the status tooltip for more detail and update your payment method in Ads Manager Beta.
+
+Eligible advertisers can move to higher payment thresholds over time based on successful payment history. Failed charges, disputes, and chargebacks can pause progression to higher limits.
+
+If you think a billing number is incorrect
+
+Start by gathering the full context before reaching out to support at ads-support@openai.com .
+
+A strong billing support request should include:
+
+Invoice ID or charge ID
+
+Date range in question
+
+Amount in question
+
+Affected campaign IDs
+
+Relevant reporting screenshots or exports
+
+ Note : Billing processes such as support workflows, credits, refunds, invoice corrections, and billing notifications may evolve as the Ads Manager Beta platform matures.
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001217-troubleshooting-common-issues.html
+TITLE: Troubleshooting Common Issues | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Support & resources 
+
+ 
+
+ Troubleshooting Common Issues 
+
+ 
+
+Troubleshooting Common Issues
+
+A guide to resolving common setup, launch, measurement, and payment issues in Ads Manager Beta.
+
+Updated: 13 days ago
+
+Use this guide to troubleshoot common issues in Ads Manager Beta. Start with the issue category that best matches your issue, work through the recommended checks, and contact support if the issue persists.
+
+1. Onboarding and account setup
+
+I cannot access Ads Manager
+
+ Check for verification first: Confirm the account has been verified (you will receive a verification email), the user has an OpenAI account tied to the organization the ad account is set up with, and the user has been granted access to the correct Ads Manager Beta account
+
+ Helpful details for support: User email, account name, screenshot of the error message
+
+Billing profile or payment method is missing
+
+ Check first: Confirm a billing profile has been created, a payment method has been added, and billing settings are correctly configured
+
+ Helpful details for support: Account name, screenshot of the billing page, description of the missing or blocked step
+
+Don’t have permission to create an ad account
+
+ Check first: If your company already has an OpenAI tenant, ask your IT team or admin to grant you the Ads Admin role in the OpenAI admin console at https://admin.openai.com/ . They can do this by going to Users, selecting your user profile, opening Direct roles, clicking +, and assigning Ads Admin
+
+ Helpful details for support: Tenant name, screenshot of the error message
+
+2. Uploading and launching campaigns
+
+My campaign upload had an error
+
+ Check first: Review the error message as it typically identifies the exact issue. Compare your file against the Campaign Structure Checklist and fix any issues in the template before uploading again
+
+ Helpful details for support: The exact file used, the row or object you believe is failing, the error message or screenshot
+
+My images won’t upload
+
+ Check first: Confirm that images are PNG or JPG, square, no larger than 1200 x 1200. Images must also be publicly accessible and open directly to the image in the browser. Accepted image hosting options include publicly available Google Drive links, AWS-hosted image links such as S3 or CloudFront, and self-hosted image links on the advertiser’s domain or CDN
+
+ Helpful details for support: Account name, campaign name, ad title associated with the image, image URL
+
+My ad was rejected
+
+ Check first: In the Ads tab of Ads Manager Beta, review the ad ‘Status’ . If the status is ‘Not serving’ , hover over the ad to view the reason. Common causes include ad copy or landing pages that do not align with our Ad Policies , or landing pages that block OpenAI user agents or IP addresses. If this happens, you can edit the ad and resubmit it for review, or request another review if you believe the ad was rejected in error
+
+ Helpful details for support: Ad title and copy, disapproval code or message, creative copy, landing URL, and the time you received the notice
+
+3. Reporting and measurement
+
+My campaign launched but is not getting any impressions
+
+ Check first: Confirm that billing is fully set up, your payment method is valid, your campaign budget has not been reached, and your campaign end date has not passed. Ads that are actively delivering should show a ‘Serving’ status. Please allow at least 24 hours after launch before flagging delivery issues, and note that there is typically a delay of up to 7 hours between ad delivery and reporting appearing in Ads Manager Beta
+
+ Helpful details for support: Account name, campaign name, launch date, screenshot showing zero delivery
+
+Reporting does not match what I expected
+
+ Check first: Confirm that the ads included in your reporting are marked as ‘ Serving ’. If you are comparing metrics across table view, CSV downloads, or charts, make sure the same campaigns, filters, and date range are applied across each view. If you’ve confirmed the above and still see discrepancies, please flag the issue to support for further review
+
+ Helpful details for support: Report screenshot or export, date range, filters used, short note on what you expected to see
+
+How to submit a support request
+
+You can submit a support request directly to ads-support@openai.com or use the support widget in the bottom right of this page.
+
+How to describe urgency
+
+If the issue looks broader than one campaign or one user, say that clearly. Mention whether it affects multiple campaigns, multiple accounts, or an entire workflow such as reporting or launch. If you suspect a broader incident, include a few concrete examples rather than a general statement that the platform is down.
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001218-bulk-upload-campaign-schema-checklist.html
+TITLE: Bulk Upload Campaign Schema Checklist | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Support & resources 
+
+ 
+
+ Bulk Upload Campaign Schema Checklist 
+
+ 
+
+Bulk Upload Campaign Schema Checklist
+
+Use this checklist to review your bulk upload file before uploading it in Ads Manager Beta.
+
+Updated: 5 days ago
+
+Overview
+
+Use this checklist when reviewing your bulk upload schema file before uploading into Ads Manager Beta. It helps catch avoidable file formatting and validation issues before upload.
+
+Campaigns tab
+
+All required campaign fields are filled in
+
+Campaign names are unique
+
+Campaign objective field is either: ‘Views’ or ‘Clicks’
+
+Campaign dates are valid and correctly formatted (YYYY-MM-DD)
+
+Budget fields are completed
+
+Country field is completed and in JSON format
+
+No duplicate campaign names
+
+No more than 5,000 campaigns
+
+Ad groups tab
+
+All required ad group fields are filled in
+
+Ad group names are unique
+
+Every ad group is linked to the correct campaign
+
+Campaign names match exactly across tabs (campaign/ ad groups)
+
+Context hints are in JSON format [“hint1”, “hint2”]
+
+No duplicate ad group names
+
+No more than 5,000 ad groups
+
+Ads tab
+
+All required ad fields are filled in
+
+Ad group names match exactly across tabs (ad groups / ads)
+
+Ad titles are within character limits (16-24 characters recommended; 50 characters maximum)
+
+Ad copy is within character limits (32–48 characters recommended; 100 characters maximum)
+
+Landing page URLs are valid and reachable
+
+Image URLs are publicly accessible and open directly to the image in the browser
+
+Images are hosted in one of the following methods: Google Drive links, AWS-hosted image links such as S3 or CloudFront, and self-hosted image links on the advertiser’s domain or CDN
+
+Image assets meet size and format requirements (square, 1200 x 1200 max)
+
+No more than 5,000 ads
+
+Formatting checks
+
+Do not remove header rows (1-4) in the campaign schema template
+
+Tabs are still named campaigns, adgroups, and ads
+
+Column headers have not been renamed
+
+All rows in each tab is a unique campaign, ad group, or ad (no duplicates)
+
+There are no merged cells
+
+Campaign and ad group names are consistent everywhere they appear
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001220-frequently-asked-questions.html
+TITLE: Frequently asked questions | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Support & resources 
+
+ 
+
+ Frequently asked questions 
+
+ 
+
+Frequently asked questions
+
+Learn more about how ChatGPT Ads works today and what to expect as the platform evolves.
+
+Updated: 12 days ago
+
+This FAQ covers common questions about ChatGPT Ads Beta, including platform stage, performance, delivery, and budgets.
+
+For tactical issues with onboarding, campaign launch, billing, reporting, or measurement, review the Troubleshooting Common Issues guide for guidance.
+
+What stage are ChatGPT Ads at today?
+
+ChatGPT Ads is currently in beta and in the early stages of scaling. After a focused pilot from February through April, we are expanding access through self-serve onboarding in Ads Manager Beta. We are also continuing to innovate across our ads system, with exciting developments ahead around new ad formats, expanded inventory, and improvements to our delivery infrastructure.
+
+Ads Manager Beta is also in beta and currently supports core campaign creation, billing, access management, and reporting workflows — and most recently, conversion measurement and CPC bidding. We are continuing to expand these capabilities quickly and carefully to give advertisers more ways to buy, measure, and optimize their ads.
+
+What should I expect to change during the beta?
+
+During the beta, we will continue evolving the ChatGPT Ads platform and Ads Manager Beta capabilities. This includes innovations to our delivery systems, inventory, ad formats, and how advertisers buy, manage, measure, and optimize campaigns.
+
+We will share updates to emails associated with Ads Manager Beta accounts as new capabilities become available.
+
+What countries are Ads Self-Serve available in?
+
+At this time, Ads Self-Serve is only available for advertisers and businesses based in the United States. We plan to continue expanding availability and rolling out access to additional international countries and regions in the future as the platform evolves.
+
+If your business is based in the United States, you can sign up directly through ads.openai.com .
+
+If you are located internationally or outside of the United States, you can register your interest and stay informed about future availability through OpenAI Advertisers Interest Form .
+
+What does good performance look like on ChatGPT Ads?
+
+As an early platform, ChatGPT Ads does not yet have performance benchmarks across advertisers, industries, or campaign types. Results will depend on factors such as campaign objective, creative, landing page experience, relevance to the user’s conversation, and overall setup.
+
+As ChatGPT Ads evolves, we are continuing to innovate across the platform and tooling to help advertisers better understand and optimize performance.
+
+How can I increase my delivery?
+
+To help scale delivery, review and optimize your campaign setup and ads against the best practices in the following guides:
+
+ Create campaigns for ChatGPT 
+
+ Create ad groups for ChatGPT 
+
+ Create ads for ChatGPT 
+
+What should I do if my ads are not delivering?
+
+If your ads are not delivering, check the following:
+
+ Review status: ads must be reviewed before they can serve. In Ads Manager Beta, check whether your ads are marked as ‘Serving’. If an ad is marked ‘Not serving’, hover over the status for more detail
+
+ Campaign budget: ads will not serve if the campaign budget limit has been reached
+
+ Campaign end date: ads will not serve after the campaign end date
+
+ Billing status: ads may not serve if there is an issue with your payment method
+
+How should I think about budget during the beta?
+
+Your campaign budget controls the maximum amount you’re willing to spend across all ads within a campaign. During the beta period, how quickly spend accumulates can vary based on campaign structure, objectives, audience, and overall setup.
+
+When setting budgets, consider distributing your total planned spend across campaigns based on priority. We recommend choosing budgets that balance testing a new platform with giving campaigns enough room to deliver and generate meaningful signals. You can then adjust budgets over time as you learn what performs well for your campaigns.
+
+Where can I learn more or troubleshoot issues?
+
+We recommend reviewing the relevant Help Center articles as you set up your account, before launching your first campaign, and when diagnosing delivery or performance questions.
+
+As the platform evolves, we will continue updating Help Center resources with the latest guidance. If your question is not answered in the Help Center articles, reach out to ads-support@openai.com .
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences
+
+================================================================================
+FILE: 20001224-quickstart-launch-your-first-campaign.html
+TITLE: Quickstart: Launch your first campaign | OpenAI Help Center
+--------------------------------------------------------------------------------
+All Collections 
+
+ 
+
+ ChatGPT Ads 
+
+ 
+
+ Launch campaigns 
+
+ 
+
+ Quickstart: Launch your first campaign 
+
+ 
+
+Quickstart: Launch your first campaign
+
+A quickstart guide to creating, launching, and monitoring your first campaign in OpenAI Ads Manager Beta.
+
+Updated: 13 days ago
+
+Getting started with ChatGPT Ads is simple. In this quick start video, we walk through the three core steps to launch your first campaign in OpenAI Ads Manager Beta: creating your account, building your campaigns, and monitoring early performance signals after launch.
+
+ 
+
+Step 1: Create your Ads Manager Beta account
+
+All campaign creation and management for ChatGPT Ads takes place in OpenAI Ads Manager Beta, available at ads.openai.com. Get started by creating your Ads Manager Beta account.
+
+To get started:
+
+Sign in with an existing OpenAI account tied to your work email, or create a new account
+
+Complete the onboarding and account verification flow
+
+Finish account setup in Ads Manager Beta
+
+Before campaigns can launch, make sure you:
+
+Add your advertiser name and favicon (brand logo), which will appear in your ads
+
+Set up your billing profile and payment method
+
+Invite additional team members who need access to Ads Manager Beta
+
+For more detail, review our Ads Manager Beta Account Setup guide.
+
+Step 2: Create your campaigns
+
+Once your account is set up, you can create your first campaign. Ads Manager Beta currently supports two campaign creation workflows:
+
+ Guided campaign creation: Build campaigns directly in Ads Manager Beta using the step-by-step creation flow
+
+ Bulk upload: Create and manage campaigns at scale by uploading a completed campaign schema template
+
+All campaigns in Ads Manager Beta follow the same structure:
+
+ Campaign: defines your objective, budget, dates, and targeting
+
+ Ad Group: a collection of ads organized around a specific theme or intent area. Context hints can be added to describe relevant conversation types for that ad group
+
+ Ad: the creative shown in ChatGPT, including your title, copy, image, and landing page
+
+As part of campaign setup, you will:
+
+Create campaigns and choose objectives
+
+Create ad groups and define context hints
+
+Create ads with titles, descriptions, images, and landing pages
+
+Submit campaigns for review
+
+For best practices, review:
+
+ Create Campaigns for ChatGPT 
+
+ Create Ad Groups for ChatGPT 
+
+ Create Ads for ChatGPT 
+
+Step 3: Launch and monitor signals
+
+After your campaigns are submitted and approved, monitor your campaign status in Ads Manager Beta to confirm your ads are serving.
+
+If an ad is marked as “Not serving,” hover over the status to view the reason. Many issues can be resolved by editing and resubmitting the ad or campaign, though some ads may be rejected for policy reasons .
+
+Once campaigns are serving, you can begin monitoring performance metrics in Ads Manager Beta, including:
+
+Impressions
+
+Clicks
+
+Spend
+
+CTR
+
+Avg CPC
+
+Avg CPM
+
+Conversions (if conversion measurement is set up)
+
+These metrics can be viewed in three different formats:
+
+Review performance in the campaign/ad group/ad table view
+
+Analyze performance trends over time with charts
+
+Download CSV reports for daily or cumulative values across your selected date range
+
+As you learn from results, you can make updates to your campaigns, ad groups, or ads:
+
+Use in-line edits for quick updates
+
+Use bulk edit workflows for larger changes at scale
+
+As you gather performance data, continue testing and refining your campaigns over time. If you run into issues, review our Troubleshooting Common Issues guide and Frequently Asked Questions article for additional support.
+
+Was this article helpful?
+ 
+ 
+
+ 
+
+ 
+ 
+ Submit 
+ 
+
+ 
+
+ 
+
+ ChatGPT API Service Status Cookie Preferences

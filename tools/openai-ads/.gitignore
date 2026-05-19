@@ -1,0 +1,13 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Working image directories — source photos and resized variants are large and
+# already mirrored to gs://buildertrend-rip/sfw-ad-images/. Don't commit them.
+ad-images/
+ad-images-resized/
+
+# Reconnaissance / scratch files used to discover sfwconstruction.com URLs.
+sfw_home.html
+sfw_pages.xml
+sfw_sitemap.xml

@@ -40,6 +40,8 @@ pnpm-debug.log*
 tools/*
 !tools/visual-qa/
 !tools/editorial-crew/
+!tools/openai-ads/
+!tools/campaign_workbook_template.xlsx
 
 # Git worktrees
 .worktrees/
