@@ -14,7 +14,7 @@ function imageKey(id: string, ext: 'jpg' | 'png'): string {
 export async function saveProject(project: TraceProject): Promise<void> {
   TraceProjectSchema.parse(project);
   await put(projectKey(project.id), JSON.stringify(project), {
-    access: 'private',
+    access: 'public',
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
@@ -43,7 +43,7 @@ export async function saveImage(
 ): Promise<string> {
   const ext = contentType === 'image/jpeg' ? 'jpg' : 'png';
   const result = await put(imageKey(id, ext), body, {
-    access: 'private',
+    access: 'public',
     contentType,
     addRandomSuffix: false,
     allowOverwrite: true,
