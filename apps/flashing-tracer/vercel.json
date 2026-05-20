@@ -1,0 +1,5 @@
+{
+  "installCommand": "pnpm install --ignore-workspace --ignore-scripts",
+  "buildCommand": "pnpm --ignore-workspace run build",
+  "framework": "nextjs"
+}
