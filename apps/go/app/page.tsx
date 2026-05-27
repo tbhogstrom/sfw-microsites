@@ -1,22 +1,18 @@
-export default function HomePage() {
-  return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#f8f7f4',
-        fontFamily: '-apple-system, sans-serif',
-        textAlign: 'center',
-        padding: '24px',
-      }}
-    >
-      <h1 style={{ fontSize: '22px', fontWeight: 600, color: '#1a3a2a', margin: 0 }}>SFW Links</h1>
-      <p style={{ fontSize: '14px', color: '#888', marginTop: '8px' }}>
-        Short-link service — setup in progress.
-      </p>
-    </div>
-  );
+import { listLinks } from '@/lib/store';
+import type { Link } from '@/lib/links';
+import AdminClient from './AdminClient';
+
+export const dynamic = 'force-dynamic';
+
+export default async function AdminPage() {
+  let links: Link[] = [];
+  let storageError: string | null = null;
+
+  try {
+    links = await listLinks();
+  } catch (e) {
+    storageError = e instanceof Error ? e.message : String(e);
+  }
+
+  return <AdminClient initialLinks={links} storageError={storageError} />;
 }
