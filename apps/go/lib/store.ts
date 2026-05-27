@@ -36,6 +36,9 @@ export async function putLink(link: Link): Promise<void> {
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
+    // Link records are mutable; don't let the blob CDN serve a stale
+    // destination after an edit. 0 = no edge caching, always fresh reads.
+    cacheControlMaxAge: 0,
     token,
   });
 }
