@@ -37,6 +37,25 @@ body {
     display: none !important;
   }
 
+  /* Submittal cover sheet: render inputs as plain filled-in text. */
+  .submittal-sheet input,
+  .submittal-sheet textarea {
+    background: transparent !important;
+    color: #1c2230 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    resize: none !important;
+  }
+  .submittal-sheet input::placeholder,
+  .submittal-sheet textarea::placeholder {
+    color: transparent !important;
+  }
+  .submittal-sheet {
+    page-break-inside: avoid;
+  }
+
   /* Hide the interactive on-screen canvas during print. */
   .print-screen {
     display: none !important;

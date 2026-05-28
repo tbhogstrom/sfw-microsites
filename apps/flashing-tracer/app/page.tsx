@@ -15,6 +15,12 @@ export default function LandingPage() {
         >
           Start a new trace →
         </Link>
+        <Link
+          href="/submittal"
+          className="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 text-slate-800 hover:bg-slate-50"
+        >
+          Submittal cover sheet →
+        </Link>
       </div>
     </main>
   );
