@@ -97,6 +97,9 @@ export default function AdminClient({
       }}
     >
       <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+        <a href="/decks" style={{ fontSize: '13px', color: GREEN, float: 'right' }}>
+          Decks →
+        </a>
         <h1 style={{ fontSize: '22px', fontWeight: 600, color: GREEN, margin: '0 0 4px' }}>
           SFW Links
         </h1>
