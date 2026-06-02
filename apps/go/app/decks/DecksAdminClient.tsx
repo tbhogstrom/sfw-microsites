@@ -222,25 +222,36 @@ function DeckEditor({
   }
 
   async function patch(op: unknown) {
-    await fetch(`/api/decks/${encodeURIComponent(deck.slug)}`, {
+    const res = await fetch(`/api/decks/${encodeURIComponent(deck.slug)}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(op),
     });
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      alert(d.error ?? 'Operation failed');
+      return;
+    }
     await onChange();
   }
 
-  function move(index: number, dir: -1 | 1) {
+  async function move(index: number, dir: -1 | 1) {
     const order = deck.slides.map((s) => s.id);
     const j = index + dir;
     if (j < 0 || j >= order.length) return;
     [order[index], order[j]] = [order[j], order[index]];
-    return patch({ op: 'reorder', order });
+    setBusy(true);
+    try {
+      await patch({ op: 'reorder', order });
+    } finally {
+      setBusy(false);
+    }
   }
 
   function describe(s: Slide): string {
     if (s.type === 'markdown') return s.content.split('\n')[0].slice(0, 60);
     if (s.type === 'html') return '<html block>';
+    if (s.type === 'image') return `image: ${s.url.split('/').pop() ?? ''}`.trim();
     return s.url;
   }
 
@@ -299,10 +310,10 @@ function DeckEditor({
               >
                 {describe(s)}
               </span>
-              <button onClick={() => move(i, -1)} style={ghostButton}>
+              <button onClick={() => void move(i, -1)} disabled={busy} style={ghostButton}>
                 ↑
               </button>
-              <button onClick={() => move(i, 1)} style={ghostButton}>
+              <button onClick={() => void move(i, 1)} disabled={busy} style={ghostButton}>
                 ↓
               </button>
               <button
