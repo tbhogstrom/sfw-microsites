@@ -16,33 +16,31 @@ export default function DeckView({ sections }: { sections: Section[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let deck: { destroy?: () => void } | undefined;
-    let destroyed = false;
+    let instance: { initialize: () => Promise<unknown>; destroy: () => void } | undefined;
+    let cancelled = false;
 
     (async () => {
-      const Reveal = (await import('reveal.js')).default as unknown as new (
-        el: HTMLElement,
-        config: Record<string, unknown>,
-      ) => { initialize: () => Promise<void>; destroy?: () => void };
+      const Reveal = (await import('reveal.js')).default;
       const Notes = (await import('reveal.js/plugin/notes')).default;
       const Highlight = (await import('reveal.js/plugin/highlight')).default;
 
-      if (destroyed || !rootRef.current) return;
-      const instance = new Reveal(rootRef.current, {
+      if (cancelled || !rootRef.current) return;
+      instance = new Reveal(rootRef.current, {
         hash: true,
         slideNumber: 'c/t',
         plugins: [Notes, Highlight],
       });
       await instance.initialize();
-      deck = instance;
+      // Cleanup may have run while initialize() was in flight.
+      if (cancelled) instance.destroy();
     })();
 
     return () => {
-      destroyed = true;
+      cancelled = true;
       try {
-        deck?.destroy?.();
+        instance?.destroy();
       } catch {
-        // reveal may already be torn down
+        // already torn down
       }
     };
   }, []);
