@@ -1,0 +1,60 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="about" class="bg-brand-green text-brand-cream">
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:items-center">
+    <div>
+      <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-brand-gold-light">
+        Why Somerset Hills
+      </p>
+      <h2 class="font-serif text-3xl font-bold sm:text-4xl">Local builders you can trust</h2>
+      <div class="mt-6 space-y-4 text-brand-cream/85">
+        {site.about.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+    <div class="rounded-2xl border border-brand-cream/15 bg-brand-green-dark/40 p-8">
+      <h3 class="font-serif text-xl font-bold text-brand-gold-light">Credentials</h3>
+      <ul class="mt-5 space-y-4">
+        {
+          site.credentials.map((c) => (
+            <li class="flex items-center gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-brand-gold-light"
+              >
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+              <span class="font-medium">{c}</span>
+            </li>
+          ))
+        }
+        <li class="flex items-center gap-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-brand-gold-light"
+          >
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+          <span class="font-medium">{site.ccb}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

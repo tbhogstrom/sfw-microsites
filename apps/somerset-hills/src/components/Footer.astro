@@ -1,0 +1,16 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-brand-green/10 bg-brand-cream">
+  <div
+    class="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-10 text-center sm:flex-row sm:justify-between sm:text-left"
+  >
+    <img src="/logo.png" alt={site.legalName} class="h-14 w-auto" width="140" height="140" />
+    <div class="text-sm text-brand-charcoal/70">
+      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
+      <p class="mt-1">Licensed &amp; Bonded in Oregon &middot; {site.ccb}</p>
+    </div>
+  </div>
+</footer>

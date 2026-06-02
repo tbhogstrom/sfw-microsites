@@ -1,0 +1,19 @@
+---
+import { services } from '../data/site';
+import ServiceCard from './ServiceCard.astro';
+---
+
+<section id="services" class="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+  <div class="mx-auto mb-14 max-w-2xl text-center">
+    <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-brand-gold">What We Do</p>
+    <h2 class="font-serif text-3xl font-bold text-brand-green sm:text-4xl">
+      Construction services, done right
+    </h2>
+    <p class="mt-4 text-brand-charcoal/75">
+      From new builds to careful repairs, we handle every phase with the same commitment to quality.
+    </p>
+  </div>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {services.map((s) => <ServiceCard title={s.title} description={s.description} icon={s.icon} />)}
+  </div>
+</section>

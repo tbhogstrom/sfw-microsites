@@ -1,0 +1,34 @@
+---
+import { site } from '../data/site';
+const telHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
+---
+
+<header class="sticky top-0 z-50 border-b border-brand-green/10 bg-brand-cream/90 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+    <a href="#top" class="flex items-center gap-3">
+      <img src="/logo.png" alt={site.legalName} class="h-12 w-auto" width="120" height="120" />
+      <span class="sr-only">{site.legalName}</span>
+    </a>
+    <nav class="hidden items-center gap-8 md:flex">
+      <a
+        href="#services"
+        class="text-sm font-medium text-brand-charcoal transition hover:text-brand-green"
+        >Services</a
+      >
+      <a
+        href="#about"
+        class="text-sm font-medium text-brand-charcoal transition hover:text-brand-green">About</a
+      >
+      <a
+        href="#contact"
+        class="text-sm font-medium text-brand-charcoal transition hover:text-brand-green">Contact</a
+      >
+    </nav>
+    <a
+      href={telHref}
+      class="rounded-full bg-brand-green px-5 py-2 text-sm font-semibold text-brand-cream shadow-sm transition hover:bg-brand-green-dark"
+    >
+      Call Now
+    </a>
+  </div>
+</header>
