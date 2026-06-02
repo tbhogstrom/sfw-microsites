@@ -6,11 +6,18 @@ export async function GET(
   { params }: { params: Promise<{ slug: string; file: string }> },
 ) {
   const { slug, file } = await params;
-  // Guard against path traversal / unexpected names: only <id>.<ext>.
-  if (!/^[a-z0-9-]+\.[a-z0-9]+$/i.test(file)) {
+  const normalizedSlug = normalizeSlug(slug);
+  // Both segments are interpolated into the blob path; constrain them to the
+  // exact shapes putMedia produces so nothing can escape the deck-media prefix.
+  if (!/^[a-z0-9-]{1,40}$/.test(normalizedSlug) || !/^[a-z0-9-]+\.[a-z0-9]+$/.test(file)) {
     return new Response('Not found', { status: 404 });
   }
-  const media = await getMedia(normalizeSlug(slug), file);
+  let media: { body: ArrayBuffer; contentType: string } | null;
+  try {
+    media = await getMedia(normalizedSlug, file);
+  } catch {
+    return new Response('Service unavailable', { status: 503 });
+  }
   if (!media) return new Response('Not found', { status: 404 });
   return new Response(media.body, {
     headers: {
