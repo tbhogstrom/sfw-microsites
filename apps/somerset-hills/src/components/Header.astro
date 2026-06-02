@@ -1,6 +1,5 @@
 ---
-import { site } from '../data/site';
-const telHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
+import { site, phoneHref } from '../data/site';
 ---
 
 <header class="sticky top-0 z-50 border-b border-brand-green/10 bg-brand-cream/90 backdrop-blur">
@@ -25,7 +24,7 @@ const telHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
       >
     </nav>
     <a
-      href={telHref}
+      href={phoneHref}
       class="rounded-full bg-brand-green px-5 py-2 text-sm font-semibold text-brand-cream shadow-sm transition hover:bg-brand-green-dark"
     >
       Call Now

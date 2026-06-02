@@ -28,6 +28,9 @@ export const site = {
   credentials: ['Licensed', 'Bonded', 'Insured'],
 };
 
+export const phoneHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
+export const emailHref = `mailto:${site.email}`;
+
 export const services: Service[] = [
   {
     title: 'New Home Construction',

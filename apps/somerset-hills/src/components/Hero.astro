@@ -1,9 +1,8 @@
 ---
-import { site } from '../data/site';
-const telHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
+import { site, phoneHref } from '../data/site';
 ---
 
-<section id="top" class="relative overflow-hidden">
+<section id="top" class="relative overflow-hidden scroll-mt-24">
   <div class="absolute inset-0 bg-gradient-to-b from-brand-green/5 via-brand-cream to-brand-cream">
   </div>
   <div
@@ -29,7 +28,7 @@ const telHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
     </p>
     <div class="mt-9 flex flex-col gap-3 sm:flex-row">
       <a
-        href={telHref}
+        href={phoneHref}
         class="rounded-full bg-brand-green px-7 py-3 font-semibold text-brand-cream shadow-md transition hover:bg-brand-green-dark"
       >
         Call {site.phone}

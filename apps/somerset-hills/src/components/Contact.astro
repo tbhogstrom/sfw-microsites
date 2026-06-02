@@ -1,10 +1,8 @@
 ---
-import { site } from '../data/site';
-const telHref = `tel:${site.phone.replace(/[^0-9+]/g, '')}`;
-const mailHref = `mailto:${site.email}`;
+import { site, phoneHref, emailHref } from '../data/site';
 ---
 
-<section id="contact" class="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+<section id="contact" class="mx-auto max-w-6xl px-6 py-20 sm:py-24 scroll-mt-24">
   <div class="grid gap-12 lg:grid-cols-2">
     <div>
       <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-brand-gold">
@@ -19,13 +17,13 @@ const mailHref = `mailto:${site.email}`;
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a
-          href={telHref}
+          href={phoneHref}
           class="rounded-full bg-brand-green px-7 py-3 text-center font-semibold text-brand-cream shadow-md transition hover:bg-brand-green-dark"
         >
           Call {site.phone}
         </a>
         <a
-          href={mailHref}
+          href={emailHref}
           class="rounded-full border border-brand-green px-7 py-3 text-center font-semibold text-brand-green transition hover:bg-brand-green hover:text-brand-cream"
         >
           Email Us
@@ -37,17 +35,19 @@ const mailHref = `mailto:${site.email}`;
         <div>
           <dt class="text-xs font-semibold uppercase tracking-wider text-brand-gold">Phone</dt>
           <dd class="mt-1">
-            <a href={telHref} class="text-lg font-medium text-brand-charcoal hover:text-brand-green"
-              >{site.phone}</a>
+            <a
+              href={phoneHref}
+              class="text-lg font-medium text-brand-charcoal hover:text-brand-green">{site.phone}</a
+            >
           </dd>
         </div>
         <div>
           <dt class="text-xs font-semibold uppercase tracking-wider text-brand-gold">Email</dt>
           <dd class="mt-1">
             <a
-              href={mailHref}
-              class="text-lg font-medium text-brand-charcoal hover:text-brand-green"
-              >{site.email}</a>
+              href={emailHref}
+              class="text-lg font-medium text-brand-charcoal hover:text-brand-green">{site.email}</a
+            >
           </dd>
         </div>
         <div>
