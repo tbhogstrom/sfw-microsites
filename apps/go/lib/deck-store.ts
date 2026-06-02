@@ -60,7 +60,12 @@ export async function listDecks(): Promise<Deck[]> {
 export async function deleteDeckMedia(slug: string): Promise<void> {
   const token = getToken();
   const { blobs } = await list({ prefix: `deck-media/${slug}/`, token });
-  await Promise.all(blobs.map((b) => del(b.url, { token })));
+  // Best-effort: attempt every media deletion even if some fail.
+  const results = await Promise.allSettled(blobs.map((b) => del(b.url, { token })));
+  const failed = results.filter((r) => r.status === 'rejected').length;
+  if (failed) {
+    console.error(`deleteDeckMedia: ${failed}/${blobs.length} blobs not deleted for slug=${slug}`);
+  }
 }
 
 export async function deleteDeck(slug: string): Promise<void> {
@@ -88,4 +93,10 @@ export async function putMedia(
     token,
   });
   return url;
+}
+
+/** Best-effort delete of a single media blob by URL — used to roll back an orphaned upload. */
+export async function deleteMediaByUrl(url: string): Promise<void> {
+  const token = getToken();
+  await del(url, { token });
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { isAuthorized } from '@/lib/auth';
-import { getDeck, putDeck, putMedia } from '@/lib/deck-store';
+import { getDeck, putDeck, putMedia, deleteMediaByUrl } from '@/lib/deck-store';
 import { normalizeSlug, generateSlug } from '@/lib/links';
 import { addSlide, MEDIA_MIME_EXT, MAX_MEDIA_BYTES } from '@/lib/decks';
 
@@ -45,7 +45,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
 
     const caption = (form.get('caption') as string | null)?.trim() || undefined;
     const updated = addSlide(deck, { type: 'image', url, caption });
-    const saved = await putDeck(updated);
+    let saved;
+    try {
+      saved = await putDeck(updated);
+    } catch (e) {
+      // putMedia already wrote a public blob; if the deck write fails, delete it
+      // so we don't leave a billable orphan that deleteDeck can't reach.
+      await deleteMediaByUrl(url).catch(() => {});
+      throw e;
+    }
     const slide = saved.slides[saved.slides.length - 1];
     return NextResponse.json({ ok: true, url, slide, deck: saved }, { status: 201 });
   } catch (e) {
