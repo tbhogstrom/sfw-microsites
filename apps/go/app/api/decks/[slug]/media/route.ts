@@ -41,7 +41,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
 
     const id = generateSlug(8);
     const buffer = Buffer.from(await file.arrayBuffer());
-    const url = await putMedia(slug, id, ext, buffer, file.type);
+    const { blobUrl } = await putMedia(slug, id, ext, buffer, file.type);
+    // Proxy path — the viewer fetches this app route which streams the private blob.
+    const url = `/d/${slug}/media/${id}.${ext}`;
 
     const caption = (form.get('caption') as string | null)?.trim() || undefined;
     const updated = addSlide(deck, { type: 'image', url, caption });
@@ -49,9 +51,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ slu
     try {
       saved = await putDeck(updated);
     } catch (e) {
-      // putMedia already wrote a public blob; if the deck write fails, delete it
+      // putMedia already wrote a private blob; if the deck write fails, delete it
       // so we don't leave a billable orphan that deleteDeck can't reach.
-      await deleteMediaByUrl(url).catch(() => {});
+      await deleteMediaByUrl(blobUrl).catch(() => {});
       throw e;
     }
     const slide = saved.slides[saved.slides.length - 1];

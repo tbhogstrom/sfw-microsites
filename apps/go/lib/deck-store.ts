@@ -77,22 +77,43 @@ export async function deleteDeck(slug: string): Promise<void> {
   await deleteDeckMedia(slug);
 }
 
-/** Upload an image to public storage and return its public URL. */
+/** Upload an image to private storage and return its pathname and blob url. */
 export async function putMedia(
   slug: string,
   id: string,
   ext: string,
   data: Buffer,
   contentType: string,
-): Promise<string> {
+): Promise<{ pathname: string; blobUrl: string }> {
   const token = getToken();
-  const { url } = await put(`deck-media/${slug}/${id}.${ext}`, data, {
-    access: 'public',
+  const result = await put(`deck-media/${slug}/${id}.${ext}`, data, {
+    access: 'private',
     contentType,
     addRandomSuffix: false,
     token,
   });
-  return url;
+  return { pathname: result.pathname, blobUrl: result.url };
+}
+
+/** Fetch a private media blob by slug + filename, returning its bytes and content-type. */
+export async function getMedia(
+  slug: string,
+  file: string,
+): Promise<{ body: ArrayBuffer; contentType: string } | null> {
+  const token = getToken();
+  const path = `deck-media/${slug}/${file}`;
+  const { blobs } = await list({ prefix: path, token });
+  const blob = blobs.find((b) => b.pathname === path);
+  if (!blob) return null;
+  const resp = await fetch(blob.downloadUrl, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!resp.ok) return null;
+  return {
+    body: await resp.arrayBuffer(),
+    contentType: resp.headers.get('content-type') ?? 'application/octet-stream',
+  };
 }
 
 /** Best-effort delete of a single media blob by URL — used to roll back an orphaned upload. */
