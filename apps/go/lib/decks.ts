@@ -65,23 +65,23 @@ export function normalizeSlideInput(input: unknown): Omit<Slide, 'id'> {
     case 'markdown': {
       const content = str(o.content);
       if (!content.trim()) throw new DeckError('Markdown slide requires content');
-      return { type, content, notes };
+      return { type, content, notes } as Omit<Slide, 'id'>;
     }
     case 'html': {
       const html = str(o.html);
       if (!html.trim()) throw new DeckError('HTML slide requires html');
-      return { type, html, notes };
+      return { type, html, notes } as Omit<Slide, 'id'>;
     }
     case 'image': {
       const url = str(o.url);
       if (!isValidUrl(url)) throw new DeckError('Image slide requires a valid http(s) url');
       const caption = str(o.caption).trim() || undefined;
-      return { type, url, caption, notes };
+      return { type, url, caption, notes } as Omit<Slide, 'id'>;
     }
     case 'embed': {
       const url = str(o.url);
       if (!isValidUrl(url)) throw new DeckError('Embed slide requires a valid http(s) url');
-      return { type, url, notes };
+      return { type, url, notes } as Omit<Slide, 'id'>;
     }
   }
 }
