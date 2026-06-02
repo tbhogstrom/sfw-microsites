@@ -59,7 +59,8 @@ export function normalizeSlideInput(input: unknown): Omit<Slide, 'id'> {
   if (!SLIDE_TYPES.includes(type)) {
     throw new DeckError(`Invalid slide type: ${String(o.type)}`);
   }
-  const notes = typeof o.notes === 'string' && o.notes.trim() ? o.notes : undefined;
+  const notesRaw = typeof o.notes === 'string' ? o.notes.trim() : '';
+  const notes = notesRaw || undefined;
 
   switch (type) {
     case 'markdown': {
@@ -113,9 +114,13 @@ export function applyDeckOp(deck: Deck, op: DeckOp): Deck {
       return { ...deck, title, theme };
     }
     case 'reorder': {
-      const ids = deck.slides.map((s) => s.id);
       const order = op.order ?? [];
-      const same = order.length === ids.length && ids.every((id) => order.includes(id));
+      const idSet = new Set(deck.slides.map((s) => s.id));
+      const orderSet = new Set(op.order ?? []);
+      const same =
+        (op.order ?? []).length === idSet.size &&
+        orderSet.size === idSet.size &&
+        [...idSet].every((id) => orderSet.has(id));
       if (!same) throw new DeckError('Order must be a permutation of the existing slide ids');
       const byId = new Map(deck.slides.map((s) => [s.id, s]));
       return { ...deck, slides: order.map((id) => byId.get(id)!) };
@@ -133,6 +138,10 @@ export function applyDeckOp(deck: Deck, op: DeckOp): Deck {
       const slides = [...deck.slides];
       slides[idx] = next;
       return { ...deck, slides };
+    }
+    default: {
+      const _exhaustive: never = op;
+      throw new DeckError(`Unknown op: ${(_exhaustive as { op?: string }).op}`);
     }
   }
 }

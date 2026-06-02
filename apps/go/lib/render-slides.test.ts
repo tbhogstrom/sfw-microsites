@@ -42,5 +42,5 @@ test('buildSections maps every slide and renders notes', () => {
   const sections = buildSections(deck);
   expect(sections).toHaveLength(1);
   expect(sections[0].html).toContain('Body');
-  expect(sections[0].notes).toContain('speaker');
+  expect(sections[0].notes).toMatch(/<p>[\s\S]*speaker[\s\S]*<\/p>/);
 });
