@@ -341,6 +341,8 @@ function DeckEditor({
           onChange={(e) => setType(e.target.value as SlideType)}
           style={selectStyle}
         >
+          {/* Image slides are added via the Upload button (-> /media), not by URL, so no
+              'image' option here. The API/normalizeSlideInput still accept image-by-url. */}
           <option value="markdown">markdown</option>
           <option value="embed">embed (url)</option>
           <option value="html">html</option>
