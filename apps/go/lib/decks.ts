@@ -1,4 +1,4 @@
-import { isValidUrl } from './links';
+import { isValidUrl, generateSlug } from './links';
 
 export type SlideType = 'markdown' | 'image' | 'embed' | 'html';
 
@@ -82,6 +82,57 @@ export function normalizeSlideInput(input: unknown): Omit<Slide, 'id'> {
       const url = str(o.url);
       if (!isValidUrl(url)) throw new DeckError('Embed slide requires a valid http(s) url');
       return { type, url, notes };
+    }
+  }
+}
+
+/** Build a full slide (with id) from input. Throws DeckError if invalid. */
+export function makeSlide(input: unknown): Slide {
+  const base = normalizeSlideInput(input);
+  return { ...base, id: generateSlug(8) } as Slide;
+}
+
+/** Return a copy of the deck with a new validated slide appended. */
+export function addSlide(deck: Deck, input: unknown): Deck {
+  return { ...deck, slides: [...deck.slides, makeSlide(input)] };
+}
+
+export type DeckOp =
+  | { op: 'updateDeck'; title?: string; theme?: string }
+  | { op: 'reorder'; order: string[] }
+  | { op: 'updateSlide'; id: string; patch: Record<string, unknown> }
+  | { op: 'deleteSlide'; id: string };
+
+/** Apply a single mutation op and return a new deck. Throws DeckError on bad input. */
+export function applyDeckOp(deck: Deck, op: DeckOp): Deck {
+  switch (op.op) {
+    case 'updateDeck': {
+      const title = op.title !== undefined ? op.title.trim() : deck.title;
+      if (!title) throw new DeckError('Title cannot be empty');
+      const theme = op.theme !== undefined ? op.theme : deck.theme;
+      return { ...deck, title, theme };
+    }
+    case 'reorder': {
+      const ids = deck.slides.map((s) => s.id);
+      const order = op.order ?? [];
+      const same = order.length === ids.length && ids.every((id) => order.includes(id));
+      if (!same) throw new DeckError('Order must be a permutation of the existing slide ids');
+      const byId = new Map(deck.slides.map((s) => [s.id, s]));
+      return { ...deck, slides: order.map((id) => byId.get(id)!) };
+    }
+    case 'deleteSlide': {
+      return { ...deck, slides: deck.slides.filter((s) => s.id !== op.id) };
+    }
+    case 'updateSlide': {
+      const idx = deck.slides.findIndex((s) => s.id === op.id);
+      if (idx < 0) throw new DeckError('Slide not found');
+      const current = deck.slides[idx];
+      const merged = { ...current, ...op.patch, type: current.type };
+      const normalized = normalizeSlideInput(merged);
+      const next = { ...normalized, id: current.id } as Slide;
+      const slides = [...deck.slides];
+      slides[idx] = next;
+      return { ...deck, slides };
     }
   }
 }

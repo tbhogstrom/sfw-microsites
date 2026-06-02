@@ -33,3 +33,51 @@ test('normalizeSlideInput rejects a non-http embed url', () => {
 test('normalizeSlideInput rejects an unknown type', () => {
   expect(() => normalizeSlideInput({ type: 'video', url: 'https://x.test' })).toThrow(DeckError);
 });
+
+import { addSlide, applyDeckOp } from './decks';
+import type { Deck } from './decks';
+
+function deckFixture(): Deck {
+  return {
+    slug: 'wk1',
+    title: 'Week 1',
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: '2026-01-01T00:00:00.000Z',
+    slides: [
+      { id: 'a', type: 'markdown', content: 'A' },
+      { id: 'b', type: 'markdown', content: 'B' },
+    ],
+  };
+}
+
+test('addSlide appends a validated slide with a generated id', () => {
+  const next = addSlide(deckFixture(), { type: 'markdown', content: 'C' });
+  expect(next.slides).toHaveLength(3);
+  const added = next.slides[2];
+  expect(added.type).toBe('markdown');
+  expect(added.id).toMatch(/^[a-z0-9]{8}$/);
+});
+
+test('applyDeckOp reorder reverses the slides', () => {
+  const next = applyDeckOp(deckFixture(), { op: 'reorder', order: ['b', 'a'] });
+  expect(next.slides.map((s) => s.id)).toEqual(['b', 'a']);
+});
+
+test('applyDeckOp reorder rejects a non-permutation', () => {
+  expect(() => applyDeckOp(deckFixture(), { op: 'reorder', order: ['b'] })).toThrow();
+});
+
+test('applyDeckOp deleteSlide removes by id', () => {
+  const next = applyDeckOp(deckFixture(), { op: 'deleteSlide', id: 'a' });
+  expect(next.slides.map((s) => s.id)).toEqual(['b']);
+});
+
+test('applyDeckOp updateSlide edits content and keeps id/type', () => {
+  const next = applyDeckOp(deckFixture(), { op: 'updateSlide', id: 'a', patch: { content: 'A2' } });
+  const s = next.slides[0] as { id: string; type: string; content: string };
+  expect(s).toMatchObject({ id: 'a', type: 'markdown', content: 'A2' });
+});
+
+test('applyDeckOp updateDeck rejects an empty title', () => {
+  expect(() => applyDeckOp(deckFixture(), { op: 'updateDeck', title: '   ' })).toThrow();
+});
