@@ -38,3 +38,32 @@ def pacific_day_bounds(date_str, tz):
 def fmt_time(dt):
     """Cross-platform '%-I:%M %p' (Windows strftime lacks %-I)."""
     return dt.strftime("%I:%M %p").lstrip("0")
+
+
+from collections import Counter
+
+
+def bucket_photos_by_hour(timestamps, tz):
+    """{hour_of_day: count} from unix-timestamp strings/ints, in local tz."""
+    counts = {}
+    for ts in timestamps:
+        h = datetime.fromtimestamp(int(ts), tz).hour
+        counts[h] = counts.get(h, 0) + 1
+    return counts
+
+
+def compute_thoroughness_stats(timestamps, phases, tz):
+    """Pure, fact-only stats for the day. No AI."""
+    ints = sorted(int(t) for t in timestamps)
+    first = datetime.fromtimestamp(ints[0], tz)
+    last = datetime.fromtimestamp(ints[-1], tz)
+    counts = bucket_photos_by_hour(timestamps, tz)
+    return {
+        "total": len(ints),
+        "first_time": fmt_time(first),
+        "last_time": fmt_time(last),
+        "span_label": f"{fmt_time(first)} – {fmt_time(last)}",
+        "span_hours": round((ints[-1] - ints[0]) / 3600),
+        "active_hours": len(counts),
+        "phase_counts": dict(Counter(phases)),
+    }
