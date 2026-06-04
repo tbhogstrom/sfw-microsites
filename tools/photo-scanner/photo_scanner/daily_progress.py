@@ -88,3 +88,48 @@ def select_grid_photos(photos, max_n=GRID_MAX):
                     seen.add(id(p))
         round_idx += 1
     return selected
+
+
+def _hour_label(h):
+    ampm = "AM" if h < 12 else "PM"
+    disp = h % 12 or 12
+    return f"{disp}{ampm}"
+
+
+def render_hour_chart_svg(hour_counts, start_hour, end_hour):
+    """Self-contained SVG bar chart. X = hour of day [start_hour, end_hour), Y = photo count."""
+    hours = list(range(start_hour, end_hour))
+    W, H = 720, 300
+    pad_l, pad_b, pad_t = 40, 40, 24
+    plot_w = W - pad_l - 16
+    plot_h = H - pad_b - pad_t
+    n = max(len(hours), 1)
+    slot = plot_w / n
+    bar_w = slot * 0.62
+    max_count = max(hour_counts.values(), default=0) or 1
+    accent = "#1f6feb"
+    parts = [
+        f'<svg viewBox="0 0 {W} {H}" width="100%" xmlns="http://www.w3.org/2000/svg" '
+        f'font-family="Segoe UI, system-ui, sans-serif">',
+        f'<line x1="{pad_l}" y1="{pad_t + plot_h}" x2="{W - 16}" y2="{pad_t + plot_h}" stroke="#d0d7de"/>',
+    ]
+    for i, h in enumerate(hours):
+        c = hour_counts.get(h, 0)
+        bh = (c / max_count) * plot_h
+        x = pad_l + i * slot + (slot - bar_w) / 2
+        y = pad_t + plot_h - bh
+        parts.append(
+            f'<rect class="bar" x="{x:.1f}" y="{y:.1f}" width="{bar_w:.1f}" height="{bh:.1f}" '
+            f'rx="3" fill="{accent}" opacity="{0.35 + 0.65 * (c / max_count):.2f}"/>'
+        )
+        if c:
+            parts.append(
+                f'<text x="{x + bar_w / 2:.1f}" y="{y - 5:.1f}" text-anchor="middle" '
+                f'font-size="11" fill="#57606a">{c}</text>'
+            )
+        parts.append(
+            f'<text x="{pad_l + i * slot + slot / 2:.1f}" y="{pad_t + plot_h + 16}" '
+            f'text-anchor="middle" font-size="10" fill="#8b949e">{_hour_label(h)}</text>'
+        )
+    parts.append("</svg>")
+    return "\n".join(parts)

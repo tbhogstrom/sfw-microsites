@@ -63,3 +63,19 @@ def test_select_grid_caps_and_diversifies_phases():
     assert len(picked) == 16
     phases = {p["phase"] for p in picked}
     assert "before" in phases and "after" in phases
+
+
+from photo_scanner.daily_progress import render_hour_chart_svg
+
+
+def test_render_hour_chart_svg_smoke():
+    svg = render_hour_chart_svg({8: 37, 15: 15, 11: 9}, start_hour=7, end_hour=18)
+    assert svg.startswith("<svg")
+    assert svg.rstrip().endswith("</svg>")
+    assert svg.count('class="bar"') == 11
+    assert ">37<" in svg
+
+
+def test_render_hour_chart_svg_handles_empty():
+    svg = render_hour_chart_svg({}, start_hour=7, end_hour=18)
+    assert svg.startswith("<svg")
