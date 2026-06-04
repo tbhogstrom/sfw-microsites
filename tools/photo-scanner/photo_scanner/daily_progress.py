@@ -4,10 +4,25 @@ Usage:
     python -m photo_scanner.daily_progress            # Reynolds 06-03-2026 defaults
     python -m photo_scanner.daily_progress <project_id> <YYYY-MM-DD>
 """
+import asyncio
+import io
+import sys
 from collections import Counter
 from datetime import datetime, time, timedelta, timezone
+from pathlib import Path
 
 from jinja2 import Environment
+from PIL import Image
+
+from photo_scanner.catalog import Catalog
+from photo_scanner.companycam import CompanyCamClient
+from photo_scanner.scanner import (
+    analyze_project_from_catalog,
+    get_async_anthropic_client,
+    image_to_b64,
+    log,
+)
+from photo_scanner.reports import generate_daily_report
 
 PROJECT_ID = "106749565"
 REPORT_DATE = "2026-06-03"
@@ -239,3 +254,89 @@ _REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
 
 def render_report_html(ctx):
     return _REPORT_TEMPLATE.render(**ctx)
+
+
+async def build_report(project_id, date_str, out_path):
+    tz = get_pacific_tz()
+    catalog = Catalog()
+    client = get_async_anthropic_client()
+    if client is None:
+        raise SystemExit("No ANTHROPIC_API_KEY in .env — cannot analyze or write narrative.")
+    cc = CompanyCamClient()
+    try:
+        # 1. Analyze the whole project if any photos are still unanalyzed (idempotent).
+        if catalog.get_unanalyzed_photos(project_id):
+            log("[daily_progress] Analyzing project photos…")
+            await analyze_project_from_catalog(
+                catalog, project_id, cc, client,
+                on_progress=lambda d: log("  " + str(d.get("message", ""))),
+            )
+
+        ts_start, ts_end = pacific_day_bounds(date_str, tz)
+
+        # 2. ALL photos that day (fact-only chart + stats) — direct query, not scene-filtered.
+        rows = [dict(r) for r in catalog.db.execute(
+            "SELECT taken_at, phase FROM photos WHERE project_id=? "
+            "AND CAST(taken_at AS INTEGER)>=? AND CAST(taken_at AS INTEGER)<?",
+            (project_id, ts_start, ts_end),
+        ).fetchall()]
+        if not rows:
+            raise SystemExit(f"No photos found for {project_id} on {date_str}.")
+        timestamps = [r["taken_at"] for r in rows]
+        phases = [r["phase"] for r in rows if r["phase"]]
+        hour_counts = bucket_photos_by_hour(timestamps, tz)
+        stats = compute_thoroughness_stats(timestamps, phases, tz)
+        lo = min(min(hour_counts), 7)
+        hi = max(max(hour_counts) + 1, 18)
+        chart_svg = render_hour_chart_svg(hour_counts, lo, hi)
+
+        # 3. Analyzed picks → grid → base64 thumbnails.
+        analyzed = catalog.get_photos_for_date(project_id, ts_start, ts_end)
+        grid = select_grid_photos(analyzed, GRID_MAX)
+        images = []
+        for p in grid:
+            try:
+                raw = await cc.get_photo_bytes(p["uri"])
+                b64, mt = image_to_b64(Image.open(io.BytesIO(raw)), max_dim=900)
+                images.append({"data_uri": f"data:{mt};base64,{b64}", "phase": p.get("phase")})
+            except Exception as e:
+                log(f"[daily_progress] image fetch failed {p.get('id')}: {e}")
+
+        # 4. Grounded narrative (existing generator; restricted to analyzed data + scope).
+        report = await generate_daily_report(catalog, project_id, ts_start, ts_end, client) or {}
+
+        # 5. Render + write.
+        d = datetime.strptime(date_str, "%Y-%m-%d").date()
+        ctx = {
+            "company_name": COMPANY_NAME,
+            "customer_name": CUSTOMER_NAME,
+            "address": ADDRESS,
+            "date_label": f"{d.strftime('%B')} {d.day}, {d.year}",
+            "headline": report.get("headline", "Daily Progress Update"),
+            "summary": report.get("value_statement", ""),
+            "what_we_did": report.get("what_we_did", ""),
+            "risk_before": report.get("risk_before", ""),
+            "risk_after": report.get("risk_after", ""),
+            "chart_svg": chart_svg,
+            "stats": stats,
+            "images": images,
+        }
+        html = render_report_html(ctx)
+        Path(out_path).write_text(html, encoding="utf-8")
+        log(f"[daily_progress] Wrote {out_path} ({len(images)} photos embedded)")
+    finally:
+        await cc.close()
+    return out_path
+
+
+def main():
+    project_id = sys.argv[1] if len(sys.argv) > 1 else PROJECT_ID
+    date_str = sys.argv[2] if len(sys.argv) > 2 else REPORT_DATE
+    out_path = f"reynolds_progress_{date_str}.html"
+    path = asyncio.run(build_report(project_id, date_str, out_path))
+    import webbrowser
+    webbrowser.open(Path(path).resolve().as_uri())
+
+
+if __name__ == "__main__":
+    main()
