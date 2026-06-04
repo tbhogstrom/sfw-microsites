@@ -209,7 +209,21 @@ _REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
   </section>
 
   <section>
-    <h2>Crew Activity Through the Day</h2>
+    <h2>What We Did Today</h2>
+    <p class="body">{{ what_we_did }}</p>
+    <div class="ba">
+      <div class="col"><h3>Condition Before</h3><p class="body">{{ risk_before }}</p></div>
+      <div class="col"><h3>Condition After Today</h3><p class="body">{{ risk_after }}</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Photo Documentation Activity Through the Day</h2>
+    <p class="body">At SFW Construction, thorough photo documentation is how we keep you informed
+       and stand behind our work. Throughout the day our crew photographs the conditions that
+       matter — dry rot at trim and sheathing, flashing details, substrate and framing quality,
+       and the progression of each repair — building an honest visual record of what we found
+       and how we addressed it.</p>
     <div class="stats">
       <div class="stat"><div class="v">{{ stats.total }}</div><div class="l">Photos documented</div></div>
       <div class="stat"><div class="v">{{ stats.span_label }}</div><div class="l">Documented throughout the day</div></div>
@@ -217,15 +231,6 @@ _REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
     {{ chart_svg | safe }}
     <p class="chart-note">Based on the timestamps of photos added to the project log.
        Reflects documentation activity only — it is not a measure of billed time or hours worked.</p>
-  </section>
-
-  <section>
-    <h2>What We Did Today</h2>
-    <p class="body">{{ what_we_did }}</p>
-    <div class="ba">
-      <div class="col"><h3>Condition Before</h3><p class="body">{{ risk_before }}</p></div>
-      <div class="col"><h3>Condition After Today</h3><p class="body">{{ risk_after }}</p></div>
-    </div>
   </section>
 
   <section>
