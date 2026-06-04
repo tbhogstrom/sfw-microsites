@@ -211,9 +211,7 @@ _REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
     <h2>Crew Activity Through the Day</h2>
     <div class="stats">
       <div class="stat"><div class="v">{{ stats.total }}</div><div class="l">Photos documented</div></div>
-      <div class="stat"><div class="v">{{ stats.span_hours }} hrs</div><div class="l">On-site span</div></div>
-      <div class="stat"><div class="v">{{ stats.active_hours }}</div><div class="l">Active hours</div></div>
-      <div class="stat"><div class="v">{{ stats.span_label }}</div><div class="l">First → last photo</div></div>
+      <div class="stat"><div class="v">{{ stats.span_label }}</div><div class="l">Documented throughout the day</div></div>
     </div>
     {{ chart_svg | safe }}
   </section>
