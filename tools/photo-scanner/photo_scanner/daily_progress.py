@@ -4,7 +4,10 @@ Usage:
     python -m photo_scanner.daily_progress            # Reynolds 06-03-2026 defaults
     python -m photo_scanner.daily_progress <project_id> <YYYY-MM-DD>
 """
+from collections import Counter
 from datetime import datetime, time, timedelta, timezone
+
+from jinja2 import Environment
 
 PROJECT_ID = "106749565"
 REPORT_DATE = "2026-06-03"
@@ -40,9 +43,6 @@ def fmt_time(dt):
     return dt.strftime("%I:%M %p").lstrip("0")
 
 
-from collections import Counter
-
-
 def bucket_photos_by_hour(timestamps, tz):
     """{hour_of_day: count} from unix-timestamp strings/ints, in local tz."""
     counts = {}
@@ -54,6 +54,9 @@ def bucket_photos_by_hour(timestamps, tz):
 
 def compute_thoroughness_stats(timestamps, phases, tz):
     """Pure, fact-only stats for the day. No AI."""
+    if not timestamps:
+        return {"total": 0, "first_time": None, "last_time": None,
+                "span_label": "—", "span_hours": 0, "active_hours": 0, "phase_counts": {}}
     ints = sorted(int(t) for t in timestamps)
     first = datetime.fromtimestamp(ints[0], tz)
     last = datetime.fromtimestamp(ints[-1], tz)
@@ -135,9 +138,8 @@ def render_hour_chart_svg(hour_counts, start_hour, end_hour):
     return "\n".join(parts)
 
 
-from jinja2 import Template
-
-_REPORT_TEMPLATE = Template("""<!DOCTYPE html>
+_env = Environment(autoescape=True)
+_REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ customer_name }} — Daily Progress Report</title>
@@ -198,7 +200,7 @@ _REPORT_TEMPLATE = Template("""<!DOCTYPE html>
       <div class="stat"><div class="v">{{ stats.active_hours }}</div><div class="l">Active hours</div></div>
       <div class="stat"><div class="v">{{ stats.span_label }}</div><div class="l">First → last photo</div></div>
     </div>
-    {{ chart_svg }}
+    {{ chart_svg | safe }}
   </section>
 
   <section>
@@ -214,7 +216,7 @@ _REPORT_TEMPLATE = Template("""<!DOCTYPE html>
     <h2>Documented Work</h2>
     <div class="grid">
       {% for img in images %}
-      <figure><img src="{{ img.data_uri }}" alt="job photo"/>
+      <figure><img src="{{ img.data_uri | safe }}" alt="job photo"/>
         {% if img.phase %}<figcaption>{{ img.phase }}</figcaption>{% endif %}</figure>
       {% endfor %}
     </div>

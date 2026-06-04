@@ -6,7 +6,8 @@ def test_pacific_day_bounds_june_is_pdt():
     tz = get_pacific_tz()
     start, end = pacific_day_bounds("2026-06-03", tz)
     # 06-03 00:00 PDT == 06-03 07:00 UTC
-    assert datetime.utcfromtimestamp(start).strftime("%Y-%m-%d %H:%M") == "2026-06-03 07:00"
+    from datetime import timezone
+    assert datetime.fromtimestamp(start, tz=timezone.utc).strftime("%Y-%m-%d %H:%M") == "2026-06-03 07:00"
     assert end - start == 24 * 3600
 
 
@@ -41,6 +42,13 @@ def test_compute_thoroughness_stats():
     assert stats["span_label"] == "7:00 AM – 5:00 PM"
     assert stats["span_hours"] == 10
     assert stats["phase_counts"] == {"before": 1, "during": 1, "after": 1}
+
+
+def test_compute_thoroughness_stats_empty():
+    stats = compute_thoroughness_stats([], [], get_pacific_tz())
+    assert stats["total"] == 0
+    assert stats["active_hours"] == 0
+    assert stats["phase_counts"] == {}
 
 
 from photo_scanner.daily_progress import select_grid_photos
