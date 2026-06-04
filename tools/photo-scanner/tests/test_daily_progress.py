@@ -41,3 +41,25 @@ def test_compute_thoroughness_stats():
     assert stats["span_label"] == "7:00 AM – 5:00 PM"
     assert stats["span_hours"] == 10
     assert stats["phase_counts"] == {"before": 1, "during": 1, "after": 1}
+
+
+from photo_scanner.daily_progress import select_grid_photos
+
+
+def _photo(pid, phase, score):
+    return {"id": pid, "phase": phase, "marketing_score": score, "uri": f"u{pid}"}
+
+
+def test_select_grid_returns_all_when_under_cap():
+    photos = [_photo(i, "during", 3) for i in range(5)]
+    assert len(select_grid_photos(photos, max_n=16)) == 5
+
+
+def test_select_grid_caps_and_diversifies_phases():
+    photos = [_photo(f"d{i}", "during", 5) for i in range(20)]
+    photos += [_photo("b1", "before", 1), _photo("b2", "before", 1)]
+    photos += [_photo("a1", "after", 1), _photo("a2", "after", 1)]
+    picked = select_grid_photos(photos, max_n=16)
+    assert len(picked) == 16
+    phases = {p["phase"] for p in picked}
+    assert "before" in phases and "after" in phases

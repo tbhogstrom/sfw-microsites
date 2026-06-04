@@ -67,3 +67,24 @@ def compute_thoroughness_stats(timestamps, phases, tz):
         "active_hours": len(counts),
         "phase_counts": dict(Counter(phases)),
     }
+
+
+def select_grid_photos(photos, max_n=GRID_MAX):
+    """Up to max_n photos, score-sorted but round-robin across phases for diversity."""
+    scored = sorted(photos, key=lambda p: p.get("marketing_score") or 0, reverse=True)
+    if len(scored) <= max_n:
+        return scored
+    by_phase = {}
+    for p in scored:
+        by_phase.setdefault(p.get("phase") or "other", []).append(p)
+    selected, seen, round_idx = [], set(), 0
+    while len(selected) < max_n and any(round_idx < len(b) for b in by_phase.values()):
+        for phase in PHASE_ORDER:
+            bucket = by_phase.get(phase, [])
+            if round_idx < len(bucket) and len(selected) < max_n:
+                p = bucket[round_idx]
+                if id(p) not in seen:
+                    selected.append(p)
+                    seen.add(id(p))
+        round_idx += 1
+    return selected
