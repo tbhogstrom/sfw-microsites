@@ -326,6 +326,7 @@ async def build_report(project_id, date_str, out_path):
         log(f"[daily_progress] Wrote {out_path} ({len(images)} photos embedded)")
     finally:
         await cc.close()
+        catalog.close()
     return out_path
 
 
