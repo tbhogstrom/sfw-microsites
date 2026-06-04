@@ -133,3 +133,107 @@ def render_hour_chart_svg(hour_counts, start_hour, end_hour):
         )
     parts.append("</svg>")
     return "\n".join(parts)
+
+
+from jinja2 import Template
+
+_REPORT_TEMPLATE = Template("""<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ customer_name }} — Daily Progress Report</title>
+<style>
+  :root { --ink:#1b2733; --muted:#5b6b7b; --line:#e3e8ee; --accent:#1f6feb; --bg:#f6f8fa; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; color:var(--ink); background:var(--bg);
+         line-height:1.55; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .sheet { max-width:880px; margin:0 auto; background:#fff; }
+  .topbar { background:var(--ink); color:#fff; padding:22px 36px; display:flex;
+            justify-content:space-between; align-items:baseline; }
+  .topbar .co { font-size:20px; font-weight:700; letter-spacing:.02em; }
+  .topbar .kind { font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:#9fb3c8; }
+  .meta { padding:20px 36px; border-bottom:1px solid var(--line); }
+  .meta .cust { font-size:22px; font-weight:700; }
+  .meta .sub { font-size:13px; color:var(--muted); margin-top:2px; }
+  section { padding:24px 36px; border-bottom:1px solid var(--line); }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:var(--accent);
+       margin-bottom:12px; }
+  .headline { font-size:19px; font-weight:700; margin-bottom:8px; }
+  p.body { font-size:14.5px; color:#33414f; margin-bottom:10px; }
+  .stats { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:18px; }
+  .stat { background:var(--bg); border:1px solid var(--line); border-radius:10px;
+          padding:12px 16px; min-width:120px; }
+  .stat .v { font-size:24px; font-weight:700; font-variant-numeric:tabular-nums; }
+  .stat .l { font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .ba { display:flex; gap:18px; flex-wrap:wrap; }
+  .ba .col { flex:1; min-width:240px; }
+  .ba .col h3 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted);
+                margin-bottom:4px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:10px; }
+  .grid figure { border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#000; }
+  .grid img { width:100%; height:160px; object-fit:cover; display:block; }
+  .grid figcaption { font-size:10px; text-transform:uppercase; letter-spacing:.05em;
+                     color:var(--muted); padding:5px 8px; background:#fff; }
+  .teaser { background:#eef4ff; border:1px solid #cfe0ff; border-radius:12px; padding:18px 20px; }
+  .teaser h2 { color:var(--accent); }
+  .teaser p { font-size:14px; color:#2b3b52; }
+  footer { padding:18px 36px; font-size:11px; color:var(--muted); }
+  @media print { body { background:#fff; } .sheet { max-width:none; } section { break-inside:avoid; } }
+</style></head>
+<body><div class="sheet">
+  <div class="topbar"><div class="co">{{ company_name }}</div>
+    <div class="kind">Daily Progress Report</div></div>
+  <div class="meta"><div class="cust">{{ customer_name }}</div>
+    <div class="sub">{{ address }} &nbsp;·&nbsp; {{ date_label }}</div></div>
+
+  <section>
+    <div class="headline">{{ headline }}</div>
+    <p class="body">{{ summary }}</p>
+  </section>
+
+  <section>
+    <h2>Crew Activity Through the Day</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">{{ stats.total }}</div><div class="l">Photos documented</div></div>
+      <div class="stat"><div class="v">{{ stats.span_hours }} hrs</div><div class="l">On-site span</div></div>
+      <div class="stat"><div class="v">{{ stats.active_hours }}</div><div class="l">Active hours</div></div>
+      <div class="stat"><div class="v">{{ stats.span_label }}</div><div class="l">First → last photo</div></div>
+    </div>
+    {{ chart_svg }}
+  </section>
+
+  <section>
+    <h2>What We Did Today</h2>
+    <p class="body">{{ what_we_did }}</p>
+    <div class="ba">
+      <div class="col"><h3>Condition Before</h3><p class="body">{{ risk_before }}</p></div>
+      <div class="col"><h3>Condition After Today</h3><p class="body">{{ risk_after }}</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Documented Work</h2>
+    <div class="grid">
+      {% for img in images %}
+      <figure><img src="{{ img.data_uri }}" alt="job photo"/>
+        {% if img.phase %}<figcaption>{{ img.phase }}</figcaption>{% endif %}</figure>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section>
+    <div class="teaser">
+      <h2>While We're On Site</h2>
+      <p>Our crew is already set up on your home with pumpjacks staging the upper elevations.
+         That puts us in a strong position to handle exterior painting and finishing on these
+         same walls while access is in place. If refreshing and protecting the exterior is
+         something you're considering, we'd be glad to talk it through — no obligation.</p>
+    </div>
+  </section>
+
+  <footer>{{ company_name }} · Prepared {{ date_label }}. Photo timestamps reflect on-site
+    documentation. This report describes work performed and conditions observed to date.</footer>
+</div></body></html>""")
+
+
+def render_report_html(ctx):
+    return _REPORT_TEMPLATE.render(**ctx)

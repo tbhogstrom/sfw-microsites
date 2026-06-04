@@ -79,3 +79,32 @@ def test_render_hour_chart_svg_smoke():
 def test_render_hour_chart_svg_handles_empty():
     svg = render_hour_chart_svg({}, start_hour=7, end_hour=18)
     assert svg.startswith("<svg")
+
+
+from photo_scanner.daily_progress import render_report_html
+
+
+def test_render_report_html_contains_sections():
+    ctx = {
+        "company_name": "SFW Construction",
+        "customer_name": "George Reynolds",
+        "address": "538 NW View Ridge St, Camas, WA",
+        "date_label": "June 3, 2026",
+        "headline": "Window Trim Inspection and Targeted Dry Rot Repairs",
+        "summary": "Crew opened affected trim to confirm conditions.",
+        "what_we_did": "Opened trim at picture windows.",
+        "risk_before": "Dry rot identified at window trim.",
+        "risk_after": "Affected areas opened and documented.",
+        "chart_svg": "<svg>stub</svg>",
+        "stats": {"total": 59, "span_label": "7:00 AM – 5:00 PM", "span_hours": 10,
+                  "active_hours": 9, "first_time": "7:00 AM", "last_time": "5:00 PM",
+                  "phase_counts": {"before": 5, "during": 30, "after": 4}},
+        "images": [{"data_uri": "data:image/jpeg;base64,AAAA", "phase": "during"}],
+    }
+    html = render_report_html(ctx)
+    assert "<!DOCTYPE html>" in html
+    assert "George Reynolds" in html
+    assert "<svg>stub</svg>" in html
+    assert "data:image/jpeg;base64,AAAA" in html
+    assert "pumpjacks" in html
+    assert "59" in html
