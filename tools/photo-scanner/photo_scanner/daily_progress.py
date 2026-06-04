@@ -193,6 +193,7 @@ _REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
   .teaser { background:#eef4ff; border:1px solid #cfe0ff; border-radius:12px; padding:18px 20px; }
   .teaser h2 { color:var(--accent); }
   .teaser p { font-size:14px; color:#2b3b52; }
+  .chart-note { font-size:11px; color:var(--muted); font-style:italic; margin-top:12px; }
   footer { padding:18px 36px; font-size:11px; color:var(--muted); }
   @media print { body { background:#fff; } .sheet { max-width:none; } section { break-inside:avoid; } }
 </style></head>
@@ -214,6 +215,8 @@ _REPORT_TEMPLATE = _env.from_string("""<!DOCTYPE html>
       <div class="stat"><div class="v">{{ stats.span_label }}</div><div class="l">Documented throughout the day</div></div>
     </div>
     {{ chart_svg | safe }}
+    <p class="chart-note">Based on the timestamps of photos added to the project log.
+       Reflects documentation activity only — it is not a measure of billed time or hours worked.</p>
   </section>
 
   <section>
