@@ -10,6 +10,7 @@ import '../styles/scroll-reveal.css';
 import SEO from '../components/ui/SEO.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import CCBBanner from '../components/layout/CCBBanner.astro';
 import MobileNav from '../components/layout/MobileNav.astro';
 
 
@@ -95,7 +96,10 @@ const {
     </main>
 
     {showFooter && (
-      <Footer config={config} navigation={navigation} />
+      <>
+        <CCBBanner ccbNumber={config.ccbNumber} waLicenseNumber={config.waLicenseNumber} />
+        <Footer config={config} navigation={navigation} />
+      </>
     )}
 
     <Analytics />
